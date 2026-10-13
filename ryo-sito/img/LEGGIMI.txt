@@ -1,0 +1,3 @@
+Metti qui le foto del locale (da Instagram / Google), es. hero.jpg, bancone.jpg.
+Poi in index.html aggiungi a ogni riquadro .photo lo stile, ad esempio:
+  <div class="photo" style="background-image:url('img/hero.jpg')" data-label="..."></div>
