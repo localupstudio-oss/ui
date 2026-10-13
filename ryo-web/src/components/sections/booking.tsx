@@ -24,30 +24,30 @@ const todayIso = () => new Date().toISOString().slice(0, 10)
 export function Booking() {
   return (
     <section id="prenota" className="relative overflow-hidden py-28 sm:py-36">
-      <div className="tessellated absolute inset-0 -z-10 opacity-60 [mask-image:radial-gradient(60%_60%_at_50%_50%,black,transparent)]" />
-      <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-8 lg:grid-cols-12">
+      <div className="jungle-glow absolute inset-0 -z-10 opacity-60 [mask-image:radial-gradient(60%_60%_at_50%_50%,black,transparent)]" />
+      <div className="mx-auto grid grid-cols-1 max-w-7xl gap-14 px-5 sm:px-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <Reveal>
             <SectionHeading
               eyebrow="Prenotazioni & eventi privati"
               title={
                 <>
-                  Il tuo tavolo <span className="text-brass-gradient italic">ti aspetta.</span>
+                  Il tuo tavolo <span className="text-hot">ti aspetta.</span>
                 </>
               }
               intro="Scegli data, orario e zona preferita. Per compleanni, feste private ed eventi aziendali possiamo riservare l'intero locale o un'area dedicata, con menu e drink list su misura."
             />
           </Reveal>
-          <Reveal delay={0.1} className="mt-10 grid gap-4">
+          <Reveal delay={0.1} className="mt-10 grid grid-cols-1 gap-4">
             {[
               { icon: Crown, title: "Area VIP", text: "Divanetti riservati, bottle service e servizio dedicato." },
               { icon: GlassWater, title: "Bancone", text: "In prima fila davanti ai bartender, per vivere lo show." },
               { icon: Building2, title: "Eventi aziendali", text: "Da 10 a 200 ospiti: aperitivi, cene, lanci di prodotto." },
             ].map((f) => (
               <div key={f.title} className="flex gap-4 rounded-2xl border border-border bg-card/50 p-5">
-                <f.icon className="mt-1 size-5 shrink-0 text-brass" />
+                <f.icon className="mt-1 size-5 shrink-0 text-amber" />
                 <div>
-                  <p className="font-display text-xl">{f.title}</p>
+                  <p className="font-display text-base">{f.title}</p>
                   <p className="text-sm text-muted-foreground">{f.text}</p>
                 </div>
               </div>
@@ -56,7 +56,7 @@ export function Booking() {
         </div>
 
         <Reveal delay={0.15} className="lg:col-span-7">
-          <div className="rounded-[2rem] border border-brass/25 bg-card/80 p-6 shadow-[0_40px_120px_-40px_rgb(201_162_75/0.35)] backdrop-blur-xl sm:p-10">
+          <div className="rounded-[2rem] border border-amber/25 bg-card/80 p-6 shadow-[0_40px_120px_-40px_rgb(201_162_75/0.35)] backdrop-blur-xl sm:p-10">
             <Tabs defaultValue="tavolo">
               <TabsList className="mb-8 grid h-auto w-full grid-cols-2 bg-muted/70 p-1">
                 <TabsTrigger value="tavolo" className="py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground dark:data-[state=active]:border-transparent">Prenota un tavolo</TabsTrigger>
@@ -113,7 +113,7 @@ function BookingForm({ kind }: { kind: "tavolo" | "evento" }) {
   const id = (n: string) => `${kind}-${n}`
 
   return (
-    <form action={formAction} onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
+    <form action={formAction} onSubmit={onSubmit} noValidate className="grid grid-cols-1 gap-5 sm:grid-cols-2">
       <input type="hidden" name="kind" value={kind} />
       {/* Honeypot: invisibile agli utenti, compilato dai bot */}
       <div aria-hidden className="absolute -left-[9999px] h-0 overflow-hidden">
@@ -155,8 +155,8 @@ function BookingForm({ kind }: { kind: "tavolo" | "evento" }) {
                 return (
                   <label key={z} className="group relative cursor-pointer">
                     <input type="radio" name="zone" value={z} defaultChecked={i === 2} className="peer sr-only" />
-                    <span className="flex flex-col items-center gap-2 rounded-2xl border border-border p-4 text-sm transition-all peer-checked:border-brass peer-checked:bg-brass/10 peer-checked:shadow-[0_0_24px_-8px_var(--brass)] peer-focus-visible:ring-2 peer-focus-visible:ring-ring hover:border-foreground/30">
-                      <Icon className="size-5 text-brass" />
+                    <span className="flex flex-col items-center gap-2 rounded-2xl border border-border p-4 text-sm transition-all peer-checked:border-amber peer-checked:bg-amber/10 peer-checked:shadow-[0_0_24px_-8px_var(--amber)] peer-focus-visible:ring-2 peer-focus-visible:ring-ring hover:border-foreground/30">
+                      <Icon className="size-5 text-amber" />
                       {ZONES[z]}
                     </span>
                   </label>
@@ -191,9 +191,9 @@ function BookingForm({ kind }: { kind: "tavolo" | "evento" }) {
 
       <div className="sm:col-span-2">
         <label className="flex items-start gap-3 text-sm text-muted-foreground">
-          <input type="checkbox" name="privacy" required className="mt-1 size-4 accent-[var(--brass)]" />
+          <input type="checkbox" name="privacy" required className="mt-1 size-4 accent-[var(--amber)]" />
           <span>
-            Ho letto l&apos;<a href="/privacy" className="text-brass underline-offset-4 hover:underline">informativa privacy</a> e acconsento al trattamento dei dati per gestire la richiesta.
+            Ho letto l&apos;<a href="/privacy" className="text-amber underline-offset-4 hover:underline">informativa privacy</a> e acconsento al trattamento dei dati per gestire la richiesta.
           </span>
         </label>
         <ErrorText errors={errors.privacy} />
@@ -201,7 +201,7 @@ function BookingForm({ kind }: { kind: "tavolo" | "evento" }) {
 
       <AnimatePresence>
         {state.status === "error" && (
-          <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="alert" className="rounded-xl border border-ember/40 bg-ember/10 px-4 py-3 text-sm text-ember sm:col-span-2">
+          <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="alert" className="rounded-xl border border-orange/40 bg-orange/10 px-4 py-3 text-sm text-orange sm:col-span-2">
             {state.message}
           </motion.p>
         )}
@@ -217,9 +217,9 @@ function BookingForm({ kind }: { kind: "tavolo" | "evento" }) {
 
 function Field({ label, id, error, className, children }: { label: string; id: string; error?: string[]; className?: string; children: React.ReactNode }) {
   return (
-    <div className={cn("grid gap-2", className)} data-invalid={!!error?.length || undefined}>
+    <div className={cn("grid grid-cols-1 gap-2", className)} data-invalid={!!error?.length || undefined}>
       <Label htmlFor={id}>{label}</Label>
-      <div className="[&_input]:h-11 [&_input]:bg-background/60 [&_[data-slot=select-trigger]]:h-11 [&_[data-slot=select-trigger]]:bg-background/60 [&_textarea]:bg-background/60 in-data-invalid:[&_input]:border-ember">
+      <div className="[&_input]:h-11 [&_input]:bg-background/60 [&_[data-slot=select-trigger]]:h-11 [&_[data-slot=select-trigger]]:bg-background/60 [&_textarea]:bg-background/60 in-data-invalid:[&_input]:border-orange">
         {children}
       </div>
       <ErrorText errors={error} />
@@ -229,5 +229,5 @@ function Field({ label, id, error, className, children }: { label: string; id: s
 
 function ErrorText({ errors }: { errors?: string[] }) {
   if (!errors?.length) return null
-  return <p className="text-xs text-ember" role="alert">{errors[0]}</p>
+  return <p className="text-xs text-orange" role="alert">{errors[0]}</p>
 }

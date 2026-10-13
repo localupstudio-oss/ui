@@ -55,7 +55,7 @@ export const site = {
 
 export const nav = [
   { href: "#filosofia", label: "Filosofia" },
-  { href: "#mixology-lab", label: "Mixology Lab" },
+  { href: "#drink-list", label: "Drink List 3D" },
   { href: "#serate", label: "Serate" },
   { href: "#abbinamenti", label: "Abbinamenti" },
   { href: "#location", label: "Location" },

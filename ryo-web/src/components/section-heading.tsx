@@ -13,13 +13,12 @@ type Props = {
 export function SectionHeading({ eyebrow, title, intro, align = "left", demo, className }: Props) {
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
-      <p className={cn("flex items-center gap-3 text-xs font-semibold tracking-[0.32em] text-brass uppercase", align === "center" && "justify-center")}>
-        <span className="h-px w-8 bg-brass/60" />
+      <p className={cn("eyebrow flex items-center gap-3", align === "center" && "justify-center")}>
         {eyebrow}
         {demo && <DemoBadge />}
       </p>
-      <h2 className="mt-5 font-display text-4xl leading-[1.05] font-medium text-balance sm:text-5xl lg:text-6xl">{title}</h2>
-      {intro && <p className="mt-6 text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">{intro}</p>}
+      <h2 className="mt-4 font-display text-[clamp(2.3rem,6vw,4.2rem)] text-balance">{title}</h2>
+      {intro && <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">{intro}</p>}
     </div>
   )
 }

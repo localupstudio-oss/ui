@@ -3,7 +3,8 @@ import { Footer } from "@/components/layout/footer"
 import { Hero } from "@/components/sections/hero"
 import { QuickAccess } from "@/components/sections/quick-access"
 import { Philosophy } from "@/components/sections/philosophy"
-import { MixologyLab } from "@/components/sections/mixology-lab"
+import { DrinkList } from "@/components/sections/drink-list"
+import { Marquee } from "@/components/marquee"
 import { Nights } from "@/components/sections/nights"
 import { Pairings } from "@/components/sections/pairings"
 import { Booking } from "@/components/sections/booking"
@@ -17,8 +18,9 @@ export default function HomePage() {
       <main id="contenuto">
         <Hero />
         <QuickAccess />
+        <Marquee items={["Cocktail", "Bar", "Cucina", "This is RYO Weekend", "Cava de' Tirreni"]} />
         <Philosophy />
-        <MixologyLab />
+        <DrinkList />
         <Nights />
         <Pairings />
         <Booking />

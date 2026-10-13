@@ -20,7 +20,7 @@ export function SocialProof() {
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[2rem] border border-border bg-border lg:grid-cols-4">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.08} className="bg-background p-8 text-center">
-              <p className="font-display text-5xl text-brass-gradient sm:text-6xl">
+              <p className="font-display text-5xl text-hot sm:text-6xl">
                 <Counter to={s.value} decimals={"decimals" in s ? s.decimals : 0} />
                 {s.suffix}
               </p>
@@ -36,7 +36,7 @@ export function SocialProof() {
             eyebrow="Dicono di noi"
             title={
               <>
-                Cinque stelle, <span className="text-brass-gradient italic">una notte dopo l&apos;altra.</span>
+                Cinque stelle, <span className="text-hot">una notte dopo l&apos;altra.</span>
               </>
             }
             intro={site.demo ? "Testi dimostrativi: in produzione verranno mostrate le recensioni verificate di Google e TripAdvisor." : undefined}
@@ -52,12 +52,12 @@ export function SocialProof() {
                     <CardContent className="flex h-full flex-col gap-5 p-7">
                       <div className="flex items-center justify-between">
                         <div className="flex gap-0.5" aria-label={`${r.rating} stelle su 5`}>
-                          {Array.from({ length: r.rating }, (_, k) => <Star key={k} className="size-4 fill-brass text-brass" />)}
+                          {Array.from({ length: r.rating }, (_, k) => <Star key={k} className="size-4 fill-amber text-amber" />)}
                         </div>
                         <Badge variant="outline" className="rounded-full border-border text-xs">{r.source}</Badge>
                       </div>
-                      <Quote className="size-7 text-brass/40" />
-                      <p className="flex-1 font-display text-xl leading-snug">“{r.text}”</p>
+                      <Quote className="size-7 text-amber/40" />
+                      <p className="flex-1 text-lg leading-relaxed text-[#e3dac6]">“{r.text}”</p>
                       <p className="text-sm text-muted-foreground">{r.author} · {r.date}</p>
                     </CardContent>
                   </Card>

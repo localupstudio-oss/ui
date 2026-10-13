@@ -23,7 +23,7 @@ export function Philosophy() {
 
   return (
     <section id="filosofia" ref={ref} className="relative overflow-hidden py-28 sm:py-40">
-      <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-12">
+      <div className="mx-auto grid grid-cols-1 max-w-7xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-12">
         {/* Colonna immagini: asimmetrica, parallax a velocità diverse */}
         <div className="relative lg:col-span-6">
           <motion.div style={reduce ? undefined : { y: yMain, clipPath: clip }} className="relative aspect-[4/5] w-[85%] overflow-hidden rounded-[2rem]">
@@ -35,8 +35,8 @@ export function Philosophy() {
               className="object-cover"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/90 to-transparent p-6 pt-20">
-              <p className="text-xs tracking-[0.3em] text-brass uppercase">Master bartender</p>
-              <p className="font-display text-2xl">Nome Cognome</p>
+              <p className="eyebrow">Master bartender</p>
+              <p className="font-display text-xl">Nome Cognome</p>
             </div>
           </motion.div>
           <motion.div
@@ -45,7 +45,7 @@ export function Philosophy() {
           >
             <Image src="/images/locale/sala-giungla.jpg" alt="La sala con felci sospese e lampade in rattan" fill sizes="(min-width: 1024px) 20vw, 42vw" className="object-cover" />
           </motion.div>
-          <div className="tessellated absolute -top-10 -left-10 -z-10 size-56 rounded-full opacity-60" />
+          <div className="jungle-glow absolute -top-10 -left-10 -z-10 size-56 rounded-full opacity-60" />
         </div>
 
         {/* Testo narrativo */}
@@ -55,7 +55,7 @@ export function Philosophy() {
               eyebrow="La nostra filosofia"
               title={
                 <>
-                  Un drink è un viaggio. <span className="text-brass-gradient italic">Noi tracciamo la rotta.</span>
+                  Un drink è un <span className="text-hot">viaggio.</span>
                 </>
               }
             />
@@ -69,9 +69,9 @@ export function Philosophy() {
           <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-border bg-border">
             {pillars.map((p, i) => (
               <Reveal key={p.n} delay={0.15 + i * 0.1} className="flex gap-6 bg-background p-6">
-                <span className="font-display text-3xl text-brass/70 tabular-nums">{p.n}</span>
+                <span className="font-display text-2xl text-orange tabular-nums">{p.n}</span>
                 <div>
-                  <h3 className="font-display text-2xl">{p.title}</h3>
+                  <h3 className="font-display text-lg">{p.title}</h3>
                   <p className="mt-1 text-muted-foreground">{p.text}</p>
                 </div>
               </Reveal>

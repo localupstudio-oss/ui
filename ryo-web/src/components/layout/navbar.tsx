@@ -49,7 +49,7 @@ export function Navbar() {
       >
         <Link href="/" className="flex items-center gap-3" aria-label={`${site.fullName} — home`}>
           <Image src="/images/brand/logo.png" alt="" width={44} height={44} priority className="size-10 sm:size-11" />
-          <span className="font-display text-2xl font-semibold tracking-[0.2em]">{site.name}</span>
+          <span className="font-display text-xl">{site.name}</span>
         </Link>
 
         <ul className="hidden items-center gap-1 lg:flex">
@@ -72,7 +72,7 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="lg" className="rounded-full px-5 font-semibold shadow-[0_0_30px_-8px_var(--brass)]">
+          <Button asChild size="lg" className="rounded-full px-5 font-semibold shadow-[0_0_30px_-8px_var(--amber)]">
             <a href="#prenota">
               <CalendarCheck className="size-4" />
               <span className="hidden sm:inline">Prenota un Tavolo</span>
@@ -97,7 +97,7 @@ export function Navbar() {
                     <a
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="block border-b border-border py-4 font-display text-2xl transition-colors hover:text-brass"
+                      className="block border-b border-border py-4 font-display text-xl transition-colors hover:text-orange"
                     >
                       {item.label}
                     </a>

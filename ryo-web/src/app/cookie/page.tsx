@@ -23,7 +23,7 @@ export default function CookiePage() {
       </ul>
       <h2>Gestione dei cookie</h2>
       <p>Puoi eliminare o bloccare i cookie dalle impostazioni del browser. Bloccare i cookie tecnici può compromettere alcune funzionalità.</p>
-      <p>Per domande scrivi a <a className="text-brass" href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <p>Per domande scrivi a <a className="text-amber" href={`mailto:${site.email}`}>{site.email}</a>.</p>
     </LegalPage>
   )
 }

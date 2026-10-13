@@ -18,7 +18,7 @@ export default function PrivacyPage() {
       <h2>Titolare del trattamento</h2>
       <p>
         {site.company.legalName}, P.IVA {site.company.vat}, con sede in {site.address.street}, {site.address.zip} {site.address.city} ({site.address.province}).
-        Contatto: <a className="text-brass" href={`mailto:${site.email}`}>{site.email}</a>.
+        Contatto: <a className="text-amber" href={`mailto:${site.email}`}>{site.email}</a>.
       </p>
       <h2>Dati trattati e finalità</h2>
       <ul>

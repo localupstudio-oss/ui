@@ -45,7 +45,6 @@ Tutti i contenuti stanno in `src/content/`:
 | `site.ts` | indirizzo, contatti, social, orari, dati societari, flag `demo` |
 | `menu.ts` | menu food, drink, drink special, allergeni (Reg. UE 1169/2011) |
 | `experience.ts` | serate, abbinamenti, recensioni, statistiche, parcheggi |
-| `mixology.ts` | ingredienti e profili aromatici del Mixology Lab 3D |
 
 Le voci marcate `✎` sono **segnaposto**. Finché `site.demo = true` le sezioni con
 contenuti dimostrativi mostrano un badge "Demo". Prima del go-live:

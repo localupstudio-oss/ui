@@ -3,40 +3,43 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── RYO · dark luxury: smeraldo profondo, ottone, legno scuro, luce calda ── */
+/* ── RYO · giungla urbana: verde profondo, arancio, ambra, crema ── */
 :root {
   --radius: 1rem;
 
-  --background: #070d0a;
-  --foreground: #f3ead7;
-  --card: #0e1914;
-  --card-foreground: #f3ead7;
-  --popover: #0c1611;
-  --popover-foreground: #f3ead7;
-  --primary: #c9a24b;            /* ottone */
-  --primary-foreground: #0b120e;
-  --secondary: #15271d;
-  --secondary-foreground: #f3ead7;
-  --muted: #13221a;
-  --muted-foreground: #a3b0a6;
-  --accent: #1d3a2a;
-  --accent-foreground: #f3ead7;
-  --destructive: #e5672a;
-  --border: rgb(201 162 75 / 0.16);
-  --input: rgb(243 234 215 / 0.14);
-  --ring: #c9a24b;
+  --background: #0a1410;
+  --foreground: #f4ead5;
+  --card: #10221a;
+  --card-foreground: #f4ead5;
+  --popover: #10221a;
+  --popover-foreground: #f4ead5;
+  --primary: #e5672a;           /* arancio */
+  --primary-foreground: #ffffff;
+  --secondary: #16301f;
+  --secondary-foreground: #f4ead5;
+  --muted: #16301f;
+  --muted-foreground: #a9b5a4;
+  --accent: #1b3826;
+  --accent-foreground: #f4ead5;
+  --destructive: #ff8a5c;
+  --border: #21392b;
+  --input: #2a4535;
+  --ring: #f0b340;
 
-  --brass: #c9a24b;
-  --brass-light: #e8cd8a;
-  --emerald: #237a2e;
+  --amber: #f0b340;
+  --amber-light: #f6cf7a;
+  --orange: #e5672a;
+  --green: #237a2e;
   --leaf: #3fae4f;
-  --ember: #e5672a;
-  --wood: #3a2414;
+  --pink: #f2a7b8;
+  --bg-2: #10221a;
+  --bg-3: #16301f;
 }
 
 @theme inline {
-  --font-sans: var(--font-manrope);
-  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-bowlby);
+  --font-mono: var(--font-space-mono);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -57,12 +60,14 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --color-brass: var(--brass);
-  --color-brass-light: var(--brass-light);
-  --color-emerald: var(--emerald);
+  --color-amber: var(--amber);
+  --color-amber-light: var(--amber-light);
+  --color-orange: var(--orange);
+  --color-green: var(--green);
   --color-leaf: var(--leaf);
-  --color-ember: var(--ember);
-  --color-wood: var(--wood);
+  --color-pink: var(--pink);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
 
   --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 4px);
@@ -75,43 +80,50 @@
   html { scroll-behavior: smooth; scroll-padding-top: 5rem; color-scheme: dark; }
   body {
     @apply bg-background text-foreground antialiased;
-    background-image:
-      radial-gradient(60rem 40rem at 85% -10%, rgb(35 122 46 / 0.14), transparent 70%),
-      radial-gradient(50rem 40rem at -10% 40%, rgb(201 162 75 / 0.06), transparent 70%);
+    font-weight: 300;
   }
-  ::selection { background: var(--brass); color: #0b120e; }
+  ::selection { background: var(--orange); color: #fff; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 }
 
-@utility font-display { font-family: var(--font-display); font-variant-numeric: lining-nums; }
-
-/* Testo con riflesso ottone */
-@utility text-brass-gradient {
-  background: linear-gradient(100deg, #b98b34 0%, #f1d796 45%, #c9a24b 70%, #8f6a26 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Titoli "poster": Bowlby One maiuscolo, come le locandine THIS IS RYO WEEKEND */
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1;
 }
 
-/* Pannelli in vetro */
+/* Etichette in stile anello del logo */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+/* Parola evidenziata in arancio */
+@utility text-hot { color: var(--orange); }
+
 @utility glass {
-  background: rgb(10 20 15 / 0.45);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid rgb(243 234 215 / 0.1);
+  background: rgb(10 20 16 / 0.82);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--border);
 }
 
-/* Trama a tessere (mosaico) usata come texture di sfondo */
-@utility tessellated {
+/* Bagliore verde + arancio, come lo sfondo dell'hero della prima versione */
+@utility jungle-glow {
   background-image:
-    linear-gradient(45deg, rgb(201 162 75 / 0.05) 25%, transparent 25%, transparent 75%, rgb(201 162 75 / 0.05) 75%),
-    linear-gradient(45deg, rgb(201 162 75 / 0.05) 25%, transparent 25%, transparent 75%, rgb(201 162 75 / 0.05) 75%);
-  background-size: 28px 28px;
-  background-position: 0 0, 14px 14px;
+    radial-gradient(70% 60% at 85% 20%, rgb(63 174 79 / 0.16), transparent 70%),
+    radial-gradient(50% 50% at 8% 90%, rgb(229 103 42 / 0.10), transparent 70%);
 }
 
-/* Filetto ottone */
-@utility brass-rule {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--brass), transparent);
-}
+@utility rule-line { height: 1px; background: var(--border); }
+
+/* Nastro arancio inclinato con testo che scorre */
+@keyframes marquee { to { transform: translateX(-50%); } }
+@utility animate-marquee { animation: marquee 28s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .animate-marquee { animation: none; } }

@@ -29,14 +29,14 @@ export function Location() {
             eyebrow="Location, mappe & parcheggi"
             title={
               <>
-                Nel cuore di <span className="text-brass-gradient italic">Cava de&apos; Tirreni.</span>
+                Nel cuore di <span className="text-hot">Cava de&apos; Tirreni.</span>
               </>
             }
             intro={`${fullAddress}. A due passi dai portici del Corso, facilmente raggiungibile in auto e in treno.`}
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-12">
+        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-12">
           <Reveal className="relative min-h-[420px] overflow-hidden rounded-[2rem] border border-border lg:col-span-7">
             {mapLoaded ? (
               <iframe
@@ -52,8 +52,8 @@ export function Location() {
                 <Image src="/images/locale/bancone.jpg" alt="" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover opacity-40 blur-[2px]" />
                 <div className="absolute inset-0 grid place-items-center bg-background/50 p-6 text-center">
                   <div className="max-w-sm">
-                    <MapPin className="mx-auto size-10 text-brass" />
-                    <p className="mt-4 font-display text-3xl">{site.address.street}</p>
+                    <MapPin className="mx-auto size-10 text-amber" />
+                    <p className="mt-4 font-display text-2xl">{site.address.street}</p>
                     <p className="text-muted-foreground">{site.address.zip} {site.address.city} ({site.address.province})</p>
                     <div className="mt-6 flex flex-wrap justify-center gap-3">
                       <Button onClick={() => setMapLoaded(true)} className="rounded-full">Mostra la mappa</Button>
@@ -68,12 +68,12 @@ export function Location() {
             )}
           </Reveal>
 
-          <div className="grid gap-6 lg:col-span-5">
+          <div className="grid grid-cols-1 gap-6 lg:col-span-5">
             <Reveal delay={0.1}>
               <Card className="rounded-[2rem] border-border bg-card/60">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 font-display text-2xl font-medium">
-                    <ParkingSquare className="size-5 text-brass" /> Parcheggi vicini <DemoBadge />
+                  <CardTitle className="flex items-center gap-2 font-display text-lg">
+                    <ParkingSquare className="size-5 text-amber" /> Parcheggi vicini <DemoBadge />
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -81,17 +81,17 @@ export function Location() {
                     {parkings.map((p) => (
                       <li key={p.name} className="flex items-start justify-between gap-4 py-3 first:pt-0">
                         <div className="flex gap-3">
-                          {p.type === "Treno" ? <TrainFront className="mt-0.5 size-4 text-brass" /> : <Car className="mt-0.5 size-4 text-brass" />}
+                          {p.type === "Treno" ? <TrainFront className="mt-0.5 size-4 text-amber" /> : <Car className="mt-0.5 size-4 text-amber" />}
                           <div>
                             <p className="font-medium">{p.name}</p>
                             <p className="text-sm text-muted-foreground">{p.type} · {p.note}</p>
                           </div>
                         </div>
-                        <span className="shrink-0 rounded-full bg-brass/10 px-3 py-1 text-xs text-brass-light">{p.walk}</span>
+                        <span className="shrink-0 rounded-full bg-amber/10 px-3 py-1 text-xs text-amber-light">{p.walk}</span>
                       </li>
                     ))}
                   </ul>
-                  <Button asChild variant="link" className="mt-2 h-auto px-0 text-brass">
+                  <Button asChild variant="link" className="mt-2 h-auto px-0 text-left whitespace-normal text-amber">
                     <a href={nearbyParking} target="_blank" rel="noopener noreferrer">Vedi tutti i parcheggi su Google Maps →</a>
                   </Button>
                 </CardContent>
@@ -101,19 +101,19 @@ export function Location() {
             <Reveal delay={0.2}>
               <Card className="rounded-[2rem] border-border bg-card/60">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 font-display text-2xl font-medium">
-                    <Route className="size-5 text-brass" /> Come arrivare
+                  <CardTitle className="flex items-center gap-2 font-display text-lg">
+                    <Route className="size-5 text-amber" /> Come arrivare
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="grid gap-4">
+                <CardContent className="grid grid-cols-1 gap-4">
                   {directions.map((d) => (
                     <div key={d.from}>
-                      <p className="text-xs font-semibold tracking-[0.2em] text-brass uppercase">{d.from}</p>
+                      <p className="eyebrow">{d.from}</p>
                       <p className="mt-1 text-sm text-foreground/80">{d.text}</p>
                     </div>
                   ))}
                   <p className="flex items-center gap-2 border-t border-border pt-4 text-sm text-muted-foreground">
-                    <Clock className="size-4 text-brass" /> Aperti dal mercoledì alla domenica
+                    <Clock className="size-4 text-amber" /> Aperti dal mercoledì alla domenica
                   </p>
                 </CardContent>
               </Card>

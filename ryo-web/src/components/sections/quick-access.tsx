@@ -56,16 +56,16 @@ export function QuickAccess() {
             whileHover={{ y: -6 }}
             whileTap={{ scale: 0.98 }}
             aria-haspopup="dialog"
-            className="group glass relative overflow-hidden rounded-3xl p-6 text-left shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9)] transition-colors hover:border-brass/50"
+            className="group glass relative overflow-hidden rounded-3xl p-6 text-left shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9)] transition-colors hover:border-amber/50"
           >
-            <span className="absolute inset-0 -z-10 bg-gradient-to-br from-brass/0 via-brass/0 to-brass/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <span className="absolute inset-0 -z-10 bg-gradient-to-br from-amber/0 via-amber/0 to-amber/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             <div className="flex items-start justify-between">
-              <span className="grid size-12 place-items-center rounded-2xl border border-brass/30 bg-brass/10 text-brass transition-colors group-hover:bg-brass group-hover:text-primary-foreground">
+              <span className="grid size-12 place-items-center rounded-2xl border border-amber/30 bg-amber/10 text-amber transition-colors group-hover:bg-amber group-hover:text-background">
                 <p.icon className="size-5" />
               </span>
-              <ArrowUpRight className="size-5 text-foreground/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brass" />
+              <ArrowUpRight className="size-5 text-foreground/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-amber" />
             </div>
-            <p className="mt-6 font-display text-3xl">{p.label}</p>
+            <p className="mt-6 font-display text-2xl">{p.label}</p>
             <p className="mt-1 text-sm text-muted-foreground">{p.hint}</p>
           </motion.button>
         ))}

@@ -1,22 +1,12 @@
 import type { Metadata, Viewport } from "next"
-import { Cormorant_Garamond, Manrope } from "next/font/google"
+import { Bowlby_One, Inter, Space_Mono } from "next/font/google"
 
 import { fullAddress, site } from "@/content/site"
 import "./globals.css"
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-})
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  display: "swap",
-})
+const bowlby = Bowlby_One({ variable: "--font-bowlby", subsets: ["latin"], weight: "400", display: "swap" })
+const spaceMono = Space_Mono({ variable: "--font-space-mono", subsets: ["latin"], weight: ["400", "700"], display: "swap" })
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" })
 
 const title = `${site.fullName} · Cava de' Tirreni`
 
@@ -54,7 +44,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#070d0a",
+  themeColor: "#0a1410",
   colorScheme: "dark",
 }
 
@@ -91,8 +81,8 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`dark ${cormorant.variable} ${manrope.variable}`}>
-      <body className="min-h-dvh font-sans">
+    <html lang="it" className={`dark ${bowlby.variable} ${spaceMono.variable} ${inter.variable}`}>
+      <body className="min-h-dvh overflow-x-clip font-sans">
         <a
           href="#contenuto"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"

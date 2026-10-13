@@ -25,6 +25,22 @@ export const ALLERGENS = {
 
 export type Allergen = keyof typeof ALLERGENS
 
+/** Profilo di gusto (0–10) mostrato nella Drink List 3D. */
+export const FLAVORS = ["Agrumato", "Dolce", "Amaro", "Erbaceo", "Affumicato", "Floreale"] as const
+export type Flavor = (typeof FLAVORS)[number]
+
+/** Come appare il drink nella scena 3D (ricavato dalle foto reali dei drink di RYO). */
+export type DrinkVisual = {
+  glass: "rocks" | "highball" | "coupe" | "goblet" | "stem"
+  liquid: string
+  ice: "none" | "cubes" | "block"
+  garnish: "none" | "orange" | "leaf" | "cherry" | "pepper" | "twist"
+  foam?: boolean
+  smoke?: boolean
+  /** Colore dello stelo (es. il calice dallo stelo verde). */
+  stemColor?: string
+}
+
 export type MenuItem = {
   id: string
   name: string
@@ -34,6 +50,8 @@ export type MenuItem = {
   allergens: Allergen[]
   image?: string
   tags?: ("signature" | "veg" | "da condividere" | "novità" | "analcolico")[]
+  visual?: DrinkVisual
+  profile?: Partial<Record<Flavor, number>>
 }
 
 export type MenuCategory = { id: string; label: string; items: MenuItem[] }
@@ -163,6 +181,8 @@ export const drinkMenu: MenuCategory[] = [
         description: "Highball floreale e frizzante, profumo d'arancia.",
         ingredients: ["Gin", "Ibisco", "Pompelmo rosa", "Tonica", "Scorza d'arancia"],
         price: 12,
+        visual: { glass: "highball", liquid: "#f08fae", ice: "cubes", garnish: "orange" },
+        profile: { Floreale: 8, Agrumato: 6, Dolce: 3, Amaro: 2 },
         allergens: [],
         image: "/images/drink/highball-rosa.jpg",
         tags: ["signature"],
@@ -173,6 +193,8 @@ export const drinkMenu: MenuCategory[] = [
         description: "Sour vellutato con schiuma setosa e foglia essiccata.",
         ingredients: ["Bourbon", "Limone", "Miele speziato", "Aquafaba"],
         price: 13,
+        visual: { glass: "goblet", liquid: "#d9822b", ice: "none", garnish: "leaf", foam: true },
+        profile: { Dolce: 6, Agrumato: 5, Affumicato: 3, Erbaceo: 2 },
         allergens: [],
         image: "/images/drink/cocktail-foglia.jpg",
         tags: ["signature"],
@@ -183,6 +205,8 @@ export const drinkMenu: MenuCategory[] = [
         description: "Delicato e agrumato, servito nel calice dallo stelo verde.",
         ingredients: ["Vodka", "Sambuco", "Lime", "Pepe rosa"],
         price: 12,
+        visual: { glass: "stem", liquid: "#ece6a2", ice: "none", garnish: "pepper", stemColor: "#1f8a3a" },
+        profile: { Agrumato: 7, Floreale: 6, Erbaceo: 3, Dolce: 2 },
         allergens: [],
         image: "/images/drink/calice-stelo-verde.jpg",
       },
@@ -198,6 +222,8 @@ export const drinkMenu: MenuCategory[] = [
         description: "Il grande classico, nel bicchiere firmato RYO.",
         ingredients: ["Gin", "Bitter", "Vermouth rosso", "Arancia"],
         price: 11,
+        visual: { glass: "rocks", liquid: "#b5121f", ice: "block", garnish: "orange" },
+        profile: { Amaro: 8, Agrumato: 5, Dolce: 4, Erbaceo: 4 },
         allergens: ["solfiti"],
         image: "/images/drink/bicchiere-ryo.jpg",
       },
@@ -207,6 +233,8 @@ export const drinkMenu: MenuCategory[] = [
         description: "Whisky, zucchero, angostura e scorza d'arancia.",
         ingredients: ["Bourbon", "Zucchero", "Angostura", "Arancia"],
         price: 11,
+        visual: { glass: "rocks", liquid: "#c06a1c", ice: "block", garnish: "twist" },
+        profile: { Dolce: 6, Affumicato: 4, Amaro: 3, Agrumato: 3 },
         allergens: [],
         image: "/images/drink/ambrato-on-the-rocks.jpg",
       },
@@ -222,6 +250,8 @@ export const drinkMenu: MenuCategory[] = [
         description: "Analcolico agrumato e aromatico.",
         ingredients: ["Distillato analcolico", "Yuzu", "Basilico", "Soda"],
         price: 9,
+        visual: { glass: "coupe", liquid: "#e9e6b4", ice: "none", garnish: "twist" },
+        profile: { Agrumato: 7, Erbaceo: 6, Floreale: 2 },
         allergens: [],
         image: "/images/drink/cocktail-sipario.jpg",
         tags: ["analcolico"],
@@ -238,6 +268,8 @@ export const drinkSpecials: MenuItem[] = [
       "Il drink del weekend creato dal master bartender: cambia ogni settimana, in edizione limitata.",
     ingredients: ["Rum invecchiato", "Ananas arrosto", "Falernum", "Lime", "Bitter al cacao"],
     price: 14,
+    visual: { glass: "highball", liquid: "#e2893f", ice: "cubes", garnish: "leaf" },
+    profile: { Dolce: 6, Agrumato: 5, Affumicato: 2, Floreale: 3 },
     allergens: [],
     image: "/images/drink/highball-rosa.jpg",
     tags: ["signature", "novità"],
@@ -248,6 +280,8 @@ export const drinkSpecials: MenuItem[] = [
     description: "Affumicato al tavolo con legno di ciliegio, servito sotto campana.",
     ingredients: ["Mezcal", "Vermouth", "Amaro", "Fumo di ciliegio"],
     price: 16,
+    visual: { glass: "rocks", liquid: "#7a2a1c", ice: "block", garnish: "cherry", smoke: true },
+    profile: { Affumicato: 9, Amaro: 6, Dolce: 3 },
     allergens: ["solfiti"],
     image: "/images/drink/bicchiere-ryo.jpg",
     tags: ["signature"],
@@ -256,3 +290,9 @@ export const drinkSpecials: MenuItem[] = [
 
 export const formatPrice = (value: number) =>
   new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR" }).format(value)
+
+/** Tutti i drink con una rappresentazione 3D, nell'ordine della Drink List. */
+export const drinkShowcase: (MenuItem & { visual: DrinkVisual; category: string })[] = [
+  ...drinkSpecials.map((d) => ({ ...d, category: "Drink Special" })),
+  ...drinkMenu.flatMap((c) => c.items.map((d) => ({ ...d, category: c.label }))),
+].filter((d): d is MenuItem & { visual: DrinkVisual; category: string } => Boolean(d.visual))
