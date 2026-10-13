@@ -26,9 +26,9 @@ src/
     sitemap.ts robots.ts manifest.ts icon.png apple-icon.png
   components/
     layout/               # Navbar glass, Footer, layout pagine legali
-    sections/             # Hero, QuickAccess, Philosophy, MixologyLab, Nights,
+    sections/             # Hero, QuickAccess, Philosophy, DrinkList, Nights,
                           # Pairings, Booking, Location, SocialProof
-    mixology/             # scena 3D (caricata solo client, solo quando visibile)
+    drinks/               # scena 3D della drink list (solo client, solo quando visibile)
     menu/                 # drawer menu con tab, allergeni e ingredienti
     ui/                   # componenti shadcn/ui
   content/                # ⬅ TUTTI i testi e dati del sito
