@@ -1,0 +1,67 @@
+/**
+ * Dati anagrafici del locale.
+ *
+ * ✔ = verificato (post/locandine Instagram @ryococktailbar)
+ * ✎ = segnaposto da sostituire prima della messa in produzione
+ */
+export const site = {
+  /** Quando `true` le sezioni con contenuti dimostrativi mostrano un badge "Demo". */
+  demo: true,
+
+  name: "RYO",
+  fullName: "RYO Cocktail Bar & Bistro",
+  claim: "Cocktail · Bar · Cucina", // ✔ dal logo
+  description:
+    "Luxury cocktail bar & bistro nel cuore di Cava de' Tirreni: mixology d'autore, cucina da condividere e serate esclusive in un'atmosfera tropicale.",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ryococktailbar.it", // ✎ dominio definitivo
+  locale: "it_IT",
+
+  address: {
+    street: "Corso Umberto I, 1", // ✔ locandine
+    zip: "84013",
+    city: "Cava de' Tirreni",
+    province: "SA",
+    country: "IT",
+  },
+  phone: "+39 329 697 4492", // ✔ schede pubbliche (da riconfermare)
+  whatsapp: "393296974492",
+  email: "info@ryococktailbar.it", // ✎
+
+  social: {
+    instagram: "https://www.instagram.com/ryococktailbar/", // ✔
+    tiktok: "", // ✎ inserire URL
+    facebook: "", // ✎ inserire URL
+  },
+
+  /** ✔ "Aperti dal mercoledì alla domenica" — orari esatti ✎ */
+  hours: [
+    { days: "Lunedì", value: "Chiuso" },
+    { days: "Martedì", value: "Chiuso" },
+    { days: "Mercoledì", value: "19:00 – 01:00" },
+    { days: "Giovedì", value: "19:00 – 01:00" },
+    { days: "Venerdì", value: "19:00 – 02:00" },
+    { days: "Sabato", value: "19:00 – 02:00" },
+    { days: "Domenica", value: "19:00 – 01:00" },
+  ],
+  /** Giorni di chiusura (0 = domenica … 6 = sabato) usati anche dalla validazione prenotazioni. */
+  closedWeekdays: [1, 2],
+
+  company: {
+    legalName: "Ragione sociale S.r.l.", // ✎
+    vat: "IT00000000000", // ✎
+    rea: "SA-000000", // ✎
+  },
+} as const
+
+export const nav = [
+  { href: "#filosofia", label: "Filosofia" },
+  { href: "#mixology-lab", label: "Mixology Lab" },
+  { href: "#serate", label: "Serate" },
+  { href: "#abbinamenti", label: "Abbinamenti" },
+  { href: "#location", label: "Location" },
+] as const
+
+export const whatsappUrl = (text = "Ciao RYO! Vorrei prenotare un tavolo") =>
+  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`
+
+export const fullAddress = `${site.address.street}, ${site.address.zip} ${site.address.city} (${site.address.province})`
