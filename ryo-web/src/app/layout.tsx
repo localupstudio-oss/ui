@@ -39,7 +39,8 @@ export const metadata: Metadata = {
     description: site.description,
     images: ["/images/og/og-default.jpg"],
   },
-  robots: { index: true, follow: true },
+  // La bozza per il cliente non deve finire su Google.
+  robots: process.env.STATIC_PREVIEW === "1" ? { index: false, follow: false } : { index: true, follow: true },
   formatDetection: { telephone: true, address: true },
 }
 

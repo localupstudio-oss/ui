@@ -2,9 +2,10 @@
 
 import { headers } from "next/headers"
 
-import { site, whatsappUrl } from "@/content/site"
+import { whatsappUrl } from "@/content/site"
 import { rateLimit } from "@/lib/rate-limit"
-import { EVENT_TYPES, ZONES, validateBooking, type BookingInput, type BookingState } from "@/lib/validation/booking"
+import { summarizeBooking as summarize } from "@/lib/booking-summary"
+import { validateBooking, type BookingInput, type BookingState } from "@/lib/validation/booking"
 
 const ALLOWED_FIELDS = [
   "kind", "name", "email", "phone", "notes", "privacy", "website",
@@ -54,13 +55,6 @@ export async function submitBooking(_prev: BookingState, formData: FormData): Pr
   }
 }
 
-function summarize(b: BookingInput) {
-  const lines =
-    b.kind === "tavolo"
-      ? [`Prenotazione tavolo — ${site.name}`, `Data: ${b.date} ore ${b.time}`, `Ospiti: ${b.guests}`, `Zona: ${ZONES[b.zone]}`]
-      : [`Richiesta evento privato — ${site.name}`, `Tipo: ${EVENT_TYPES[b.eventType]}`, `Data: ${b.date}`, `Ospiti: ${b.guests}`, b.company && `Azienda: ${b.company}`]
-  return [...lines, `Nome: ${b.name}`, `Tel: ${b.phone}`, `Email: ${b.email}`, b.notes && `Note: ${b.notes}`].filter(Boolean).join("\n")
-}
 
 /**
  * Invia la richiesta al gestionale/CRM/email tramite webhook (es. Make, Zapier, n8n, endpoint interno).

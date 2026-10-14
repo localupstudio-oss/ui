@@ -1,6 +1,8 @@
 import type { NextConfig } from "next"
 
 const isDev = process.env.NODE_ENV === "development"
+/** `npm run build:preview` → bozza statica in `out/` (nessun server: niente Server Actions, header e ottimizzazione immagini). */
+const isPreview = process.env.STATIC_PREVIEW === "1"
 
 /**
  * Content Security Policy statica (compatibile con il prerender statico/CDN).
@@ -36,11 +38,15 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
+  // PPR/Cache Components non sono compatibili con l'export statico della bozza.
+  cacheComponents: !isPreview,
+  partialPrefetching: !isPreview,
   poweredByHeader: false,
   reactStrictMode: true,
+  // Bozza statica: solo pagine .tsx (esclude sitemap/robots/manifest .ts, inutili e non esportabili con Cache Components).
+  ...(isPreview && { output: "export" as const, trailingSlash: true, pageExtensions: ["tsx"] }),
   turbopack: {
+    ...(isPreview && { resolveAlias: { "@/app/actions/booking": "./src/app/actions/booking.preview.ts" } }),
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],
@@ -49,6 +55,7 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
+    unoptimized: isPreview,
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],
     deviceSizes: [640, 828, 1080, 1280, 1600, 1920, 2560],
@@ -68,5 +75,7 @@ const nextConfig: NextConfig = {
     ]
   },
 }
+
+if (isPreview) delete nextConfig.headers // nessun server nella bozza: gli header si configurano sull'hosting
 
 export default nextConfig

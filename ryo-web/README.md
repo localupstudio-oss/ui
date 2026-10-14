@@ -12,7 +12,18 @@ cp .env.example .env.local   # configura URL e webhook prenotazioni
 npm run dev                  # http://localhost:3000
 npm run build && npm start   # produzione
 npm run lint
+npm run build:preview        # bozza statica per il cliente in out/ (vedi sotto)
 ```
+
+### Bozza statica per il cliente
+
+`npm run build:preview` genera in `out/` un sito 100% statico da caricare su qualsiasi
+hosting (Netlify Drop, GitHub Pages, ecc.). In questa modalità:
+
+- niente server: il modulo prenotazioni valida i dati nel browser e invia il riepilogo
+  su WhatsApp (`src/app/actions/booking.preview.ts`, sostituito via alias);
+- immagini non ottimizzate, niente header HTTP, sitemap/robots/manifest esclusi;
+- `noindex` attivo: la bozza non finisce su Google.
 
 ## Struttura
 
