@@ -94,7 +94,8 @@ export default function DrinkScene({ drinkId, visual, active, reduceMotion, labe
       <DrinkModel key={drinkId} visual={visual} reduceMotion={reduceMotion} />
       {labels && labelCount > 0 && <LabelProjector def={GLASSES[visual.glass]} count={labelCount} labels={labels} />}
 
-      <ContactShadows position={[0, -1.35, 0]} opacity={0.6} scale={7} blur={2.6} far={3} color="#000" />
+      {/* Bicchieri rotondi: l'ombra non cambia ruotando, la calcoliamo una volta per drink */}
+      <ContactShadows key={`shadow-${drinkId}`} frames={40} position={[0, -1.35, 0]} opacity={0.6} scale={7} blur={2.6} far={3} color="#000" />
 
       {/* Riflessi verde/arancio della giungla, senza file HDR esterni */}
       <Environment resolution={256}>
