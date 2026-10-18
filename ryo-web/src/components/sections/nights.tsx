@@ -20,10 +20,10 @@ export function Nights() {
             eyebrow="Le nostre serate"
             title={
               <>
-                Tre notti, <span className="text-hot">tre anime.</span>
+                Le notti <span className="text-hot">di RYO</span>
               </>
             }
-            intro="Dal jazz dal vivo al DJ set, fino alla notte più esclusiva della settimana. Line-up aggiornate ogni settimana su Instagram."
+            intro="Il giovedì si canta a tavola, il weekend si balla. Programma e ospiti aggiornati ogni settimana su Instagram."
           />
         </Reveal>
 
@@ -57,7 +57,7 @@ export function Nights() {
                   </dl>
 
                   <Button asChild variant="outline" className="mt-6 w-full rounded-full border-amber/40 bg-transparent hover:bg-amber hover:text-background">
-                    <a href="#prenota">Riserva per {n.day.toLowerCase()}</a>
+                    <a href={n.href ?? "#prenota"}>{n.href ? "Scopri la serata" : `Riserva per ${n.day.toLowerCase()}`}</a>
                   </Button>
                 </div>
               </motion.article>

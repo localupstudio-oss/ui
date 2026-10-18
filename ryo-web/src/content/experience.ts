@@ -14,18 +14,21 @@ export type Night = {
   dressCode: string
   highlight: string
   image: string
+  /** Sezione di approfondimento, se esiste. */
+  href?: string
 }
 
 export const nights: Night[] = [
   {
     day: "Giovedì",
-    title: "Live Jazz & Chill",
-    mood: "Luci basse, contrabbasso e cocktail lenti da sorseggiare.",
-    time: "21:30 – 00:30",
-    lineup: ["Trio jazz residente", "Ospite del mese da annunciare"],
-    dressCode: "Smart casual",
-    highlight: "Degustazione di 3 mini signature",
-    image: "/images/drink/cocktail-sipario.jpg",
+    title: "Quelli che il Giovedì",
+    mood: "Si cena, si canta al microfono che gira tra i tavoli e si balla tutti insieme.", // ✔ concept reale
+    time: "Dalle 20:30", // ✎ da confermare
+    lineup: ["Karaoke tra i tavoli", "Cena e musica live"], // ✎ presentatore/cantante da confermare
+    dressCode: "Libero",
+    highlight: "Cena + karaoke + festa",
+    image: "/images/giovedi/cantano-al-tavolo.jpg",
+    href: "#giovedi",
   },
   {
     day: "Venerdì",
@@ -119,3 +122,33 @@ export const directions = [
   { from: "In treno", text: "Dalla stazione di Cava de' Tirreni, pochi minuti a piedi verso il centro e i portici del Corso." },
   { from: "A piedi", text: "RYO è nel centro storico, lungo i caratteristici portici di Corso Umberto I." },
 ]
+
+/** "Quelli che il Giovedì" — serata reale del giovedì (prima edizione: ottobre 2026). */
+export const thursday = {
+  name: "Quelli che il Giovedì",
+  logo: "/images/giovedi/logo-quelli-che-il-giovedi.png",
+  claim: "Cena, canta, balla. Tutti insieme.",
+  intro:
+    "Il giovedì da RYO è una festa a tavola: si cena tra felci e lampade in rattan, il microfono passa di mano in mano tra i tavoli e la serata finisce a ballare tutti insieme.",
+  moments: [
+    { title: "Cena", text: "Piatti da condividere e calici di vino al tavolo, sotto le luci calde della sala." },
+    { title: "Canta", text: "Il microfono gira tra i tavoli: chi vuole canta, tutti gli altri fanno il coro." },
+    { title: "Balla", text: "Quando si alza la musica, la sala diventa una pista." },
+  ],
+  /** ✎ da confermare con il locale */
+  details: [
+    { label: "Quando", value: "Ogni giovedì" },
+    { label: "Inizio", value: "Dalle 20:30" },
+    { label: "Prenotazione", value: "Consigliata" },
+  ],
+  gallery: [
+    { src: "/images/giovedi/microfono-tavola.jpg", alt: "Il microfono della serata appoggiato sul menu tropicale di RYO", tall: true },
+    { src: "/images/giovedi/microfoni-menu.jpg", alt: "I microfoni della serata accanto al menu cucina di RYO", tall: true },
+    { src: "/images/giovedi/tavolata.jpg", alt: "Una tavolata di amici sotto le lampade in rattan", wide: true },
+    { src: "/images/giovedi/festa-al-tavolo.jpg", alt: "Un'ospite festeggia a braccia alzate durante la cena", tall: true },
+    { src: "/images/giovedi/calici-microfono.jpg", alt: "Calici e microfono della serata sul tavolo", tall: true },
+    { src: "/images/giovedi/brindisi.jpg", alt: "Brindisi a tavola con i calici di vino", tall: true },
+    { src: "/images/giovedi/cantano-al-tavolo.jpg", alt: "Ospiti che cantano al microfono a tavola tra le canne di bambù", tall: true },
+    { src: "/images/giovedi/karaoke.jpg", alt: "Un'ospite canta al microfono in mezzo alla sala", wide: true },
+  ],
+} as const

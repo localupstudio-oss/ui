@@ -6,6 +6,7 @@ import { Philosophy } from "@/components/sections/philosophy"
 import { DrinkList } from "@/components/sections/drink-list"
 import { Marquee } from "@/components/marquee"
 import { Nights } from "@/components/sections/nights"
+import { Thursday } from "@/components/sections/thursday"
 import { Pairings } from "@/components/sections/pairings"
 import { Booking } from "@/components/sections/booking"
 import { Location } from "@/components/sections/location"
@@ -22,6 +23,7 @@ export default function HomePage() {
         <Philosophy />
         <DrinkList />
         <Nights />
+        <Thursday />
         <Pairings />
         <Booking />
         <Location />
