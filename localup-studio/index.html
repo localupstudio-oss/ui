@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Local Up Studio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Local Up Studio progetta e sviluppa siti web su misura per ristoranti, bar, pizzerie e locali. Un solo sviluppatore, dal design al lancio.">
+<meta name="description" content="Local Up Studio progetta e sviluppa siti web su misura per ristoranti, pub, pizzerie, bar, studi dentistici, studi professionali e attività locali. Un solo sviluppatore, dal design al lancio.">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,16 +201,41 @@ p { margin: 0; }
 .demo .d-small b { font-weight: 700; }
 .demo svg { position: absolute; z-index: 3; }
 
-/* Osteria Nero — light, giant type, plate from above */
-.d-nero { background: #dcdce0; color: #111; }
-.d-nero .d-giant { color: #fff; font-size: 34cqw; }
-.d-nero .g1 { left: -1cqw; top: 6cqw; }
-.d-nero .g2 { right: -2cqw; bottom: -4cqw; }
-.d-nero .d-h { left: 4cqw; bottom: 9cqw; font-size: 5.2cqw; }
-.d-nero .s1 { left: 34cqw; bottom: 10.2cqw; }
-.d-nero .s2 { right: 4cqw; top: 13cqw; text-align: right; color: #fff; font-size: 1.5cqw; max-width: 20cqw; }
-.d-nero .cta { position: absolute; z-index: 4; left: 34cqw; bottom: 7cqw; font-size: .95cqw; font-weight: 700; letter-spacing: .06em; }
-.d-nero svg { width: 46cqw; left: 31cqw; top: 4cqw; filter: drop-shadow(0 3cqw 3cqw rgba(0,0,0,.35)); }
+/* Shared bits for monitor demos */
+.d-btns { position: absolute; z-index: 4; display: flex; gap: 1cqw; font-size: 1cqw; font-weight: 600; letter-spacing: 0; }
+.d-btns span { border-radius: 99px; padding: .9cqw 1.8cqw; border: .1cqw solid currentColor; }
+.d-btns span:first-child { background: #111; color: #fff; border-color: #111; }
+.d-list { position: absolute; z-index: 4; display: grid; grid-template-columns: repeat(3, 13cqw); gap: 1.2cqw; }
+.d-list div { border-top: .1cqw solid currentColor; padding-top: .8cqw; font-size: 1cqw; letter-spacing: 0; color: #555; }
+.d-list b { display: block; font-size: 1.25cqw; color: #111; }
+.d-card { position: absolute; z-index: 4; background: #fff; border-radius: 1.2cqw; padding: 1.2cqw 1.6cqw; font-size: .95cqw; letter-spacing: 0; box-shadow: 0 1.5cqw 3cqw rgba(0,0,0,.12); color: #555; }
+.d-card b { display: block; color: #111; font-size: 1.7cqw; font-weight: 600; letter-spacing: -.02em; }
+
+/* Studio Dentistico Moretti — clinical white */
+.d-dent { background: #fbfbfd; color: #111; }
+.d-dent .d-logo small { display: block; font-size: .75cqw; font-weight: 600; letter-spacing: .25em; opacity: .55; text-transform: uppercase; margin-top: .35cqw; }
+.d-dent .d-pill { background: #111; color: #fff; border-color: #111; }
+.d-dent .d-giant { color: #f0f0f3; font-size: 19cqw; right: -1cqw; bottom: -3cqw; }
+.d-dent .d-h { left: 4cqw; top: 14cqw; font-size: 5cqw; }
+.d-dent .s1 { left: 4cqw; top: 26.5cqw; max-width: 27cqw; color: #555; font-size: 1.25cqw; }
+.d-dent .d-btns { left: 4cqw; top: 34cqw; }
+.d-dent .photo { position: absolute; z-index: 2; right: 4cqw; top: 9.5cqw; width: 42cqw; height: 40cqw; border-radius: 2cqw; background: radial-gradient(circle at 60% 40%, #ffffff 0, #ececf0 45%, #d6d6dc 100%); }
+.d-dent svg { width: 20cqw; right: 15cqw; top: 15cqw; filter: drop-shadow(0 2cqw 2.5cqw rgba(0,0,0,.18)); }
+.d-dent .c1 { right: 39cqw; top: 31cqw; }
+.d-dent .c2 { right: 6cqw; top: 41cqw; }
+.d-dent .d-list { left: 4cqw; bottom: 4.5cqw; }
+
+/* Ferri & Associati — commercialisti */
+.d-ferri { background: #fff; color: #111; }
+.d-ferri .d-giant { color: #f2f2f4; font-size: 26cqw; right: -1cqw; bottom: -4cqw; }
+.d-ferri .d-h { left: 4cqw; top: 15cqw; font-size: 5.2cqw; }
+.d-ferri .s1 { left: 4cqw; top: 28cqw; max-width: 27cqw; color: #555; font-size: 1.2cqw; }
+.d-ferri .d-btns { left: 4cqw; top: 36cqw; }
+.d-ferri .chart { position: absolute; z-index: 3; right: 4cqw; top: 10cqw; width: 46cqw; height: 34cqw; background: #0b0b0c; border-radius: 1.6cqw; color: #f5f5f7; padding: 2.2cqw; letter-spacing: 0; }
+.d-ferri .chart small { font-size: .9cqw; letter-spacing: .1em; color: #8e8e93; font-weight: 600; }
+.d-ferri .chart b { display: block; font-size: 3.2cqw; font-weight: 500; letter-spacing: -.03em; margin-top: .4cqw; }
+.d-ferri .chart svg { left: 2.2cqw; bottom: 2.2cqw; width: 41.6cqw; }
+.d-ferri .d-list { left: 4cqw; bottom: 4.5cqw; }
 
 /* Ottanta — black cocktail bar */
 .d-otto { background: #050505; color: #f5f5f7; }
@@ -303,21 +328,79 @@ section { scroll-margin-top: 60px; }
 .tile .acts .btn { min-height: 40px; font-size: 15px; padding: 0 18px; }
 .tile .acts .btn-blue { background: var(--ink); color: #fff; }
 .t-black .acts .btn-blue { background: var(--white); color: var(--black); }
-.tile .device { margin-top: auto; width: 92%; transform: translateY(14%); transition: transform .8s var(--ease); }
-.tile:hover .device { transform: translateY(8%); }
-.laptop .lid { border-radius: 14px 14px 0 0; background: #111; padding: 10px 10px 0; box-shadow: 0 0 0 1px #3a3a3c inset; }
-.t-black .laptop .lid { background: #1c1c1e; box-shadow: 0 0 0 1px #48484a inset; }
-.laptop .screen { border-radius: 6px 6px 0 0; }
-.tile .phone {
-  position: absolute; right: 7%; bottom: 7%; width: 20%; aspect-ratio: 9 / 19.5; border-radius: 18% / 8.5%;
-  background: #111; padding: 3.2%; box-shadow: 0 0 0 1px #48484a inset, 0 30px 40px -18px rgba(0,0,0,.6); z-index: 5;
+.tile .feat { list-style: none; padding: 0; margin: 18px 0 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.tile .feat li { font-size: 12.5px; font-weight: 500; padding: 5px 11px; border-radius: 99px; border: 1px solid currentColor; opacity: .7; letter-spacing: 0; }
+.tile .device { margin-top: auto; transform: translateY(10%); transition: transform .8s var(--ease); }
+.tile:hover .device { transform: translateY(5%); }
+.show { display: grid; gap: 14px; }
+.show-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tile.st-monitor { min-height: 0; padding-bottom: 60px; }
+.monitor.mon-show { width: min(78%, 880px); margin: 46px auto 0; }
+
+/* Tablet (portrait) */
+.tablet { width: min(80%, 440px); aspect-ratio: 3 / 4; max-width: 100%; margin-top: 40px; background: #111; border-radius: 6% / 4.5%; padding: 3.4%; box-shadow: 0 0 0 1px #48484a inset, 0 0 0 1px #d2d2d7, 0 40px 60px -30px rgba(0,0,0,.45); }
+.tscreen { width: 100%; height: 100%; border-radius: 3% / 2.2%; overflow: hidden; position: relative; container-type: inline-size; }
+.tdemo { position: absolute; inset: 0; padding: 7cqw 6cqw; display: flex; flex-direction: column; gap: 4cqw; background: #f5f5f7; color: #111; font-family: var(--font); letter-spacing: 0; }
+.tdemo .tn { display: flex; justify-content: space-between; align-items: center; font-size: 2.6cqw; }
+.tdemo .tn b { font-size: 5cqw; letter-spacing: -.05em; }
+.tdemo .tn span { border: .25cqw solid #111; border-radius: 99px; padding: 1cqw 2.6cqw; font-weight: 600; }
+.tdemo .tk { font-size: 2.2cqw; letter-spacing: .14em; font-weight: 600; color: #86868b; margin-top: 3cqw; }
+.tdemo h4 { margin: -2cqw 0 0; font-size: 9.5cqw; line-height: .96; font-weight: 500; letter-spacing: -.045em; text-transform: uppercase; }
+.tile .tdemo p { margin: 0; opacity: 1; font-size: 2.7cqw; line-height: 1.45; color: #555; max-width: 70cqw; }
+.tdemo .tb { display: flex; gap: 2cqw; font-size: 2.5cqw; font-weight: 600; }
+.tdemo .tb span { border-radius: 99px; padding: 2cqw 4cqw; border: .25cqw solid #111; }
+.tdemo .tb span:first-child { background: #111; color: #fff; }
+.tdemo .timg { position: relative; border-radius: 3cqw; background: radial-gradient(circle at 50% 45%, #3a3a3c, #121212 70%); height: 42cqw; flex: none; overflow: hidden; }
+.tdemo .timg svg { position: absolute; width: 50cqw; left: 50%; top: 50%; transform: translate(-50%, -50%); filter: drop-shadow(0 3cqw 3cqw rgba(0,0,0,.5)); }
+.tdemo .timg em { position: absolute; left: 3cqw; bottom: 2.6cqw; color: #fff; font-style: normal; font-size: 2.2cqw; letter-spacing: .1em; text-transform: uppercase; opacity: .8; font-weight: 600; }
+.tdemo .tm { display: grid; }
+.tdemo .tm small { font-size: 2.1cqw; letter-spacing: .12em; text-transform: uppercase; color: #86868b; font-weight: 600; margin-bottom: 1.5cqw; }
+.tdemo .tm div { display: flex; justify-content: space-between; font-size: 2.8cqw; padding: 2cqw 0; border-top: .2cqw solid #d2d2d7; }
+
+/* Phone with auto-scrolling homepage */
+.phone-lg { width: min(54%, 290px); aspect-ratio: 9 / 19.5; max-width: 100%; margin-top: 40px; background: #111; border-radius: 16% / 7.4%; padding: 3.4%; box-shadow: 0 0 0 1px #48484a inset, 0 0 0 1px #c7c7cc, 0 40px 60px -30px rgba(0,0,0,.5); }
+.phone-lg .pscreen { width: 100%; height: 100%; border-radius: 13% / 6%; overflow: hidden; position: relative; container-type: inline-size; background: #0a0a0a; }
+.island { position: absolute; z-index: 3; top: 3.5cqw; left: 50%; transform: translateX(-50%); width: 30cqw; height: 8.5cqw; border-radius: 99px; background: #000; }
+.pfeed { position: absolute; inset: 0 0 auto; padding: 18cqw 7cqw 12cqw; display: flex; flex-direction: column; gap: 6cqw; color: #f5f5f7; font-family: var(--font); letter-spacing: 0; animation: feed 18s cubic-bezier(.65,0,.35,1) infinite; }
+@keyframes feed {
+  0%, 12% { transform: translateY(0); }
+  40%, 52% { transform: translateY(calc(-50% + 100cqw)); }
+  78%, 90% { transform: translateY(calc(-100% + 205cqw)); }
+  100% { transform: translateY(0); }
 }
-.phone .pscreen { width: 100%; height: 100%; border-radius: 15% / 7%; overflow: hidden; container-type: inline-size; position: relative; }
-.pdemo { position: absolute; inset: 0; padding: 18cqw 9cqw 0; font-family: var(--font); display: flex; flex-direction: column; gap: 5cqw; }
-.pdemo .pl { font-weight: 700; font-size: 9cqw; letter-spacing: -.04em; }
-.pdemo .ph { font-weight: 500; font-size: 13cqw; line-height: .98; text-transform: uppercase; letter-spacing: -.04em; }
-.pdemo .pb { margin-top: auto; margin-bottom: 12cqw; border-radius: 99px; text-align: center; font-size: 6cqw; font-weight: 600; padding: 5cqw 0; letter-spacing: .02em; }
-.pdemo .pimg { flex: 1; border-radius: 6cqw; max-height: 70cqw; }
+.pfeed .pn { display: flex; justify-content: space-between; align-items: center; }
+.pfeed .pn b { font-size: 8cqw; letter-spacing: -.05em; }
+.pfeed .pn i { width: 7cqw; height: 3cqw; border-top: .6cqw solid #f5f5f7; border-bottom: .6cqw solid #f5f5f7; }
+.pfeed .pk { font-size: 3.2cqw; letter-spacing: .14em; color: #8e8e93; font-weight: 600; margin-top: 4cqw; }
+.pfeed h4 { margin: -3cqw 0 0; font-size: 12.5cqw; line-height: .96; font-weight: 500; letter-spacing: -.045em; text-transform: uppercase; }
+.pfeed .pglass { position: relative; height: 78cqw; border-radius: 6cqw; background: radial-gradient(circle at 50% 35%, #2c2c2e, #111 70%); flex: none; }
+.pfeed .pglass svg { position: absolute; height: 62cqw; left: 50%; top: 54%; transform: translate(-50%, -50%); }
+.pfeed .pglass span { position: absolute; right: 5cqw; top: 5cqw; text-align: right; font-size: 3cqw; color: #8e8e93; letter-spacing: .1em; font-weight: 600; }
+.pfeed .pglass span b { display: block; color: #fff; font-size: 13cqw; letter-spacing: -.05em; font-weight: 500; line-height: 1; }
+.pfeed .pcta { background: #f5f5f7; color: #000; border-radius: 99px; text-align: center; padding: 4.6cqw 0; font-size: 4.6cqw; font-weight: 600; }
+.pfeed .plist { display: grid; }
+.pfeed .plist small { font-size: 3.2cqw; letter-spacing: .14em; text-transform: uppercase; color: #8e8e93; font-weight: 600; margin-bottom: 2cqw; }
+.pfeed .plist div { display: grid; grid-template-columns: 13cqw 1fr auto; gap: 2cqw; padding: 3.6cqw 0; border-top: .3cqw solid #2c2c2e; font-size: 4.2cqw; }
+.pfeed .plist b { font-weight: 600; }
+.pfeed .plist em { font-style: normal; color: #8e8e93; }
+.tile .pfeed .pfoot { margin: 0; opacity: 1; font-size: 3.6cqw; color: #8e8e93; line-height: 1.5; }
+
+/* Sectors */
+.sectors { padding-block: 0 clamp(90px, 12vw, 150px); }
+.sec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.sector { border-radius: 24px; padding: 30px 26px 26px; background: var(--paper); display: flex; flex-direction: column; gap: 12px; min-height: 360px; }
+.sector.dark { background: var(--black); color: var(--white); }
+.sector .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--ink); display: grid; place-items: center; }
+.sector.dark .ico { background: var(--white); }
+.sector .ico svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.sector.dark .ico svg { stroke: #000; }
+.sector h3 { font-size: 24px; letter-spacing: -.025em; line-height: 1.12; margin-top: 12px; }
+.sector .who { color: var(--grey); font-size: 16px; line-height: 1.45; }
+.sector.dark .who { color: var(--grey-2); }
+.sector .gets { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; display: grid; gap: 4px; }
+.sector.dark .gets { border-color: var(--line-dark); }
+.sector .gets span { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
+.sector.dark .gets span { color: var(--grey-2); }
 
 /* Services */
 .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -461,6 +544,8 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
   .hero-copy { position: relative; left: auto; bottom: auto; max-width: 640px; margin-bottom: 30px; }
   .monitor { width: 100%; }
   .svc-grid { grid-template-columns: 1fr 1fr; }
+  .sec-grid { grid-template-columns: 1fr 1fr; }
+  .monitor.mon-show { width: 100%; }
   .svc.feature { grid-row: auto; grid-column: span 2; min-height: 0; }
   .qr { width: 160px; }
   .steps { grid-template-columns: 1fr 1fr; }
@@ -481,7 +566,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     border-bottom: 1px solid var(--line); min-height: calc(100vh - 52px);
   }
   .nav.open .nav-links a { padding: 12px 0; color: var(--ink); }
-  .work-grid { grid-template-columns: 1fr; }
+  .show-row { grid-template-columns: 1fr; }
   .tile { min-height: 520px; padding: 44px 22px 0; }
   .hero-note { display: none; }
   .hero-giant { justify-content: flex-start; padding-top: 90px; }
@@ -516,7 +601,9 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
   .contact { border-radius: 26px; padding: 30px 20px; }
   details .ans { padding-right: 0; }
   summary { font-size: 18px; }
-  .tile .phone { width: 26%; right: 5%; }
+  .sec-grid { grid-template-columns: 1fr; }
+  .sector { min-height: 0; }
+  .gets { margin-top: 18px; }
   .tile h3 { font-size: 32px; }
   .tile p { font-size: 17px; }
 }
@@ -537,7 +624,8 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
       <span>LOCAL UP<small>STUDIO</small></span>
     </a>
     <nav class="nav-links" id="navLinks" aria-label="Principale">
-      <a href="#lavori">Lavori</a>
+      <a href="#settori">Settori</a>
+      <a href="#lavori">Progetti</a>
       <a href="#servizi">Servizi</a>
       <a href="#metodo">Metodo</a>
       <a href="#prezzi">Prezzi</a>
@@ -558,19 +646,19 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
   <div class="wrap">
     <div class="hero-top">
       <span class="hero-kicker"><span class="dot-live"></span>Disponibile per 2 nuovi progetti a novembre</span>
-      <p class="hero-note">Siti web per <b>ristoranti, bar e locali</b>. Progettati e sviluppati da una sola persona, dalla prima bozza al giorno del lancio.</p>
+      <p class="hero-note">Siti web per <b>locali, studi e attività</b>: ristoranti, pub, pizzerie, bar, studi dentistici e professionali. Progettati e sviluppati da una sola persona.</p>
     </div>
 
     <div class="hero-stage">
       <div class="hero-copy">
-        <h1 id="h1">Il tuo locale,<br>pieno anche online.</h1>
+        <h1 id="h1">La tua attività,<br>scelta anche online.</h1>
         <div class="sub">
           <p><b>Design su misura</b> e sviluppo a mano. Niente template.</p>
-          <p>Menu, prenotazioni e Google, in un solo sito veloce.</p>
+          <p>Per locali, studi dentistici, studi professionali e attività locali.</p>
         </div>
         <div class="hero-actions">
           <a class="btn btn-dark" href="#contatti">Richiedi un preventivo <span class="arr">→</span></a>
-          <a class="btn btn-ghost" href="#lavori">Guarda i concept</a>
+          <a class="btn btn-ghost" href="#lavori">Guarda i progetti</a>
         </div>
       </div>
 
@@ -584,7 +672,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     </div>
 
     <div class="mon-caption">
-      <span>In onda: <strong id="demoName">Osteria Nero</strong> · <span id="demoType">Ristorante</span></span>
+      <span>In onda: <strong id="demoName">Forno 1956</strong> · <span id="demoType">Pizzeria</span></span>
       <div class="dots" id="demoDots" role="group" aria-label="Cambia concept"></div>
     </div>
   </div>
@@ -593,8 +681,8 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
 <!-- ============ TICKER ============ -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span>Ristoranti</span><span>Cocktail bar</span><span>Pizzerie</span><span>Caffetterie</span><span>Wine bar</span><span>Trattorie</span><span>Beach club</span><span>Pasticcerie</span><span>Bistrot</span>
-    <span>Ristoranti</span><span>Cocktail bar</span><span>Pizzerie</span><span>Caffetterie</span><span>Wine bar</span><span>Trattorie</span><span>Beach club</span><span>Pasticcerie</span><span>Bistrot</span>
+    <span>Ristoranti</span><span>Pizzerie</span><span>Pub</span><span>Bar</span><span>Studi dentistici</span><span>Studi legali</span><span>Commercialisti</span><span>Centri estetici</span><span>Palestre</span><span>B&amp;B</span><span>Negozi</span>
+    <span>Ristoranti</span><span>Pizzerie</span><span>Pub</span><span>Bar</span><span>Studi dentistici</span><span>Studi legali</span><span>Commercialisti</span><span>Centri estetici</span><span>Palestre</span><span>B&amp;B</span><span>Negozi</span>
   </div>
 </div>
 
@@ -606,63 +694,165 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
       <span class="eyebrow">Lo studio</span>
     </div>
     <div class="rv">
-      <h2><span class="indent"></span>Local Up Studio è uno studio di una persona sola. Progetto <span class="pill-inline" aria-hidden="true"></span> siti per locali <span class="mute">che vogliono più tavoli prenotati, non solo più like. Parli sempre con chi <span class="pill-inline light" aria-hidden="true"></span> scrive il codice.</span></h2>
+      <h2><span class="indent"></span>Local Up Studio è uno studio di una persona sola. Progetto <span class="pill-inline" aria-hidden="true"></span> siti per locali, studi e attività <span class="mute">che vogliono più clienti, non solo più visite. Parli sempre con chi <span class="pill-inline light" aria-hidden="true"></span> scrive il codice.</span></h2>
       <div class="statement-foot">
         <div><b>1</b><span>referente, dal primo messaggio alla messa online</span></div>
-        <div><b>0</b><span>template: ogni sito nasce da zero sul tuo locale</span></div>
+        <div><b>0</b><span>template: ogni sito nasce da zero sulla tua attività</span></div>
         <div><b>&lt;1s</b><span>di caricamento da smartphone: l'obiettivo di ogni progetto</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ WORK ============ -->
+<!-- ============ SECTORS ============ -->
+<section class="sectors" id="settori" aria-labelledby="settori-h">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <span class="eyebrow">Per chi lavoro</span>
+        <h2 id="settori-h" style="margin-top:12px">Locali, studi e attività.<br>Ognuno con il suo sito.</h2>
+      </div>
+      <p>Un ristorante deve far venire fame, uno studio dentistico deve dare fiducia. Progetto ogni sito sulle domande che si fanno i tuoi clienti.</p>
+    </div>
+    <div class="sec-grid">
+      <article class="sector dark rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 0 0 2 2v8M11 3v8a2 2 0 0 1-2 2M9 3v6M17 21V3c-2 1.5-3 4-3 7v3h3"/></svg></div>
+        <h3>Locali e ristorazione</h3>
+        <p class="who">Ristoranti, pizzerie, pub, bar, caffetterie, trattorie.</p>
+        <div class="gets"><span>Cosa ottieni</span>Menu digitale, prenotazione tavoli, eventi.</div>
+      </article>
+      <article class="sector rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 3c-2 0-3.5 1.6-3.5 4 0 3 1.4 4.6 2 7.5.6 3 1 6.5 2.5 6.5s1.4-5 3-5 1.5 5 3 5 1.9-3.5 2.5-6.5c.6-2.9 2-4.5 2-7.5 0-2.4-1.5-4-3.5-4-2 0-3 1.2-5 1.2S9 3 7 3z"/></svg></div>
+        <h3>Studi dentistici e medici</h3>
+        <p class="who">Dentisti, ortodontisti, fisioterapisti, poliambulatori.</p>
+        <div class="gets"><span>Cosa ottieni</span>Appuntamenti online, trattamenti, team.</div>
+      </article>
+      <article class="sector rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></div>
+        <h3>Studi professionali</h3>
+        <p class="who">Avvocati, commercialisti, architetti, consulenti.</p>
+        <div class="gets"><span>Cosa ottieni</span>Credibilità, servizi chiari, contatto rapido.</div>
+      </article>
+      <article class="sector rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9M3 9v11h18V9M3 9h18M9 20v-6h6v6"/></svg></div>
+        <h3>Attività locali</h3>
+        <p class="who">Centri estetici, palestre, negozi, B&amp;B e hotel.</p>
+        <div class="gets"><span>Cosa ottieni</span>Prenotazioni, listino, Google Maps.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK: three homepages, three devices ============ -->
 <section class="band band-paper" id="lavori" aria-labelledby="lavori-h">
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">Concept di design</span>
-        <h2 id="lavori-h" style="margin-top:12px">Quattro locali.<br>Quattro identità diverse.</h2>
+        <span class="eyebrow">Progetti</span>
+        <h2 id="lavori-h" style="margin-top:12px">Tre homepage.<br>Tre schermi.</h2>
       </div>
-      <p>Studi di design realizzati per mostrare il mio metodo: ogni locale ha un carattere, e il sito deve averlo prima ancora che il cliente legga il menu.</p>
+      <p>Tre homepage che ho progettato da zero per tre settori diversi: una su monitor, una su tablet, una su smartphone. Ogni sito che consegno funziona così su tutti e tre.</p>
     </div>
 
-    <div class="work-grid">
-      <article class="tile t-black rv">
-        <span class="tag">Ristorante · Concept</span>
-        <h3>Osteria Nero</h3>
-        <p>Sito vetrina con prenotazione tavoli.</p>
-        <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Ristorante">Voglio un sito così</a><button class="btn btn-ghost-light" data-show="0">Mostra sul monitor</button></div>
-        <div class="device laptop"><div class="lid"><div class="screen" data-demo="0"></div></div></div>
-        <div class="phone" aria-hidden="true"><div class="pscreen"><div class="pdemo" style="background:#dcdce0;color:#111"><span class="pl">nero</span><span class="ph">La cucina è già qui.</span><span class="pimg" style="background:radial-gradient(circle at 50% 50%,#2a2a2a 0 22%,#f3f3f3 23% 38%,#cfcfd3 39% 41%,transparent 42%)"></span><span class="pb" style="background:#111;color:#fff">Prenota un tavolo</span></div></div></div>
+    <div class="show">
+      <article class="tile t-black st-monitor rv">
+        <span class="tag">Studio dentistico · Desktop</span>
+        <h3>Studio Dentistico Moretti</h3>
+        <p>Visite prenotabili online e trattamenti spiegati con chiarezza.</p>
+        <ul class="feat"><li>Prenotazione visite</li><li>Pagine trattamenti</li><li>SEO locale</li></ul>
+        <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Studio dentistico">Voglio un sito così</a></div>
+        <div class="monitor mon-show" aria-label="Homepage dello Studio Dentistico Moretti su monitor">
+          <div class="mon-frame"><div class="screen" data-demo="4"></div></div>
+          <div class="mon-neck" aria-hidden="true"></div>
+          <div class="mon-base" aria-hidden="true"></div>
+        </div>
       </article>
 
-      <article class="tile t-light rv">
-        <span class="tag">Cocktail bar · Concept</span>
-        <h3>Ottanta</h3>
-        <p>Atmosfera notturna, eventi e lista drink.</p>
-        <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Cocktail bar">Voglio un sito così</a><button class="btn btn-ghost" data-show="1">Mostra sul monitor</button></div>
-        <div class="device laptop"><div class="lid"><div class="screen" data-demo="1"></div></div></div>
-        <div class="phone" aria-hidden="true"><div class="pscreen"><div class="pdemo" style="background:#050505;color:#f5f5f7"><span class="pl">ottanta</span><span class="ph">Dopo le otto, qui.</span><span class="pimg" style="background:radial-gradient(ellipse 40% 12% at 50% 30%,transparent 80%,#fff 82% 86%,transparent 88%),linear-gradient(#050505,#050505)"></span><span class="pb" style="background:#f5f5f7;color:#000">Riserva il tavolo</span></div></div></div>
-      </article>
+      <div class="show-row">
+        <article class="tile t-light rv">
+          <span class="tag">Ristorante · Tablet</span>
+          <h3>Trattoria Sale</h3>
+          <p>Menu del giorno e tavoli, a portata di dito.</p>
+          <ul class="feat"><li>Menu aggiornabile</li><li>Prenota tavolo</li><li>Multilingua</li></ul>
+          <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Ristorante / Pizzeria">Voglio un sito così</a></div>
+          <div class="device tablet" aria-label="Homepage della Trattoria Sale su tablet">
+            <div class="tscreen">
+              <div class="tdemo">
+                <div class="tn"><b>sale.</b><span>PRENOTA</span></div>
+                <span class="tk">TRATTORIA · BERGAMO</span>
+                <h4>Cucina di casa,<br>dal 1972.</h4>
+                <p>Pasta fresca tirata a mano ogni mattina. Trattoria di famiglia nel cuore di Città Alta.</p>
+                <div class="tb"><span>Prenota un tavolo</span><span>Menu del giorno</span></div>
+                <div class="timg">
+                  <svg viewBox="0 0 200 200" aria-hidden="true">
+                    <defs>
+                      <radialGradient id="tPlate" cx="45%" cy="40%"><stop offset="0" stop-color="#ffffff"/><stop offset=".8" stop-color="#ececef"/><stop offset="1" stop-color="#c9c9ce"/></radialGradient>
+                      <radialGradient id="tFood" cx="40%" cy="35%"><stop offset="0" stop-color="#5a5a5e"/><stop offset=".7" stop-color="#1e1e20"/><stop offset="1" stop-color="#0a0a0a"/></radialGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="92" fill="url(#tPlate)"/>
+                    <circle cx="100" cy="100" r="62" fill="none" stroke="#d6d6da" stroke-width="1"/>
+                    <ellipse cx="100" cy="100" rx="38" ry="34" fill="url(#tFood)"/>
+                    <g fill="none" stroke="#6b6b70" stroke-width="2.2" stroke-linecap="round">
+                      <ellipse cx="98" cy="99" rx="30" ry="26" transform="rotate(-18 98 99)"/>
+                      <ellipse cx="101" cy="101" rx="22" ry="18" transform="rotate(24 101 101)"/>
+                      <ellipse cx="99" cy="98" rx="13" ry="11" transform="rotate(-40 99 98)"/>
+                    </g>
+                    <g fill="#f5f5f7"><ellipse cx="116" cy="84" rx="5" ry="2.4" transform="rotate(-30 116 84)"/><ellipse cx="122" cy="90" rx="4" ry="2" transform="rotate(20 122 90)"/><ellipse cx="111" cy="80" rx="3.4" ry="1.8"/></g>
+                  </svg>
+                  <em>Tagliatelle al ragù</em>
+                </div>
+                <div class="tm">
+                  <small>Menu di oggi</small>
+                  <div><span>Tagliatelle al ragù</span><span>€ 12</span></div>
+                  <div><span>Casoncelli alla bergamasca</span><span>€ 13</span></div>
+                  <div><span>Polenta e brasato</span><span>€ 16</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
 
-      <article class="tile t-mist rv">
-        <span class="tag">Pizzeria · Concept</span>
-        <h3>Forno 1956</h3>
-        <p>Menu digitale con QR al tavolo e asporto.</p>
-        <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Pizzeria">Voglio un sito così</a><button class="btn btn-ghost" data-show="2">Mostra sul monitor</button></div>
-        <div class="device laptop"><div class="lid"><div class="screen" data-demo="2"></div></div></div>
-        <div class="phone" aria-hidden="true"><div class="pscreen"><div class="pdemo" style="background:#fafafa;color:#111"><span class="pl">forno 1956</span><span class="ph">Impasto di 72 ore.</span><span class="pimg" style="background:radial-gradient(circle,#2b2b2b 0 4%,#e9e9e9 5% 9%,#cfcfcf 10% 52%,#9a9a9a 53% 60%,transparent 61%)"></span><span class="pb" style="background:#111;color:#fff">Ordina da asporto</span></div></div></div>
-      </article>
-
-      <article class="tile t-black rv">
-        <span class="tag">Caffetteria · Concept</span>
-        <h3>Café Lume</h3>
-        <p>Colazioni, brunch e Google Maps in primo piano.</p>
-        <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Caffetteria">Voglio un sito così</a><button class="btn btn-ghost-light" data-show="3">Mostra sul monitor</button></div>
-        <div class="device laptop"><div class="lid"><div class="screen" data-demo="3"></div></div></div>
-        <div class="phone" aria-hidden="true"><div class="pscreen"><div class="pdemo" style="background:#ececee;color:#111"><span class="pl">lume</span><span class="ph">Il caffè del mattino.</span><span class="pimg" style="background:radial-gradient(circle,#3a2a20 0 18%,#f5f5f7 19% 30%,#1c1c1e 31% 33%,transparent 34%)"></span><span class="pb" style="background:#111;color:#fff">Indicazioni</span></div></div></div>
-      </article>
+        <article class="tile t-mist rv">
+          <span class="tag">Pub · Smartphone</span>
+          <h3>Luppolo</h3>
+          <p>Eventi, birre alla spina e tavoli, in tasca.</p>
+          <ul class="feat"><li>Calendario eventi</li><li>Lista spine</li><li>Prenota tavolo</li></ul>
+          <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Pub / Bar">Voglio un sito così</a></div>
+          <div class="device phone-lg" aria-label="Homepage del pub Luppolo su smartphone">
+            <div class="pscreen">
+              <span class="island" aria-hidden="true"></span>
+              <div class="pfeed">
+                <div class="pn"><b>luppolo</b><i></i></div>
+                <span class="pk">PUB · BERGAMO ALTA</span>
+                <h4>Birre artigianali.<br>Cucina fino a tardi.</h4>
+                <div class="pglass">
+                  <svg viewBox="0 0 100 160" aria-hidden="true">
+                    <path d="M23 42 L77 42 L71.5 147 L28.5 147 Z" fill="#f5f5f7" fill-opacity=".22"/>
+                    <path d="M21 22 Q30 12 40 20 Q50 10 60 20 Q70 12 79 22 L77.6 42 L22.4 42 Z" fill="#f5f5f7"/>
+                    <path d="M20 20 L80 20 L72 150 L28 150 Z" fill="none" stroke="#f5f5f7" stroke-width="2" stroke-linejoin="round"/>
+                    <g fill="#f5f5f7" fill-opacity=".6"><circle cx="40" cy="80" r="1.6"/><circle cx="58" cy="96" r="1.2"/><circle cx="47" cy="118" r="1.8"/><circle cx="62" cy="64" r="1.3"/><circle cx="36" cy="130" r="1.1"/></g>
+                  </svg>
+                  <span><b>24</b>SPINE</span>
+                </div>
+                <span class="pcta">Prenota un tavolo</span>
+                <div class="plist">
+                  <small>Questa settimana</small>
+                  <div><b>Gio</b><span>Quiz night</span><em>21:00</em></div>
+                  <div><b>Ven</b><span>Live acustico</span><em>22:00</em></div>
+                  <div><b>Sab</b><span>Partita su maxischermo</span><em>20:45</em></div>
+                </div>
+                <div class="plist">
+                  <small>Alla spina</small>
+                  <div><b>IPA</b><span>Luppolo IPA · 6,2%</span><em>€ 6</em></div>
+                  <div><b>Wit</b><span>Blanche · 4,8%</span><em>€ 5,5</em></div>
+                  <div><b>Stout</b><span>Nera · 5,5%</span><em>€ 6</em></div>
+                </div>
+                <p class="pfoot">Via Gombito 8 · Bergamo<br>Tutti i giorni 18:00 — 01:00</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </div>
 </section>
@@ -673,41 +863,41 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     <div class="sec-head rv">
       <div>
         <span class="eyebrow">Servizi</span>
-        <h2 id="servizi-h" style="margin-top:12px">Tutto quello che serve a un locale per farsi trovare. E scegliere.</h2>
+        <h2 id="servizi-h" style="margin-top:12px">Tutto quello che serve a un'attività per farsi trovare. E scegliere.</h2>
       </div>
-      <p>Un sito non è una brochure. Deve rispondere in tre secondi a: dove siete, cosa servite, come prenoto.</p>
+      <p>Un sito non è una brochure. Deve rispondere in tre secondi a tre domande: chi siete, dove siete, come vi contatto.</p>
     </div>
 
     <div class="svc-grid">
       <article class="svc feature rv">
         <div style="display:grid;gap:14px">
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></div>
-          <h3>Menu digitale con QR al tavolo</h3>
-          <p>Aggiorni prezzi, piatti del giorno e allergeni dal telefono, in pochi secondi. Il cliente inquadra, sceglie, ordina. Niente PDF che si ingrandiscono male.</p>
+          <h3>Menu e listini sempre aggiornati</h3>
+          <p>Il menu del ristorante, il listino dei trattamenti, gli orari dello studio: li aggiorni dal telefono in pochi secondi. Per i locali c'è anche il QR al tavolo, senza PDF che si ingrandiscono male.</p>
         </div>
         <div class="qr" id="qr" aria-hidden="true"></div>
-        <ul><li>Allergeni UE 14</li><li>Multilingua IT · EN · DE</li><li>Modifica da smartphone</li></ul>
+        <ul><li>QR al tavolo</li><li>Multilingua IT · EN · DE</li><li>Modifica da smartphone</li></ul>
       </article>
 
       <article class="svc rv">
         <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
         <h3>Sito su misura</h3>
-        <p>Design originale, sviluppo a mano, foto e testi curati. Pensato prima per lo smartphone, dove arriva il 78% delle visite di un locale.</p>
+        <p>Design originale, sviluppo a mano, foto e testi curati. Pensato prima per lo smartphone, da dove arriva la maggior parte delle visite.</p>
         <ul><li>Responsive</li><li>Dominio + hosting</li><li>Testi inclusi</li></ul>
       </article>
 
       <article class="svc rv">
         <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 15l2.5 2.5L16 13"/></svg></div>
-        <h3>Prenotazioni online</h3>
-        <p>Il cliente prenota mentre tu chiudi la cucina. Conferme automatiche via email e WhatsApp, meno telefonate perse.</p>
+        <h3>Prenotazioni e appuntamenti</h3>
+        <p>Tavoli per il ristorante, visite per lo studio dentistico, trattamenti per il centro estetico. Conferme automatiche via email e WhatsApp.</p>
         <ul><li>Zero commissioni</li><li>Notifiche WhatsApp</li></ul>
       </article>
 
       <article class="svc rv">
         <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
         <h3>SEO locale e Google</h3>
-        <p>Scheda Google Business ottimizzata e sito costruito per comparire quando qualcuno cerca "ristorante vicino a me".</p>
-        <ul><li>Google Business</li><li>Schema.org Restaurant</li></ul>
+        <p>Scheda Google Business ottimizzata e sito costruito per comparire quando qualcuno cerca "dentista vicino a me" o "pizzeria aperta ora".</p>
+        <ul><li>Google Business</li><li>Dati strutturati</li></ul>
       </article>
 
       <article class="svc rv">
@@ -735,7 +925,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
       <div class="step rv">
         <span class="n">01</span>
         <h3>Chiamata conoscitiva</h3>
-        <p>30 minuti, gratis. Mi racconti il locale, i clienti, cosa non funziona oggi. Ti mando un preventivo chiaro entro 48 ore.</p>
+        <p>30 minuti, gratis. Mi racconti la tua attività, i clienti, cosa non funziona oggi. Ti mando un preventivo chiaro entro 48 ore.</p>
         <span class="when">Settimana 0</span>
       </div>
       <div class="step rv">
@@ -747,7 +937,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
       <div class="step rv">
         <span class="n">03</span>
         <h3>Sviluppo</h3>
-        <p>Scrivo il codice a mano: veloce, accessibile, pronto per Google. Colleghiamo menu, prenotazioni e mappe.</p>
+        <p>Scrivo il codice a mano: veloce, accessibile, pronto per Google. Colleghiamo prenotazioni, menu o listini e mappe.</p>
         <span class="when">Settimana 2</span>
       </div>
       <div class="step rv">
@@ -758,7 +948,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
       </div>
     </div>
 
-    <p class="big-line rv">Creo siti che riempiono<br><span class="fade">i tavoli, non le cartelle.</span></p>
+    <p class="big-line rv">Creo siti che portano<br><span class="fade">clienti, non solo visite.</span></p>
   </div>
 </section>
 
@@ -776,11 +966,11 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     <div class="price-grid">
       <article class="plan rv">
         <h3>Essenziale</h3>
-        <p class="for">Per bar e caffetterie che partono da zero.</p>
+        <p class="for">Per bar, pub e piccole attività che partono da zero.</p>
         <div class="price"><small>da</small><b>€1.200</b></div>
         <ul>
           <li>Sito one-page su misura</li>
-          <li>Menu digitale con QR</li>
+          <li>Menu digitale o listino servizi</li>
           <li>Mappa, orari e contatti WhatsApp</li>
           <li>Google Business configurato</li>
           <li>Online in 10 giorni</li>
@@ -791,12 +981,12 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
       <article class="plan pro rv">
         <span class="badge">Il più scelto</span>
         <h3>Signature</h3>
-        <p class="for">Per ristoranti che vogliono più prenotazioni.</p>
+        <p class="for">Per ristoranti e studi che vogliono più clienti.</p>
         <div class="price"><small>da</small><b>€2.400</b></div>
         <ul>
           <li>Sito multi-pagina con design esclusivo</li>
-          <li>Prenotazioni online senza commissioni</li>
-          <li>Menu multilingua con allergeni</li>
+          <li>Prenotazioni o appuntamenti online</li>
+          <li>Contenuti multilingua</li>
           <li>SEO locale e dati strutturati</li>
           <li>Shooting foto guidato</li>
           <li>3 mesi di assistenza inclusi</li>
@@ -806,13 +996,13 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
 
       <article class="plan rv">
         <h3>Su misura</h3>
-        <p class="for">Per gruppi, catene e progetti speciali.</p>
+        <p class="for">Per cliniche, gruppi, catene e progetti speciali.</p>
         <div class="price"><b style="font-size:40px">Su preventivo</b></div>
         <ul>
           <li>Più sedi, un unico sito</li>
           <li>E-commerce e gift card</li>
           <li>Integrazioni con cassa e gestionale</li>
-          <li>Area eventi e privati</li>
+          <li>Area riservata clienti o pazienti</li>
           <li>Referente dedicato</li>
         </ul>
         <a class="btn btn-ghost" href="#contatti" data-budget="4k+">Parliamone</a>
@@ -833,16 +1023,20 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     </div>
     <div class="rv">
       <details open>
+        <summary>Lavori solo con ristoranti e locali?<span class="pm" aria-hidden="true"></span></summary>
+        <p class="ans">No. Locali e ristorazione sono il mio punto di partenza, ma progetto siti anche per studi dentistici e medici, studi legali e commercialisti, centri estetici, palestre, negozi e B&amp;B. Il metodo è lo stesso: capire chi sono i tuoi clienti e farli arrivare a te.</p>
+      </details>
+      <details>
         <summary>Quanto tempo serve per avere il sito online?<span class="pm" aria-hidden="true"></span></summary>
         <p class="ans">Da 10 giorni per il pacchetto Essenziale a circa 3 settimane per Signature. Ti do una data di consegna precisa già nel preventivo.</p>
       </details>
       <details>
         <summary>Devo occuparmi io di testi e foto?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">No. Scrivo io i testi partendo da una chiacchierata con te. Per le foto ti guido con una lista di scatti, oppure organizziamo uno shooting nel locale.</p>
+        <p class="ans">No. Scrivo io i testi partendo da una chiacchierata con te. Per le foto ti guido con una lista di scatti, oppure organizziamo uno shooting nella tua sede.</p>
       </details>
       <details>
-        <summary>Posso modificare menu e prezzi da solo?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">Sì. Menu, orari, piatti del giorno ed eventi si aggiornano dallo smartphone, senza toccare codice. Per tutto il resto mi scrivi e ci penso io.</p>
+        <summary>Posso modificare testi e prezzi da solo?<span class="pm" aria-hidden="true"></span></summary>
+        <p class="ans">Sì. Menu, listini, orari ed eventi si aggiornano dallo smartphone, senza toccare codice. Per tutto il resto mi scrivi e ci penso io.</p>
       </details>
       <details>
         <summary>Il sito è davvero mio?<span class="pm" aria-hidden="true"></span></summary>
@@ -850,7 +1044,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
       </details>
       <details>
         <summary>Lavori anche fuori dalla mia città?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">Lavoro con locali in tutta Italia. La maggior parte del progetto si fa in videochiamata e su WhatsApp. Per lo shooting, se serve, vengo di persona.</p>
+        <p class="ans">Lavoro con attività in tutta Italia. La maggior parte del progetto si fa in videochiamata e su WhatsApp. Per lo shooting, se serve, vengo di persona.</p>
       </details>
       <details>
         <summary>Cosa succede dopo la messa online?<span class="pm" aria-hidden="true"></span></summary>
@@ -866,7 +1060,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     <div class="contact rv">
       <div class="contact-side">
         <span class="eyebrow" style="color:#86868b">Preventivo gratuito</span>
-        <h2 id="contatti-h" style="margin-top:14px">Hai un locale?<br><span class="g">Parliamone.</span></h2>
+        <h2 id="contatti-h" style="margin-top:14px">Hai un'attività?<br><span class="g">Parliamone.</span></h2>
         <p>Raccontami il tuo progetto in due minuti. Ricevi un preventivo dettagliato entro 48 ore, senza impegno.</p>
         <div class="contact-lines">
           <div class="cline"><span>Email</span><b id="cEmail"></b><button class="copy" type="button" data-copy="cEmail">Copia</button></div>
@@ -879,15 +1073,15 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
         <form id="quoteForm" novalidate>
           <div class="f-row">
             <div class="field"><label for="f-name">Nome</label><input id="f-name" name="name" autocomplete="name" placeholder="Mario Rossi" required></div>
-            <div class="field"><label for="f-venue">Nome del locale</label><input id="f-venue" name="venue" placeholder="Trattoria da Mario" required></div>
+            <div class="field"><label for="f-venue">Nome dell'attività</label><input id="f-venue" name="venue" placeholder="Trattoria da Mario" required></div>
           </div>
           <fieldset class="chips" id="f-type">
-            <legend class="fs-label">Tipo di locale</legend>
-            <input type="radio" name="type" id="t1" value="Ristorante" checked><label class="chip" for="t1">Ristorante</label>
-            <input type="radio" name="type" id="t2" value="Pizzeria"><label class="chip" for="t2">Pizzeria</label>
-            <input type="radio" name="type" id="t3" value="Cocktail bar"><label class="chip" for="t3">Cocktail bar</label>
-            <input type="radio" name="type" id="t4" value="Caffetteria"><label class="chip" for="t4">Caffetteria</label>
-            <input type="radio" name="type" id="t5" value="Altro"><label class="chip" for="t5">Altro</label>
+            <legend class="fs-label">Tipo di attività</legend>
+            <input type="radio" name="type" id="t1" value="Ristorante / Pizzeria" checked><label class="chip" for="t1">Ristorante / Pizzeria</label>
+            <input type="radio" name="type" id="t2" value="Pub / Bar"><label class="chip" for="t2">Pub / Bar</label>
+            <input type="radio" name="type" id="t3" value="Studio dentistico"><label class="chip" for="t3">Studio dentistico</label>
+            <input type="radio" name="type" id="t4" value="Studio professionale"><label class="chip" for="t4">Studio professionale</label>
+            <input type="radio" name="type" id="t5" value="Altra attività"><label class="chip" for="t5">Altra attività</label>
           </fieldset>
           <div class="f-row">
             <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="mario@email.it" required></div>
@@ -900,7 +1094,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
             <input type="radio" name="budget" id="b3" value="4k+"><label class="chip" for="b3">€4k+</label>
             <input type="radio" name="budget" id="b4" value="Da definire"><label class="chip" for="b4">Non lo so</label>
           </fieldset>
-          <div class="field"><label for="f-msg">Il progetto</label><textarea id="f-msg" name="msg" placeholder="Abbiamo 40 coperti, vorremmo ricevere prenotazioni online e avere il menu in inglese per i turisti…"></textarea></div>
+          <div class="field"><label for="f-msg">Il progetto</label><textarea id="f-msg" name="msg" placeholder="Es. siamo uno studio dentistico con due sedi e vorremmo ricevere prenotazioni online dal sito…"></textarea></div>
           <div class="form-foot">
             <small>Nessuno spam. Uso i tuoi dati solo per risponderti.</small>
             <button class="btn btn-light" type="submit">Prepara la richiesta <span class="arr">→</span></button>
@@ -932,9 +1126,9 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     <div class="foot-grid">
       <div>
         <img src="assets/logo.png" alt="Local Up Studio" width="210" height="119">
-        <p>Siti web su misura per ristoranti, bar e locali. Design e sviluppo indipendente, in tutta Italia.</p>
+        <p>Siti web su misura per locali, ristoranti, studi e attività. Design e sviluppo indipendente, in tutta Italia.</p>
       </div>
-      <div class="foot-col"><b>Studio</b><a href="#lavori">Concept</a><a href="#servizi">Servizi</a><a href="#metodo">Metodo</a></div>
+      <div class="foot-col"><b>Studio</b><a href="#settori">Settori</a><a href="#lavori">Progetti</a><a href="#servizi">Servizi</a><a href="#metodo">Metodo</a></div>
       <div class="foot-col"><b>Info</b><a href="#prezzi">Prezzi</a><a href="#faq">FAQ</a><a href="#contatti">Preventivo</a></div>
       <div class="foot-col"><b>Social</b><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.behance.net/" target="_blank" rel="noopener">Behance</a></div>
     </div>
@@ -950,29 +1144,36 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
 
 <!-- ============ Concept site templates (rendered into every .screen) ============ -->
 <template id="tpl-demos">
-  <div class="demo d-nero">
-    <div class="d-nav"><span class="d-logo">nero</span><span class="d-links"><span>Menu</span><span>Storia</span><span>Vini</span></span><span class="d-links"><span>Eventi</span><span>Dove siamo</span></span><span class="d-pill">PRENOTA</span></div>
-    <span class="d-giant g1">ne</span><span class="d-giant g2">ro</span>
+  <div class="demo d-forno">
+    <div class="d-nav"><span class="d-logo">forno 1956</span><span class="d-links"><span>Pizze</span><span>Asporto</span><span>Storia</span></span><span class="d-pill">ORDINA</span></div>
+    <span class="d-giant">1956</span>
     <svg viewBox="0 0 200 200" aria-hidden="true">
-      <defs>
-        <radialGradient id="plate" cx="45%" cy="40%"><stop offset="0" stop-color="#ffffff"/><stop offset=".8" stop-color="#ececef"/><stop offset="1" stop-color="#c9c9ce"/></radialGradient>
-        <radialGradient id="food" cx="40%" cy="35%"><stop offset="0" stop-color="#5a5a5e"/><stop offset=".7" stop-color="#1e1e20"/><stop offset="1" stop-color="#0a0a0a"/></radialGradient>
-      </defs>
-      <circle cx="100" cy="100" r="92" fill="url(#plate)"/>
-      <circle cx="100" cy="100" r="62" fill="none" stroke="#d6d6da" stroke-width="1"/>
-      <ellipse cx="100" cy="100" rx="38" ry="34" fill="url(#food)"/>
-      <g fill="none" stroke="#6b6b70" stroke-width="2.2" stroke-linecap="round">
-        <ellipse cx="98" cy="99" rx="30" ry="26" transform="rotate(-18 98 99)"/>
-        <ellipse cx="101" cy="101" rx="22" ry="18" transform="rotate(24 101 101)"/>
-        <ellipse cx="99" cy="98" rx="13" ry="11" transform="rotate(-40 99 98)"/>
-      </g>
-      <g fill="#f5f5f7"><ellipse cx="116" cy="84" rx="5" ry="2.4" transform="rotate(-30 116 84)"/><ellipse cx="122" cy="90" rx="4" ry="2" transform="rotate(20 122 90)"/><ellipse cx="111" cy="80" rx="3.4" ry="1.8"/></g>
-      <rect x="168" y="40" width="4" height="120" rx="2" fill="#bdbdc2" transform="rotate(14 170 100)"/>
+      <circle cx="100" cy="100" r="94" fill="#8f8f93"/>
+      <circle cx="100" cy="100" r="80" fill="#d9d9dc"/>
+      <circle cx="100" cy="100" r="74" fill="#c4c4c8"/>
+      <g fill="#f7f7f8"><ellipse cx="76" cy="80" rx="14" ry="11"/><ellipse cx="124" cy="74" rx="12" ry="10"/><ellipse cx="112" cy="124" rx="15" ry="11"/><ellipse cx="72" cy="122" rx="10" ry="9"/></g>
+      <g fill="#2a2a2c"><path d="M95 98 q8 -10 16 0 q-8 6 -16 0z"/><path d="M60 100 q6 -8 13 0 q-6 5 -13 0z"/><path d="M128 100 q6 -8 13 0 q-6 5 -13 0z"/></g>
+      <circle cx="100" cy="60" r="2" fill="#555"/><circle cx="140" cy="112" r="2" fill="#555"/><circle cx="90" cy="142" r="2" fill="#555"/>
     </svg>
-    <span class="d-small s2">La cucina inizia al mercato. Il gusto si decide al tavolo.</span>
-    <span class="d-h">La cucina<br>è già qui.</span>
-    <span class="d-small s1"><b>Cucina</b> lombarda,<br>dal 1998 in Brera</span>
-    <span class="cta">PRENOTA UN TAVOLO →</span>
+    <span class="d-h">Impasto<br>di 72 ore.</span>
+    <span class="d-small s1">Forno a legna, farina di tipo 1 macinata a pietra. Come nel 1956.</span>
+    <div class="menu"><div><b>Margherita</b>€ 7,50</div><div><b>Marinara</b>€ 6,00</div><div><b>Diavola</b>€ 9,00</div></div>
+  </div>
+
+  <div class="demo d-ferri">
+    <div class="d-nav"><span class="d-logo">ferri &amp; associati</span><span class="d-links"><span>Servizi</span><span>Lo studio</span><span>Risorse</span></span><span class="d-pill">FISSA UNA CONSULENZA</span></div>
+    <span class="d-giant">ferri</span>
+    <span class="d-h">Numeri chiari.<br>Decisioni migliori.</span>
+    <span class="d-small s1">Commercialisti per imprese e professionisti. Contabilità, fiscale e consulenza del lavoro.</span>
+    <div class="d-btns"><span>Prenota una consulenza</span><span>I servizi</span></div>
+    <div class="chart">
+      <small>CRESCITA MEDIA CLIENTI</small><b>+18,4%</b>
+      <svg viewBox="0 0 420 150" aria-hidden="true">
+        <g fill="#3a3a3c"><rect x="0" y="110" width="34" height="40" rx="4"/><rect x="48" y="96" width="34" height="54" rx="4"/><rect x="96" y="100" width="34" height="50" rx="4"/><rect x="144" y="80" width="34" height="70" rx="4"/><rect x="192" y="70" width="34" height="80" rx="4"/><rect x="240" y="58" width="34" height="92" rx="4"/><rect x="288" y="44" width="34" height="106" rx="4"/><rect x="336" y="30" width="34" height="120" rx="4"/></g>
+        <rect x="384" y="10" width="34" height="140" rx="4" fill="#f5f5f7"/>
+      </svg>
+    </div>
+    <div class="d-list"><div><b>Contabilità</b>Ordinaria e semplificata</div><div><b>Dichiarazioni</b>730, Redditi, IVA</div><div><b>Paghe</b>Consulenza del lavoro</div></div>
   </div>
 
   <div class="demo d-otto">
@@ -990,22 +1191,6 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     <div class="hours"><span><b>18:00</b>APERTURA</span><span><b>02:00</b>CHIUSURA</span><span><b>Gio</b>LIVE DJ</span></div>
   </div>
 
-  <div class="demo d-forno">
-    <div class="d-nav"><span class="d-logo">forno 1956</span><span class="d-links"><span>Pizze</span><span>Asporto</span><span>Storia</span></span><span class="d-pill">ORDINA</span></div>
-    <span class="d-giant">1956</span>
-    <svg viewBox="0 0 200 200" aria-hidden="true">
-      <circle cx="100" cy="100" r="94" fill="#8f8f93"/>
-      <circle cx="100" cy="100" r="80" fill="#d9d9dc"/>
-      <circle cx="100" cy="100" r="74" fill="#c4c4c8"/>
-      <g fill="#f7f7f8"><ellipse cx="76" cy="80" rx="14" ry="11"/><ellipse cx="124" cy="74" rx="12" ry="10"/><ellipse cx="112" cy="124" rx="15" ry="11"/><ellipse cx="72" cy="122" rx="10" ry="9"/></g>
-      <g fill="#2a2a2c"><path d="M95 98 q8 -10 16 0 q-8 6 -16 0z"/><path d="M60 100 q6 -8 13 0 q-6 5 -13 0z"/><path d="M128 100 q6 -8 13 0 q-6 5 -13 0z"/></g>
-      <circle cx="100" cy="60" r="2" fill="#555"/><circle cx="140" cy="112" r="2" fill="#555"/><circle cx="90" cy="142" r="2" fill="#555"/>
-    </svg>
-    <span class="d-h">Impasto<br>di 72 ore.</span>
-    <span class="d-small s1">Forno a legna, farina di tipo 1 macinata a pietra. Come nel 1956.</span>
-    <div class="menu"><div><b>Margherita</b>€ 7,50</div><div><b>Marinara</b>€ 6,00</div><div><b>Diavola</b>€ 9,00</div></div>
-  </div>
-
   <div class="demo d-lume">
     <div class="d-nav"><span class="d-logo">lume</span><span class="d-links"><span>Colazione</span><span>Brunch</span><span>Caffè</span></span><span class="d-pill">INDICAZIONI</span></div>
     <span class="d-giant">lume</span>
@@ -1021,6 +1206,21 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     <span class="d-small s1">Specialty coffee e colazioni lente, nel cuore del quartiere.</span>
     <div class="times"><b>07:00 — 15:00</b>TUTTI I GIORNI</div>
   </div>
+  <div class="demo d-dent">
+    <div class="d-nav"><span class="d-logo">moretti<small>Studio dentistico</small></span><span class="d-links"><span>Trattamenti</span><span>Team</span><span>Lo studio</span><span>Contatti</span></span><span class="d-pill">PRENOTA UNA VISITA</span></div>
+    <span class="d-giant">sorriso</span>
+    <span class="d-h">Il tuo sorriso,<br>in mani sicure.</span>
+    <span class="d-small s1">Implantologia, ortodonzia invisibile e igiene dentale, in un unico studio nel centro di Bergamo.</span>
+    <div class="d-btns"><span>Prenota una visita</span><span>I trattamenti</span></div>
+    <div class="photo"></div>
+    <svg viewBox="0 0 120 110" aria-hidden="true">
+      <path d="M30 20 C30 8 50 6 60 14 C70 6 90 8 90 20 C92 40 84 52 82 70 C80 88 74 100 68 100 C62 100 64 76 60 76 C56 76 58 100 52 100 C46 100 40 88 38 70 C36 52 28 40 30 20 Z" fill="#ffffff" stroke="#d2d2d7" stroke-width="1"/>
+      <path d="M44 22 C40 26 39 34 41 42" fill="none" stroke="#e8e8ed" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div class="d-card c1">Prima visita<b>Gratuita</b></div>
+    <div class="d-card c2">Lun — Ven<b>9:00 — 19:00</b></div>
+    <div class="d-list"><div><b>Implantologia</b>Denti fissi in 24 ore</div><div><b>Ortodonzia</b>Allineatori invisibili</div><div><b>Igiene</b>Pulizia e sbiancamento</div></div>
+  </div>
 </template>
 
 <script>
@@ -1034,10 +1234,10 @@ const CONFIG = {
 (function () {
   document.documentElement.classList.add("js");
   const demos = [
-    { name: "Osteria Nero", type: "Ristorante" },
-    { name: "Ottanta", type: "Cocktail bar" },
     { name: "Forno 1956", type: "Pizzeria" },
-    { name: "Café Lume", type: "Caffetteria" }
+    { name: "Ferri & Associati", type: "Studio commercialista" },
+    { name: "Ottanta", type: "Cocktail bar" },
+    { name: "Café Lume", type: "Bar e caffetteria" }
   ];
   const tpl = document.getElementById("tpl-demos");
 
@@ -1078,10 +1278,6 @@ const CONFIG = {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function restart() { clearInterval(timer); if (!reduce) timer = setInterval(() => show((cur + 1) % demos.length), 4200); }
   show(0); restart();
-  document.querySelectorAll("[data-show]").forEach(b => b.addEventListener("click", () => {
-    show(+b.dataset.show); restart();
-    document.getElementById("top").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-  }));
 
   // QR pattern for the menu card (decorative, deterministic)
   const qr = document.getElementById("qr");
@@ -1169,7 +1365,7 @@ const CONFIG = {
     const text =
       "Ciao Local Up Studio, vorrei un preventivo.\n\n" +
       "Nome: " + f.get("name") + "\n" +
-      "Locale: " + f.get("venue") + " (" + f.get("type") + ")\n" +
+      "Attività: " + f.get("venue") + " (" + f.get("type") + ")\n" +
       (f.get("city") ? "Città: " + f.get("city") + "\n" : "") +
       "Email: " + f.get("email") + "\n" +
       "Budget: " + f.get("budget") + "\n" +
