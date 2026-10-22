@@ -24,7 +24,7 @@ export function Nights() {
         <div className="mt-16 grid gap-10 md:grid-cols-3 md:gap-6">
           {nights.map((n, i) => (
             <Reveal key={n.day} delay={i * 0.1} className="flex flex-col">
-              <a href={n.href ?? "/prenota"} className="group block overflow-hidden rounded-sm">
+              <a href={n.href ?? "#prenota"} className="group block overflow-hidden rounded-sm">
                 <div className="relative aspect-[1170/1901]">
                   <Image
                     src={n.image}
@@ -45,7 +45,7 @@ export function Nights() {
                   {n.entry && <Row icon={Ticket} value={n.entry} />}
                   <Row icon={Star} value={n.highlight} />
                 </dl>
-                <a href={n.href ?? "/prenota"} className="link-underline mt-6 inline-block text-lg">
+                <a href={n.href ?? "#prenota"} className="link-underline mt-6 inline-block text-lg">
                   {n.href ? "Scopri la serata" : `Prenota per ${n.day.toLowerCase()}`}
                 </a>
               </div>

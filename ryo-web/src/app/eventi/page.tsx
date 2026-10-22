@@ -17,14 +17,14 @@ export default function Page() {
       <Navbar />
       <main id="contenuto">
         <PageHero
-          title="Eventi privati"
-          subtitle="Compleanni, cene aziendali e feste: un'area dedicata o l'intero locale, con menu e drink su misura."
+          title="Feste ed eventi privati"
+          subtitle="Compleanni, feste e cene di gruppo da RYO: compila il modulo e ti ricontattiamo per organizzare la serata."
           image="/images/giovedi/tavolata.jpg"
           alt="Una tavolata di amici da RYO"
         />
         <Booking defaultTab="evento" />
       </main>
-      <Footer />
+      <Footer booking={false} />
     </>
   )
 }

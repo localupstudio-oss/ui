@@ -68,7 +68,7 @@ export function HomeHero() {
       </div>
 
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4, duration: 0.9 }} className="absolute inset-x-0 bottom-10 flex justify-center">
-        <Link href="/prenota" className="rounded-full bg-[#f6efe0] px-9 py-4 text-[1.05rem] text-ink transition-colors hover:bg-white">
+        <Link href="#prenota" className="rounded-full bg-[#f6efe0] px-9 py-4 text-[1.05rem] text-ink transition-colors hover:bg-white">
           Prenota un tavolo
         </Link>
       </motion.div>

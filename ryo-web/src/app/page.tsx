@@ -19,19 +19,21 @@ export default function HomePage() {
           <div className="grid gap-5 sm:gap-8 md:grid-cols-2">
             <FeatureCard
               size="half"
-              href="/serate#giovedi"
-              title="Quelli che il Giovedì"
-              meta="Giovedì | Start 21:30 | Cena, karaoke e festa"
+              href="/serate"
+              title="Gli eventi della settimana"
+              meta="Giovedì | Venerdì | Sabato"
+              cta="Scopri le serate"
               image="/images/giovedi/microfono-tavola.jpg"
-              alt="Il microfono della serata sul menu tropicale"
+              alt="Il microfono della serata del giovedì sul menu tropicale"
             />
             <FeatureCard
               size="half"
-              href="/serate#serate"
-              title="RYO Weekend"
-              meta="Venerdì T'immagini | Sabato Churrasco Experience"
-              image="/images/eventi/bancone-scimmia.jpg"
-              alt="Il bancone di RYO di sera"
+              href="/eventi"
+              title="Feste ed eventi privati"
+              meta="Compleanni | Feste | Cene di gruppo"
+              cta="Richiedi un preventivo"
+              image="/images/giovedi/tavolata.jpg"
+              alt="Una tavolata di amici da RYO"
             />
           </div>
           <div className="grid gap-5 sm:gap-8 md:grid-cols-2">
@@ -41,17 +43,18 @@ export default function HomePage() {
               external
               title="Drink List"
               meta="Signature | Tiempo Negroni"
+              cta="Apri la drink list"
               image="/images/drink/highball-rosa.jpg"
               alt="Highball rosa tra foglie tropicali"
             />
             <FeatureCard
               size="half"
-              href="/eventi"
-              title="Eventi privati"
-              meta="Compleanni | Aziende | Feste"
-              image="/images/giovedi/bottle-service.jpg"
-              alt="Bottle service sotto il soffitto di felci"
-              position="40% center"
+              href="/contatti"
+              title="Location"
+              meta="Corso Umberto I, 1 | Cava de' Tirreni"
+              cta="Come arrivare"
+              image="/images/locale/sala-giungla.jpg"
+              alt="La sala di RYO"
             />
           </div>
         </div>

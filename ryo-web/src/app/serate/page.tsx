@@ -18,8 +18,8 @@ export default function Page() {
       <Navbar />
       <main id="contenuto">
         <PageHero title="Le serate" subtitle="Il giovedì si canta a tavola, il weekend si balla." image="/images/giovedi/microfono-sala.jpg" alt="Serata da RYO" />
-        <Thursday />
         <Nights />
+        <Thursday />
       </main>
       <Footer />
     </>

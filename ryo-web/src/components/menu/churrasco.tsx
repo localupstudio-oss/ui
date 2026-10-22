@@ -31,7 +31,7 @@ export function ChurrascoFeature({ id }: { id?: string }) {
           {ch.prezzo} <span className="font-sans text-sm tracking-[0.2em] text-foreground/70 uppercase">a persona</span>
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link href="/prenota" className="rounded-full bg-primary px-8 py-3.5 text-primary-foreground transition-colors hover:bg-amber-light">
+          <Link href="#prenota" className="rounded-full bg-primary px-8 py-3.5 text-primary-foreground transition-colors hover:bg-amber-light">
             Prenota il churrasco
           </Link>
           <a

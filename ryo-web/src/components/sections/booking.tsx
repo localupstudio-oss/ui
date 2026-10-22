@@ -2,7 +2,7 @@
 
 import { useActionState, useState, useSyncExternalStore } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Building2, CheckCircle2, Crown, GlassWater, Loader2, MessageCircle, Sofa } from "lucide-react"
+import { CheckCircle2, Crown, GlassWater, Loader2, MessageCircle, Sofa } from "lucide-react"
 
 import { submitBooking } from "@/app/actions/booking"
 import { Button } from "@/components/ui/button"
@@ -15,6 +15,7 @@ import { SectionHeading } from "@/components/section-heading"
 import { Reveal } from "@/components/motion/reveal"
 import { EVENT_TYPES, TIME_SLOTS, ZONES, validateBooking, type BookingState, type FieldErrors } from "@/lib/validation/booking"
 import { cn } from "@/lib/utils"
+import { site, whatsappUrl } from "@/content/site"
 
 const zoneIcons = { vip: Crown, bancone: GlassWater, sala: Sofa } as const
 const initial: BookingState = { status: "idle" }
@@ -29,29 +30,29 @@ export function Booking({ defaultTab = "tavolo" }: { defaultTab?: "tavolo" | "ev
         <div className="lg:col-span-5">
           <Reveal>
             <SectionHeading
-              eyebrow="Prenotazioni & eventi privati"
+              align="left"
               title={
                 <>
-                  Il tuo tavolo <span className="text-hot">ti aspetta.</span>
+                  Prenota il tuo <span className="text-hot">tavolo</span>
                 </>
               }
-              intro="Scegli data, orario e zona preferita. Per compleanni, feste private ed eventi aziendali possiamo riservare l'intero locale o un'area dedicata, con menu e drink list su misura."
+              intro="Scegli data, orario e zona. Per feste, compleanni e cene di gruppo usa la scheda Evento privato: ti ricontattiamo per costruire la serata insieme."
             />
           </Reveal>
-          <Reveal delay={0.1} className="mt-10 grid grid-cols-1 gap-4">
-            {[
-              { icon: Crown, title: "Area VIP", text: "Divanetti riservati, bottle service e servizio dedicato." },
-              { icon: GlassWater, title: "Bancone", text: "In prima fila davanti ai bartender, per vivere lo show." },
-              { icon: Building2, title: "Eventi aziendali", text: "Da 10 a 200 ospiti: aperitivi, cene, lanci di prodotto." },
-            ].map((f) => (
-              <div key={f.title} className="flex gap-4 rounded-sm border border-border bg-card/50 p-5">
-                <f.icon className="mt-1 size-5 shrink-0 text-amber" />
-                <div>
-                  <p className="font-display text-base">{f.title}</p>
-                  <p className="text-sm text-muted-foreground">{f.text}</p>
-                </div>
-              </div>
-            ))}
+          <Reveal delay={0.1} className="mt-10 border border-border p-6 sm:p-8">
+            <p className="font-display text-2xl">Preferisci scriverci?</p>
+            <p className="mt-2 text-foreground/75">Rispondiamo in chat su WhatsApp per tavoli, feste, compleanni e cene di gruppo.</p>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#25d366] px-7 py-3.5 font-medium text-[#062e16] transition-colors hover:bg-[#3ee07a]"
+            >
+              <MessageCircle className="size-5" /> Chatta su WhatsApp
+            </a>
+            <p className="mt-5 text-sm text-foreground/65">
+              Oppure chiama il <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="link-underline">{site.phone}</a>
+            </p>
           </Reveal>
         </div>
 

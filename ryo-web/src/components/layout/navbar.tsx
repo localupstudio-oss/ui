@@ -116,7 +116,7 @@ export function Navbar() {
                 {site.address.street} · {site.address.city}
               </p>
               <Link
-                href="/prenota"
+                href="#prenota"
                 onClick={() => setOpen(false)}
                 className="order-1 rounded-full bg-ink px-8 py-3.5 text-[0.95rem] text-cream transition-colors hover:bg-green sm:order-2"
               >

@@ -20,7 +20,7 @@ export function HomeIntro() {
           <Link href="/menu" className="rounded-full border border-foreground/80 px-8 py-3.5 transition-colors hover:bg-foreground hover:text-background">
             Scopri i menu
           </Link>
-          <Link href="/prenota" className="rounded-full border border-foreground/80 px-8 py-3.5 transition-colors hover:bg-foreground hover:text-background">
+          <Link href="#prenota" className="rounded-full border border-foreground/80 px-8 py-3.5 transition-colors hover:bg-foreground hover:text-background">
             Prenota ora
           </Link>
         </div>

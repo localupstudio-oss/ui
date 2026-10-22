@@ -19,7 +19,7 @@ export default function Page() {
         <PageHero title="Prenota" image="/images/locale/bancone.jpg" alt="Il bancone di RYO" position="center 40%" />
         <Booking />
       </main>
-      <Footer />
+      <Footer booking={false} />
     </>
   )
 }
