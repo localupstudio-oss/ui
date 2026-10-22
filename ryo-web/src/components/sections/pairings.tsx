@@ -26,7 +26,7 @@ export function Pairings() {
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           {pairings.map((p, i) => (
             <Reveal key={p.dish.name} delay={(i % 2) * 0.12}>
-              <Card className="group gap-0 overflow-hidden rounded-[2rem] border-border bg-background/70 p-0">
+              <Card className="group gap-0 overflow-hidden rounded-sm border-border bg-background/70 p-0">
                 <div className="relative grid grid-cols-2">
                   {[p.dish, p.drink].map((x, j) => (
                     <div key={x.name} className="relative aspect-[4/5] overflow-hidden">

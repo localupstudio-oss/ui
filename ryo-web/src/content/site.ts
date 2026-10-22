@@ -10,7 +10,7 @@ export const site = {
 
   name: "RYO",
   fullName: "RYO Cocktail Bar & Bistro",
-  claim: "Cocktail · Bar · Cucina", // ✔ dal logo
+  claim: "Churrascaria · Tapas · Cocktail", // ✔ dalle locandine di ottobre 2026
   description:
     "Luxury cocktail bar & bistro nel cuore di Cava de' Tirreni: mixology d'autore, cucina da condividere e serate esclusive in un'atmosfera tropicale.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ryococktailbar.it", // ✎ dominio definitivo
@@ -54,11 +54,11 @@ export const site = {
 } as const
 
 export const nav = [
-  { href: "#filosofia", label: "Filosofia" },
-  { href: "#drink-list", label: "Drink List 3D" },
-  { href: "#serate", label: "Serate" },
-  { href: "#abbinamenti", label: "Abbinamenti" },
-  { href: "#location", label: "Location" },
+  { href: "/menu", label: "Menu" },
+  { href: "/menu#drink-list", label: "Drink List" },
+  { href: "/serate", label: "Le serate" },
+  { href: "/eventi", label: "Eventi privati" },
+  { href: "/contatti", label: "Location & contatti" },
 ] as const
 
 export const whatsappUrl = (text = "Ciao RYO! Vorrei prenotare un tavolo") =>

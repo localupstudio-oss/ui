@@ -1,12 +1,11 @@
 import type { Metadata, Viewport } from "next"
-import { Bowlby_One, Inter, Space_Mono } from "next/font/google"
+import { Montserrat, Playfair_Display } from "next/font/google"
 
 import { fullAddress, site } from "@/content/site"
 import "./globals.css"
 
-const bowlby = Bowlby_One({ variable: "--font-bowlby", subsets: ["latin"], weight: "400", display: "swap" })
-const spaceMono = Space_Mono({ variable: "--font-space-mono", subsets: ["latin"], weight: ["400", "700"], display: "swap" })
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" })
+const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["latin"], weight: ["400", "500"], style: ["normal", "italic"], display: "swap" })
+const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"], weight: ["300", "400", "500"], display: "swap" })
 
 const title = `${site.fullName} · Cava de' Tirreni`
 
@@ -45,7 +44,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#0a1410",
+  themeColor: "#0d2618",
   colorScheme: "dark",
 }
 
@@ -82,7 +81,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`dark ${bowlby.variable} ${spaceMono.variable} ${inter.variable}`}>
+    <html lang="it" className={`dark ${playfair.variable} ${montserrat.variable}`}>
       <body className="min-h-dvh overflow-x-clip font-sans">
         <a
           href="#contenuto"

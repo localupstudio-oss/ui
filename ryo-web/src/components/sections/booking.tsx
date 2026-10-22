@@ -21,7 +21,7 @@ const initial: BookingState = { status: "idle" }
 const noopSubscribe = () => () => {}
 const todayIso = () => new Date().toISOString().slice(0, 10)
 
-export function Booking() {
+export function Booking({ defaultTab = "tavolo" }: { defaultTab?: "tavolo" | "evento" }) {
   return (
     <section id="prenota" className="relative overflow-hidden py-28 sm:py-36">
       <div className="jungle-glow absolute inset-0 -z-10 opacity-60 [mask-image:radial-gradient(60%_60%_at_50%_50%,black,transparent)]" />
@@ -44,7 +44,7 @@ export function Booking() {
               { icon: GlassWater, title: "Bancone", text: "In prima fila davanti ai bartender, per vivere lo show." },
               { icon: Building2, title: "Eventi aziendali", text: "Da 10 a 200 ospiti: aperitivi, cene, lanci di prodotto." },
             ].map((f) => (
-              <div key={f.title} className="flex gap-4 rounded-2xl border border-border bg-card/50 p-5">
+              <div key={f.title} className="flex gap-4 rounded-sm border border-border bg-card/50 p-5">
                 <f.icon className="mt-1 size-5 shrink-0 text-amber" />
                 <div>
                   <p className="font-display text-base">{f.title}</p>
@@ -56,8 +56,8 @@ export function Booking() {
         </div>
 
         <Reveal delay={0.15} className="lg:col-span-7">
-          <div className="rounded-[2rem] border border-amber/25 bg-card/80 p-6 shadow-[0_40px_120px_-40px_rgb(201_162_75/0.35)] backdrop-blur-xl sm:p-10">
-            <Tabs defaultValue="tavolo">
+          <div className="rounded-sm border border-amber/25 bg-card/80 p-6 shadow-[0_40px_120px_-40px_rgb(201_162_75/0.35)] backdrop-blur-xl sm:p-10">
+            <Tabs defaultValue={defaultTab}>
               <TabsList className="mb-8 grid h-auto w-full grid-cols-2 bg-muted/70 p-1">
                 <TabsTrigger value="tavolo" className="py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground dark:data-[state=active]:border-transparent">Prenota un tavolo</TabsTrigger>
                 <TabsTrigger value="evento" className="py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground dark:data-[state=active]:border-transparent">Evento privato</TabsTrigger>
@@ -155,7 +155,7 @@ function BookingForm({ kind }: { kind: "tavolo" | "evento" }) {
                 return (
                   <label key={z} className="group relative cursor-pointer">
                     <input type="radio" name="zone" value={z} defaultChecked={i === 2} className="peer sr-only" />
-                    <span className="flex flex-col items-center gap-2 rounded-2xl border border-border p-4 text-sm transition-all peer-checked:border-amber peer-checked:bg-amber/10 peer-checked:shadow-[0_0_24px_-8px_var(--amber)] peer-focus-visible:ring-2 peer-focus-visible:ring-ring hover:border-foreground/30">
+                    <span className="flex flex-col items-center gap-2 rounded-sm border border-border p-4 text-sm transition-all peer-checked:border-amber peer-checked:bg-amber/10 peer-checked:shadow-[0_0_24px_-8px_var(--amber)] peer-focus-visible:ring-2 peer-focus-visible:ring-ring hover:border-foreground/30">
                       <Icon className="size-5 text-amber" />
                       {ZONES[z]}
                     </span>

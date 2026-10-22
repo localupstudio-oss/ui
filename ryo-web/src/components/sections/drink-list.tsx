@@ -72,7 +72,7 @@ export function DrinkList() {
               if (e.key === "ArrowRight") go(1)
               if (e.key === "ArrowLeft") go(-1)
             }}
-            className="relative h-[460px] overflow-hidden rounded-[22px] border border-border bg-[radial-gradient(60%_55%_at_50%_55%,rgb(240_179_64/0.14),transparent_70%),linear-gradient(180deg,#132a1d,#0a1410)] outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-[580px] lg:col-span-7"
+            className="relative h-[460px] overflow-hidden rounded-sm border border-border bg-[radial-gradient(60%_55%_at_50%_55%,rgb(240_179_64/0.14),transparent_70%),linear-gradient(180deg,#132a1d,#0a1410)] outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-[580px] lg:col-span-7"
           >
             {inView && (
               <DrinkScene
@@ -132,7 +132,7 @@ export function DrinkList() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -24 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col gap-6 rounded-[22px] border border-border bg-background/60 p-6 sm:p-8 lg:col-span-5"
+              className="flex flex-col gap-6 rounded-sm border border-border bg-background/60 p-6 sm:p-8 lg:col-span-5"
             >
               <div>
                 <div className="flex flex-wrap gap-2">

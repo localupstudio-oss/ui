@@ -34,7 +34,7 @@ export function Nights() {
                 whileHover="hover"
                 initial="rest"
                 animate="rest"
-                className="group relative flex h-[560px] flex-col justify-end overflow-hidden rounded-[2rem] border border-border"
+                className="group relative flex h-[560px] flex-col justify-end overflow-hidden rounded-sm border border-border"
               >
                 <motion.div variants={{ rest: { scale: 1.02 }, hover: { scale: 1.1 } }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-0 -z-10">
                   <Image src={n.image} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />

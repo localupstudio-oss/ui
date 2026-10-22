@@ -59,11 +59,11 @@ export function MenuSheet({ open, onOpenChange, title, description, categories }
   )
 }
 
-function ItemList({ items }: { items: MenuItem[] }) {
+export function ItemList({ items }: { items: MenuItem[] }) {
   return (
     <Accordion type="single" collapsible className="flex flex-col gap-3">
       {items.map((item) => (
-        <AccordionItem key={item.id} value={item.id} className="overflow-hidden rounded-2xl border border-border bg-card/60 last:border-b">
+        <AccordionItem key={item.id} value={item.id} className="overflow-hidden rounded-sm border border-border bg-card/60 last:border-b">
           <AccordionTrigger className="items-center gap-4 p-3 pr-5 hover:no-underline">
             <div className="flex flex-1 items-center gap-4 text-left">
               {item.image && (

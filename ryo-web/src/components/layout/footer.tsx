@@ -1,94 +1,102 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react"
 
-import { FacebookIcon, InstagramIcon, TikTokIcon } from "@/components/brand-icons"
 import { DemoBadge } from "@/components/demo-badge"
 import { fullAddress, nav, site, whatsappUrl } from "@/content/site"
-import { cn } from "@/lib/utils"
 
-const socials = [
-  { label: "Instagram", href: site.social.instagram, icon: InstagramIcon },
-  { label: "TikTok", href: site.social.tiktok, icon: TikTokIcon },
-  { label: "Facebook", href: site.social.facebook, icon: FacebookIcon },
-]
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`
+
+const brands = ["Churrascaria", "Tapas", "Cocktail", "Quelli che il Giovedì", "This is RYO Weekend", "Cava de' Tirreni"]
 
 export function Footer() {
+  const socials = [
+    { label: "Instagram", href: site.social.instagram },
+    { label: "Facebook", href: site.social.facebook },
+    { label: "TikTok", href: site.social.tiktok },
+  ].filter((s) => s.href)
+
   return (
-    <footer className="relative border-t border-border bg-[#050a07] pt-20">
-      <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 px-5 sm:px-8 md:grid-cols-2 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/images/brand/logo.png" alt="" width={56} height={56} />
-            <span className="font-display text-2xl">{site.name}</span>
-          </Link>
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">{site.description}</p>
-          <ul className="mt-6 flex gap-3">
-            {socials.map(({ label, href, icon: Icon }) => {
-              const configured = Boolean(href)
-              return (
-                <li key={label}>
-                  <a
-                    href={configured ? href : undefined}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={configured ? `${site.name} su ${label}` : `${label} (in arrivo)`}
-                    aria-disabled={!configured}
-                    title={configured ? label : `${label}: link da configurare`}
-                    className={cn(
-                      "group relative grid size-12 place-items-center overflow-hidden rounded-full border border-border text-foreground/80 transition-all duration-500",
-                      configured ? "hover:-translate-y-1 hover:border-amber hover:text-primary-foreground hover:shadow-[0_10px_30px_-10px_var(--amber)]" : "cursor-not-allowed opacity-40",
-                    )}
-                  >
-                    <span className="absolute inset-0 translate-y-full bg-amber transition-transform duration-500 group-hover:translate-y-0" />
-                    <Icon className="relative size-5" />
-                  </a>
-                </li>
-              )
-            })}
+    <footer className="cream-surface">
+      {/* Nastro con le anime del locale */}
+      <div aria-hidden className="overflow-hidden border-b border-ink/15 bg-[#d9cba9] py-9">
+        <div className="animate-marquee flex w-max items-center gap-16 font-display text-3xl whitespace-nowrap text-ink/80 italic">
+          {[...brands, ...brands].map((b, i) => (
+            <span key={i} className="flex items-center gap-16">
+              {b}
+              <span className="text-xl not-italic">✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mx-auto grid max-w-[1800px] grid-cols-1 gap-14 px-5 py-20 sm:px-10 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <p className="max-w-md font-display text-[clamp(1.9rem,3vw,2.6rem)] leading-tight">
+            RYO ti aspetta per una serata fuori dall&apos;ordinario.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/prenota" className="rounded-full bg-ink px-7 py-3 text-cream transition-colors hover:bg-green">
+              Prenota un tavolo
+            </Link>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-ink px-7 py-3 transition-colors hover:bg-ink hover:text-cream"
+            >
+              Scrivici su WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Il locale" className="lg:col-span-2">
+          <h3 className="text-sm tracking-wide text-ink/60">Il locale</h3>
+          <ul className="mt-5 grid gap-3 font-display text-xl">
+            {nav.map((n) => (
+              <li key={n.href}>
+                <Link href={n.href} className="hover:opacity-60">{n.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="lg:col-span-2">
+          <h3 className="text-sm tracking-wide text-ink/60">Trovaci</h3>
+          <ul className="mt-5 grid gap-3 font-display text-xl">
+            <li><a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">Google Maps</a></li>
+            <li><a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:opacity-60">Telefono</a></li>
+            <li><a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">WhatsApp</a></li>
+          </ul>
+          <h3 className="mt-10 text-sm tracking-wide text-ink/60">Seguici</h3>
+          <ul className="mt-5 grid gap-3 font-display text-xl">
+            {socials.map((s) => (
+              <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">{s.label}</a></li>
+            ))}
           </ul>
         </div>
 
         <div className="lg:col-span-3">
-          <h3 className="eyebrow">Contatti</h3>
-          <ul className="mt-5 grid grid-cols-1 gap-3 text-sm">
-            <li className="flex gap-3"><MapPin className="size-4 shrink-0 text-amber" /> {fullAddress}</li>
-            <li><a className="flex gap-3 hover:text-amber" href={`tel:${site.phone.replace(/\s/g, "")}`}><Phone className="size-4 text-amber" /> {site.phone}</a></li>
-            <li><a className="flex gap-3 hover:text-amber" href={whatsappUrl()} target="_blank" rel="noopener noreferrer"><MessageCircle className="size-4 text-amber" /> WhatsApp</a></li>
-            <li><a className="flex gap-3 hover:text-amber" href={`mailto:${site.email}`}><Mail className="size-4 text-amber" /> {site.email}</a></li>
-          </ul>
-        </div>
-
-        <div className="lg:col-span-3">
-          <h3 className="flex items-center gap-2 eyebrow">Orari <DemoBadge /></h3>
-          <dl className="mt-5 grid grid-cols-[1fr_auto] gap-x-4 gap-y-2 text-sm">
+          <h3 className="flex items-center gap-2 text-sm tracking-wide text-ink/60">Orari <DemoBadge /></h3>
+          <dl className="mt-5 grid grid-cols-[1fr_auto] gap-x-6 gap-y-2 text-sm">
             {site.hours.map((h) => (
               <div key={h.days} className="contents">
-                <dt className="text-muted-foreground">{h.days}</dt>
-                <dd className={cn("text-right tabular-nums", h.value === "Chiuso" && "text-orange")}>{h.value}</dd>
+                <dt>{h.days}</dt>
+                <dd className="text-right tabular-nums text-ink/75">{h.value}</dd>
               </div>
             ))}
           </dl>
+          <p className="mt-6 text-sm leading-relaxed text-ink/75">{fullAddress}</p>
         </div>
-
-        <nav aria-label="Link rapidi" className="lg:col-span-2">
-          <h3 className="eyebrow">Esplora</h3>
-          <ul className="mt-5 grid grid-cols-1 gap-2 text-sm">
-            {nav.map((n) => <li key={n.href}><Link href={`/${n.href}`} className="text-muted-foreground hover:text-foreground">{n.label}</Link></li>)}
-            <li><Link href="/#prenota" className="text-muted-foreground hover:text-foreground">Prenota</Link></li>
-          </ul>
-        </nav>
       </div>
 
-      <div className="rule-line mx-auto mt-16 max-w-7xl opacity-40" />
-
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-8 text-xs text-muted-foreground sm:px-8 md:flex-row md:items-center md:justify-between">
-        <p>
-          © {site.company.legalName} · P.IVA {site.company.vat} · REA {site.company.rea}
-        </p>
-        <p className="flex flex-wrap gap-x-5 gap-y-2">
-          <Link href="/privacy" className="hover:text-foreground">Privacy Policy</Link>
-          <Link href="/cookie" className="hover:text-foreground">Cookie Policy</Link>
+      <div className="mx-auto flex max-w-[1800px] flex-col gap-6 border-t border-ink/15 px-5 py-8 text-xs text-ink/70 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+        <div className="flex items-center gap-4">
+          <Image src="/images/brand/wordmark-dark.png" alt="" width={84} height={26} className="h-auto w-[84px]" />
+          <span>© {site.company.legalName} · P.IVA {site.company.vat}</span>
+        </div>
+        <p className="flex flex-wrap gap-x-6 gap-y-2">
+          <Link href="/privacy" className="hover:text-ink">Privacy Policy</Link>
+          <Link href="/cookie" className="hover:text-ink">Cookie Policy</Link>
           <span>Bevi responsabilmente</span>
         </p>
       </div>

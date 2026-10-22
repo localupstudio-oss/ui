@@ -37,7 +37,7 @@ export function Location() {
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-12">
-          <Reveal className="relative min-h-[420px] overflow-hidden rounded-[2rem] border border-border lg:col-span-7">
+          <Reveal className="relative min-h-[420px] overflow-hidden rounded-sm border border-border lg:col-span-7">
             {mapLoaded ? (
               <iframe
                 title={`Mappa di ${site.fullName}`}
@@ -70,7 +70,7 @@ export function Location() {
 
           <div className="grid grid-cols-1 gap-6 lg:col-span-5">
             <Reveal delay={0.1}>
-              <Card className="rounded-[2rem] border-border bg-card/60">
+              <Card className="rounded-sm border-border bg-card/60">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 font-display text-lg">
                     <ParkingSquare className="size-5 text-amber" /> Parcheggi vicini <DemoBadge />
@@ -99,7 +99,7 @@ export function Location() {
             </Reveal>
 
             <Reveal delay={0.2}>
-              <Card className="rounded-[2rem] border-border bg-card/60">
+              <Card className="rounded-sm border-border bg-card/60">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 font-display text-lg">
                     <Route className="size-5 text-amber" /> Come arrivare

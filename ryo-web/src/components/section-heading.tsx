@@ -2,7 +2,8 @@ import { cn } from "@/lib/utils"
 import { DemoBadge } from "@/components/demo-badge"
 
 type Props = {
-  eyebrow: string
+  /** Mantenuto per compatibilità: non viene più mostrato sopra il titolo. */
+  eyebrow?: string
   title: React.ReactNode
   intro?: React.ReactNode
   align?: "left" | "center"
@@ -10,15 +11,12 @@ type Props = {
   className?: string
 }
 
-export function SectionHeading({ eyebrow, title, intro, align = "left", demo, className }: Props) {
+export function SectionHeading({ title, intro, align = "center", demo, className }: Props) {
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
-      <p className={cn("eyebrow flex items-center gap-3", align === "center" && "justify-center")}>
-        {eyebrow}
-        {demo && <DemoBadge />}
-      </p>
-      <h2 className="mt-4 font-display text-[clamp(2.3rem,6vw,4.2rem)] text-balance">{title}</h2>
-      {intro && <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">{intro}</p>}
+      <h2 className="font-display text-[clamp(2.4rem,5vw,4.2rem)] text-balance">{title}</h2>
+      {intro && <p className={cn("mt-6 max-w-[60ch] text-lg leading-relaxed text-pretty text-foreground/75", align === "center" && "mx-auto")}>{intro}</p>}
+      {demo && <p className={cn("mt-5 flex", align === "center" && "justify-center")}><DemoBadge /></p>}
     </div>
   )
 }

@@ -2,13 +2,15 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
 import { Footer } from "@/components/layout/footer"
+import { Navbar } from "@/components/layout/navbar"
 import { site } from "@/content/site"
 
 /** Layout tipografico per le pagine legali. */
 export function LegalPage({ title, updated, children }: { title: string; updated: string; children: React.ReactNode }) {
   return (
     <>
-      <main id="contenuto" className="mx-auto max-w-3xl px-5 py-24 sm:px-8">
+      <Navbar />
+      <main id="contenuto" className="mx-auto max-w-3xl px-5 pt-36 pb-24 sm:px-8">
         <Link href="/" className="inline-flex items-center gap-2 text-sm text-amber hover:underline">
           <ArrowLeft className="size-4" /> Torna a {site.name}
         </Link>

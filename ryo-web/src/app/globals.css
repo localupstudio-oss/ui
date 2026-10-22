@@ -3,43 +3,45 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── RYO · giungla urbana: verde profondo, arancio, ambra, crema ── */
+/* ── RYO · giungla elegante: verde bosco profondo, crema, oro tenue ── */
 :root {
-  --radius: 1rem;
+  --radius: 0.25rem;
 
-  --background: #0a1410;
-  --foreground: #f4ead5;
-  --card: #10221a;
-  --card-foreground: #f4ead5;
-  --popover: #10221a;
-  --popover-foreground: #f4ead5;
-  --primary: #e5672a;           /* arancio */
-  --primary-foreground: #ffffff;
-  --secondary: #16301f;
-  --secondary-foreground: #f4ead5;
-  --muted: #16301f;
-  --muted-foreground: #a9b5a4;
-  --accent: #1b3826;
-  --accent-foreground: #f4ead5;
-  --destructive: #ff8a5c;
-  --border: #21392b;
-  --input: #2a4535;
-  --ring: #f0b340;
+  --background: #0d2618;
+  --foreground: #efe6d2;
+  --card: #10301f;
+  --card-foreground: #efe6d2;
+  --popover: #10301f;
+  --popover-foreground: #efe6d2;
+  --primary: #ece0c2;            /* crema: pulsanti principali */
+  --primary-foreground: #0d2618;
+  --secondary: #163a27;
+  --secondary-foreground: #efe6d2;
+  --muted: #163a27;
+  --muted-foreground: #b4bda9;
+  --accent: #1b4430;
+  --accent-foreground: #efe6d2;
+  --destructive: #e39a7a;
+  --border: rgb(236 224 194 / 0.16);
+  --input: rgb(236 224 194 / 0.24);
+  --ring: #cdb07a;
 
-  --amber: #f0b340;
-  --amber-light: #f6cf7a;
-  --orange: #e5672a;
-  --green: #237a2e;
-  --leaf: #3fae4f;
-  --pink: #f2a7b8;
-  --bg-2: #10221a;
-  --bg-3: #16301f;
+  --amber: #cdb07a;              /* oro tenue */
+  --amber-light: #e6d3a6;
+  --orange: #c8794d;             /* terracotta, uso parco */
+  --green: #1f5c3a;
+  --leaf: #7fb28a;
+  --pink: #e6b3b8;
+  --bg-2: #0f2a1c;
+  --bg-3: #163a27;
+  --cream: #e8dcc0;
+  --ink: #123524;
 }
 
 @theme inline {
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-bowlby);
-  --font-mono: var(--font-space-mono);
+  --font-sans: var(--font-montserrat);
+  --font-display: var(--font-playfair);
+  --font-mono: var(--font-montserrat);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -68,62 +70,77 @@
   --color-pink: var(--pink);
   --color-bg-2: var(--bg-2);
   --color-bg-3: var(--bg-3);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
 
-  --radius-sm: calc(var(--radius) - 6px);
-  --radius-md: calc(var(--radius) - 4px);
-  --radius-lg: calc(var(--radius) - 2px);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
 }
 
 @layer base {
   * { @apply border-border outline-ring/50; }
-  html { scroll-behavior: smooth; scroll-padding-top: 5rem; color-scheme: dark; }
+  html { scroll-behavior: smooth; scroll-padding-top: 6rem; color-scheme: dark; }
   body {
     @apply bg-background text-foreground antialiased;
     font-weight: 300;
+    background-image: url("/images/brand/fern-on-green.svg");
+    background-size: 280px 280px;
   }
-  ::selection { background: var(--orange); color: #fff; }
+  ::selection { background: var(--cream); color: var(--ink); }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 }
 
-/* Titoli "poster": Bowlby One maiuscolo, come le locandine THIS IS RYO WEEKEND */
+/* Titoli serif: grandi, ariosi, minuscole */
 @utility font-display {
   font-family: var(--font-display);
   font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  line-height: 1;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
 }
 
-/* Etichette in stile anello del logo */
 @utility eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  letter-spacing: 0.22em;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--amber);
 }
 
-/* Parola evidenziata in arancio */
-@utility text-hot { color: var(--orange); }
+/* Parola evidenziata: corsivo oro */
+@utility text-hot { color: var(--amber-light); font-style: italic; }
 
 @utility glass {
-  background: rgb(10 20 16 / 0.82);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: rgb(13 38 24 / 0.82);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
   border: 1px solid var(--border);
 }
 
-/* Bagliore verde + arancio, come lo sfondo dell'hero della prima versione */
 @utility jungle-glow {
-  background-image:
-    radial-gradient(70% 60% at 85% 20%, rgb(63 174 79 / 0.16), transparent 70%),
-    radial-gradient(50% 50% at 8% 90%, rgb(229 103 42 / 0.10), transparent 70%);
+  background-image: radial-gradient(60% 50% at 80% 10%, rgb(205 176 122 / 0.08), transparent 70%);
+}
+
+/* Superfici crema con trama di felci (menu a schermo intero, footer) */
+@utility cream-surface {
+  background-color: var(--cream);
+  background-image: url("/images/brand/fern-on-cream.svg");
+  background-size: 280px 280px;
+  color: var(--ink);
+}
+
+@utility link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.45em;
+  transition: text-underline-offset 0.3s, color 0.3s;
+  &:hover { text-underline-offset: 0.25em; }
 }
 
 @utility rule-line { height: 1px; background: var(--border); }
 
-/* Nastro arancio inclinato con testo che scorre */
 @keyframes marquee { to { transform: translateX(-50%); } }
-@utility animate-marquee { animation: marquee 28s linear infinite; }
+@utility animate-marquee { animation: marquee 60s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .animate-marquee { animation: none; } }

@@ -49,7 +49,7 @@ export function Thursday() {
               {thursday.moments.map((m, i) => {
                 const Icon = icons[i]
                 return (
-                  <li key={m.title} className="flex gap-4 rounded-2xl border border-border bg-bg-2/70 p-4">
+                  <li key={m.title} className="flex gap-4 rounded-sm border border-border bg-bg-2/70 p-4">
                     <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-orange/15 text-orange">
                       <Icon className="size-5" />
                     </span>
@@ -83,7 +83,7 @@ export function Thursday() {
                 key={g.src}
                 delay={(i % 3) * 0.08}
                 className={cn(
-                  "group relative overflow-hidden rounded-2xl bg-bg-3",
+                  "group relative overflow-hidden rounded-sm bg-bg-3",
                   "wide" in g && g.wide ? "col-span-2 aspect-[2/1] sm:col-span-3" : "aspect-[3/4]",
                 )}
               >
