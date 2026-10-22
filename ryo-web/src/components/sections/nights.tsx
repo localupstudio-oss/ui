@@ -1,66 +1,54 @@
-"use client"
-
 import Image from "next/image"
-import { motion } from "framer-motion"
-import { Clock, Music2, Shirt, Star } from "lucide-react"
+import { Clock, Music2, Ticket, Star } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { SectionHeading } from "@/components/section-heading"
 import { Reveal } from "@/components/motion/reveal"
+import { SectionHeading } from "@/components/section-heading"
 import { nights } from "@/content/experience"
 
+/** Le tre serate della settimana, ognuna con la sua locandina. */
 export function Nights() {
   return (
     <section id="serate" className="py-28 sm:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal>
           <SectionHeading
-            demo
-            eyebrow="Le nostre serate"
             title={
               <>
                 Le notti <span className="text-hot">di RYO</span>
               </>
             }
-            intro="Il giovedì si canta a tavola, il weekend si balla. Programma e ospiti aggiornati ogni settimana su Instagram."
+            intro="Giovedì si canta a tavola, venerdì e sabato si balla. Line-up e ospiti aggiornati ogni settimana su Instagram."
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
+        <div className="mt-16 grid gap-10 md:grid-cols-3 md:gap-6">
           {nights.map((n, i) => (
-            <Reveal key={n.day} delay={i * 0.12}>
-              <motion.article
-                whileHover="hover"
-                initial="rest"
-                animate="rest"
-                className="group relative flex h-[560px] flex-col justify-end overflow-hidden rounded-sm border border-border"
-              >
-                <motion.div variants={{ rest: { scale: 1.02 }, hover: { scale: 1.1 } }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-0 -z-10">
-                  <Image src={n.image} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-                </motion.div>
-                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background via-background/75 to-background/10" />
-
-                <div className="absolute top-5 left-5">
-                  <Badge className="rounded-full bg-amber px-3 py-1 text-xs font-semibold tracking-[0.2em] text-background uppercase">{n.day}</Badge>
+            <Reveal key={n.day} delay={i * 0.1} className="flex flex-col">
+              <a href={n.href ?? "/prenota"} className="group block overflow-hidden rounded-sm">
+                <div className="relative aspect-[1170/1901]">
+                  <Image
+                    src={n.image}
+                    alt={`Locandina: ${n.title}, ${n.day.toLowerCase()} da RYO`}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                  />
                 </div>
-
-                <div className="p-7">
-                  <h3 className="font-display text-2xl">{n.title}</h3>
-                  <p className="mt-2 text-foreground/75">{n.mood}</p>
-
-                  <dl className="mt-6 grid gap-3 border-t border-border pt-5 text-sm">
-                    <Row icon={Clock} label="Orario" value={n.time} />
-                    <Row icon={Music2} label="Line-up" value={n.lineup.join(" · ")} />
-                    <Row icon={Shirt} label="Dress code" value={n.dressCode} />
-                    <Row icon={Star} label="Highlight" value={n.highlight} />
-                  </dl>
-
-                  <Button asChild variant="outline" className="mt-6 w-full rounded-full border-amber/40 bg-transparent hover:bg-amber hover:text-background">
-                    <a href={n.href ?? "#prenota"}>{n.href ? "Scopri la serata" : `Riserva per ${n.day.toLowerCase()}`}</a>
-                  </Button>
-                </div>
-              </motion.article>
+              </a>
+              <div className="mt-6 text-center">
+                <p className="text-sm tracking-[0.2em] text-amber uppercase">{n.day}</p>
+                <h3 className="mt-2 font-display text-3xl">{n.title}</h3>
+                <p className="mx-auto mt-3 max-w-xs text-foreground/75">{n.mood}</p>
+                <dl className="mx-auto mt-5 grid max-w-xs gap-2 text-left text-sm">
+                  {n.time && <Row icon={Clock} value={n.time} />}
+                  <Row icon={Music2} value={n.lineup.join(" · ")} />
+                  {n.entry && <Row icon={Ticket} value={n.entry} />}
+                  <Row icon={Star} value={n.highlight} />
+                </dl>
+                <a href={n.href ?? "/prenota"} className="link-underline mt-6 inline-block text-lg">
+                  {n.href ? "Scopri la serata" : `Prenota per ${n.day.toLowerCase()}`}
+                </a>
+              </div>
             </Reveal>
           ))}
         </div>
@@ -69,11 +57,10 @@ export function Nights() {
   )
 }
 
-function Row({ icon: Icon, label, value }: { icon: typeof Clock; label: string; value: string }) {
+function Row({ icon: Icon, value }: { icon: typeof Clock; value: string }) {
   return (
-    <div className="grid grid-cols-[20px_92px_1fr] items-start gap-2">
-      <Icon className="mt-0.5 size-4 text-amber" aria-hidden />
-      <dt className="text-muted-foreground">{label}</dt>
+    <div className="flex items-start gap-3">
+      <Icon className="mt-0.5 size-4 shrink-0 text-amber" aria-hidden />
       <dd className="text-foreground/90">{value}</dd>
     </div>
   )

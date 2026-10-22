@@ -55,7 +55,7 @@ export const site = {
 
 export const nav = [
   { href: "/menu", label: "Menu" },
-  { href: "/menu#drink-list", label: "Drink List" },
+  { href: "/menu#drink", label: "Drink List" },
   { href: "/serate", label: "Le serate" },
   { href: "/eventi", label: "Eventi privati" },
   { href: "/contatti", label: "Location & contatti" },

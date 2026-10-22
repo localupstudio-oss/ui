@@ -1,0 +1,2 @@
+Playfair Display e Montserrat: SIL Open Font License 1.1 (https://openfontlicense.org).
+Istanze statiche generate dai font variabili di github.com/google/fonts.

@@ -59,6 +59,8 @@ export function PhotoStrip() {
 
 type FeatureProps = {
   href: string
+  /** Apre in una nuova scheda (es. PDF). */
+  external?: boolean
   title: string
   meta?: string
   cta?: string
@@ -69,11 +71,12 @@ type FeatureProps = {
 }
 
 /** Grande riquadro fotografico con titolo serif e link sottolineato, con fronda sfocata in primo piano. */
-export function FeatureCard({ href, title, meta, cta = "Scopri", image, alt, size = "full", position = "center" }: FeatureProps) {
+export function FeatureCard({ href, external, title, meta, cta = "Scopri", image, alt, size = "full", position = "center" }: FeatureProps) {
   return (
     <Reveal className="h-full">
       <Link
         href={href}
+        {...(external && { target: "_blank", rel: "noopener" })}
         className={cn(
           "group relative isolate flex h-full flex-col items-center justify-end overflow-hidden px-6 pb-14 text-center text-[#f6efe0] sm:pb-20",
           size === "full" ? "min-h-[72vh] sm:min-h-[85vh]" : "min-h-[70vh] sm:min-h-[90vh]",

@@ -1,0 +1,116 @@
+{
+  "aggiornato": "ottobre 2026",
+  "coperto": "Coperto 2 € · Coperto + musica 4 €",
+  "churrasco": {
+    "nome": "Churrasco Menù",
+    "titolo": "Degustazione alla brace",
+    "descrizione": "4 tapas, 3 contorni, 5 tipologie di carne alla brace",
+    "carni": ["Picanha", "Maiale", "Manzo", "Pollo", "Vitello"],
+    "prezzo": "38 €"
+  },
+  "cucina": [
+    {
+      "id": "tapas",
+      "nome": "Tapas",
+      "piatti": [
+        { "nome": "Croquetas di melanzane", "descrizione": "Polpetta di melanzana ripiena di caciocavallo con mayo al pomodoro", "prezzo": "8 €" },
+        { "nome": "Polpetta di maiale", "descrizione": "Polpetta di maiale al vino bianco servita con broccoli croccanti", "prezzo": "10 €" },
+        { "nome": "Pollo Carioca", "descrizione": "Pollo marinato e fritto", "prezzo": "10 €" },
+        { "nome": "Pan tostado, tomate e jamón ibérico", "descrizione": "Bruschetta con salsa fredda di pomodori all'insalata e jamón ibérico selezione RYO", "prezzo": "18 €" },
+        { "nome": "Gamberi Camarão", "descrizione": "Gamberi in pane panko con salsa RYO e sesamo nero", "prezzo": "13 €" },
+        { "nome": "Tortillas di manzo", "descrizione": "Stracotto di manzo, cavolo viola marinato, salsa RYO e yogurt", "prezzo": "14 €" },
+        { "nome": "Empanadas di pollo", "descrizione": "Empanadas ripiene di pollo e peperoni", "prezzo": "8 €" }
+      ]
+    },
+    {
+      "id": "platos",
+      "nome": "Platos",
+      "piatti": [
+        { "nome": "Ceviche di pescato", "descrizione": "Tartare di spigola marinata al lime, coriandolo, cipolla e jalapeño", "prezzo": "18 €" },
+        { "nome": "Tagliere salumi e formaggi", "descrizione": "Selezione RYO, può variare in base alla disponibilità · per 2 persone", "prezzo": "20 €" },
+        { "nome": "RYO Roll", "descrizione": "Pan brioche di produzione RYO, gambero scottato, misticanza, salsa RYO e yogurt", "prezzo": "15 €" },
+        { "nome": "Tacos salmone", "descrizione": "Tartare di salmone, mayo al lime, misticanza, mango e cipolla in agrodolce", "prezzo": "12 €" },
+        { "nome": "Polpo, patate e chimichurri", "descrizione": "", "prezzo": "18 €" },
+        { "nome": "RYO Bun", "descrizione": "Bun di produzione RYO, hamburger di manzo selezione RYO da 180 g, bacon croccante, cheddar, cipolla in agrodolce, insalata lollo, salsa asado. Servito con patatine", "prezzo": "15 €" }
+      ]
+    },
+    {
+      "id": "ensaladas",
+      "nome": "Ensaladas",
+      "piatti": [
+        { "nome": "Insalata di pollo", "descrizione": "Petto di pollo marinato e grigliato, insalata, crostini, datterino rosso, scaglie di grana, bacon croccante e salsa allo yogurt", "prezzo": "12 €" }
+      ]
+    },
+    {
+      "id": "primi",
+      "nome": "Primi piatti",
+      "piatti": [
+        { "nome": "Tagliolino cacio, pepe, gamberi rossi e lime", "descrizione": "", "prezzo": "18 €" },
+        { "nome": "Riso amazzonico", "descrizione": "Riso spadellato, ananas, cipolla, arachidi, spezie, peperoni, prezzemolo e lime", "prezzo": "16 €" },
+        { "nome": "Pasta mista, fagioli, chorizo, jalapeño e coriandolo", "descrizione": "", "prezzo": "16 €" }
+      ]
+    },
+    {
+      "id": "carnes",
+      "nome": "Carnes",
+      "piatti": [
+        { "nome": "Bistecca selezione RYO", "descrizione": "Bistecca con osso da circa 800 g della nostra selezione settimanale di razza e frollatura", "prezzo": "9 €/etto" },
+        { "nome": "Picanha", "descrizione": "Taglio selezione RYO da 250 g servito con patate alla cenere", "prezzo": "22 €" },
+        { "nome": "Maialino", "descrizione": "Maiale di nostra selezione con spinacino saltato, polenta croccante e crema di patate", "prezzo": "22 €" }
+      ]
+    },
+    {
+      "id": "sides",
+      "nome": "Sides",
+      "piatti": [
+        { "nome": "Misticanza RYO", "descrizione": "Servita con salsa al mais e cavolo viola marinato", "prezzo": "6 €" },
+        { "nome": "Patatine dipper's", "descrizione": "", "prezzo": "6 €" },
+        { "nome": "Verdure grigliate", "descrizione": "", "prezzo": "6 €" },
+        { "nome": "Patatine dolci", "descrizione": "", "prezzo": "6 €" },
+        { "nome": "Patate al forno", "descrizione": "", "prezzo": "6 €" }
+      ]
+    },
+    {
+      "id": "dulce",
+      "nome": "Dulce",
+      "piatti": [
+        { "nome": "Tiramiryo", "descrizione": "", "prezzo": "6 €" },
+        { "nome": "Bananito", "descrizione": "", "prezzo": "6 €" },
+        { "nome": "Babà con gelato al limone e frutti rossi", "descrizione": "", "prezzo": "6 €" },
+        { "nome": "Dolce della settimana", "descrizione": "", "prezzo": "6 €" }
+      ]
+    }
+  ],
+  "drink": [
+    {
+      "id": "signature",
+      "nome": "Signature",
+      "piatti": [
+        { "nome": "Save the Jungle", "descrizione": "Cachaça, tamarillo, Cocchi Americano, lime, agave, ginger ale", "prezzo": "9 €" },
+        { "nome": "Monkey Business", "descrizione": "Bulleit Bourbon, liquore alla banana, sciroppo d'acero, succo di limone, ginger beer, plátano crispy", "prezzo": "10 €" },
+        { "nome": "Trinidad Scorpion", "descrizione": "Tequila Patrón Silver, Italicus, limone, agave, Trinidad Scorpion, pompelmo rosa", "prezzo": "11 €" },
+        { "nome": "Old Fashioned della Foresta", "descrizione": "Diplomático Mantuano, Briottet Fava Tonka, honey mix, Angostura", "prezzo": "9 €" },
+        { "nome": "RYO Collins", "descrizione": "Grey Goose, Briottet Pesca, Briottet Lychee, lime, fermentato di frutti rossi, tonica Indian", "prezzo": "10 €" },
+        { "nome": "Señor Gimlet 2.0", "descrizione": "Tanqueray Ten, cordiale di lime speziato, olio al rosmarino", "prezzo": "9 €" },
+        { "nome": "Hibiscus", "descrizione": "Mezcal Nuestra Soledad, lime, zucchero, Briottet Zenzero, pompelmo rosa", "prezzo": "12 €" },
+        { "nome": "Coco Espresso", "descrizione": "Grey Goose, Mr Black, liquore al cioccolato, cocco, caffè, scaglia di cocco", "prezzo": "9 €" },
+        { "nome": "Colombiana", "descrizione": "Aqva di Gin Fruity, riduzione di vino bianco Fiano, Archechenji dalla Colombia", "prezzo": "9 €" }
+      ]
+    },
+    {
+      "id": "tiempo-negroni",
+      "nome": "Tiempo Negroni",
+      "piatti": [
+        { "nome": "Negroni delle Amazzoni", "descrizione": "Cachaça al tamarillo, Vermouth di Torino 1757, Bitter Martini Riserva", "prezzo": "8 €" },
+        { "nome": "Choco Negroni", "descrizione": "Portobello Gin, Campari, Punt e Mes, crème de cacao, bitter al cioccolato", "prezzo": "9 €" },
+        { "nome": "Coffee Negroni", "descrizione": "Tanqueray, Bitter Martini Riserva al caffè, Marsala, Mr Black", "prezzo": "8 €" },
+        { "nome": "Sud Americano", "descrizione": "Martini Bitter Riserva, Punt e Mes, soda all'ananas arrostito", "prezzo": "8 €" },
+        { "nome": "Yuzu Negroni", "descrizione": "Yuzu sake, Nuestra Soledad Mezcal, Martini Bitter Riserva, yuzu bitters", "prezzo": "9 €" },
+        { "nome": "White Negroni", "descrizione": "Bombay Sapphire, Suze, Martini Ambrato", "prezzo": "8 €" },
+        { "nome": "Old Pal", "descrizione": "Knob Creek Rye, Martini Bitter Riserva, Noilly Prat Extra Dry", "prezzo": "8 €" },
+        { "nome": "Barrel Boulevardier", "descrizione": "Boulevardier invecchiato 6 mesi in botti di rovere", "prezzo": "10 €" },
+        { "nome": "Barrel Negroni", "descrizione": "Negroni invecchiato 4 mesi in botte di rovere", "prezzo": "10 €" }
+      ]
+    }
+  ]
+}

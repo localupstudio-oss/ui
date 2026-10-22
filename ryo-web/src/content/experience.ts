@@ -9,46 +9,46 @@ export type Night = {
   day: "Giovedì" | "Venerdì" | "Sabato"
   title: string
   mood: string
-  time: string
+  time?: string
   lineup: string[]
-  dressCode: string
+  entry?: string
   highlight: string
+  /** Locandina della serata (verticale). */
   image: string
   /** Sezione di approfondimento, se esiste. */
   href?: string
 }
 
+/** ✔ Dalle locandine di ottobre 2026. ✎ Da confermare se le serate di venerdì e sabato sono ricorrenti. */
 export const nights: Night[] = [
   {
     day: "Giovedì",
     title: "Quelli che il Giovedì",
-    mood: "Si cena, si canta al microfono che gira tra i tavoli e si balla tutti insieme.", // ✔ concept reale
-    time: "Dalle 20:30", // ✎ da confermare
-    lineup: ["Karaoke tra i tavoli", "Cena e musica live"], // ✎ presentatore/cantante da confermare
-    dressCode: "Libero",
-    highlight: "Cena + karaoke + festa",
-    image: "/images/giovedi/cantano-al-tavolo.jpg",
+    mood: "Cena, karaoke tra i tavoli e festa: il Giovedì RYO.",
+    time: "Start 21:30",
+    lineup: ["DJ set Peter Torre", "Voice Carmine Caudino"],
+    entry: "Solo con tavolo cena · cocktail bar",
+    highlight: "Si canta, si cena, si balla",
+    image: "/images/serate/giovedi-ryo.jpg",
     href: "#giovedi",
   },
   {
     day: "Venerdì",
-    title: "DJ Set & Lounge",
-    mood: "Deep, funky e house: la giungla si accende.",
-    time: "22:00 – 02:00",
-    lineup: ["Lefty DJ", "Omen DJ"],
-    dressCode: "Elegante",
-    highlight: "This is RYO Weekend",
-    image: "/images/eventi/bancone-scimmia.jpg",
+    title: "T'immagini",
+    mood: "Il venerdì di RYO con Friends Events: nuovo menù e nuova drink list.",
+    time: "Start 21:30",
+    lineup: ["DJ set Lorenzo Barbarulo", "Friends Events"],
+    highlight: "Nuovo menù e nuova drink list",
+    image: "/images/serate/venerdi-timmagini.jpg",
   },
   {
     day: "Sabato",
-    title: "Premium Exclusive Night",
-    mood: "Tavoli riservati, bottle service e drink special in edizione limitata.",
-    time: "22:00 – 02:00",
-    lineup: ["Guest DJ da annunciare"],
-    dressCode: "Elegante — no sportswear",
-    highlight: "Prenotazione consigliata",
-    image: "/images/locale/sala-giungla.jpg",
+    title: "Churrasco Experience",
+    mood: "Fuoco, incontri e alchimia liquida. Un nuovo rituale sta per iniziare.",
+    lineup: ["DJ set Lefty"],
+    highlight: "4 tapas, 3 contorni e giro di carne allo spiedo",
+    image: "/images/serate/sabato-churrasco.jpg",
+    href: "/menu#churrasco",
   },
 ]
 
@@ -135,11 +135,12 @@ export const thursday = {
     { title: "Canta", text: "Il microfono gira tra i tavoli: chi vuole canta, tutti gli altri fanno il coro." },
     { title: "Balla", text: "Quando si alza la musica, la sala diventa una pista." },
   ],
-  /** ✎ da confermare con il locale */
   details: [
-    { label: "Quando", value: "Ogni giovedì" },
-    { label: "Inizio", value: "Dalle 20:30" },
-    { label: "Prenotazione", value: "Consigliata" },
+    { label: "Quando", value: "Giovedì" },
+    { label: "Start", value: "21:30" },
+    { label: "Ingresso", value: "Solo con tavolo cena" },
+    { label: "DJ set", value: "Peter Torre" },
+    { label: "Voice", value: "Carmine Caudino" },
   ],
   gallery: [
     { src: "/images/giovedi/microfono-tavola.jpg", alt: "Il microfono della serata appoggiato sul menu tropicale di RYO", tall: true },

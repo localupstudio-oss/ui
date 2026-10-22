@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:preview": "STATIC_PREVIEW=1 next build",
+    "menu:pdf": "python3 scripts/build-menu-pdf.py",
     "start": "next start",
     "lint": "eslint"
   },

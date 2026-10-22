@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion"
 import { Mic2, UtensilsCrossed, Music4 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { DemoBadge } from "@/components/demo-badge"
 import { Reveal } from "@/components/motion/reveal"
 import { thursday } from "@/content/experience"
 import { cn } from "@/lib/utils"
@@ -25,7 +24,7 @@ export function Thursday() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
             <p className="eyebrow flex items-center gap-3">
-              Ogni giovedì <DemoBadge label="Orari da confermare" />
+              Ogni giovedì · Giovedì RYO
             </p>
             <motion.div
               className="relative mt-6 w-full max-w-md"
