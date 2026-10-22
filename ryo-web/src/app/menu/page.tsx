@@ -18,7 +18,7 @@ export default function Page() {
     <>
       <Navbar />
       <main id="contenuto">
-        <PageHero title="Il menu" subtitle="Churrascaria, tapas da condividere e cocktail d'autore." image="/images/cucina/nuovo-menu.jpg" alt="Il menu cucina di RYO" />
+        <PageHero title="Il menu" subtitle="Churrascaria, tapas da condividere e cocktail d'autore." image="/images/cucina/paella.jpg" alt="Paella da condividere" position="center 35%" />
         <MenuPage />
         <DrinkList />
         <Pairings />
