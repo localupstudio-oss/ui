@@ -153,3 +153,69 @@ export const thursday = {
     { src: "/images/giovedi/karaoke.jpg", alt: "Un'ospite canta al microfono in mezzo alla sala", wide: true },
   ],
 } as const
+
+export type Experience = {
+  key: "festa" | "mercoledi" | "giovedi" | "venerdi" | "sabato" | "domenica"
+  /** Etichetta breve sopra il titolo. */
+  label: string
+  title: string
+  text: string
+  image: string
+  /** Giorno della settimana preselezionato nel calendario (0 = domenica); assente per le feste. */
+  weekday?: number
+  /** Segnaposto in attesa dei dettagli dell'evento. */
+  soon?: boolean
+}
+
+/** Le "esperienze" del modulo di prenotazione: feste private e le serate della settimana. */
+export const experiences: Experience[] = [
+  {
+    key: "festa",
+    label: "Su richiesta",
+    title: "Feste private & compleanni",
+    text: "Festa dei 30 anni, compleanni, lauree e cene di gruppo: menu dedicato, torta, musica e tavolo riservato.",
+    image: "/images/giovedi/festa-al-tavolo.jpg",
+  },
+  {
+    key: "mercoledi",
+    label: "Mercoledì",
+    title: "Il Mercoledì di RYO",
+    text: "Si riapre la settimana tra tapas e cocktail. In arrivo una formula speciale per far risparmiare chi viene a trovarci.",
+    image: "/images/locale/sala-giungla.jpg",
+    weekday: 3,
+    soon: true,
+  },
+  {
+    key: "giovedi",
+    label: "Giovedì",
+    title: "Quelli che il Giovedì",
+    text: "Cena, karaoke tra i tavoli e festa. Start 21:30, ingresso solo con tavolo cena.",
+    image: "/images/serate/giovedi-ryo.jpg",
+    weekday: 4,
+  },
+  {
+    key: "venerdi",
+    label: "Venerdì",
+    title: "T'immagini",
+    text: "Il venerdì con Friends Events e DJ set Lorenzo Barbarulo: nuovo menù e nuova drink list.",
+    image: "/images/serate/venerdi-timmagini.jpg",
+    weekday: 5,
+  },
+  {
+    key: "sabato",
+    label: "Sabato",
+    title: "Churrasco Experience",
+    text: "4 tapas, 3 contorni e il giro di carne allo spiedo, con il DJ set di Lefty.",
+    image: "/images/serate/sabato-churrasco.jpg",
+    weekday: 6,
+  },
+  {
+    key: "domenica",
+    label: "Domenica",
+    title: "La Domenica di RYO",
+    text: "Chiudi il weekend con calma, tra brace e cocktail. Anche qui presto una formula pensata per farti risparmiare.",
+    image: "/images/locale/bancone.jpg",
+    weekday: 0,
+    soon: true,
+  },
+]

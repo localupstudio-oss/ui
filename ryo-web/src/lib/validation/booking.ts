@@ -8,11 +8,12 @@ z.config({ jitless: true })
 /** Schema condiviso client/server: la stessa regola valida il form nel browser e nella Server Action. */
 
 export const TIME_SLOTS = ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"] as const
-export const EVENT_TYPES = { compleanno: "Compleanno", aziendale: "Evento aziendale", privato: "Festa privata", altro: "Altro" } as const
+export const EVENT_TYPES = { compleanno: "Compleanno (18, 30, 40 anni…)", privato: "Festa privata / laurea", aziendale: "Cena aziendale", altro: "Altro" } as const
+export const GUESTS_MAX = 12
 
-const todayInRome = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date()) // YYYY-MM-DD
+export const todayInRome = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date()) // YYYY-MM-DD
 
-const weekday = (isoDate: string) => new Date(`${isoDate}T12:00:00Z`).getUTCDay()
+export const weekday = (isoDate: string) => new Date(`${isoDate}T12:00:00Z`).getUTCDay()
 
 const futureDate = z.iso
   .date("Seleziona una data valida")
@@ -45,7 +46,7 @@ export const tableBookingSchema = z.object({
     "Siamo chiusi il lunedì e il martedì",
   ),
   time: z.enum(TIME_SLOTS, "Seleziona un orario"),
-  guests: z.coerce.number("Numero ospiti non valido").int().min(1, "Minimo 1 ospite").max(12, "Per più di 12 ospiti usa il modulo eventi"),
+  guests: z.coerce.number("Numero ospiti non valido").int().min(1, "Minimo 1 ospite").max(GUESTS_MAX, "Per più di 12 ospiti usa Feste ed eventi"),
 })
 
 export const privateEventSchema = z.object({
@@ -72,7 +73,7 @@ export function validateBooking(data: unknown) {
   return { ok: false as const, fieldErrors: z.flattenError(result.error).fieldErrors as FieldErrors }
 }
 
-function addMonths(isoDate: string, months: number) {
+export function addMonths(isoDate: string, months: number) {
   const d = new Date(`${isoDate}T12:00:00Z`)
   d.setUTCMonth(d.getUTCMonth() + months)
   return d.toISOString().slice(0, 10)
