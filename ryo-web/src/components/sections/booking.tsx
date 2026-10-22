@@ -2,7 +2,7 @@
 
 import { useActionState, useState, useSyncExternalStore } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { CheckCircle2, Crown, GlassWater, Loader2, MessageCircle, Sofa } from "lucide-react"
+import { CheckCircle2, Loader2, MessageCircle } from "lucide-react"
 
 import { submitBooking } from "@/app/actions/booking"
 import { Button } from "@/components/ui/button"
@@ -13,11 +13,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { SectionHeading } from "@/components/section-heading"
 import { Reveal } from "@/components/motion/reveal"
-import { EVENT_TYPES, TIME_SLOTS, ZONES, validateBooking, type BookingState, type FieldErrors } from "@/lib/validation/booking"
+import { EVENT_TYPES, TIME_SLOTS, validateBooking, type BookingState, type FieldErrors } from "@/lib/validation/booking"
 import { cn } from "@/lib/utils"
 import { site, whatsappUrl } from "@/content/site"
 
-const zoneIcons = { vip: Crown, bancone: GlassWater, sala: Sofa } as const
 const initial: BookingState = { status: "idle" }
 const noopSubscribe = () => () => {}
 const todayIso = () => new Date().toISOString().slice(0, 10)
@@ -36,7 +35,7 @@ export function Booking({ defaultTab = "tavolo" }: { defaultTab?: "tavolo" | "ev
                   Prenota il tuo <span className="text-hot">tavolo</span>
                 </>
               }
-              intro="Scegli data, orario e zona. Per feste, compleanni e cene di gruppo usa la scheda Evento privato: ti ricontattiamo per costruire la serata insieme."
+              intro="Scegli data, orario e numero di ospiti. Per feste, compleanni e cene di gruppo usa la scheda Evento privato: ti ricontattiamo per costruire la serata insieme."
             />
           </Reveal>
           <Reveal delay={0.1} className="mt-10 border border-border p-6 sm:p-8">
@@ -148,24 +147,6 @@ function BookingForm({ kind }: { kind: "tavolo" | "evento" }) {
           <Field label="Numero ospiti" id={id("guests")} error={errors.guests}>
             <Input id={id("guests")} name="guests" type="number" inputMode="numeric" min={1} max={12} defaultValue={2} required />
           </Field>
-          <fieldset className="sm:col-span-2">
-            <legend className="mb-2 text-sm font-medium">Zona preferita</legend>
-            <div className="grid grid-cols-3 gap-3">
-              {(Object.keys(ZONES) as (keyof typeof ZONES)[]).map((z, i) => {
-                const Icon = zoneIcons[z]
-                return (
-                  <label key={z} className="group relative cursor-pointer">
-                    <input type="radio" name="zone" value={z} defaultChecked={i === 2} className="peer sr-only" />
-                    <span className="flex flex-col items-center gap-2 rounded-sm border border-border p-4 text-sm transition-all peer-checked:border-amber peer-checked:bg-amber/10 peer-checked:shadow-[0_0_24px_-8px_var(--amber)] peer-focus-visible:ring-2 peer-focus-visible:ring-ring hover:border-foreground/30">
-                      <Icon className="size-5 text-amber" />
-                      {ZONES[z]}
-                    </span>
-                  </label>
-                )
-              })}
-            </div>
-            <ErrorText errors={errors.zone} />
-          </fieldset>
         </>
       ) : (
         <>

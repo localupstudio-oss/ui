@@ -9,7 +9,7 @@ import { validateBooking, type BookingInput, type BookingState } from "@/lib/val
 
 const ALLOWED_FIELDS = [
   "kind", "name", "email", "phone", "notes", "privacy", "website",
-  "date", "time", "guests", "zone", "eventType", "company",
+  "date", "time", "guests", "eventType", "company",
 ] as const
 
 export async function submitBooking(_prev: BookingState, formData: FormData): Promise<BookingState> {

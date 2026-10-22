@@ -8,7 +8,6 @@ z.config({ jitless: true })
 /** Schema condiviso client/server: la stessa regola valida il form nel browser e nella Server Action. */
 
 export const TIME_SLOTS = ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"] as const
-export const ZONES = { vip: "Area VIP", bancone: "Bancone", sala: "Sala" } as const
 export const EVENT_TYPES = { compleanno: "Compleanno", aziendale: "Evento aziendale", privato: "Festa privata", altro: "Altro" } as const
 
 const todayInRome = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date()) // YYYY-MM-DD
@@ -47,7 +46,6 @@ export const tableBookingSchema = z.object({
   ),
   time: z.enum(TIME_SLOTS, "Seleziona un orario"),
   guests: z.coerce.number("Numero ospiti non valido").int().min(1, "Minimo 1 ospite").max(12, "Per più di 12 ospiti usa il modulo eventi"),
-  zone: z.enum(Object.keys(ZONES) as [keyof typeof ZONES, ...(keyof typeof ZONES)[]], "Seleziona una zona"),
 })
 
 export const privateEventSchema = z.object({
