@@ -1,0 +1,2 @@
+Playfair Display, Montserrat, Caveat Brush, Space Grotesk e Syne: SIL Open Font License 1.1 (https://openfontlicense.org).
+Istanze statiche generate dai font variabili di github.com/google/fonts.

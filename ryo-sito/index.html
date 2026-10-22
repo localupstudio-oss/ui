@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RYO Cocktail Bar</title>
+<meta name="description" content="RYO · Cocktail, bar e cucina nel cuore di Cava de' Tirreni. Corso Umberto I, 1. Aperti dal mercoledì alla domenica.">
+<link rel="icon" href="dati/logo/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a1410; --bg-2:#10221a; --bg-3:#16301f; --line:#21392b;
+    --cream:#f4ead5; --muted:#a9b5a4;
+    --green:#237a2e; --leaf:#3fae4f; --amber:#f0b340; --orange:#e5672a; --pink:#f2a7b8;
+    --display:"Bowlby One",Impact,sans-serif; --mono:"Space Mono",ui-monospace,monospace; --sans:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--cream);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+  h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1;letter-spacing:.01em;text-transform:uppercase}
+  h2{font-size:clamp(2.3rem,6vw,4.2rem);margin:.6rem 0 1.4rem}
+  h3{font-size:1.25rem}
+  section{padding:clamp(72px,10vw,130px) 0}
+  .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 1.5rem;border-radius:999px;border:1.5px solid var(--cream);font-family:var(--mono);font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:.25s}
+  .btn:hover{background:var(--cream);color:var(--bg)}
+  .btn.hot{background:var(--orange);border-color:var(--orange);color:#fff}
+  .btn.hot:hover{background:var(--amber);border-color:var(--amber);color:var(--bg)}
+  .todo{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;background:rgba(229,103,42,.15);color:#ffb38c;border:1px dashed rgba(255,179,140,.55);padding:.1rem .45rem;border-radius:4px;vertical-align:middle}
+  .ph{width:100%;height:100%;object-fit:cover}
+
+  /* Nav */
+  header{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s;border-bottom:1px solid transparent}
+  header.scrolled{background:rgba(10,20,16,.9);backdrop-filter:blur(12px);border-color:var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:1rem}
+  .brand{display:flex;align-items:center;gap:.7rem;font-family:var(--display);font-size:1.5rem}
+  .brand img{width:44px;height:44px}
+  .links{display:flex;gap:1.8rem;align-items:center;font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .links a:hover{color:var(--amber)}
+  .links .btn{padding:.6rem 1.1rem;color:#fff}
+  .burger{display:none;background:none;border:0;color:var(--cream);font-size:1.6rem;cursor:pointer}
+
+  /* Hero */
+  .hero{min-height:100svh;display:flex;align-items:center;padding:110px 0 60px;position:relative;overflow:hidden;
+        background:radial-gradient(70% 60% at 85% 30%,rgba(63,174,79,.18),transparent 70%),radial-gradient(50% 50% at 10% 90%,rgba(229,103,42,.12),transparent 70%)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:center}
+  .hero h1{font-size:clamp(5.5rem,17vw,12rem);line-height:.85;margin:.9rem 0 1.2rem;color:var(--cream)}
+  .hero h1 span{color:var(--orange)}
+  .hero .lead{font-size:clamp(1.05rem,1.6vw,1.25rem);color:#dcd3bf;max-width:34ch;margin-bottom:2rem}
+  .hero .ctas{display:flex;gap:.8rem;flex-wrap:wrap}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;margin-top:2.4rem;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+  .hero .meta b{color:var(--leaf);font-weight:400}
+  .collage{position:relative;aspect-ratio:4/4.4}
+  .collage figure{position:absolute;overflow:hidden;border-radius:18px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+  .collage .c1{inset:0 18% 14% 0}
+  .collage .c2{width:42%;aspect-ratio:3/4;right:0;bottom:0;border:6px solid var(--bg)}
+  .collage .c3{width:30%;aspect-ratio:3/4;right:4%;top:-4%;border:6px solid var(--bg);transform:rotate(4deg)}
+  .stamp{position:absolute;left:-26px;bottom:4%;width:118px;animation:spin 24s linear infinite;filter:drop-shadow(0 10px 20px rgba(0,0,0,.5))}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Marquee */
+  .marquee{background:var(--orange);color:#fff;overflow:hidden;padding:14px 0;transform:rotate(-1.2deg);margin:0 -10px}
+  .marquee div{display:flex;gap:2.4rem;white-space:nowrap;width:max-content;animation:slide 28s linear infinite;font-family:var(--display);font-size:1.5rem;text-transform:uppercase}
+  @keyframes slide{to{transform:translateX(-50%)}}
+
+  /* Locale */
+  .split{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,6vw,90px);align-items:center}
+  .split .img{border-radius:22px;overflow:hidden;aspect-ratio:4/5}
+  .split p{color:#d7cfbd;margin-bottom:1rem;max-width:54ch}
+  .chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.8rem}
+  .chip{font-family:var(--mono);font-size:.74rem;padding:.45rem .9rem;border:1px solid var(--line);border-radius:999px;background:var(--bg-2);color:var(--cream)}
+
+  /* Drink */
+  #drink{background:var(--bg-2)}
+  .head{display:flex;justify-content:space-between;align-items:end;gap:2rem;flex-wrap:wrap;margin-bottom:2.8rem}
+  .head p{color:var(--muted);max-width:46ch}
+  .drinks{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  .tile{position:relative;border-radius:16px;overflow:hidden;background:var(--bg-3)}
+  .tile img{transition:transform .8s ease}
+  .tile:hover img{transform:scale(1.05)}
+  .tile figcaption{position:absolute;inset:auto 0 0 0;padding:2.4rem 1rem .9rem;background:linear-gradient(transparent,rgba(5,12,9,.88));font-size:.86rem;color:#e9e0cb}
+  .tile figcaption b{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:400}
+  .drinks .tile{aspect-ratio:3/4;grid-column:span 2}
+  .drinks .tile.wide{grid-column:span 3;aspect-ratio:4/3.4}
+
+  /* Cucina */
+  .menu-hero{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center;margin-bottom:3.2rem}
+  .menu-hero .img{border-radius:22px;overflow:hidden;aspect-ratio:5/6}
+  blockquote{font-family:var(--display);font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.15;text-transform:uppercase;color:var(--cream);margin:1rem 0 1.2rem}
+  blockquote em{font-style:normal;color:var(--orange)}
+  .quote-src{font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+  .dishes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .dishes .tile{aspect-ratio:4/5}
+
+  /* Eventi */
+  #eventi{background:linear-gradient(180deg,var(--bg) 0%,#0e2a18 100%)}
+  .ev-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,64px);align-items:stretch}
+  .poster{border-radius:22px;padding:clamp(28px,4vw,48px);background:var(--green);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-height:440px}
+  .poster::after{content:"";position:absolute;right:-60px;bottom:-60px;width:260px;height:260px;background:url(dati/logo/ryo-logo.png) center/contain no-repeat;opacity:.18}
+  .poster .big{font-family:var(--display);font-size:clamp(2.6rem,6vw,4.6rem);line-height:.9;text-transform:uppercase}
+  .poster .big span{color:var(--amber)}
+  .poster ul{list-style:none;margin-top:1.6rem;display:grid;gap:.9rem;position:relative;z-index:1}
+  .poster li{display:flex;gap:1rem;align-items:baseline;border-top:1px solid rgba(255,255,255,.25);padding-top:.8rem}
+  .poster li b{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;min-width:110px;color:var(--amber)}
+  .ev-photo{border-radius:22px;overflow:hidden;min-height:440px}
+
+  /* Galleria */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:230px;gap:14px}
+  .gallery button{border:0;padding:0;cursor:zoom-in;border-radius:14px;overflow:hidden;background:var(--bg-3)}
+  .gallery button:nth-child(1){grid-column:span 2;grid-row:span 2}
+  .gallery button:nth-child(4){grid-row:span 2}
+  .gallery img{transition:transform .8s}
+  .gallery button:hover img{transform:scale(1.06)}
+  .ig{margin-top:2.2rem;text-align:center}
+  .lightbox{position:fixed;inset:0;background:rgba(4,9,7,.94);display:none;place-items:center;z-index:100;padding:24px;cursor:zoom-out}
+  .lightbox.open{display:grid}
+  .lightbox img{max-height:90vh;width:auto;border-radius:12px}
+
+  /* Contatti */
+  #visita{background:var(--bg-2)}
+  .visit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,72px)}
+  .info dl{display:grid;grid-template-columns:auto 1fr;gap:1rem 1.6rem;margin:1.4rem 0 2rem}
+  .info dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);padding-top:.25rem}
+  .info dd{color:#e3dac6}
+  .info dd a{border-bottom:1px solid var(--line)}
+  .info dd a:hover{color:var(--amber)}
+  .hours{width:100%;border-collapse:collapse;font-size:.95rem}
+  .hours td{padding:.6rem 0;border-bottom:1px solid var(--line)}
+  .hours td:last-child{text-align:right;font-family:var(--mono);font-size:.82rem;color:var(--leaf)}
+  .hours tr.closed td:last-child{color:#ffb38c}
+  .map{width:100%;height:100%;min-height:400px;border:0;border-radius:22px;filter:grayscale(.4) contrast(.95)}
+
+  footer{padding:56px 0 40px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+  footer .wrap{display:flex;justify-content:space-between;gap:1.2rem;flex-wrap:wrap;align-items:center}
+  footer .brand img{width:52px;height:52px}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .marquee div,.stamp{animation:none}
+    html{scroll-behavior:auto}
+  }
+
+  @media (max-width:960px){
+    .links{position:fixed;inset:76px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;background:rgba(10,20,16,.98);border-bottom:1px solid var(--line);display:none;padding-bottom:16px}
+    .links.open{display:flex}
+    .links a{padding:1rem 16px;border-top:1px solid var(--line)}
+    .links .btn{margin:12px 16px 0;justify-content:center}
+    .burger{display:block}
+    .hero-grid,.split,.menu-hero,.ev-grid,.visit{grid-template-columns:1fr}
+    .collage{max-width:520px;width:100%;margin-inline:auto}
+    .stamp{left:-6px;width:92px}
+    .drinks{grid-template-columns:repeat(2,1fr)}
+    .drinks .tile,.drinks .tile.wide{grid-column:span 1;aspect-ratio:3/4}
+    .drinks .tile.wide:first-child{grid-column:span 2;aspect-ratio:4/3}
+    .dishes{grid-template-columns:repeat(2,1fr)}
+    .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}
+    .ev-photo{min-height:320px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand"><img src="dati/logo/ryo-logo.png" alt="Logo RYO">RYO</a>
+    <nav class="links" id="links">
+      <a href="#locale">Il locale</a>
+      <a href="#drink">Drink</a>
+      <a href="#cucina">Cucina</a>
+      <a href="#eventi">Eventi</a>
+      <a href="#visita">Contatti</a>
+      <a class="btn hot" href="https://wa.me/393296974492?text=Ciao%20RYO!%20Vorrei%20prenotare%20un%20tavolo" target="_blank" rel="noopener">Prenota</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Apri menu">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Cocktail · Bar · Cucina — Cava de' Tirreni</div>
+      <h1>RY<span>O</span></h1>
+      <p class="lead">Una giungla urbana nel cuore di Cava: cocktail d'autore, cucina da condividere e weekend a ritmo di DJ set.</p>
+      <div class="ctas">
+        <a class="btn hot" href="https://wa.me/393296974492?text=Ciao%20RYO!%20Vorrei%20prenotare%20un%20tavolo" target="_blank" rel="noopener">Prenota un tavolo</a>
+        <a class="btn" href="#cucina">Scopri il menu</a>
+      </div>
+      <div class="meta">
+        <span><b>●</b> Aperti dal mercoledì alla domenica</span>
+        <span>Corso Umberto I, 1</span>
+      </div>
+    </div>
+    <div class="collage">
+      <figure class="c1"><img class="ph" src="dati/foto/locale/bancone.jpg" alt="Il bancone di RYO tra felci sospese e lampade in rattan"></figure>
+      <figure class="c3"><img class="ph" src="dati/foto/drink/bicchiere-ryo.jpg" alt="Cocktail rosso nel bicchiere con il logo RYO"></figure>
+      <figure class="c2"><img class="ph" src="dati/foto/drink/highball-rosa.jpg" alt="Highball rosa tra foglie tropicali"></figure>
+      <img class="stamp" src="dati/logo/ryo-logo.png" alt="">
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div>
+  <span>Cocktail ✦ Bar ✦ Cucina ✦ This is RYO Weekend ✦ Cava de' Tirreni ✦</span>
+  <span>Cocktail ✦ Bar ✦ Cucina ✦ This is RYO Weekend ✦ Cava de' Tirreni ✦</span>
+</div></div>
+
+<section id="locale">
+  <div class="wrap split">
+    <div class="img reveal"><img class="ph" src="dati/foto/locale/sala-giungla.jpg" alt="La sala di RYO con felci dal soffitto e carta da parati tropicale" loading="lazy"></div>
+    <div class="reveal">
+      <div class="eyebrow">Il locale</div>
+      <h2>Benvenuti<br>nella giungla</h2>
+      <p>Felci che scendono dal soffitto, lampade intrecciate in rattan, bambù, velluto verde e legno caldo: entrare da RYO è come attraversare una foresta tropicale nel centro di Cava de' Tirreni.</p>
+      <p>Al bancone si lavora di mixology, in cucina si preparano piatti pensati per stare in mezzo al tavolo. Il risultato è un posto dove un drink diventa una cena, e una cena diventa una serata.</p>
+      <p><span class="todo">Da completare</span> la storia del locale e il significato del nome “RYO”.</p>
+      <div class="chips">
+        <span class="chip">🍸 Mixology</span><span class="chip">🥘 Cucina</span><span class="chip">🎧 DJ set nel weekend</span><span class="chip">🌿 Atmosfera tropicale</span><span class="chip">☀️ Dehors</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="drink">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><div class="eyebrow">Dal bancone</div><h2>Drink list</h2></div>
+      <p>Signature colorati, grandi classici e drink serviti nel bicchiere firmato RYO. <span class="todo">Nomi e prezzi da inserire</span></p>
+    </div>
+    <div class="drinks">
+      <figure class="tile wide reveal"><img class="ph" src="dati/foto/drink/highball-rosa.jpg" alt="Highball rosa" loading="lazy"><figcaption><b>Signature</b>Highball rosa con scorza d'arancia</figcaption></figure>
+      <figure class="tile wide reveal"><img class="ph" src="dati/foto/drink/cocktail-foglia.jpg" alt="Cocktail con foglia essiccata" loading="lazy"><figcaption><b>Signature</b>Sour ambrato con foglia essiccata</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/drink/bicchiere-ryo.jpg" alt="Cocktail rosso nel bicchiere RYO" loading="lazy"><figcaption><b>Classico</b>Rosso, arancia e ghiaccio</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/drink/calice-stelo-verde.jpg" alt="Cocktail in calice dallo stelo verde" loading="lazy"><figcaption><b>Signature</b>Nel calice dallo stelo verde</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/drink/ambrato-on-the-rocks.jpg" alt="Drink ambrato con ghiaccio" loading="lazy"><figcaption><b>On the rocks</b>Ambrato, ghiaccio e agrumi</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="cucina">
+  <div class="wrap">
+    <div class="menu-hero">
+      <div class="img reveal"><img class="ph" src="dati/foto/cucina/nuovo-menu.jpg" alt="Il nuovo menu di RYO: paella, tartare, tacos e insalate" loading="lazy"></div>
+      <div class="reveal">
+        <div class="eyebrow">La cucina</div>
+        <h2>Nuovo menu</h2>
+        <blockquote>Non è solo cena. È il tavolo che si riempie, i bicchieri che si alzano, <em>i sapori che iniziano a parlare.</em></blockquote>
+        <div class="quote-src">— @ryococktailbar</div>
+        <p style="color:#d7cfbd;margin-top:1.4rem;max-width:46ch">Paella, tartare, tacos, burger, insalate e fritti da condividere: piatti colorati, da accompagnare con un buon calice o con un cocktail. <span class="todo">Menu completo da inserire</span></p>
+      </div>
+    </div>
+    <div class="dishes">
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/paella.jpg" alt="Paella di pesce" loading="lazy"><figcaption><b>Da condividere</b>Paella</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/tartare.jpg" alt="Tartare" loading="lazy"><figcaption><b>Crudi</b>Tartare</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/tacos-e-vino.jpg" alt="Tacos e vino" loading="lazy"><figcaption><b>Street</b>Tacos</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/burger.jpg" alt="Burger con bacon e patate" loading="lazy"><figcaption><b>Burger</b>Bacon, formaggio e patate</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/insalata-salmone.jpg" alt="Insalata con salmone e arance" loading="lazy"><figcaption><b>Insalate</b>Salmone, arance e finocchio</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/insalata-pollo.jpg" alt="Insalata con pollo grigliato" loading="lazy"><figcaption><b>Insalate</b>Pollo grigliato, crostini e scaglie</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/bowl-verdure.jpg" alt="Bowl di verdure e tonno" loading="lazy"><figcaption><b>Bowl</b>Verdure grigliate e tonno</figcaption></figure>
+      <figure class="tile reveal"><img class="ph" src="dati/foto/cucina/fritto-e-drink.jpg" alt="Fritto con salsa e cocktail" loading="lazy"><figcaption><b>Aperitivo</b>Fritto, salsa e drink</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="eventi">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><div class="eyebrow">Eventi</div><h2>Le notti di RYO</h2></div>
+      <p>Il calendario aggiornato è su Instagram: seguiteci per non perdere il prossimo DJ set.</p>
+    </div>
+    <div class="ev-grid">
+      <div class="poster reveal">
+        <div>
+          <div class="eyebrow" style="color:#fff">Venerdì e sabato</div>
+          <div class="big" style="margin-top:.8rem">This is<br><span>RYO</span><br>Weekend</div>
+        </div>
+        <ul>
+          <li><b>DJ set</b>Musica dal vivo in console, con DJ come Lefty DJ e Omen DJ</li>
+          <li><b>Capodanno</b>Il New Year Party con il DJ set di Jansen</li>
+          <li><b>Privati</b>Compleanni, cene aziendali e serate a tema: scriveteci</li>
+        </ul>
+      </div>
+      <div class="ev-photo reveal"><img class="ph" src="dati/foto/eventi/bancone-scimmia.jpg" alt="Il bancone di RYO di sera" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section id="galleria">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><div class="eyebrow">Galleria</div><h2>Atmosfera</h2></div>
+      <p>Tocca una foto per ingrandirla.</p>
+    </div>
+    <div class="gallery" id="gallery">
+      <button class="reveal"><img class="ph" src="dati/foto/galleria/tavola-condivisa.jpg" alt="Tavola con paella, piatti e cocktail rosa" loading="lazy"></button>
+      <button class="reveal"><img class="ph" src="dati/foto/drink/cocktail-sipario.jpg" alt="Cocktail davanti alla tenda di velluto verde" loading="lazy"></button>
+      <button class="reveal"><img class="ph" src="dati/foto/galleria/calamari.jpg" alt="Calamari fritti su piatto a foglia" loading="lazy"></button>
+      <button class="reveal"><img class="ph" src="dati/foto/cucina/burger-dettaglio.jpg" alt="Dettaglio del burger" loading="lazy"></button>
+      <button class="reveal"><img class="ph" src="dati/foto/galleria/dessert-frutta.jpg" alt="Dessert con frutta" loading="lazy"></button>
+      <button class="reveal"><img class="ph" src="dati/foto/cucina/tacos-e-vino.jpg" alt="Tacos e vino bianco" loading="lazy"></button>
+    </div>
+    <div class="ig reveal"><a class="btn" href="https://www.instagram.com/ryococktailbar/" target="_blank" rel="noopener">Seguici su Instagram · @ryococktailbar</a></div>
+  </div>
+</section>
+
+<section id="visita">
+  <div class="wrap visit">
+    <div class="info reveal">
+      <div class="eyebrow">Vieni a trovarci</div>
+      <h2>Dove siamo</h2>
+      <dl>
+        <dt>Indirizzo</dt><dd>Corso Umberto I, 1<br>84013 Cava de' Tirreni (SA)</dd>
+        <dt>Telefono</dt><dd><a href="tel:+393296974492">+39 329 697 4492</a></dd>
+        <dt>Prenota</dt><dd><a href="https://wa.me/393296974492" target="_blank" rel="noopener">Scrivici su WhatsApp</a></dd>
+        <dt>Instagram</dt><dd><a href="https://www.instagram.com/ryococktailbar/" target="_blank" rel="noopener">@ryococktailbar</a></dd>
+      </dl>
+      <table class="hours" aria-label="Giorni di apertura">
+        <tr class="closed"><td>Lunedì</td><td>Chiuso</td></tr>
+        <tr class="closed"><td>Martedì</td><td>Chiuso</td></tr>
+        <tr><td>Mercoledì – Domenica</td><td>Aperto</td></tr>
+      </table>
+      <p style="margin-top:1rem;font-size:.85rem;color:var(--muted)"><span class="todo">Orari di apertura e chiusura da inserire</span></p>
+    </div>
+    <iframe class="map reveal" title="Mappa RYO Cocktail Bar" loading="lazy"
+      src="https://www.google.com/maps?q=Corso+Umberto+I+1,+84013+Cava+de'+Tirreni+SA&output=embed"></iframe>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="#" class="brand"><img src="dati/logo/ryo-logo.png" alt="">RYO</a>
+    <div>RYO Cocktail · Bar · Cucina — Corso Umberto I, 1 · Cava de' Tirreni (SA)</div>
+    <div>Bevi responsabilmente</div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Foto ingrandita"><img alt=""></div>
+
+<script>
+  const header=document.querySelector('header');
+  addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>40),{passive:true});
+  const links=document.getElementById('links');
+  document.getElementById('burger').onclick=()=>links.classList.toggle('open');
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+  const lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img');
+  document.querySelectorAll('#gallery button').forEach(b=>b.onclick=()=>{
+    const i=b.querySelector('img'); lbImg.src=i.src; lbImg.alt=i.alt; lb.classList.add('open');
+  });
+  lb.onclick=()=>lb.classList.remove('open');
+  addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open')});
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

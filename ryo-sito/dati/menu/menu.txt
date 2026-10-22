@@ -1,0 +1,3 @@
+# Una riga per drink:  Categoria | Nome | Ingredienti | Prezzo
+# Esempio:
+# Signature | Nome drink | gin, yuzu, tonica | 10 €

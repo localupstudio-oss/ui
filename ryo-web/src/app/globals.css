@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── RYO · giungla elegante: verde bosco profondo, crema, oro tenue ── */
+:root {
+  --radius: 0.25rem;
+
+  --background: #0d2618;
+  --foreground: #efe6d2;
+  --card: #10301f;
+  --card-foreground: #efe6d2;
+  --popover: #10301f;
+  --popover-foreground: #efe6d2;
+  --primary: #ece0c2;            /* crema: pulsanti principali */
+  --primary-foreground: #0d2618;
+  --secondary: #163a27;
+  --secondary-foreground: #efe6d2;
+  --muted: #163a27;
+  --muted-foreground: #b4bda9;
+  --accent: #1b4430;
+  --accent-foreground: #efe6d2;
+  --destructive: #e39a7a;
+  --border: rgb(236 224 194 / 0.16);
+  --input: rgb(236 224 194 / 0.24);
+  --ring: #cdb07a;
+
+  --amber: #cdb07a;              /* oro tenue */
+  --amber-light: #e6d3a6;
+  --orange: #c8794d;             /* terracotta, uso parco */
+  --green: #1f5c3a;
+  --leaf: #7fb28a;
+  --pink: #e6b3b8;
+  --bg-2: #0f2a1c;
+  --bg-3: #163a27;
+  --cream: #e8dcc0;
+  --ink: #123524;
+}
+
+@theme inline {
+  --font-sans: var(--font-montserrat);
+  --font-display: var(--font-playfair);
+  --font-mono: var(--font-montserrat);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-amber: var(--amber);
+  --color-amber-light: var(--amber-light);
+  --color-orange: var(--orange);
+  --color-green: var(--green);
+  --color-leaf: var(--leaf);
+  --color-pink: var(--pink);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { scroll-behavior: smooth; scroll-padding-top: 6rem; color-scheme: dark; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-weight: 300;
+    background-image: url("/images/brand/fern-on-green.svg");
+    background-size: 280px 280px;
+  }
+  ::selection { background: var(--cream); color: var(--ink); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}
+
+/* Titoli serif: grandi, ariosi, minuscole */
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+/* Parola evidenziata: corsivo oro */
+@utility text-hot { color: var(--amber-light); font-style: italic; }
+
+@utility glass {
+  background: rgb(13 38 24 / 0.82);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  border: 1px solid var(--border);
+}
+
+@utility jungle-glow {
+  background-image: radial-gradient(60% 50% at 80% 10%, rgb(205 176 122 / 0.08), transparent 70%);
+}
+
+/* Superfici crema con trama di felci (menu a schermo intero, footer) */
+@utility cream-surface {
+  background-color: var(--cream);
+  background-image: url("/images/brand/fern-on-cream.svg");
+  background-size: 280px 280px;
+  color: var(--ink);
+}
+
+@utility link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.45em;
+  transition: text-underline-offset 0.3s, color 0.3s;
+  &:hover { text-underline-offset: 0.25em; }
+}
+
+@utility rule-line { height: 1px; background: var(--border); }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+@utility animate-marquee { animation: marquee 60s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .animate-marquee { animation: none; } }
