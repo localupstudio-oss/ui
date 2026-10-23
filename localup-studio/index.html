@@ -9,184 +9,161 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
 <style>
-/* Layout: Apple-style alternating bands (light grey / white / black) around one
-   centrepiece — a studio monitor in the hero that plays live concept sites. */
+/* Layout: editorial agency structure — black hero with wave texture and a booting
+   monitor, white stats band with the seal, giant service rows, manifesto on bone. */
 :root {
-  --paper: #f5f5f7;      /* Apple light band */
+  --black: #050505;
+  --coal: #111111;
+  --coal-2: #1a1a1a;
+  --bone: #efefed;       /* light band, slightly off pure white */
   --white: #ffffff;
-  --mist: #e8e8ed;       /* hero ground, giant type sits on it in white */
-  --ink: #1d1d1f;        /* Apple near-black text */
-  --black: #000000;
-  --grey: #6e6e73;       /* secondary text */
-  --grey-2: #86868b;
-  --line: #d2d2d7;
-  --line-dark: #424245;
+  --chalk: #f2f2f0;      /* text on black */
+  --grey: #8a8a8a;
+  --grey-d: #5c5c5c;
+  --line-d: rgba(242,242,240,.16);
+  --line-l: rgba(5,5,5,.14);
 
-  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --font: var(--body);   /* used by the concept sites inside screens */
 
-  --max: 1180px;
-  --gut: max(22px, env(safe-area-inset-left, 0px));
-  --gut-r: max(22px, env(safe-area-inset-right, 0px));
-  --radius: 28px;
+  --max: 1320px;
+  --gut: max(24px, env(safe-area-inset-left, 0px));
+  --gut-r: max(24px, env(safe-area-inset-right, 0px));
   --ease: cubic-bezier(.22,.8,.2,1);
-  color-scheme: light;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0;
-  background: var(--white);
-  color: var(--ink);
-  font-family: var(--font);
-  font-size: 17px;
-  line-height: 1.47;
-  letter-spacing: -0.022em;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  margin: 0; background: var(--black); color: var(--chalk);
+  font-family: var(--body); font-size: 17px; line-height: 1.5; letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
 }
-body::before {
-  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
-  z-index: 60; background: rgba(245,245,247,.86);
-}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 70; background: var(--black); }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid #0071e3; outline-offset: 3px; border-radius: 6px; }
-h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 600; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
 p { margin: 0; }
+em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -.01em; }
 
-.wrap {
-  width: 100%; max-width: calc(var(--max) + 44px); margin-inline: auto;
-  padding-left: var(--gut); padding-right: var(--gut-r);
-}
-.eyebrow {
-  font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--grey);
-}
+.wrap { width: 100%; max-width: calc(var(--max) + 48px); margin-inline: auto; padding-left: var(--gut); padding-right: var(--gut-r); }
+.label { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+.on-light { background: var(--white); color: var(--black); }
+.on-bone { background: var(--bone); color: var(--black); }
 
-/* ---------- Buttons (Apple pill) ---------- */
+/* Big display headings */
+.mega {
+  font-family: var(--display); font-weight: 900; text-transform: uppercase;
+  line-height: .9; letter-spacing: -.035em; word-spacing: .12em;
+}
+.mega em.s { display: inline-block; font-size: 1.08em; line-height: .9; letter-spacing: -.02em; }
+
+/* Buttons: square boxes, tracked caps */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 44px; padding: 0 22px; border-radius: 980px;
-  font-size: 17px; font-weight: 400; letter-spacing: -0.01em;
-  border: 1px solid transparent; cursor: pointer; background: transparent; white-space: nowrap;
-  transition: background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease), border-color .25s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+  min-height: 56px; padding: 0 30px; border: 1px solid currentColor; border-radius: 0;
+  background: transparent; cursor: pointer; white-space: nowrap;
+  font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  transition: background .3s var(--ease), color .3s var(--ease), border-color .3s;
 }
-.btn:active { transform: scale(.97); }
-.btn-dark { background: var(--ink); color: var(--white); }
-.btn-dark:hover { background: #000; }
-.btn-ghost { border-color: var(--ink); color: var(--ink); background: transparent; }
-.btn-ghost:hover { background: var(--ink); color: var(--white); }
-.btn-light { background: var(--white); color: var(--black); }
-.btn-light:hover { background: var(--mist); }
-.btn-ghost-light { border-color: rgba(255,255,255,.7); color: var(--white); }
-.btn-ghost-light:hover { background: var(--white); color: var(--black); }
-.btn .arr { transition: transform .25s var(--ease); }
-.btn:hover .arr { transform: translateX(3px); }
-.link-more { font-size: 17px; color: var(--ink); display: inline-flex; gap: 4px; align-items: center; }
-.link-more:hover { text-decoration: underline; }
+.btn .arr { transition: transform .3s var(--ease); font-size: 16px; letter-spacing: 0; }
+.btn:hover .arr { transform: translateX(5px); }
+.btn-chalk { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
+.btn-chalk:hover { background: transparent; color: var(--chalk); }
+.btn-line { color: var(--chalk); border-color: var(--line-d); }
+.btn-line:hover { border-color: var(--chalk); background: var(--chalk); color: var(--black); }
+.btn-ink { background: var(--black); color: var(--white); border-color: var(--black); }
+.btn-ink:hover { background: transparent; color: var(--black); }
+.btn-ink-line { color: var(--black); border-color: var(--line-l); }
+.btn-ink-line:hover { background: var(--black); color: var(--white); border-color: var(--black); }
 
 /* ---------- Nav ---------- */
 .nav {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
-  background: rgba(245,245,247,.8);
-  backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid rgba(0,0,0,.06);
+  position: fixed; z-index: 60; left: 0; right: 0; top: env(safe-area-inset-top, 0px);
+  transition: background .4s var(--ease), border-color .4s, backdrop-filter .4s;
+  border-bottom: 1px solid transparent;
 }
-.nav-in { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 24px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.01em; font-size: 15px; line-height: 1; }
-.brand img { height: 30px; width: auto; }
-.brand span { display: grid; gap: 2px; }
-.brand small { font-size: 9.5px; font-weight: 600; letter-spacing: .32em; color: var(--grey); }
-.nav-links { display: flex; gap: 34px; font-size: 12.5px; color: rgba(29,29,31,.8); letter-spacing: -0.005em; }
-.nav-links a:hover { color: var(--black); }
-.nav-cta { min-height: 32px; padding: 0 16px; font-size: 13px; }
-.nav-toggle { display: none; background: none; border: 0; width: 40px; height: 40px; cursor: pointer; padding: 0; }
-.nav-toggle i { display: block; width: 18px; height: 1.5px; background: var(--ink); margin: 5px auto; transition: transform .3s var(--ease); }
+.nav.solid { background: rgba(5,5,5,.86); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-color: var(--line-d); }
+.nav-in { display: flex; align-items: center; gap: 28px; height: 104px; transition: height .4s var(--ease); }
+.nav.solid .nav-in { height: 76px; }
+.brand img { height: 46px; width: auto; filter: invert(1); }
+.nav-links { display: flex; gap: clamp(20px, 3.4vw, 56px); margin-left: auto; font-size: 13px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(242,242,240,.82); }
+.nav-links a { position: relative; padding-block: 6px; }
+.nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--chalk); transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease); }
+.nav-links a:hover { color: var(--chalk); }
+.nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.nav-sep { width: 1px; height: 36px; background: var(--line-d); }
+.nav-cta { min-height: 54px; padding: 0 30px; }
+.nav-toggle { display: none; margin-left: auto; width: 48px; height: 48px; border: 1px solid var(--line-d); background: none; cursor: pointer; padding: 0; }
+.nav-toggle i { display: block; width: 18px; height: 1.5px; background: var(--chalk); margin: 5px auto; transition: transform .35s var(--ease); }
 .nav.open .nav-toggle i:first-child { transform: translateY(3.25px) rotate(45deg); }
 .nav.open .nav-toggle i:last-child { transform: translateY(-3.25px) rotate(-45deg); }
 
 /* ---------- Hero ---------- */
-.hero {
-  position: relative; background: var(--mist); overflow: hidden;
-  padding-block: 56px 0;
-}
-.hero-giant {
-  position: absolute; inset: 0; pointer-events: none; user-select: none;
-  display: flex; flex-direction: column; justify-content: center; align-items: stretch;
-  font-weight: 500; color: var(--white); line-height: .78; letter-spacing: -.07em;
-  font-size: clamp(150px, 31vw, 470px);
-}
-.hero-giant span { display: block; will-change: transform; }
-.hero-giant span:first-child { padding-left: 2vw; margin-top: -2vw; }
-.hero-giant span:last-child { text-align: right; padding-right: 1vw; }
-.hero-top {
-  position: relative; z-index: 3;
-  display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
-}
-.hero-kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--ink); background: rgba(255,255,255,.7); padding: 7px 14px 7px 10px; border-radius: 99px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-.dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--ink); position: relative; }
-.dot-live::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--ink); animation: ping 2.2s var(--ease) infinite; }
-@keyframes ping { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
-.hero-note { max-width: 250px; font-size: 14px; line-height: 1.45; color: var(--grey); text-align: right; }
-.hero-note b { color: var(--ink); font-weight: 600; }
+.hero { position: relative; overflow: hidden; background: var(--black); padding-block: 170px 90px; }
+#waves { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero::after { content: ""; position: absolute; inset: auto 0 0; height: 30%; background: linear-gradient(transparent, var(--black)); pointer-events: none; }
+.hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: clamp(36px, 5vw, 80px); align-items: end; }
+.hero h1 { font-size: clamp(54px, 7.6vw, 132px); }
+.hero h1 .ln { display: block; overflow: hidden; padding-bottom: .04em; }
+.hero h1 .ln > span { display: block; animation: rise 1.1s var(--ease) both; }
+.hero h1 .ln:nth-child(2) > span { animation-delay: .08s; }
+.hero h1 .ln:nth-child(3) > span { animation-delay: .16s; }
+.hero h1 .ln:nth-child(4) > span { animation-delay: .24s; }
+@keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
+.hero-sub { margin-top: 34px; max-width: 600px; font-size: clamp(17px, 1.45vw, 21px); line-height: 1.38; color: rgba(242,242,240,.86); animation: fadeup 1s .45s var(--ease) both; }
+.hero-actions { margin-top: 38px; display: flex; gap: 14px; flex-wrap: wrap; animation: fadeup 1s .55s var(--ease) both; }
+@keyframes fadeup { from { transform: translateY(20px); opacity: .001; } to { transform: none; opacity: 1; } }
 
-.hero-stage { position: relative; z-index: 2; margin-top: 18px; }
-.hero-copy {
-  position: absolute; z-index: 4; left: 0; bottom: 24%;
-  max-width: 34%;
-}
-.hero-copy h1 {
-  font-size: clamp(40px, 4.6vw, 66px); line-height: .98; font-weight: 500; letter-spacing: -.045em;
-  text-transform: uppercase; color: var(--ink);
-}
-.hero-copy .sub { margin-top: 20px; display: flex; gap: 28px; align-items: flex-start; }
-.hero-copy .sub p { font-size: 15px; line-height: 1.4; color: var(--ink); max-width: 230px; }
-.hero-copy .sub p b { font-weight: 600; }
-.hero-actions { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
-
-/* Monitor */
-.monitor { position: relative; width: min(64%, 780px); margin-left: auto; margin-right: 0; }
+/* Monitor panel (right) */
+.panel { animation: monrise 1.3s .15s var(--ease) both; }
+@keyframes monrise { from { transform: translateY(70px) scale(.94); opacity: .001; } to { transform: none; opacity: 1; } }
+.panel-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 1px solid var(--line-d); border-bottom: 0; }
+.panel-head .label { font-size: 11px; }
+.panel-head .dots3 { display: flex; gap: 4px; }
+.panel-head .dots3 i { width: 4px; height: 4px; border-radius: 50%; background: var(--chalk); opacity: .8; }
+.panel-head .dots3 i:last-child { opacity: .35; }
+.panel-body { border: 1px solid var(--line-d); padding: clamp(18px, 2.4vw, 34px) clamp(14px, 2vw, 28px) 0; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)); }
+.monitor { position: relative; width: 100%; }
 .mon-frame {
-  position: relative; border-radius: clamp(14px, 1.9vw, 24px);
-  background: linear-gradient(180deg, #2b2b2e, #0d0d0f 30%);
-  padding: clamp(7px, 1vw, 13px);
-  box-shadow:
-    0 0 0 1px #4a4a4e inset,
-    0 1px 0 1px rgba(255,255,255,.25),
-    0 50px 80px -30px rgba(0,0,0,.45),
-    0 30px 40px -25px rgba(0,0,0,.35);
+  position: relative; border-radius: clamp(10px, 1.3vw, 18px);
+  background: linear-gradient(180deg, #2b2b2e, #0d0d0f 30%); padding: clamp(6px, .8vw, 11px);
+  box-shadow: 0 0 0 1px #4a4a4e inset, 0 1px 0 1px rgba(255,255,255,.18), 0 50px 80px -30px rgba(0,0,0,.8);
 }
-.screen {
-  position: relative; aspect-ratio: 16 / 10; max-width: 100%;
-  border-radius: clamp(6px, .9vw, 12px); overflow: hidden; background: #000;
-  container-type: inline-size;
-}
-.screen::after { /* glass reflection */
-  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 20;
-  background: linear-gradient(115deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 70%, rgba(255,255,255,.05) 100%);
-}
-.mon-neck {
-  width: 22%; margin: 0 auto; height: clamp(70px, 10vw, 150px);
-  background: linear-gradient(90deg, #a9a9ae 0%, #e4e4e8 18%, #f7f7f9 45%, #d3d3d8 70%, #9b9ba0 100%);
-  clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
-  position: relative;
-}
-.mon-neck::before { content: ""; position: absolute; inset: 0 0 auto; height: 18%; background: linear-gradient(180deg, rgba(0,0,0,.25), transparent); }
-.mon-base {
-  width: 42%; margin: 0 auto; height: clamp(10px, 1.4vw, 18px); border-radius: 4px 4px 10px 10px;
-  background: linear-gradient(180deg, #f2f2f4, #bdbdc2 60%, #8e8e93);
-  box-shadow: 0 18px 30px -12px rgba(0,0,0,.4);
-}
-.mon-caption {
-  display: flex; align-items: center; justify-content: center; gap: 14px;
-  padding-block: 26px 40px; font-size: 13px; color: var(--grey);
-}
-.mon-caption strong { color: var(--ink); font-weight: 600; }
-.dots { display: flex; gap: 8px; }
-.dots button { width: 8px; height: 8px; border-radius: 99px; border: 0; padding: 0; background: #b8b8bd; cursor: pointer; transition: width .4s var(--ease), background .3s; }
-.dots button[aria-current="true"] { width: 26px; background: var(--ink); }
+.screen { position: relative; aspect-ratio: 16 / 10; max-width: 100%; border-radius: clamp(5px, .7vw, 9px); overflow: hidden; background: #000; container-type: inline-size; }
+.screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 20; background: linear-gradient(115deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 70%, rgba(255,255,255,.04) 100%); }
+.mon-neck { width: 22%; margin: 0 auto; height: clamp(54px, 7vw, 110px); background: linear-gradient(90deg, #6f6f74 0%, #c9c9ce 18%, #e9e9ec 45%, #b9b9be 70%, #66666b 100%); clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%); position: relative; }
+.mon-neck::before { content: ""; position: absolute; inset: 0 0 auto; height: 18%; background: linear-gradient(180deg, rgba(0,0,0,.45), transparent); }
+.mon-base { width: 44%; margin: 0 auto; height: clamp(9px, 1.1vw, 15px); border-radius: 3px 3px 8px 8px; background: linear-gradient(180deg, #e2e2e5, #a5a5aa 60%, #6e6e73); }
+
+/* Boot screen: logo, then the site appears */
+.boot { position: absolute; inset: 0; z-index: 30; background: #000; display: grid; place-items: center; animation: bootout .7s 1.9s var(--ease) both; pointer-events: none; }
+.boot img { width: 15cqw; filter: invert(1); animation: bootlogo 1.6s .4s var(--ease) both; }
+.boot::after { content: ""; position: absolute; left: 35%; right: 35%; bottom: 30%; height: .35cqw; border-radius: 9px; background: rgba(255,255,255,.18); }
+.boot::before { content: ""; position: absolute; left: 35%; bottom: 30%; height: .35cqw; width: 30%; border-radius: 9px; background: #fff; z-index: 1; transform-origin: left; animation: bootbar 1.3s .5s ease-in-out both; }
+@keyframes bootlogo { from { opacity: .001; transform: scale(.92); } 30% { opacity: 1; transform: none; } to { opacity: 1; } }
+@keyframes bootbar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes bootout { to { opacity: 0; visibility: hidden; } }
+
+/* Story bars over the screen */
+.stories { position: absolute; z-index: 25; top: 1cqw; left: 2cqw; right: 2cqw; display: flex; gap: .8cqw; mix-blend-mode: difference; }
+.stories i { flex: 1; height: .28cqw; min-height: 2px; background: rgba(255,255,255,.3); position: relative; overflow: hidden; }
+.stories i::after { content: ""; position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: left; }
+.stories i.done::after { transform: scaleX(1); }
+.stories i.run::after { animation: story 5.2s linear forwards; }
+@keyframes story { to { transform: scaleX(1); } }
+
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 22px; border: 1px solid var(--line-d); }
+.tabs button { min-height: 62px; border: 0; background: transparent; color: var(--chalk); cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; transition: background .3s, color .3s; }
+.tabs button + button { border-left: 1px solid var(--line-d); }
+.tabs button[aria-pressed="true"] { background: var(--chalk); color: var(--black); }
+.tabs button:hover:not([aria-pressed="true"]) { background: rgba(255,255,255,.06); }
 
 /* ---------- Concept sites inside screens (sized in cqw) ---------- */
 .demo { position: absolute; inset: 0; opacity: 0; transition: opacity .9s var(--ease); font-family: var(--font); }
@@ -256,78 +233,56 @@ p { margin: 0; }
 .d-forno .menu b { display: block; font-size: 1.25cqw; }
 .d-forno svg { width: 44cqw; right: 6cqw; top: 9cqw; filter: drop-shadow(0 2cqw 2.5cqw rgba(0,0,0,.18)); }
 
-/* Café Lume — split grey */
-.d-lume { background: linear-gradient(90deg, #111 0 50%, #ececee 50% 100%); color: #111; }
-.d-lume .d-nav { color: #fff; }
-.d-lume .d-nav .d-links, .d-lume .d-nav .d-pill { color: #111; }
-.d-lume .d-h { right: 4cqw; top: 15cqw; font-size: 5.4cqw; text-align: right; width: 42cqw; }
-.d-lume .s1 { right: 4cqw; top: 33cqw; text-align: right; max-width: 24cqw; color: #555; }
-.d-lume .d-giant { color: #1c1c1e; font-size: 25cqw; left: 1cqw; bottom: -3cqw; }
-.d-lume .times { position: absolute; z-index: 4; right: 4cqw; bottom: 5cqw; font-size: 1cqw; letter-spacing: .06em; color: #555; text-align: right; }
-.d-lume .times b { color: #111; font-size: 1.8cqw; display: block; letter-spacing: -.02em; font-weight: 500; }
-.d-lume svg { width: 33cqw; left: 9cqw; top: 9cqw; filter: drop-shadow(0 3cqw 3cqw rgba(0,0,0,.6)); }
 
-/* ---------- Ticker ---------- */
-.ticker { background: var(--black); color: var(--white); overflow: hidden; padding-block: 18px; }
-.ticker-track { display: flex; gap: 0; width: max-content; animation: tick 38s linear infinite; }
-.ticker-track span { font-size: 15px; font-weight: 500; letter-spacing: .02em; padding-inline: 26px; white-space: nowrap; display: inline-flex; align-items: center; gap: 52px; }
-.ticker-track span::after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #6e6e73; }
-@keyframes tick { to { transform: translateX(-50%); } }
 
-/* ---------- Sections ---------- */
-section { scroll-margin-top: 60px; }
-.band { padding-block: clamp(90px, 12vw, 150px); }
-.band-paper { background: var(--paper); }
-.band-black { background: var(--black); color: var(--white); }
-.sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 56px; flex-wrap: wrap; }
-.sec-head h2 { font-size: clamp(40px, 5.6vw, 64px); line-height: 1.04; letter-spacing: -.035em; max-width: 760px; }
-.sec-head p { max-width: 380px; color: var(--grey); font-size: 19px; line-height: 1.42; }
-.band-black .sec-head p { color: var(--grey-2); }
+/* ---------- Stats band with seal ---------- */
+.stats { padding-block: clamp(70px, 9vw, 120px); }
+.stats-grid { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; gap: clamp(50px, 7vw, 100px) 40px; align-items: center; }
+.stat { display: grid; gap: 18px; }
+.stat.r { justify-items: end; text-align: right; }
+.stat .num { display: inline-flex; align-items: flex-end; font-family: var(--display); font-weight: 500; font-size: clamp(76px, 10.5vw, 168px); line-height: .8; letter-spacing: -.055em; font-variant-numeric: tabular-nums; }
+.stat .num small { font-size: .2em; font-weight: 600; letter-spacing: 0; line-height: 1; margin-left: .12em; padding-bottom: .1em; }
+.stat .label { font-size: 13px; }
+.s1 { grid-column: 1; grid-row: 1; } .s2 { grid-column: 3; grid-row: 1; } .s3 { grid-column: 1; grid-row: 2; } .s4 { grid-column: 3; grid-row: 2; }
+.seal { grid-column: 2; grid-row: 1 / 3; width: clamp(220px, 26vw, 380px); aspect-ratio: 1; max-width: 100%; border-radius: 50%; position: relative; display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 42%, #ffffff 0 55%, #f1f1f1 75%, #e6e6e6 100%);
+  box-shadow: 0 40px 70px -30px rgba(0,0,0,.35), 0 0 0 1px rgba(0,0,0,.04); }
+.seal::before { content: ""; position: absolute; inset: 0; border-radius: 50%; padding: 7px;
+  background: conic-gradient(from 0deg, #fdfdfd, #7d7d80, #f4f4f4, #5d5d60, #e9e9ea, #9a9a9e, #fdfdfd);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+  animation: spin 14s linear infinite; }
+.seal::after { content: ""; position: absolute; inset: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.08); }
+.seal img { width: 50%; filter: grayscale(1) drop-shadow(0 1px 0 #fff) drop-shadow(0 6px 8px rgba(0,0,0,.22)); }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* Statement */
-.statement { padding-block: clamp(100px, 14vw, 180px); }
-.statement-grid { display: grid; grid-template-columns: 1fr 2.4fr; gap: 40px; }
-.statement-side { display: grid; gap: 18px; align-content: start; padding-top: 14px; }
-.statement-side img { width: 64px; }
-.statement h2 {
-  font-size: clamp(32px, 4.4vw, 58px); line-height: 1.1; letter-spacing: -.035em; font-weight: 600;
-}
-.statement h2 .mute { color: #b0b0b5; }
-.statement h2 .indent { display: inline-block; width: 1.8em; }
-.pill-inline {
-  display: inline-block; vertical-align: middle; width: 2.1em; height: .9em; border-radius: 99px; margin-inline: .08em;
-  background: #111; position: relative; overflow: hidden; transform: translateY(-.06em);
-}
-.pill-inline::before {
-  content: ""; position: absolute; inset: 22% 10%; border-radius: 99px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.95) 45%, rgba(255,255,255,.4) 60%, transparent);
-  filter: blur(3px); animation: streak 3.6s var(--ease) infinite;
-}
-.pill-inline.light { background: #e8e8ed; }
-.pill-inline.light::before { background: linear-gradient(90deg, transparent, #111 45%, rgba(0,0,0,.4) 60%, transparent); }
-@keyframes streak { 0%,100% { transform: translateX(-30%); } 50% { transform: translateX(30%); } }
-.statement-foot { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; border-top: 1px solid var(--line); padding-top: 32px; }
-.statement-foot div { display: grid; gap: 6px; }
-.statement-foot b { font-size: 40px; font-weight: 600; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
-.statement-foot span { color: var(--grey); font-size: 15px; }
+/* ---------- Services: giant rows ---------- */
+.svc-intro { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line-d); }
+.svc-intro > div { padding-block: clamp(70px, 9vw, 120px) 56px; }
+.svc-intro > div + div { border-left: 1px solid var(--line-d); padding-left: clamp(24px, 4vw, 64px); display: flex; align-items: flex-end; }
+.svc-intro h2 { margin-top: 18px; font-size: clamp(40px, 5vw, 76px); }
+.svc-intro p { color: rgba(242,242,240,.75); font-size: 18px; max-width: 460px; }
+.svc-row { position: relative; border-bottom: 1px solid var(--line-d); cursor: pointer; outline-offset: -4px; }
+.svc-row::before { content: ""; position: absolute; inset: 0; background: var(--chalk); transform: scaleY(0); transform-origin: bottom; transition: transform .55s var(--ease); }
+.svc-row > .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 120px 1fr 120px; align-items: center; padding-block: clamp(18px, 2.4vw, 30px); transition: color .4s var(--ease); }
+.svc-row .no { font-size: 13px; font-weight: 700; letter-spacing: .14em; }
+.svc-row .name { text-align: center; font-family: var(--display); font-weight: 500; text-transform: uppercase; font-size: clamp(34px, 7.4vw, 116px); line-height: 1; letter-spacing: -.045em; }
+.svc-row .pm { justify-self: end; width: 40px; height: 40px; border: 1px solid currentColor; position: relative; opacity: .7; }
+.svc-row .pm::before, .svc-row .pm::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 1.5px; background: currentColor; transform: translate(-50%,-50%); transition: transform .4s var(--ease); }
+.svc-row .pm::after { transform: translate(-50%,-50%) rotate(90deg); }
+.svc-row .desc { grid-column: 1 / -1; display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
+.svc-row .desc > p { overflow: hidden; text-align: center; max-width: 640px; margin-inline: auto; font-size: 17px; color: #444; }
+.svc-row:hover::before, .svc-row.open::before { transform: scaleY(1); }
+.svc-row:hover > .wrap, .svc-row.open > .wrap { color: var(--black); }
+.svc-row.open .desc { grid-template-rows: 1fr; }
+.svc-row.open .desc > p { padding-top: 14px; }
+.svc-row.open .pm::after { transform: translate(-50%,-50%) rotate(0); }
 
-/* Work tiles (Apple 2-up grid) */
-.work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.tile {
-  position: relative; overflow: hidden; border-radius: var(--radius);
-  padding: 52px 40px 0; text-align: center; min-height: 600px;
-  display: flex; flex-direction: column; align-items: center;
-}
-.tile.t-black { background: var(--black); color: var(--white); }
-.tile.t-light { background: var(--paper); color: var(--ink); }
-.tile.t-mist { background: var(--mist); color: var(--ink); }
-.tile .tag { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .6; }
-.tile h3 { font-size: clamp(32px, 3.6vw, 44px); letter-spacing: -.035em; line-height: 1.06; margin-top: 10px; }
-.tile p { font-size: 19px; margin-top: 8px; opacity: .85; }
-.tile .acts { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; justify-content: center; }
-.tile .acts .btn { min-height: 40px; font-size: 15px; padding: 0 18px; }
-.tile .acts .btn-blue { background: var(--ink); color: #fff; }
-.t-black .acts .btn-blue { background: var(--white); color: var(--black); }
+/* ---------- Portfolio ---------- */
+.pf { padding-block: clamp(90px, 11vw, 150px); }
+.pf-head { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; margin-bottom: clamp(50px, 6vw, 80px); }
+.pf-head h2 { font-size: clamp(64px, 13vw, 210px); letter-spacing: -.065em; line-height: .82; }
+.pf-head h2 em.s { display: block; font-size: .42em; letter-spacing: -.02em; margin-top: .12em; line-height: 1; color: rgba(242,242,240,.7); }
+.pf-side { max-width: 380px; display: grid; gap: 26px; justify-items: start; color: rgba(242,242,240,.75); }
 .tile .feat { list-style: none; padding: 0; margin: 18px 0 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .tile .feat li { font-size: 12.5px; font-weight: 500; padding: 5px 11px; border-radius: 99px; border: 1px solid currentColor; opacity: .7; letter-spacing: 0; }
 .tile .device { margin-top: auto; transform: translateY(10%); transition: transform .8s var(--ease); }
@@ -385,230 +340,223 @@ section { scroll-margin-top: 60px; }
 .pfeed .plist em { font-style: normal; color: #8e8e93; }
 .tile .pfeed .pfoot { margin: 0; opacity: 1; font-size: 3.6cqw; color: #8e8e93; line-height: 1.5; }
 
-/* Sectors */
-.sectors { padding-block: 0 clamp(90px, 12vw, 150px); }
-.sec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-.sector { border-radius: 24px; padding: 30px 26px 26px; background: var(--paper); display: flex; flex-direction: column; gap: 12px; min-height: 360px; }
-.sector.dark { background: var(--black); color: var(--white); }
-.sector .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--ink); display: grid; place-items: center; }
-.sector.dark .ico { background: var(--white); }
-.sector .ico svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.sector.dark .ico svg { stroke: #000; }
-.sector h3 { font-size: 24px; letter-spacing: -.025em; line-height: 1.12; margin-top: 12px; }
-.sector .who { color: var(--grey); font-size: 16px; line-height: 1.45; }
-.sector.dark .who { color: var(--grey-2); }
-.sector .gets { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; display: grid; gap: 4px; }
-.sector.dark .gets { border-color: var(--line-dark); }
-.sector .gets span { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
-.sector.dark .gets span { color: var(--grey-2); }
 
-/* Services */
-.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.svc {
-  background: var(--white); border-radius: 22px; padding: 34px 30px 30px;
-  display: flex; flex-direction: column; gap: 14px; min-height: 290px;
-  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
-}
-.svc:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -28px rgba(0,0,0,.28); }
-.svc .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--ink); display: grid; place-items: center; }
-.svc .ico svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.svc h3 { font-size: 24px; letter-spacing: -.025em; line-height: 1.15; margin-top: 10px; }
-.svc p { color: var(--grey); font-size: 16px; line-height: 1.45; }
-.svc ul { margin: auto 0 0; padding: 14px 0 0; list-style: none; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px; }
-.svc li { font-size: 12.5px; font-weight: 500; padding: 5px 10px; border-radius: 99px; background: var(--paper); color: var(--ink); letter-spacing: 0; }
-.svc.feature { background: var(--black); color: var(--white); grid-row: span 2; justify-content: space-between; min-height: 594px; position: relative; overflow: hidden; }
-.svc.feature .ico { background: var(--white); }
-.svc.feature .ico svg { stroke: #000; }
-.svc.feature p { color: var(--grey-2); }
-.svc.feature ul { border-color: var(--line-dark); }
-.svc.feature li { background: #1d1d1f; color: #f5f5f7; }
-.svc.feature h3 { font-size: 34px; }
-.qr { width: 58%; aspect-ratio: 1; margin: 6px 0 4px; display: grid; grid-template-columns: repeat(11, 1fr); gap: 3px; }
-.qr i { background: #fff; border-radius: 2px; }
-.qr i.o { background: transparent; }
+/* Portfolio tiles (square, editorial) */
+.tile { position: relative; overflow: hidden; border-radius: 0; padding: 50px 40px 0; text-align: center; display: flex; flex-direction: column; align-items: center; border: 1px solid var(--line-d); }
+.tile.t-black { background: var(--coal); color: var(--chalk); }
+.tile.t-light { background: var(--bone); color: var(--black); border-color: var(--bone); }
+.tile.t-mist { background: var(--coal-2); color: var(--chalk); }
+.tile .tag { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; opacity: .6; }
+.tile h3 { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(30px, 3.4vw, 50px); letter-spacing: -.04em; line-height: .95; margin-top: 14px; }
+.tile > p { font-size: 18px; margin-top: 12px; opacity: .8; }
+.tile .feat li { border-radius: 0; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: 6px 10px; }
+.tile .acts { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; justify-content: center; }
+.tile .acts .btn { min-height: 48px; font-size: 12px; padding: 0 22px; }
+.tile .btn-blue { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
+.tile.t-light .btn-blue { background: var(--black); color: var(--white); border-color: var(--black); }
+.pf-note { margin-top: 26px; font-size: 13px; color: var(--grey); letter-spacing: .02em; }
 
-/* Process */
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line-dark); }
-.step { padding: 34px 28px 10px 0; display: grid; gap: 14px; align-content: start; position: relative; }
-.step + .step { padding-left: 28px; border-left: 1px solid var(--line-dark); }
-.step .n { font-size: 13px; font-weight: 600; letter-spacing: .06em; color: var(--grey-2); font-variant-numeric: tabular-nums; }
-.step h3 { font-size: 26px; letter-spacing: -.025em; line-height: 1.15; }
-.step p { color: #a1a1a6; font-size: 16px; line-height: 1.5; }
-.step .when { margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--white); display: inline-flex; align-items: center; gap: 8px; }
-.step .when::before { content: ""; width: 18px; height: 1px; background: var(--white); }
-.big-line { margin-top: clamp(80px, 10vw, 130px); font-size: clamp(44px, 8.4vw, 116px); font-weight: 600; line-height: .98; letter-spacing: -.05em; text-align: center; }
-.big-line .fade { background: linear-gradient(180deg, #fff 0%, #fff 30%, #3a3a3c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* ---------- Manifesto ---------- */
+.manifesto { padding-block: clamp(100px, 13vw, 190px); }
+.manifesto h2 { font-size: clamp(46px, 8.2vw, 142px); max-width: 15ch; }
+.manifesto-foot { margin-top: clamp(40px, 5vw, 70px); display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; border-top: 1px solid var(--line-l); padding-top: 30px; }
+.manifesto-foot p { max-width: 520px; font-size: 18px; color: #3a3a3a; }
 
-/* Pricing */
-.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
-.plan { border-radius: 26px; padding: 36px 32px; background: var(--paper); display: flex; flex-direction: column; gap: 20px; position: relative; }
-.plan.pro { background: var(--black); color: var(--white); }
-.plan .badge { position: absolute; top: 20px; right: 20px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border-radius: 99px; background: var(--white); color: var(--black); }
-.plan h3 { font-size: 26px; letter-spacing: -.025em; }
-.plan .for { color: var(--grey); font-size: 15px; margin-top: -12px; }
-.plan.pro .for { color: var(--grey-2); }
+/* ---------- Sectors ---------- */
+.sectors { padding-block: clamp(90px, 11vw, 140px); }
+.sec-head { display: grid; grid-template-columns: 1fr minmax(0, 420px); gap: 40px; align-items: end; margin-bottom: 60px; }
+.sec-head h2 { margin-top: 18px; font-size: clamp(42px, 6vw, 96px); }
+.sec-head p { font-size: 18px; color: #3a3a3a; }
+.on-black .sec-head p { color: rgba(242,242,240,.72); }
+.sec-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-l); border-left: 1px solid var(--line-l); }
+.sector { border-right: 1px solid var(--line-l); border-bottom: 1px solid var(--line-l); padding: 30px 28px 28px; display: flex; flex-direction: column; gap: 14px; min-height: 380px; transition: background .4s var(--ease), color .4s var(--ease); }
+.sector:hover { background: var(--black); color: var(--chalk); }
+.sector .no { font-size: 12px; font-weight: 700; letter-spacing: .16em; }
+.sector h3 { margin-top: auto; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 26px; line-height: 1; letter-spacing: -.03em; }
+.sector .who { color: #555; font-size: 16px; transition: color .4s; }
+.sector:hover .who { color: #a5a5a5; }
+.sector .gets { padding-top: 16px; border-top: 1px solid currentColor; font-size: 15px; display: grid; gap: 6px; border-color: var(--line-l); }
+.sector:hover .gets { border-color: var(--line-d); }
+.sector .gets span { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; opacity: .6; }
+
+/* ---------- Method ---------- */
+.method { padding-block: clamp(90px, 11vw, 150px); }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-d); }
+.step { padding: 34px 28px 20px 0; display: grid; gap: 14px; align-content: start; }
+.step + .step { padding-left: 28px; border-left: 1px solid var(--line-d); }
+.step .n { font-family: var(--display); font-weight: 900; font-size: 64px; line-height: 1; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px rgba(242,242,240,.6); }
+.step h3 { font-family: var(--display); font-weight: 700; font-size: 24px; letter-spacing: -.02em; text-transform: uppercase; }
+.step p { color: rgba(242,242,240,.68); font-size: 16px; }
+.step .when { margin-top: 6px; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; display: inline-flex; gap: 10px; align-items: center; }
+.step .when::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+
+/* ---------- Pricing ---------- */
+.pricing { padding-block: clamp(90px, 11vw, 150px); }
+.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-l); border-left: 1px solid var(--line-l); }
+.plan { border-right: 1px solid var(--line-l); border-bottom: 1px solid var(--line-l); padding: 38px 34px; display: flex; flex-direction: column; gap: 22px; position: relative; }
+.plan.pro { background: var(--black); color: var(--chalk); border-color: var(--black); }
+.plan .badge { position: absolute; top: 0; right: 0; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; padding: 9px 14px; background: var(--chalk); color: var(--black); }
+.plan h3 { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 28px; letter-spacing: -.03em; }
+.plan .for { color: #555; font-size: 15px; margin-top: -14px; }
+.plan.pro .for { color: #a5a5a5; }
 .plan .price { display: flex; align-items: baseline; gap: 8px; font-variant-numeric: tabular-nums; }
-.plan .price small { font-size: 14px; color: var(--grey); }
-.plan.pro .price small { color: var(--grey-2); }
-.plan .price b { font-size: 52px; font-weight: 600; letter-spacing: -.045em; line-height: 1; }
-.plan ul { list-style: none; margin: 0; padding: 20px 0 0; border-top: 1px solid var(--line); display: grid; gap: 12px; font-size: 15px; }
-.plan.pro ul { border-color: var(--line-dark); }
-.plan li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; }
-.plan li::before { content: ""; width: 14px; height: 8px; margin-top: 5px; border-left: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: rotate(-45deg); }
+.plan .price small { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #777; font-weight: 600; }
+.plan .price b { font-family: var(--display); font-size: 60px; font-weight: 500; letter-spacing: -.05em; line-height: 1; }
+.plan ul { list-style: none; margin: 0; padding: 22px 0 0; border-top: 1px solid var(--line-l); display: grid; gap: 12px; font-size: 15px; }
+.plan.pro ul { border-color: var(--line-d); }
+.plan li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; }
+.plan li::before { content: "—"; opacity: .5; }
 .plan .btn { margin-top: auto; width: 100%; }
-.price-note { margin-top: 26px; text-align: center; color: var(--grey); font-size: 14px; }
+.price-note { margin-top: 24px; font-size: 13px; color: #666; }
 
-/* FAQ */
-.faq-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 60px; }
-.faq-side h2 { font-size: clamp(40px, 5vw, 56px); letter-spacing: -.035em; line-height: 1.04; }
-.faq-side p { margin-top: 18px; color: var(--grey); font-size: 18px; max-width: 340px; }
-.faq-side .btn { margin-top: 26px; }
-details { border-bottom: 1px solid var(--line); }
-details:first-of-type { border-top: 1px solid var(--line); }
-summary {
-  list-style: none; cursor: pointer; padding: 24px 0; display: flex; justify-content: space-between; align-items: center; gap: 24px;
-  font-size: 20px; font-weight: 600; letter-spacing: -.02em;
-}
+/* ---------- FAQ ---------- */
+.faq { padding-block: clamp(90px, 11vw, 150px); }
+.faq-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: clamp(40px, 6vw, 90px); }
+.faq-side h2 { margin-top: 18px; font-size: clamp(44px, 6vw, 92px); }
+.faq-side p { margin-top: 24px; font-size: 18px; color: #3a3a3a; max-width: 340px; }
+.faq-side .btn { margin-top: 30px; }
+details { border-bottom: 1px solid var(--line-l); }
+details:first-of-type { border-top: 1px solid var(--line-l); }
+summary { list-style: none; cursor: pointer; padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-family: var(--display); font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
 summary::-webkit-details-marker { display: none; }
-summary .pm { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--paper); position: relative; transition: transform .35s var(--ease), background .3s; }
-summary .pm::before, summary .pm::after { content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 1.6px; background: var(--ink); transform: translate(-50%,-50%); }
-summary .pm::after { transform: translate(-50%,-50%) rotate(90deg); transition: transform .35s var(--ease); }
-details[open] summary .pm { background: var(--ink); }
-details[open] summary .pm::before { background: #fff; }
-details[open] summary .pm::after { transform: translate(-50%,-50%) rotate(0); background: #fff; }
-details .ans { padding: 0 60px 26px 0; color: var(--grey); font-size: 17px; line-height: 1.55; max-width: 640px; }
+summary .pm { flex: none; width: 36px; height: 36px; border: 1px solid var(--line-l); position: relative; transition: background .3s; }
+summary .pm::before, summary .pm::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--black); transform: translate(-50%,-50%); transition: transform .35s var(--ease); }
+summary .pm::after { transform: translate(-50%,-50%) rotate(90deg); }
+details[open] summary .pm { background: var(--black); border-color: var(--black); }
+details[open] summary .pm::before, details[open] summary .pm::after { background: #fff; }
+details[open] summary .pm::after { transform: translate(-50%,-50%) rotate(0); }
+details .ans { padding: 0 60px 28px 0; color: #4a4a4a; font-size: 17px; line-height: 1.6; max-width: 660px; }
 
-/* Contact */
-.contact { background: var(--black); color: var(--white); border-radius: 36px; padding: clamp(36px, 6vw, 80px); display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(36px, 6vw, 80px); position: relative; overflow: hidden; }
-.contact-side h2 { font-size: clamp(42px, 5.4vw, 68px); letter-spacing: -.04em; line-height: 1; text-transform: uppercase; font-weight: 500; }
-.contact-side h2 .g { color: #6e6e73; }
-.contact-side p { margin-top: 22px; color: #a1a1a6; font-size: 18px; max-width: 360px; }
-.contact-lines { margin-top: 40px; display: grid; gap: 10px; }
-.cline { display: grid; grid-template-columns: 110px 1fr auto; gap: 12px; align-items: center; padding: 16px 18px; border: 1px solid var(--line-dark); border-radius: 16px; font-size: 15px; }
-.cline span { color: #86868b; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+/* ---------- Contact ---------- */
+.contact { padding-block: clamp(90px, 11vw, 150px); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 100px); }
+.contact h2 { margin-top: 18px; font-size: clamp(50px, 7vw, 116px); }
+.contact-side > p { margin-top: 26px; font-size: 18px; color: rgba(242,242,240,.75); max-width: 420px; }
+.contact-lines { margin-top: 44px; border-top: 1px solid var(--line-d); }
+.cline { display: grid; grid-template-columns: 120px 1fr auto; gap: 12px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line-d); font-size: 16px; }
+.cline span { color: var(--grey); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; }
 .cline b { font-weight: 500; user-select: all; overflow-wrap: anywhere; min-width: 0; }
-.copy { background: #1d1d1f; border: 0; color: #f5f5f7; font-size: 12px; padding: 6px 10px; border-radius: 99px; cursor: pointer; }
-.copy:hover { background: #333336; }
-
-form { display: grid; gap: 16px; min-width: 0; }
-.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.field { display: grid; gap: 8px; min-width: 0; }
-.field label, .fs-label { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #86868b; }
-.field input, .field textarea, .field select {
-  width: 100%; background: #111113; border: 1px solid #2c2c2e; border-radius: 14px; color: #f5f5f7;
-  font: inherit; font-size: 16px; padding: 14px 16px; letter-spacing: -.01em; transition: border-color .2s, background .2s;
-}
-.field textarea { min-height: 120px; resize: vertical; }
-.field input::placeholder, .field textarea::placeholder { color: #5b5b60; }
-.field input:focus, .field textarea:focus { outline: none; border-color: #f5f5f7; background: #161618; }
+.copy { background: none; border: 1px solid var(--line-d); color: var(--chalk); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding: 8px 12px; cursor: pointer; }
+.copy:hover { background: var(--chalk); color: var(--black); }
+form { display: grid; gap: 26px; min-width: 0; align-content: start; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .fs-label { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--grey); }
+.field input, .field textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(242,242,240,.28); border-radius: 0; color: var(--chalk); font: inherit; font-size: 18px; padding: 12px 0; transition: border-color .2s; }
+.field textarea { min-height: 110px; resize: vertical; }
+.field input::placeholder, .field textarea::placeholder { color: #555; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--chalk); }
 .field input[aria-invalid="true"] { border-color: #ff6961; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; border: 0; padding: 0; margin: 0; min-width: 0; }
-.chips legend { padding: 0; margin-bottom: 10px; }
+.chips legend { padding: 0; margin-bottom: 12px; }
 .chips input { position: absolute; opacity: 0; pointer-events: none; }
-.chips label.chip { font-size: 14px; padding: 9px 15px; border-radius: 99px; border: 1px solid #3a3a3c; cursor: pointer; transition: all .2s var(--ease); letter-spacing: -.01em; text-transform: none; color: #f5f5f7; font-weight: 400; }
-.chips label.chip:hover { border-color: #8e8e93; }
-.chips input:checked + label.chip { background: #f5f5f7; color: #000; border-color: #f5f5f7; }
-.chips input:focus-visible + label.chip { outline: 2px solid #f5f5f7; outline-offset: 2px; }
-.form-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px; }
-.form-foot small { color: #6e6e73; font-size: 13px; max-width: 280px; }
-.form-done { display: grid; gap: 16px; align-content: start; }
-.form-done h3 { font-size: 32px; letter-spacing: -.03em; }
-.form-done p { color: #a1a1a6; }
-.form-done pre { white-space: pre-wrap; background: #111113; border: 1px solid #2c2c2e; border-radius: 14px; padding: 16px; font: 14px/1.5 var(--font); color: #d2d2d7; margin: 0; max-height: 260px; overflow: auto; }
+.chips label.chip { font-size: 14px; padding: 10px 16px; border: 1px solid rgba(242,242,240,.24); cursor: pointer; transition: all .25s var(--ease); color: var(--chalk); }
+.chips label.chip:hover { border-color: var(--chalk); }
+.chips input:checked + label.chip { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
+.chips input:focus-visible + label.chip { outline: 2px solid var(--chalk); outline-offset: 2px; }
+.form-foot { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+.form-foot small { color: #6a6a6a; font-size: 13px; max-width: 280px; }
+.form-done { display: grid; gap: 18px; align-content: start; }
+.form-done h3 { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 40px; letter-spacing: -.04em; line-height: .95; }
+.form-done p { color: #a5a5a5; }
+.form-done pre { white-space: pre-wrap; background: var(--coal); border: 1px solid var(--line-d); padding: 18px; font: 14px/1.55 var(--body); color: #d2d2d2; margin: 0; max-height: 260px; overflow: auto; }
 .form-done .acts { display: flex; gap: 10px; flex-wrap: wrap; }
+.linkish { background: none; border: 0; padding: 0; cursor: pointer; color: var(--grey); font-size: 14px; justify-self: start; }
+.linkish:hover { color: var(--chalk); }
 
-/* Footer */
-footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
-.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 32px; padding-bottom: 50px; border-bottom: 1px solid var(--line); }
-.foot-grid img { width: 210px; }
-.foot-grid p { color: var(--grey); font-size: 14px; margin-top: 18px; max-width: 280px; }
-.foot-col { display: grid; gap: 10px; align-content: start; font-size: 14px; }
-.foot-col b { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
-.foot-col a { color: var(--grey); }
-.foot-col a:hover { color: var(--ink); }
-.foot-giant { font-size: clamp(64px, 15.8vw, 230px); font-weight: 700; letter-spacing: -.06em; line-height: .82; margin-top: 40px; color: var(--ink); white-space: nowrap; display: flex; justify-content: space-between; }
-.foot-giant .up { display: inline-flex; align-items: flex-start; }
-.foot-giant svg { width: .32em; height: .4em; margin-left: -.02em; margin-top: -.06em; }
-.foot-bottom { margin-top: 30px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--grey-2); font-size: 12px; }
+/* ---------- Footer ---------- */
+footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow: hidden; }
+.foot-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 32px; padding-bottom: 50px; border-bottom: 1px solid var(--line-d); }
+.foot-grid img { width: 220px; filter: invert(1); }
+.foot-grid p { color: var(--grey); font-size: 15px; margin-top: 20px; max-width: 300px; }
+.foot-col { display: grid; gap: 12px; align-content: start; font-size: 15px; }
+.foot-col b { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
+.foot-col a:hover { text-decoration: underline; }
+.foot-giant { margin-top: 50px; font-size: clamp(60px, 14.6vw, 240px); white-space: nowrap; line-height: .8; letter-spacing: -.065em; }
+.foot-giant em.s { font-size: .5em; letter-spacing: -.02em; color: rgba(242,242,240,.6); }
+.foot-bottom { margin-top: 36px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--grey-d); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 
-/* Reveal: elements start visible, only lift slightly into place */
+/* Reveal (only for content below the fold) */
 .rv { transition: transform 1s var(--ease), opacity 1s var(--ease); }
-.js .rv.pre { transform: translateY(28px); opacity: .001; }
+.js .rv.pre { transform: translateY(32px); opacity: .001; }
 
-/* Mobile sticky CTA */
 .m-cta { display: none; }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1020px) {
-  .nav-links { gap: 22px; }
-  .hero-copy { position: relative; left: auto; bottom: auto; max-width: 640px; margin-bottom: 30px; }
-  .monitor { width: 100%; }
-  .svc-grid { grid-template-columns: 1fr 1fr; }
-  .sec-grid { grid-template-columns: 1fr 1fr; }
-  .monitor.mon-show { width: 100%; }
-  .svc.feature { grid-row: auto; grid-column: span 2; min-height: 0; }
-  .qr { width: 160px; }
-  .steps { grid-template-columns: 1fr 1fr; }
-  .step:nth-child(3) { border-left: 0; padding-left: 0; }
-  .step:nth-child(n+3) { border-top: 1px solid var(--line-dark); }
-  .price-grid { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
-  .faq-grid, .contact { grid-template-columns: 1fr; }
-  .statement-grid { grid-template-columns: 1fr; }
-  .statement-side { grid-auto-flow: column; justify-content: start; align-items: center; }
+@media (max-width: 1100px) {
+  .nav-links { gap: 22px; font-size: 12px; }
+  .nav-sep { display: none; }
 }
-@media (max-width: 820px) {
+@media (max-width: 960px) {
   .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: block; }
+  .nav.open { background: var(--black); }
   .nav.open .nav-links {
-    display: flex; flex-direction: column; gap: 0; position: absolute; top: 52px; left: 0; right: 0;
-    background: rgba(245,245,247,.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    padding: 8px var(--gut-r) 24px var(--gut); font-size: 24px; font-weight: 600; letter-spacing: -.02em;
-    border-bottom: 1px solid var(--line); min-height: calc(100vh - 52px);
+    display: flex; flex-direction: column; gap: 0; position: fixed; top: calc(env(safe-area-inset-top, 0px) + 76px); left: 0; right: 0; bottom: 0;
+    background: var(--black); padding: 20px var(--gut-r) 40px var(--gut); overflow-y: auto;
+    font-family: var(--display); font-size: 38px; font-weight: 800; letter-spacing: -.03em; color: var(--chalk);
   }
-  .nav.open .nav-links a { padding: 12px 0; color: var(--ink); }
-  .show-row { grid-template-columns: 1fr; }
-  .tile { min-height: 520px; padding: 44px 22px 0; }
-  .hero-note { display: none; }
-  .hero-giant { justify-content: flex-start; padding-top: 90px; }
-  .statement-foot { grid-template-columns: 1fr; gap: 20px; }
+  .nav.open .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--line-d); }
+  .nav.open .nav-links a::after { display: none; }
+  .nav-in, .nav.solid .nav-in { height: 76px; }
+  .hero { padding-block: 130px 70px; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .svc-intro { grid-template-columns: 1fr; }
+  .svc-intro > div + div { border-left: 0; padding-left: 0; padding-top: 0; }
+  .svc-row > .wrap { grid-template-columns: 50px 1fr 40px; }
+  .pf-head { grid-template-columns: 1fr; }
+  .sec-head { grid-template-columns: 1fr; }
+  .sec-grid { grid-template-columns: 1fr 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .step:nth-child(3) { border-left: 0; padding-left: 0; }
+  .step:nth-child(n+3) { border-top: 1px solid var(--line-d); }
+  .price-grid { grid-template-columns: 1fr; }
+  .faq-grid, .contact-grid { grid-template-columns: 1fr; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
   .foot-grid > :first-child { grid-column: span 2; }
+  .monitor.mon-show { width: 100%; }
+  .show-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 820px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 50px 20px; }
+  .seal { grid-column: 1 / -1; grid-row: 1; justify-self: center; width: min(62vw, 260px); }
+  .s1 { grid-column: 1; grid-row: 2; } .s2 { grid-column: 2; grid-row: 2; } .s3 { grid-column: 1; grid-row: 3; } .s4 { grid-column: 2; grid-row: 3; }
   .m-cta {
     display: flex; position: fixed; z-index: 45; left: 0; right: 0; bottom: 0;
     padding: 10px var(--gut-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gut);
-    background: rgba(255,255,255,.85); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    border-top: 1px solid rgba(0,0,0,.08); transform: translateY(110%); transition: transform .5s var(--ease);
+    background: rgba(5,5,5,.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line-d); transform: translateY(110%); transition: transform .5s var(--ease);
   }
   .m-cta.show { transform: none; }
   .m-cta .btn { width: 100%; }
-  footer { padding-bottom: 100px; }
+  footer { padding-bottom: 110px; }
 }
 @media (max-width: 600px) {
   body { font-size: 16px; }
   .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  .hero { padding-block: 32px 0; }
-  .hero-copy .sub { flex-direction: column; gap: 10px; }
-  .hero-actions .btn { flex: 1 1 auto; font-size: 16px; padding: 0 18px; }
-  .mon-caption { flex-direction: column; gap: 10px; }
-  .svc-grid { grid-template-columns: 1fr; }
-  .svc.feature { grid-column: auto; }
+  .brand img { height: 38px; }
+  .hero h1 { font-size: clamp(44px, 13.4vw, 70px); }
+  .hero-actions .btn { flex: 1 1 auto; }
+  .tabs button { font-size: 10px; letter-spacing: .1em; min-height: 54px; }
+  .stat .num { font-size: clamp(64px, 19vw, 90px); }
+  .stat .label { font-size: 11px; letter-spacing: .12em; }
+  .svc-row .name { font-size: clamp(26px, 8.6vw, 40px); text-align: left; padding-left: 4px; }
+  .sec-grid { grid-template-columns: 1fr; }
+  .sector { min-height: 0; }
+  .sector h3 { margin-top: 20px; }
   .steps { grid-template-columns: 1fr; }
-  .step, .step + .step { padding: 28px 0 18px; border-left: 0; }
-  .step + .step { border-top: 1px solid var(--line-dark); }
+  .step, .step + .step { padding: 28px 0 20px; border-left: 0; }
+  .step + .step { border-top: 1px solid var(--line-d); }
   .f-row { grid-template-columns: 1fr; }
   .cline { grid-template-columns: 1fr auto; }
   .cline span { grid-column: span 2; }
-  .contact { border-radius: 26px; padding: 30px 20px; }
   details .ans { padding-right: 0; }
-  summary { font-size: 18px; }
-  .sec-grid { grid-template-columns: 1fr; }
-  .sector { min-height: 0; }
-  .gets { margin-top: 18px; }
-  .tile h3 { font-size: 32px; }
-  .tile p { font-size: 17px; }
+  summary { font-size: 19px; }
+  .tile { padding: 40px 18px 0; }
+  .plan { padding: 32px 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition: none !important; }
   html { scroll-behavior: auto; }
   .js .rv.pre { transform: none; opacity: 1; }
 }
@@ -619,20 +567,17 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="Local Up Studio, torna all'inizio">
-      <img src="assets/logo-mark.png" alt="" width="30" height="34">
-      <span>LOCAL UP<small>STUDIO</small></span>
-    </a>
+    <a class="brand" href="#top" aria-label="Local Up Studio, torna all'inizio"><img src="assets/logo.png" alt="Local Up Studio" width="81" height="46"></a>
     <nav class="nav-links" id="navLinks" aria-label="Principale">
-      <a href="#settori">Settori</a>
-      <a href="#lavori">Progetti</a>
+      <a href="#top">Home</a>
       <a href="#servizi">Servizi</a>
-      <a href="#metodo">Metodo</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#settori">Settori</a>
       <a href="#prezzi">Prezzi</a>
-      <a href="#faq">FAQ</a>
       <a href="#contatti">Contatti</a>
     </nav>
-    <a class="btn btn-dark nav-cta" href="#contatti">Richiedi un preventivo</a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <a class="btn btn-chalk nav-cta" href="#contatti">Scrivimi</a>
     <button class="nav-toggle" id="navToggle" aria-label="Apri il menu" aria-expanded="false" aria-controls="navLinks"><i></i><i></i></button>
   </div>
 </header>
@@ -641,119 +586,85 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
 
 <!-- ============ HERO ============ -->
 <section class="hero" aria-labelledby="h1">
-  <div class="hero-giant" aria-hidden="true"><span data-px="-0.08">local</span><span data-px="0.06">up.</span></div>
-
-  <div class="wrap">
-    <div class="hero-top">
-      <span class="hero-kicker"><span class="dot-live"></span>Disponibile per 2 nuovi progetti a novembre</span>
-      <p class="hero-note">Siti web per <b>locali, studi e attività</b>: ristoranti, pub, pizzerie, bar, studi dentistici e professionali. Progettati e sviluppati da una sola persona.</p>
-    </div>
-
-    <div class="hero-stage">
-      <div class="hero-copy">
-        <h1 id="h1">La tua attività,<br>scelta anche online.</h1>
-        <div class="sub">
-          <p><b>Design su misura</b> e sviluppo a mano. Niente template.</p>
-          <p>Per locali, studi dentistici, studi professionali e attività locali.</p>
-        </div>
-        <div class="hero-actions">
-          <a class="btn btn-dark" href="#contatti">Richiedi un preventivo <span class="arr">→</span></a>
-          <a class="btn btn-ghost" href="#lavori">Guarda i progetti</a>
-        </div>
-      </div>
-
-      <div class="monitor" aria-label="Anteprima dei concept in rotazione sul monitor">
-        <div class="mon-frame">
-          <div class="screen" id="heroScreen"></div>
-        </div>
-        <div class="mon-neck" aria-hidden="true"></div>
-        <div class="mon-base" aria-hidden="true"></div>
+  <canvas id="waves" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div>
+      <h1 id="h1" class="mega">
+        <span class="ln"><span>Porto la tua</span></span>
+        <span class="ln"><span>attività</span></span>
+        <span class="ln"><span>un passo</span></span>
+        <span class="ln"><span><em class="s">più su.</em></span></span>
+      </h1>
+      <p class="hero-sub">Siti web per locali, ristoranti, studi e attività. Design su misura, codice scritto a mano. Niente template.<br>Perché un sito uguale a tutti gli altri è un sito che nessuno ricorda.</p>
+      <div class="hero-actions">
+        <a class="btn btn-chalk" href="#contatti">Richiedi un preventivo <span class="arr">→</span></a>
+        <a class="btn btn-line" href="#portfolio">Guarda i lavori</a>
       </div>
     </div>
 
-    <div class="mon-caption">
-      <span>In onda: <strong id="demoName">Forno 1956</strong> · <span id="demoType">Pizzeria</span></span>
-      <div class="dots" id="demoDots" role="group" aria-label="Cambia concept"></div>
+    <div class="panel">
+      <div class="panel-head"><span class="label">Local Up Studio — <span id="demoName">Forno 1956</span></span><span class="dots3" aria-hidden="true"><i></i><i></i><i></i></span></div>
+      <div class="panel-body">
+        <div class="monitor" aria-label="Anteprima dei siti in rotazione sul monitor">
+          <div class="mon-frame">
+            <div class="screen" id="heroScreen">
+              <div class="stories" id="stories" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="boot" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+            </div>
+          </div>
+          <div class="mon-neck" aria-hidden="true"></div>
+          <div class="mon-base" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="tabs" id="tabs" role="group" aria-label="Scegli il sito da mostrare">
+        <button type="button" data-i="0">01 / Locali</button>
+        <button type="button" data-i="1">02 / Studi</button>
+        <button type="button" data-i="2">03 / Bar</button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ TICKER ============ -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Ristoranti</span><span>Pizzerie</span><span>Pub</span><span>Bar</span><span>Studi dentistici</span><span>Studi legali</span><span>Commercialisti</span><span>Centri estetici</span><span>Palestre</span><span>B&amp;B</span><span>Negozi</span>
-    <span>Ristoranti</span><span>Pizzerie</span><span>Pub</span><span>Bar</span><span>Studi dentistici</span><span>Studi legali</span><span>Commercialisti</span><span>Centri estetici</span><span>Palestre</span><span>B&amp;B</span><span>Negozi</span>
+<!-- ============ STATS ============ -->
+<section class="stats on-light" aria-label="In numeri">
+  <div class="wrap stats-grid">
+    <div class="stat s1 rv"><span class="num"><span class="count" data-to="100">100</span><small>%</small></span><span class="label">Codice scritto a mano</span></div>
+    <div class="stat s2 r rv"><span class="num"><span class="count" data-to="48">48</span><small>ORE</small></span><span class="label">Per ricevere il preventivo</span></div>
+    <div class="seal rv"><img src="assets/logo-mark.png" alt="" width="215" height="245"></div>
+    <div class="stat s3 rv"><span class="num"><span class="count" data-to="3">3</span><small>SETT.</small></span><span class="label">Dal primo caffè al sito online</span></div>
+    <div class="stat s4 r rv"><span class="num"><span class="count" data-to="0">0</span><small>TEMPLATE</small></span><span class="label">Siti fatti con lo stampino</span></div>
   </div>
-</div>
+</section>
 
-<!-- ============ STATEMENT ============ -->
-<section class="statement" aria-label="Chi sono">
-  <div class="wrap statement-grid">
-    <div class="statement-side rv">
-      <img src="assets/logo-mark.png" alt="" width="64" height="73">
-      <span class="eyebrow">Lo studio</span>
-    </div>
+<!-- ============ SERVICES ============ -->
+<section id="servizi" aria-labelledby="servizi-h">
+  <div class="wrap svc-intro">
     <div class="rv">
-      <h2><span class="indent"></span>Local Up Studio è uno studio di una persona sola. Progetto <span class="pill-inline" aria-hidden="true"></span> siti per locali, studi e attività <span class="mute">che vogliono più clienti, non solo più visite. Parli sempre con chi <span class="pill-inline light" aria-hidden="true"></span> scrive il codice.</span></h2>
-      <div class="statement-foot">
-        <div><b>1</b><span>referente, dal primo messaggio alla messa online</span></div>
-        <div><b>0</b><span>template: ogni sito nasce da zero sulla tua attività</span></div>
-        <div><b>&lt;1s</b><span>di caricamento da smartphone: l'obiettivo di ogni progetto</span></div>
-      </div>
+      <span class="label">Servizi</span>
+      <h2 id="servizi-h" class="mega">Tutto quello che serve. <em class="s">Niente di più.</em></h2>
     </div>
+    <div class="rv"><p>Un sito deve rispondere in tre secondi a tre domande: chi siete, dove siete, come vi contatto. Tocca un servizio per scoprire cosa include.</p></div>
+  </div>
+  <div class="svc-list" id="svcList">
+    <div class="svc-row" tabindex="0" role="button" aria-expanded="false"><div class="wrap"><span class="no">01</span><span class="name">Siti web</span><span class="pm" aria-hidden="true"></span><div class="desc"><p>Design originale e sviluppo a mano, pensato prima per lo smartphone. Testi, foto, dominio e hosting inclusi.</p></div></div></div>
+    <div class="svc-row" tabindex="0" role="button" aria-expanded="false"><div class="wrap"><span class="no">02</span><span class="name">Prenotazioni</span><span class="pm" aria-hidden="true"></span><div class="desc"><p>Tavoli per il ristorante, visite per lo studio, trattamenti per il centro estetico. Conferme automatiche via email e WhatsApp.</p></div></div></div>
+    <div class="svc-row" tabindex="0" role="button" aria-expanded="false"><div class="wrap"><span class="no">03</span><span class="name">Menu &amp; listini</span><span class="pm" aria-hidden="true"></span><div class="desc"><p>Menu digitale con QR al tavolo, listino dei trattamenti, orari: li aggiorni dal telefono in pochi secondi.</p></div></div></div>
+    <div class="svc-row" tabindex="0" role="button" aria-expanded="false"><div class="wrap"><span class="no">04</span><span class="name">SEO locale</span><span class="pm" aria-hidden="true"></span><div class="desc"><p>Un sito costruito per comparire quando qualcuno cerca "dentista vicino a me" o "pizzeria aperta ora".</p></div></div></div>
+    <div class="svc-row" tabindex="0" role="button" aria-expanded="false"><div class="wrap"><span class="no">05</span><span class="name">Google Business</span><span class="pm" aria-hidden="true"></span><div class="desc"><p>Scheda Google ottimizzata: foto, orari, recensioni e collegamento diretto a prenotazioni e chiamate.</p></div></div></div>
+    <div class="svc-row" tabindex="0" role="button" aria-expanded="false"><div class="wrap"><span class="no">06</span><span class="name">Assistenza</span><span class="pm" aria-hidden="true"></span><div class="desc"><p>Aggiornamenti, backup, sicurezza e piccole modifiche. Mi scrivi su WhatsApp, la modifica è online in giornata.</p></div></div></div>
   </div>
 </section>
 
-<!-- ============ SECTORS ============ -->
-<section class="sectors" id="settori" aria-labelledby="settori-h">
+<!-- ============ PORTFOLIO ============ -->
+<section class="pf" id="portfolio" aria-labelledby="pf-h">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div>
-        <span class="eyebrow">Per chi lavoro</span>
-        <h2 id="settori-h" style="margin-top:12px">Locali, studi e attività.<br>Ognuno con il suo sito.</h2>
+    <div class="pf-head">
+      <h2 id="pf-h" class="mega rv">Portfolio <em class="s">tre homepage, tre schermi.</em></h2>
+      <div class="pf-side rv">
+        <p>Homepage progettate da zero per tre settori diversi: una su monitor, una su tablet, una su smartphone. Ogni sito che consegno funziona così su tutti e tre.</p>
+        <a class="btn btn-line" href="#contatti">Voglio il mio sito <span class="arr">→</span></a>
       </div>
-      <p>Un ristorante deve far venire fame, uno studio dentistico deve dare fiducia. Progetto ogni sito sulle domande che si fanno i tuoi clienti.</p>
     </div>
-    <div class="sec-grid">
-      <article class="sector dark rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 0 0 2 2v8M11 3v8a2 2 0 0 1-2 2M9 3v6M17 21V3c-2 1.5-3 4-3 7v3h3"/></svg></div>
-        <h3>Locali e ristorazione</h3>
-        <p class="who">Ristoranti, pizzerie, pub, bar, caffetterie, trattorie.</p>
-        <div class="gets"><span>Cosa ottieni</span>Menu digitale, prenotazione tavoli, eventi.</div>
-      </article>
-      <article class="sector rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 3c-2 0-3.5 1.6-3.5 4 0 3 1.4 4.6 2 7.5.6 3 1 6.5 2.5 6.5s1.4-5 3-5 1.5 5 3 5 1.9-3.5 2.5-6.5c.6-2.9 2-4.5 2-7.5 0-2.4-1.5-4-3.5-4-2 0-3 1.2-5 1.2S9 3 7 3z"/></svg></div>
-        <h3>Studi dentistici e medici</h3>
-        <p class="who">Dentisti, ortodontisti, fisioterapisti, poliambulatori.</p>
-        <div class="gets"><span>Cosa ottieni</span>Appuntamenti online, trattamenti, team.</div>
-      </article>
-      <article class="sector rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></div>
-        <h3>Studi professionali</h3>
-        <p class="who">Avvocati, commercialisti, architetti, consulenti.</p>
-        <div class="gets"><span>Cosa ottieni</span>Credibilità, servizi chiari, contatto rapido.</div>
-      </article>
-      <article class="sector rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9M3 9v11h18V9M3 9h18M9 20v-6h6v6"/></svg></div>
-        <h3>Attività locali</h3>
-        <p class="who">Centri estetici, palestre, negozi, B&amp;B e hotel.</p>
-        <div class="gets"><span>Cosa ottieni</span>Prenotazioni, listino, Google Maps.</div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WORK: three homepages, three devices ============ -->
-<section class="band band-paper" id="lavori" aria-labelledby="lavori-h">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div>
-        <span class="eyebrow">Progetti</span>
-        <h2 id="lavori-h" style="margin-top:12px">Tre homepage.<br>Tre schermi.</h2>
-      </div>
-      <p>Tre homepage che ho progettato da zero per tre settori diversi: una su monitor, una su tablet, una su smartphone. Ogni sito che consegno funziona così su tutti e tre.</p>
-    </div>
-
     <div class="show">
       <article class="tile t-black st-monitor rv">
         <span class="tag">Studio dentistico · Desktop</span>
@@ -762,7 +673,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
         <ul class="feat"><li>Prenotazione visite</li><li>Pagine trattamenti</li><li>SEO locale</li></ul>
         <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Studio dentistico">Voglio un sito così</a></div>
         <div class="monitor mon-show" aria-label="Homepage dello Studio Dentistico Moretti su monitor">
-          <div class="mon-frame"><div class="screen" data-demo="4"></div></div>
+          <div class="mon-frame"><div class="screen" data-demo="3"></div></div>
           <div class="mon-neck" aria-hidden="true"></div>
           <div class="mon-base" aria-hidden="true"></div>
         </div>
@@ -854,158 +765,91 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
         </article>
       </div>
     </div>
+    <p class="pf-note">Progetti dimostrativi realizzati da Local Up Studio.</p>
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
-<section class="band band-paper" id="servizi" aria-labelledby="servizi-h" style="padding-top:0">
+<!-- ============ MANIFESTO ============ -->
+<section class="manifesto on-bone" aria-label="Il primo passo">
+  <div class="wrap">
+    <h2 class="mega rv">La prima cosa che ricevi è un'analisi del tuo sito. Gratis. E <em class="s">sincera.</em></h2>
+    <div class="manifesto-foot rv">
+      <p>Prima di proporti qualcosa ti dico cosa non funziona oggi: velocità, Google, smartphone, contatti. Se il tuo sito va bene così, te lo dico.</p>
+      <a class="btn btn-ink" href="#contatti">Richiedi l'analisi <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTORS ============ -->
+<section class="sectors on-light" id="settori" aria-labelledby="settori-h">
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">Servizi</span>
-        <h2 id="servizi-h" style="margin-top:12px">Tutto quello che serve a un'attività per farsi trovare. E scegliere.</h2>
+        <span class="label">Per chi lavoro</span>
+        <h2 id="settori-h" class="mega">Ogni attività ha il suo <em class="s">sito.</em></h2>
       </div>
-      <p>Un sito non è una brochure. Deve rispondere in tre secondi a tre domande: chi siete, dove siete, come vi contatto.</p>
+      <p>Un ristorante deve far venire fame, uno studio dentistico deve dare fiducia. Progetto ogni sito sulle domande che si fanno i tuoi clienti.</p>
     </div>
-
-    <div class="svc-grid">
-      <article class="svc feature rv">
-        <div style="display:grid;gap:14px">
-          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></div>
-          <h3>Menu e listini sempre aggiornati</h3>
-          <p>Il menu del ristorante, il listino dei trattamenti, gli orari dello studio: li aggiorni dal telefono in pochi secondi. Per i locali c'è anche il QR al tavolo, senza PDF che si ingrandiscono male.</p>
-        </div>
-        <div class="qr" id="qr" aria-hidden="true"></div>
-        <ul><li>QR al tavolo</li><li>Multilingua IT · EN · DE</li><li>Modifica da smartphone</li></ul>
-      </article>
-
-      <article class="svc rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
-        <h3>Sito su misura</h3>
-        <p>Design originale, sviluppo a mano, foto e testi curati. Pensato prima per lo smartphone, da dove arriva la maggior parte delle visite.</p>
-        <ul><li>Responsive</li><li>Dominio + hosting</li><li>Testi inclusi</li></ul>
-      </article>
-
-      <article class="svc rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 15l2.5 2.5L16 13"/></svg></div>
-        <h3>Prenotazioni e appuntamenti</h3>
-        <p>Tavoli per il ristorante, visite per lo studio dentistico, trattamenti per il centro estetico. Conferme automatiche via email e WhatsApp.</p>
-        <ul><li>Zero commissioni</li><li>Notifiche WhatsApp</li></ul>
-      </article>
-
-      <article class="svc rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
-        <h3>SEO locale e Google</h3>
-        <p>Scheda Google Business ottimizzata e sito costruito per comparire quando qualcuno cerca "dentista vicino a me" o "pizzeria aperta ora".</p>
-        <ul><li>Google Business</li><li>Dati strutturati</li></ul>
-      </article>
-
-      <article class="svc rv">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div>
-        <h3>Assistenza continua</h3>
-        <p>Aggiornamenti, backup, sicurezza e piccole modifiche. Mi scrivi su WhatsApp, la modifica è online in giornata.</p>
-        <ul><li>Risposta in 24h</li><li>Backup giornalieri</li></ul>
-      </article>
+    <div class="sec-grid">
+      <article class="sector rv"><span class="no">01</span><h3>Locali e ristorazione</h3><p class="who">Ristoranti, pizzerie, pub, bar, caffetterie, trattorie.</p><div class="gets"><span>Cosa ottieni</span>Menu digitale, prenotazione tavoli, eventi.</div></article>
+      <article class="sector rv"><span class="no">02</span><h3>Studi dentistici e medici</h3><p class="who">Dentisti, ortodontisti, fisioterapisti, poliambulatori.</p><div class="gets"><span>Cosa ottieni</span>Appuntamenti online, trattamenti, team.</div></article>
+      <article class="sector rv"><span class="no">03</span><h3>Studi professionali</h3><p class="who">Avvocati, commercialisti, architetti, consulenti.</p><div class="gets"><span>Cosa ottieni</span>Credibilità, servizi chiari, contatto rapido.</div></article>
+      <article class="sector rv"><span class="no">04</span><h3>Attività locali</h3><p class="who">Centri estetici, palestre, negozi, B&amp;B e hotel.</p><div class="gets"><span>Cosa ottieni</span>Prenotazioni, listino, Google Maps.</div></article>
     </div>
   </div>
 </section>
 
-<!-- ============ PROCESS ============ -->
-<section class="band band-black" id="metodo" aria-labelledby="metodo-h">
+<!-- ============ METHOD ============ -->
+<section class="method" id="metodo" aria-labelledby="metodo-h">
   <div class="wrap">
-    <div class="sec-head rv">
+    <div class="sec-head rv on-black">
       <div>
-        <span class="eyebrow" style="color:#86868b">Metodo</span>
-        <h2 id="metodo-h" style="margin-top:12px">Dal primo caffè<br>al sito online in 3 settimane.</h2>
+        <span class="label">Metodo</span>
+        <h2 id="metodo-h" class="mega">Online in tre <em class="s">settimane.</em></h2>
       </div>
       <p>Quattro passaggi chiari. Sai sempre a che punto siamo, cosa ti serve preparare e quando vedi il risultato.</p>
     </div>
-
     <div class="steps">
-      <div class="step rv">
-        <span class="n">01</span>
-        <h3>Chiamata conoscitiva</h3>
-        <p>30 minuti, gratis. Mi racconti la tua attività, i clienti, cosa non funziona oggi. Ti mando un preventivo chiaro entro 48 ore.</p>
-        <span class="when">Settimana 0</span>
-      </div>
-      <div class="step rv">
-        <span class="n">02</span>
-        <h3>Design</h3>
-        <p>Disegno la home e le pagine chiave sul tuo brand. Vedi il sito prima che esista e lo correggiamo insieme, fino a due giri di revisioni.</p>
-        <span class="when">Settimana 1</span>
-      </div>
-      <div class="step rv">
-        <span class="n">03</span>
-        <h3>Sviluppo</h3>
-        <p>Scrivo il codice a mano: veloce, accessibile, pronto per Google. Colleghiamo prenotazioni, menu o listini e mappe.</p>
-        <span class="when">Settimana 2</span>
-      </div>
-      <div class="step rv">
-        <span class="n">04</span>
-        <h3>Lancio e crescita</h3>
-        <p>Messa online, Google Business, formazione di 20 minuti al tuo staff. Poi controllo i numeri e ti dico cosa migliorare.</p>
-        <span class="when">Settimana 3</span>
-      </div>
+      <div class="step rv"><span class="n">01</span><h3>Chiamata</h3><p>30 minuti, gratis. Mi racconti la tua attività e i tuoi clienti. Ti mando un preventivo chiaro entro 48 ore.</p><span class="when">Settimana 0</span></div>
+      <div class="step rv"><span class="n">02</span><h3>Design</h3><p>Disegno la home e le pagine chiave sul tuo brand. Vedi il sito prima che esista, con due giri di revisioni.</p><span class="when">Settimana 1</span></div>
+      <div class="step rv"><span class="n">03</span><h3>Sviluppo</h3><p>Scrivo il codice a mano: veloce, accessibile, pronto per Google. Colleghiamo prenotazioni, listini e mappe.</p><span class="when">Settimana 2</span></div>
+      <div class="step rv"><span class="n">04</span><h3>Lancio</h3><p>Messa online, Google Business, 20 minuti di formazione. Poi controllo i numeri e ti dico cosa migliorare.</p><span class="when">Settimana 3</span></div>
     </div>
-
-    <p class="big-line rv">Creo siti che portano<br><span class="fade">clienti, non solo visite.</span></p>
   </div>
 </section>
 
 <!-- ============ PRICING ============ -->
-<section class="band" id="prezzi" aria-labelledby="prezzi-h">
+<section class="pricing on-light" id="prezzi" aria-labelledby="prezzi-h">
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">Investimento</span>
-        <h2 id="prezzi-h" style="margin-top:12px">Prezzi chiari.<br>Nessun canone nascosto.</h2>
+        <span class="label">Investimento</span>
+        <h2 id="prezzi-h" class="mega">Prezzi chiari. <em class="s">Nessun canone nascosto.</em></h2>
       </div>
       <p>Paghi il 40% all'avvio e il resto alla messa online. Il sito e il dominio sono tuoi, per sempre.</p>
     </div>
-
     <div class="price-grid">
       <article class="plan rv">
         <h3>Essenziale</h3>
-        <p class="for">Per bar, pub e piccole attività che partono da zero.</p>
+        <p class="for">Per bar, pub e piccole attività.</p>
         <div class="price"><small>da</small><b>€1.200</b></div>
-        <ul>
-          <li>Sito one-page su misura</li>
-          <li>Menu digitale o listino servizi</li>
-          <li>Mappa, orari e contatti WhatsApp</li>
-          <li>Google Business configurato</li>
-          <li>Online in 10 giorni</li>
-        </ul>
-        <a class="btn btn-ghost" href="#contatti" data-budget="1-2k">Chiedi un preventivo</a>
+        <ul><li>Sito one-page su misura</li><li>Menu digitale o listino servizi</li><li>Mappa, orari e contatto WhatsApp</li><li>Google Business configurato</li><li>Online in 10 giorni</li></ul>
+        <a class="btn btn-ink-line" href="#contatti" data-budget="1-2k">Chiedi un preventivo</a>
       </article>
-
       <article class="plan pro rv">
         <span class="badge">Il più scelto</span>
         <h3>Signature</h3>
         <p class="for">Per ristoranti e studi che vogliono più clienti.</p>
         <div class="price"><small>da</small><b>€2.400</b></div>
-        <ul>
-          <li>Sito multi-pagina con design esclusivo</li>
-          <li>Prenotazioni o appuntamenti online</li>
-          <li>Contenuti multilingua</li>
-          <li>SEO locale e dati strutturati</li>
-          <li>Shooting foto guidato</li>
-          <li>3 mesi di assistenza inclusi</li>
-        </ul>
-        <a class="btn btn-light" href="#contatti" data-budget="2-4k">Chiedi un preventivo <span class="arr">→</span></a>
+        <ul><li>Sito multi-pagina con design esclusivo</li><li>Prenotazioni o appuntamenti online</li><li>Contenuti multilingua</li><li>SEO locale e dati strutturati</li><li>Shooting foto guidato</li><li>3 mesi di assistenza inclusi</li></ul>
+        <a class="btn btn-chalk" href="#contatti" data-budget="2-4k">Chiedi un preventivo <span class="arr">→</span></a>
       </article>
-
       <article class="plan rv">
         <h3>Su misura</h3>
-        <p class="for">Per cliniche, gruppi, catene e progetti speciali.</p>
-        <div class="price"><b style="font-size:40px">Su preventivo</b></div>
-        <ul>
-          <li>Più sedi, un unico sito</li>
-          <li>E-commerce e gift card</li>
-          <li>Integrazioni con cassa e gestionale</li>
-          <li>Area riservata clienti o pazienti</li>
-          <li>Referente dedicato</li>
-        </ul>
-        <a class="btn btn-ghost" href="#contatti" data-budget="4k+">Parliamone</a>
+        <p class="for">Per cliniche, gruppi e progetti speciali.</p>
+        <div class="price"><b style="font-size:44px">Su preventivo</b></div>
+        <ul><li>Più sedi, un unico sito</li><li>E-commerce e gift card</li><li>Integrazioni con cassa e gestionale</li><li>Area riservata clienti o pazienti</li><li>Referente dedicato</li></ul>
+        <a class="btn btn-ink-line" href="#contatti" data-budget="4k+">Parliamone</a>
       </article>
     </div>
     <p class="price-note">Prezzi IVA esclusa. Hosting e dominio dal secondo anno: €15/mese.</p>
@@ -1013,106 +857,82 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
 </section>
 
 <!-- ============ FAQ ============ -->
-<section class="band band-paper" id="faq" aria-labelledby="faq-h">
+<section class="faq on-bone" id="faq" aria-labelledby="faq-h">
   <div class="wrap faq-grid">
     <div class="faq-side rv">
-      <span class="eyebrow">FAQ</span>
-      <h2 id="faq-h" style="margin-top:12px">Domande frequenti.</h2>
+      <span class="label">FAQ</span>
+      <h2 id="faq-h" class="mega">Domande <em class="s">frequenti.</em></h2>
       <p>Non trovi la risposta? Scrivimi: rispondo personalmente, di solito entro qualche ora.</p>
-      <a class="btn btn-dark" href="#contatti">Fai una domanda</a>
+      <a class="btn btn-ink" href="#contatti">Fai una domanda</a>
     </div>
     <div class="rv">
-      <details open>
-        <summary>Lavori solo con ristoranti e locali?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">No. Locali e ristorazione sono il mio punto di partenza, ma progetto siti anche per studi dentistici e medici, studi legali e commercialisti, centri estetici, palestre, negozi e B&amp;B. Il metodo è lo stesso: capire chi sono i tuoi clienti e farli arrivare a te.</p>
-      </details>
-      <details>
-        <summary>Quanto tempo serve per avere il sito online?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">Da 10 giorni per il pacchetto Essenziale a circa 3 settimane per Signature. Ti do una data di consegna precisa già nel preventivo.</p>
-      </details>
-      <details>
-        <summary>Devo occuparmi io di testi e foto?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">No. Scrivo io i testi partendo da una chiacchierata con te. Per le foto ti guido con una lista di scatti, oppure organizziamo uno shooting nella tua sede.</p>
-      </details>
-      <details>
-        <summary>Posso modificare testi e prezzi da solo?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">Sì. Menu, listini, orari ed eventi si aggiornano dallo smartphone, senza toccare codice. Per tutto il resto mi scrivi e ci penso io.</p>
-      </details>
-      <details>
-        <summary>Il sito è davvero mio?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">Sì. Dominio, codice e contenuti sono intestati a te. Se un giorno vuoi cambiare fornitore, ti consegno tutto senza costi aggiuntivi.</p>
-      </details>
-      <details>
-        <summary>Lavori anche fuori dalla mia città?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">Lavoro con attività in tutta Italia. La maggior parte del progetto si fa in videochiamata e su WhatsApp. Per lo shooting, se serve, vengo di persona.</p>
-      </details>
-      <details>
-        <summary>Cosa succede dopo la messa online?<span class="pm" aria-hidden="true"></span></summary>
-        <p class="ans">Monitoro velocità, posizionamento su Google e prenotazioni. Con l'assistenza continua ricevi un breve report mensile e le modifiche sono incluse.</p>
-      </details>
+      <details open><summary>Lavori solo con ristoranti e locali?<span class="pm" aria-hidden="true"></span></summary><p class="ans">No. Locali e ristorazione sono il mio punto di partenza, ma progetto siti anche per studi dentistici e medici, studi legali e commercialisti, centri estetici, palestre, negozi e B&amp;B. Il metodo è lo stesso: capire chi sono i tuoi clienti e farli arrivare a te.</p></details>
+      <details><summary>Quanto tempo serve per avere il sito online?<span class="pm" aria-hidden="true"></span></summary><p class="ans">Da 10 giorni per il pacchetto Essenziale a circa 3 settimane per Signature. Ti do una data di consegna precisa già nel preventivo.</p></details>
+      <details><summary>Devo occuparmi io di testi e foto?<span class="pm" aria-hidden="true"></span></summary><p class="ans">No. Scrivo io i testi partendo da una chiacchierata con te. Per le foto ti guido con una lista di scatti, oppure organizziamo uno shooting nella tua sede.</p></details>
+      <details><summary>Posso modificare testi e prezzi da solo?<span class="pm" aria-hidden="true"></span></summary><p class="ans">Sì. Menu, listini, orari ed eventi si aggiornano dallo smartphone, senza toccare codice. Per tutto il resto mi scrivi e ci penso io.</p></details>
+      <details><summary>Il sito è davvero mio?<span class="pm" aria-hidden="true"></span></summary><p class="ans">Sì. Dominio, codice e contenuti sono intestati a te. Se un giorno vuoi cambiare fornitore, ti consegno tutto senza costi aggiuntivi.</p></details>
+      <details><summary>Lavori anche fuori dalla mia città?<span class="pm" aria-hidden="true"></span></summary><p class="ans">Lavoro con attività in tutta Italia. La maggior parte del progetto si fa in videochiamata e su WhatsApp. Per lo shooting, se serve, vengo di persona.</p></details>
     </div>
   </div>
 </section>
 
 <!-- ============ CONTACT ============ -->
-<section class="band" id="contatti" aria-labelledby="contatti-h">
-  <div class="wrap">
-    <div class="contact rv">
-      <div class="contact-side">
-        <span class="eyebrow" style="color:#86868b">Preventivo gratuito</span>
-        <h2 id="contatti-h" style="margin-top:14px">Hai un'attività?<br><span class="g">Parliamone.</span></h2>
-        <p>Raccontami il tuo progetto in due minuti. Ricevi un preventivo dettagliato entro 48 ore, senza impegno.</p>
-        <div class="contact-lines">
-          <div class="cline"><span>Email</span><b id="cEmail"></b><button class="copy" type="button" data-copy="cEmail">Copia</button></div>
-          <div class="cline"><span>WhatsApp</span><b id="cPhone"></b><button class="copy" type="button" data-copy="cPhone">Copia</button></div>
-          <div class="cline"><span>Zona</span><b>Tutta Italia · da remoto</b><span aria-hidden="true"></span></div>
-        </div>
+<section class="contact" id="contatti" aria-labelledby="contatti-h">
+  <div class="wrap contact-grid">
+    <div class="contact-side rv">
+      <span class="label">Preventivo gratuito</span>
+      <h2 id="contatti-h" class="mega">Hai un'attività? <em class="s">Parliamone.</em></h2>
+      <p>Raccontami il tuo progetto in due minuti. Ricevi un preventivo dettagliato entro 48 ore, senza impegno.</p>
+      <div class="contact-lines">
+        <div class="cline"><span>Email</span><b id="cEmail"></b><button class="copy" type="button" data-copy="cEmail">Copia</button></div>
+        <div class="cline"><span>WhatsApp</span><b id="cPhone"></b><button class="copy" type="button" data-copy="cPhone">Copia</button></div>
+        <div class="cline"><span>Zona</span><b>Tutta Italia · da remoto</b><span aria-hidden="true"></span></div>
       </div>
+    </div>
 
-      <div id="formBox">
-        <form id="quoteForm" novalidate>
-          <div class="f-row">
-            <div class="field"><label for="f-name">Nome</label><input id="f-name" name="name" autocomplete="name" placeholder="Mario Rossi" required></div>
-            <div class="field"><label for="f-venue">Nome dell'attività</label><input id="f-venue" name="venue" placeholder="Trattoria da Mario" required></div>
-          </div>
-          <fieldset class="chips" id="f-type">
-            <legend class="fs-label">Tipo di attività</legend>
-            <input type="radio" name="type" id="t1" value="Ristorante / Pizzeria" checked><label class="chip" for="t1">Ristorante / Pizzeria</label>
-            <input type="radio" name="type" id="t2" value="Pub / Bar"><label class="chip" for="t2">Pub / Bar</label>
-            <input type="radio" name="type" id="t3" value="Studio dentistico"><label class="chip" for="t3">Studio dentistico</label>
-            <input type="radio" name="type" id="t4" value="Studio professionale"><label class="chip" for="t4">Studio professionale</label>
-            <input type="radio" name="type" id="t5" value="Altra attività"><label class="chip" for="t5">Altra attività</label>
-          </fieldset>
-          <div class="f-row">
-            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="mario@email.it" required></div>
-            <div class="field"><label for="f-city">Città</label><input id="f-city" name="city" autocomplete="address-level2" placeholder="Milano"></div>
-          </div>
-          <fieldset class="chips" id="f-budget">
-            <legend class="fs-label">Budget indicativo</legend>
-            <input type="radio" name="budget" id="b1" value="1-2k"><label class="chip" for="b1">€1–2k</label>
-            <input type="radio" name="budget" id="b2" value="2-4k" checked><label class="chip" for="b2">€2–4k</label>
-            <input type="radio" name="budget" id="b3" value="4k+"><label class="chip" for="b3">€4k+</label>
-            <input type="radio" name="budget" id="b4" value="Da definire"><label class="chip" for="b4">Non lo so</label>
-          </fieldset>
-          <div class="field"><label for="f-msg">Il progetto</label><textarea id="f-msg" name="msg" placeholder="Es. siamo uno studio dentistico con due sedi e vorremmo ricevere prenotazioni online dal sito…"></textarea></div>
-          <div class="form-foot">
-            <small>Nessuno spam. Uso i tuoi dati solo per risponderti.</small>
-            <button class="btn btn-light" type="submit">Prepara la richiesta <span class="arr">→</span></button>
-          </div>
-        </form>
-
-        <div class="form-done" id="formDone" hidden>
-          <span class="eyebrow" style="color:#86868b">Quasi fatto</span>
-          <h3>La tua richiesta è pronta.</h3>
-          <p>Scegli come inviarla. Se l'app non si apre, copia il testo e incollalo dove preferisci.</p>
-          <pre id="doneText"></pre>
-          <div class="acts">
-            <a class="btn btn-light" id="sendWa" href="#" target="_blank" rel="noopener">Invia su WhatsApp</a>
-            <a class="btn btn-ghost-light" id="sendMail" href="#">Invia via email</a>
-            <button class="btn btn-ghost-light" type="button" id="copyDone">Copia testo</button>
-          </div>
-          <button class="link-more" type="button" id="editForm" style="color:#a1a1a6;background:none;border:0;cursor:pointer;padding:0;justify-self:start">← Modifica i dati</button>
+    <div id="formBox" class="rv">
+      <form id="quoteForm" novalidate>
+        <div class="f-row">
+          <div class="field"><label for="f-name">Nome</label><input id="f-name" name="name" autocomplete="name" placeholder="Mario Rossi" required></div>
+          <div class="field"><label for="f-venue">Nome dell'attività</label><input id="f-venue" name="venue" placeholder="Trattoria da Mario" required></div>
         </div>
+        <fieldset class="chips" id="f-type">
+          <legend class="fs-label">Tipo di attività</legend>
+          <input type="radio" name="type" id="t1" value="Ristorante / Pizzeria" checked><label class="chip" for="t1">Ristorante / Pizzeria</label>
+          <input type="radio" name="type" id="t2" value="Pub / Bar"><label class="chip" for="t2">Pub / Bar</label>
+          <input type="radio" name="type" id="t3" value="Studio dentistico"><label class="chip" for="t3">Studio dentistico</label>
+          <input type="radio" name="type" id="t4" value="Studio professionale"><label class="chip" for="t4">Studio professionale</label>
+          <input type="radio" name="type" id="t5" value="Altra attività"><label class="chip" for="t5">Altra attività</label>
+        </fieldset>
+        <div class="f-row">
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="mario@email.it" required></div>
+          <div class="field"><label for="f-city">Città</label><input id="f-city" name="city" autocomplete="address-level2" placeholder="Milano"></div>
+        </div>
+        <fieldset class="chips" id="f-budget">
+          <legend class="fs-label">Budget indicativo</legend>
+          <input type="radio" name="budget" id="b1" value="1-2k"><label class="chip" for="b1">€1–2k</label>
+          <input type="radio" name="budget" id="b2" value="2-4k" checked><label class="chip" for="b2">€2–4k</label>
+          <input type="radio" name="budget" id="b3" value="4k+"><label class="chip" for="b3">€4k+</label>
+          <input type="radio" name="budget" id="b4" value="Da definire"><label class="chip" for="b4">Non lo so</label>
+        </fieldset>
+        <div class="field"><label for="f-msg">Il progetto</label><textarea id="f-msg" name="msg" placeholder="Es. siamo uno studio dentistico con due sedi e vorremmo ricevere prenotazioni online dal sito…"></textarea></div>
+        <div class="form-foot">
+          <small>Nessuno spam. Uso i tuoi dati solo per risponderti.</small>
+          <button class="btn btn-chalk" type="submit">Prepara la richiesta <span class="arr">→</span></button>
+        </div>
+      </form>
+
+      <div class="form-done" id="formDone" hidden>
+        <span class="label" style="color:var(--grey)">Quasi fatto</span>
+        <h3>La tua richiesta è pronta.</h3>
+        <p>Scegli come inviarla. Se l'app non si apre, copia il testo e incollalo dove preferisci.</p>
+        <pre id="doneText"></pre>
+        <div class="acts">
+          <a class="btn btn-chalk" id="sendWa" href="#" target="_blank" rel="noopener">Invia su WhatsApp</a>
+          <a class="btn btn-line" id="sendMail" href="#">Invia via email</a>
+          <button class="btn btn-line" type="button" id="copyDone">Copia testo</button>
+        </div>
+        <button class="linkish" type="button" id="editForm">← Modifica i dati</button>
       </div>
     </div>
   </div>
@@ -1125,24 +945,23 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <img src="assets/logo.png" alt="Local Up Studio" width="210" height="119">
+        <img src="assets/logo.png" alt="Local Up Studio" width="220" height="125">
         <p>Siti web su misura per locali, ristoranti, studi e attività. Design e sviluppo indipendente, in tutta Italia.</p>
       </div>
-      <div class="foot-col"><b>Studio</b><a href="#settori">Settori</a><a href="#lavori">Progetti</a><a href="#servizi">Servizi</a><a href="#metodo">Metodo</a></div>
-      <div class="foot-col"><b>Info</b><a href="#prezzi">Prezzi</a><a href="#faq">FAQ</a><a href="#contatti">Preventivo</a></div>
+      <div class="foot-col"><b>Studio</b><a href="#servizi">Servizi</a><a href="#portfolio">Portfolio</a><a href="#metodo">Metodo</a></div>
+      <div class="foot-col"><b>Info</b><a href="#settori">Settori</a><a href="#prezzi">Prezzi</a><a href="#faq">FAQ</a></div>
       <div class="foot-col"><b>Social</b><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.behance.net/" target="_blank" rel="noopener">Behance</a></div>
     </div>
-    <div class="foot-giant" aria-hidden="true"><span>local</span><span class="up">up<svg viewBox="0 0 30 40"><path d="M15 2 L27 16 H19 V38 H11 V16 H3 Z" fill="currentColor"/></svg></span></div>
+    <div class="foot-giant mega" aria-hidden="true">Local up <em class="s">studio.</em></div>
     <div class="foot-bottom">
       <span>© 2026 Local Up Studio · P.IVA 00000000000</span>
-      <span>Progettato e sviluppato a mano, senza template.</span>
+      <span>Progettato e sviluppato a mano</span>
     </div>
   </div>
 </footer>
 
-<div class="m-cta" id="mCta"><a class="btn btn-dark" href="#contatti">Richiedi un preventivo gratuito</a></div>
+<div class="m-cta" id="mCta"><a class="btn btn-chalk" href="#contatti">Richiedi un preventivo</a></div>
 
-<!-- ============ Concept site templates (rendered into every .screen) ============ -->
 <template id="tpl-demos">
   <div class="demo d-forno">
     <div class="d-nav"><span class="d-logo">forno 1956</span><span class="d-links"><span>Pizze</span><span>Asporto</span><span>Storia</span></span><span class="d-pill">ORDINA</span></div>
@@ -1191,21 +1010,7 @@ footer { background: var(--white); padding-block: 80px 34px; overflow: hidden; }
     <div class="hours"><span><b>18:00</b>APERTURA</span><span><b>02:00</b>CHIUSURA</span><span><b>Gio</b>LIVE DJ</span></div>
   </div>
 
-  <div class="demo d-lume">
-    <div class="d-nav"><span class="d-logo">lume</span><span class="d-links"><span>Colazione</span><span>Brunch</span><span>Caffè</span></span><span class="d-pill">INDICAZIONI</span></div>
-    <span class="d-giant">lume</span>
-    <svg viewBox="0 0 200 200" aria-hidden="true">
-      <circle cx="100" cy="100" r="90" fill="#f5f5f7"/>
-      <circle cx="100" cy="100" r="80" fill="none" stroke="#d2d2d7"/>
-      <circle cx="100" cy="100" r="50" fill="#e8e8ed"/>
-      <circle cx="100" cy="100" r="42" fill="#2a1f19"/>
-      <path d="M100 76 c-12 10 -12 22 0 30 c12 -8 12 -20 0 -30z M100 106 c-8 6 -8 12 0 16 c8 -4 8 -10 0 -16z" fill="#d9c9b8" opacity=".85"/>
-      <rect x="146" y="88" width="34" height="24" rx="12" fill="none" stroke="#e8e8ed" stroke-width="6"/>
-    </svg>
-    <span class="d-h">Il caffè<br>del mattino.</span>
-    <span class="d-small s1">Specialty coffee e colazioni lente, nel cuore del quartiere.</span>
-    <div class="times"><b>07:00 — 15:00</b>TUTTI I GIORNI</div>
-  </div>
+
   <div class="demo d-dent">
     <div class="d-nav"><span class="d-logo">moretti<small>Studio dentistico</small></span><span class="d-links"><span>Trattamenti</span><span>Team</span><span>Lo studio</span><span>Contatti</span></span><span class="d-pill">PRENOTA UNA VISITA</span></div>
     <span class="d-giant">sorriso</span>
@@ -1233,116 +1038,146 @@ const CONFIG = {
 
 (function () {
   document.documentElement.classList.add("js");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Wave texture in the hero ---- */
+  const cv = document.getElementById("waves"), ctx = cv.getContext("2d");
+  let W = 0, H = 0, t = 0, running = true;
+  function size() {
+    const dpr = Math.min(devicePixelRatio || 1, 1.5);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const lines = 70;
+    for (let i = 0; i < lines; i++) {
+      const k = i / lines;
+      ctx.beginPath();
+      for (let x = -20; x <= W + 20; x += 14) {
+        const u = x / W;
+        const y = H * (-.15 + k * .95) + u * H * .32
+          + Math.sin(u * 5.2 + k * 7 + t) * 26 * (1 - u * .5)
+          + Math.sin(u * 11 + k * 3 - t * 1.3) * 7;
+        x === -20 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      const fade = Math.max(0, 1 - Math.abs(k - .28) * 1.9);
+      ctx.strokeStyle = "rgba(255,255,255," + (.025 + fade * .11).toFixed(3) + ")";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+  let last = 0;
+  function loop(ts) {
+    if (running && ts - last > 33) { t += .012; draw(); last = ts; }
+    requestAnimationFrame(loop);
+  }
+  size(); draw();
+  addEventListener("resize", () => { size(); draw(); });
+  if (!reduce) {
+    new IntersectionObserver(es => { running = es[0].isIntersecting; }).observe(cv);
+    requestAnimationFrame(loop);
+  }
+
+  /* ---- Concept sites into screens ---- */
   const demos = [
-    { name: "Forno 1956", type: "Pizzeria" },
-    { name: "Ferri & Associati", type: "Studio commercialista" },
-    { name: "Ottanta", type: "Cocktail bar" },
-    { name: "Café Lume", type: "Bar e caffetteria" }
+    { name: "Forno 1956" },
+    { name: "Ferri & Associati" },
+    { name: "Ottanta" }
   ];
   const tpl = document.getElementById("tpl-demos");
-
-  // Hero monitor gets every demo (crossfade); tiles get a single one.
-  // SVG gradient ids are suffixed per copy so they stay unique in the document.
   let uid = 0;
   function cloneDemo(i) {
     const node = tpl.content.children[i].cloneNode(true);
     const s = "-" + (uid++);
     node.querySelectorAll("[id]").forEach(el => { el.id += s; });
-    node.querySelectorAll("[fill^='url(#']").forEach(el => {
-      el.setAttribute("fill", el.getAttribute("fill").replace(/\)$/, s + ")"));
-    });
+    node.querySelectorAll("[fill^='url(#']").forEach(el => el.setAttribute("fill", el.getAttribute("fill").replace(/\)$/, s + ")")));
     return node;
   }
   const hero = document.getElementById("heroScreen");
   const heroDemos = demos.map((_, i) => hero.appendChild(cloneDemo(i)));
-  document.querySelectorAll(".screen[data-demo]").forEach(scr => {
-    const d = scr.appendChild(cloneDemo(+scr.dataset.demo));
-    d.classList.add("on");
-  });
+  document.querySelectorAll(".screen[data-demo]").forEach(scr => scr.appendChild(cloneDemo(+scr.dataset.demo)).classList.add("on"));
 
-  const dotsBox = document.getElementById("demoDots");
-  const dots = demos.map((d, i) => {
-    const b = document.createElement("button");
-    b.type = "button"; b.setAttribute("aria-label", "Mostra " + d.name);
-    b.addEventListener("click", () => { show(i); restart(); });
-    return dotsBox.appendChild(b);
-  });
-  const nameEl = document.getElementById("demoName"), typeEl = document.getElementById("demoType");
+  const bars = [...document.querySelectorAll("#stories i")];
+  const tabs = [...document.querySelectorAll("#tabs button")];
+  const nameEl = document.getElementById("demoName");
   let cur = 0, timer;
   function show(i) {
     cur = i;
     heroDemos.forEach((d, k) => d.classList.toggle("on", k === i));
-    dots.forEach((d, k) => d.setAttribute("aria-current", k === i ? "true" : "false"));
-    nameEl.textContent = demos[i].name; typeEl.textContent = demos[i].type;
+    tabs.forEach((b, k) => b.setAttribute("aria-pressed", k === i ? "true" : "false"));
+    bars.forEach((b, k) => { b.className = k < i ? "done" : ""; });
+    void bars[i].offsetWidth;
+    bars[i].className = reduce ? "done" : "run";
+    nameEl.textContent = demos[i].name;
   }
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function restart() { clearInterval(timer); if (!reduce) timer = setInterval(() => show((cur + 1) % demos.length), 4200); }
-  show(0); restart();
+  function restart(delay) { clearInterval(timer); if (!reduce) timer = setInterval(() => show((cur + 1) % demos.length), 5200); }
+  // Let the boot screen finish before the first story bar starts
+  show(0); bars[0].className = "";
+  setTimeout(() => { show(0); restart(); }, reduce ? 0 : 2300);
+  tabs.forEach(b => b.addEventListener("click", () => { show(+b.dataset.i); restart(); }));
 
-  // QR pattern for the menu card (decorative, deterministic)
-  const qr = document.getElementById("qr");
-  const N = 11, finder = (r, c) => (r < 3 && c < 3) || (r < 3 && c > 7) || (r > 7 && c < 3);
-  let seed = 7;
-  const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
-  for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
-    const i = document.createElement("i");
-    const on = finder(r, c) ? !(r % 10 === 1 && c % 10 === 1) && !((r === 1 && c === 9) || (r === 9 && c === 1)) : rnd() > .5;
-    if (!on) i.className = "o";
-    qr.appendChild(i);
-  }
-
-  // Nav toggle
+  /* ---- Nav ---- */
   const nav = document.getElementById("nav"), tog = document.getElementById("navToggle");
   tog.addEventListener("click", () => {
     const open = nav.classList.toggle("open");
     tog.setAttribute("aria-expanded", open); tog.setAttribute("aria-label", open ? "Chiudi il menu" : "Apri il menu");
   });
-  document.querySelectorAll("#navLinks a").forEach(a => a.addEventListener("click", () => {
-    nav.classList.remove("open"); tog.setAttribute("aria-expanded", "false");
-  }));
-
-  // Scroll: parallax on giant hero type + mobile CTA
-  const giant = document.querySelectorAll("[data-px]");
+  document.querySelectorAll("#navLinks a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); tog.setAttribute("aria-expanded", "false"); }));
   const mCta = document.getElementById("mCta"), contact = document.getElementById("contatti");
-  let ticking = false;
   function onScroll() {
-    const y = window.scrollY;
-    if (!reduce) giant.forEach(el => { el.style.transform = "translateX(" + (y * parseFloat(el.dataset.px)) + "px)"; });
-    const cTop = contact.getBoundingClientRect().top;
-    mCta.classList.toggle("show", y > 500 && cTop > window.innerHeight * .6);
-    ticking = false;
+    nav.classList.toggle("solid", scrollY > 40);
+    mCta.classList.toggle("show", scrollY > 600 && contact.getBoundingClientRect().top > innerHeight * .6);
   }
-  addEventListener("scroll", () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, { passive: true });
-  onScroll();
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
-  // Reveal: only elements below the fold are lifted; they are visible by default.
+  /* ---- Service rows: hover on desktop, tap to open on touch ---- */
+  document.querySelectorAll(".svc-row").forEach(row => {
+    const toggle = () => {
+      const open = !row.classList.contains("open");
+      document.querySelectorAll(".svc-row.open").forEach(r => { r.classList.remove("open"); r.setAttribute("aria-expanded", "false"); });
+      row.classList.toggle("open", open); row.setAttribute("aria-expanded", open);
+    };
+    row.addEventListener("click", toggle);
+    row.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  });
+
+  /* ---- Reveal + count-up (only for content below the fold) ---- */
   if ("IntersectionObserver" in window && !reduce) {
     const io = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.remove("pre"); io.unobserve(e.target); }
+      if (!e.isIntersecting) return;
+      e.target.classList.remove("pre"); io.unobserve(e.target);
+      e.target.querySelectorAll(".count").forEach(countUp);
     }), { rootMargin: "0px 0px -8% 0px" });
     document.querySelectorAll(".rv").forEach(el => {
-      if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add("pre"); io.observe(el); }
+      if (el.getBoundingClientRect().top > innerHeight) {
+        el.classList.add("pre");
+        io.observe(el);
+      }
     });
   }
+  function countUp(el) {
+    const to = +el.dataset.to; if (!to) return;
+    const t0 = performance.now(), d = 1400;
+    (function step(now) {
+      const p = Math.min(1, (now - t0) / d), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(to * e);
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
 
-  // Contacts from CONFIG
+  /* ---- Contacts ---- */
   document.getElementById("cEmail").textContent = CONFIG.email;
   document.getElementById("cPhone").textContent = CONFIG.whatsappLabel;
-  function copyText(text, btn) {
+  function copyText(text, btn, targetId) {
     const done = () => { const o = btn.textContent; btn.textContent = "Copiato"; setTimeout(() => btn.textContent = o, 1600); };
-    try {
-      navigator.clipboard.writeText(text).then(done, () => selectFallback(btn));
-    } catch (e) { selectFallback(btn); }
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(document.getElementById(targetId));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selezionato";
+    };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
   }
-  function selectFallback(btn) {
-    const target = document.getElementById(btn.dataset.copy || "doneText");
-    const r = document.createRange(); r.selectNodeContents(target);
-    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-    btn.textContent = "Selezionato";
-  }
-  document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", () => copyText(document.getElementById(b.dataset.copy).textContent, b)));
-
-  // Preselect venue type / budget from CTAs
+  document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", () => copyText(document.getElementById(b.dataset.copy).textContent, b, b.dataset.copy)));
   document.querySelectorAll("[data-pre]").forEach(a => a.addEventListener("click", () => {
     const r = document.querySelector('#f-type input[value="' + a.dataset.pre + '"]'); if (r) r.checked = true;
   }));
@@ -1350,7 +1185,7 @@ const CONFIG = {
     const r = document.querySelector('#f-budget input[value="' + a.dataset.budget + '"]'); if (r) r.checked = true;
   }));
 
-  // Quote form → composed message for WhatsApp / email
+  /* ---- Quote form → message for WhatsApp / email ---- */
   const form = document.getElementById("quoteForm"), done = document.getElementById("formDone");
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -1376,7 +1211,7 @@ const CONFIG = {
     form.hidden = true; done.hidden = false;
   });
   form.addEventListener("input", e => { if (e.target.getAttribute("aria-invalid") === "true") e.target.setAttribute("aria-invalid", "false"); });
-  document.getElementById("copyDone").addEventListener("click", e => copyText(document.getElementById("doneText").textContent, e.currentTarget));
+  document.getElementById("copyDone").addEventListener("click", e => copyText(document.getElementById("doneText").textContent, e.currentTarget, "doneText"));
   document.getElementById("editForm").addEventListener("click", () => { done.hidden = true; form.hidden = false; });
 })();
 </script>
