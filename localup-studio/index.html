@@ -111,7 +111,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 .hero::after { content: ""; position: absolute; inset: auto 0 0; height: 30%; background: linear-gradient(transparent, var(--black)); pointer-events: none; }
 .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: clamp(36px, 5vw, 80px); align-items: end; }
 .hero h1 { font-size: clamp(54px, 7.6vw, 132px); }
-.hero h1 .ln { display: block; overflow: hidden; padding-bottom: .04em; }
+.hero h1 .ln { display: block; overflow: hidden; padding: .14em 0 .04em; margin-top: -.14em; }
 .hero h1 .ln > span { display: block; animation: rise 1.1s var(--ease) both; }
 .hero h1 .ln:nth-child(2) > span { animation-delay: .08s; }
 .hero h1 .ln:nth-child(3) > span { animation-delay: .16s; }
@@ -122,31 +122,65 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 @keyframes fadeup { from { transform: translateY(20px); opacity: .001; } to { transform: none; opacity: 1; } }
 
 /* Monitor panel (right) */
-.panel { animation: monrise 1.3s .15s var(--ease) both; }
-@keyframes monrise { from { transform: translateY(70px) scale(.94); opacity: .001; } to { transform: none; opacity: 1; } }
-.panel-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 1px solid var(--line-d); border-bottom: 0; }
+.panel { animation: monrise .8s var(--ease) both; }
+@keyframes monrise { from { opacity: .001; } to { opacity: 1; } }
+.panel-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 1px solid var(--line-d); }
 .panel-head .label { font-size: 11px; }
 .panel-head .dots3 { display: flex; gap: 4px; }
 .panel-head .dots3 i { width: 4px; height: 4px; border-radius: 50%; background: var(--chalk); opacity: .8; }
 .panel-head .dots3 i:last-child { opacity: .35; }
 .panel-body { border: 1px solid var(--line-d); padding: clamp(18px, 2.4vw, 34px) clamp(14px, 2vw, 28px) 0; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)); }
-.monitor { position: relative; width: 100%; }
+.panel-body { border: 0; background: none; padding: clamp(10px, 2vw, 30px) clamp(6px, 1.4vw, 20px) clamp(20px, 3vw, 40px); }
+
+/* 3D monitor: float > intro > tilt > body (front frame + 5 faces) + neck + base */
+.m3d { position: relative; width: 100%; perspective: 1600px; perspective-origin: 50% 30%; --d: clamp(10px, 1.4vw, 20px); --r: clamp(10px, 1.3vw, 18px); }
+.m3d-float, .m3d-intro, .m3d-tilt, .mon-body { transform-style: preserve-3d; }
+.m3d-float { animation: float 7s ease-in-out 2.2s infinite alternate; }
+@keyframes float { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+.m3d-hero .m3d-intro { animation: spinin 2.1s cubic-bezier(.16,.84,.24,1) both; }
+@keyframes spinin {
+  from { transform: translateY(90px) translateZ(-420px) rotateY(-150deg) rotateX(22deg); }
+  to { transform: none; }
+}
+.m3d-tilt { transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg)); will-change: transform; }
+.mon-body { position: relative; }
 .mon-frame {
-  position: relative; border-radius: clamp(10px, 1.3vw, 18px);
+  position: relative; border-radius: var(--r);
   background: linear-gradient(180deg, #2b2b2e, #0d0d0f 30%); padding: clamp(6px, .8vw, 11px);
-  box-shadow: 0 0 0 1px #4a4a4e inset, 0 1px 0 1px rgba(255,255,255,.18), 0 50px 80px -30px rgba(0,0,0,.8);
+  box-shadow: 0 0 0 1px #4a4a4e inset, 0 1px 0 1px rgba(255,255,255,.14);
 }
 .screen { position: relative; aspect-ratio: 16 / 10; max-width: 100%; border-radius: clamp(5px, .7vw, 9px); overflow: hidden; background: #000; container-type: inline-size; }
-.screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 20; background: linear-gradient(115deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 70%, rgba(255,255,255,.04) 100%); }
-.mon-neck { width: 22%; margin: 0 auto; height: clamp(54px, 7vw, 110px); background: linear-gradient(90deg, #6f6f74 0%, #c9c9ce 18%, #e9e9ec 45%, #b9b9be 70%, #66666b 100%); clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%); position: relative; }
+.screen::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 220%; pointer-events: none; z-index: 20;
+  background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.16) 42%, rgba(255,255,255,0) 56%);
+  transform: translateX(calc(var(--gx, 0) * 1%)); }
+.mon-body .face { position: absolute; display: block; backface-visibility: visible; }
+.face.back { inset: 0; border-radius: var(--r); transform: translateZ(calc(var(--d) * -1)) rotateY(180deg);
+  background: radial-gradient(ellipse at 40% 30%, #f4f4f6, #c7c7cc 55%, #8e8e93); display: grid; place-items: center; }
+.face.back img { width: 18%; opacity: .55; filter: grayscale(1); }
+.face.l, .face.r { top: var(--r); bottom: var(--r); width: var(--d); background: linear-gradient(90deg, #8e8e93, #d4d4d8, #8e8e93); }
+.face.l { left: 0; transform-origin: left center; transform: rotateY(90deg); }
+.face.r { right: 0; transform-origin: right center; transform: rotateY(-90deg); }
+.face.t, .face.b { left: var(--r); right: var(--r); height: var(--d); background: linear-gradient(180deg, #a1a1a6, #e0e0e4, #a1a1a6); }
+.face.t { top: 0; transform-origin: center top; transform: rotateX(-90deg); }
+.face.b { bottom: 0; transform-origin: center bottom; transform: rotateX(90deg); background: linear-gradient(180deg, #6e6e73, #3a3a3c); }
+.mon-neck { width: 22%; margin: -8px auto 0; height: clamp(54px, 7vw, 110px); transform: translateZ(calc(var(--d) * -1.6));
+  background: linear-gradient(90deg, #6f6f74 0%, #c9c9ce 18%, #e9e9ec 45%, #b9b9be 70%, #66666b 100%); clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%); position: relative; }
 .mon-neck::before { content: ""; position: absolute; inset: 0 0 auto; height: 18%; background: linear-gradient(180deg, rgba(0,0,0,.45), transparent); }
-.mon-base { width: 44%; margin: 0 auto; height: clamp(9px, 1.1vw, 15px); border-radius: 3px 3px 8px 8px; background: linear-gradient(180deg, #e2e2e5, #a5a5aa 60%, #6e6e73); }
+.mon-base { width: 46%; margin: 0 auto; height: clamp(60px, 8vw, 120px); border-radius: 10px; transform-origin: center top;
+  transform: translateZ(calc(var(--d) * -1.6)) rotateX(84deg);
+  background: linear-gradient(180deg, #f0f0f2, #b5b5ba 70%, #8e8e93); box-shadow: inset 0 -3px 0 rgba(0,0,0,.25); }
+.m3d-shadow { position: absolute; left: 18%; right: 18%; bottom: -2%; height: 9%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0,0,0,.75), transparent); filter: blur(8px); transform: translateZ(-80px);
+  animation: shadowpulse 7s ease-in-out 2.2s infinite alternate; }
+.on-light .m3d-shadow, .t-light .m3d-shadow { background: radial-gradient(closest-side, rgba(0,0,0,.28), transparent); }
+@keyframes shadowpulse { to { transform: scale(.9); opacity: .75; } }
+.mon-show-wrap { width: min(78%, 880px); margin: 46px auto 0; }
 
 /* Boot screen: logo, then the site appears */
-.boot { position: absolute; inset: 0; z-index: 30; background: #000; display: grid; place-items: center; animation: bootout .7s 1.9s var(--ease) both; pointer-events: none; }
-.boot img { width: 15cqw; filter: invert(1); animation: bootlogo 1.6s .4s var(--ease) both; }
+.boot { position: absolute; inset: 0; z-index: 30; background: #000; display: grid; place-items: center; animation: bootout .7s 2.7s var(--ease) both; pointer-events: none; }
+.boot img { width: 15cqw; filter: invert(1); animation: bootlogo 1.6s 1s var(--ease) both; }
 .boot::after { content: ""; position: absolute; left: 35%; right: 35%; bottom: 30%; height: .35cqw; border-radius: 9px; background: rgba(255,255,255,.18); }
-.boot::before { content: ""; position: absolute; left: 35%; bottom: 30%; height: .35cqw; width: 30%; border-radius: 9px; background: #fff; z-index: 1; transform-origin: left; animation: bootbar 1.3s .5s ease-in-out both; }
+.boot::before { content: ""; position: absolute; left: 35%; bottom: 30%; height: .35cqw; width: 30%; border-radius: 9px; background: #fff; z-index: 1; transform-origin: left; animation: bootbar 1.5s 1.1s ease-in-out both; }
 @keyframes bootlogo { from { opacity: .001; transform: scale(.92); } 30% { opacity: 1; transform: none; } to { opacity: 1; } }
 @keyframes bootbar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes bootout { to { opacity: 0; visibility: hidden; } }
@@ -285,12 +319,13 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 .pf-side { max-width: 380px; display: grid; gap: 26px; justify-items: start; color: rgba(242,242,240,.75); }
 .tile .feat { list-style: none; padding: 0; margin: 18px 0 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .tile .feat li { font-size: 12.5px; font-weight: 500; padding: 5px 11px; border-radius: 99px; border: 1px solid currentColor; opacity: .7; letter-spacing: 0; }
-.tile .device { margin-top: auto; transform: translateY(10%); transition: transform .8s var(--ease); }
-.tile:hover .device { transform: translateY(5%); }
+.tile { perspective: 1400px; }
+.tile .device { margin-top: auto; transform: translateY(var(--dy, 10%)) rotateX(calc(var(--tx, 0) * 1deg)) rotateY(calc(var(--ty, 0) * 1deg)); transition: transform .6s var(--ease); will-change: transform; }
+.tile:hover .device { --dy: 5%; }
 .show { display: grid; gap: 14px; }
 .show-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .tile.st-monitor { min-height: 0; padding-bottom: 60px; }
-.monitor.mon-show { width: min(78%, 880px); margin: 46px auto 0; }
+
 
 /* Tablet (portrait) */
 .tablet { width: min(80%, 440px); aspect-ratio: 3 / 4; max-width: 100%; margin-top: 40px; background: #111; border-radius: 6% / 4.5%; padding: 3.4%; box-shadow: 0 0 0 1px #48484a inset, 0 0 0 1px #d2d2d7, 0 40px 60px -30px rgba(0,0,0,.45); }
@@ -476,6 +511,27 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .foot-giant em.s { font-size: .5em; letter-spacing: -.02em; color: rgba(242,242,240,.6); }
 .foot-bottom { margin-top: 36px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--grey-d); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 
+/* ---------- Motion extras ---------- */
+.marquee { border-block: 1px solid var(--line-d); overflow: hidden; padding-block: clamp(16px, 2vw, 26px); background: var(--black); }
+.marquee-track { display: flex; width: max-content; will-change: transform; }
+.marquee-track span { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 7vw, 110px); line-height: 1; letter-spacing: -.035em; padding-right: .5em; white-space: nowrap; }
+.marquee-track span:nth-child(even) { color: transparent; -webkit-text-stroke: 1.2px rgba(242,242,240,.7); }
+.marquee-track span::after { content: "✦"; display: inline-block; font-size: .35em; vertical-align: middle; margin-left: .7em; color: var(--chalk); -webkit-text-stroke: 0; transform: translateY(-.15em); }
+
+.progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--chalk); transform-origin: left; transform: scaleX(0); }
+
+.cursor { position: fixed; z-index: 80; left: 0; top: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: #fff; mix-blend-mode: difference; pointer-events: none;
+  transition: width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease), opacity .3s; opacity: 0; }
+.cursor.on { opacity: 1; }
+.cursor.big { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
+
+/* Word-by-word heading reveal (only for headings below the fold) */
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.w > span { display: inline-block; transition: transform 1s var(--ease); transition-delay: calc(var(--i, 0) * 45ms); }
+.split-wait .w > span { transform: translateY(108%); }
+
+[data-px] { will-change: transform; }
+
 /* Reveal (only for content below the fold) */
 .rv { transition: transform 1s var(--ease), opacity 1s var(--ease); }
 .js .rv.pre { transform: translateY(32px); opacity: .001; }
@@ -514,7 +570,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .faq-grid, .contact-grid { grid-template-columns: 1fr; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
   .foot-grid > :first-child { grid-column: span 2; }
-  .monitor.mon-show { width: 100%; }
+  .mon-show-wrap { width: 100%; }
   .show-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 820px) {
@@ -559,6 +615,8 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition: none !important; }
   html { scroll-behavior: auto; }
   .js .rv.pre { transform: none; opacity: 1; }
+  .split-wait .w > span { transform: none; }
+  .cursor { display: none; }
 }
 </style>
 </head>
@@ -578,6 +636,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
     </nav>
     <span class="nav-sep" aria-hidden="true"></span>
     <a class="btn btn-chalk nav-cta" href="#contatti">Scrivimi</a>
+    <span class="progress" id="progress" aria-hidden="true"></span>
     <button class="nav-toggle" id="navToggle" aria-label="Apri il menu" aria-expanded="false" aria-controls="navLinks"><i></i><i></i></button>
   </div>
 </header>
@@ -605,15 +664,21 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
     <div class="panel">
       <div class="panel-head"><span class="label">Local Up Studio — <span id="demoName">Forno 1956</span></span><span class="dots3" aria-hidden="true"><i></i><i></i><i></i></span></div>
       <div class="panel-body">
-        <div class="monitor" aria-label="Anteprima dei siti in rotazione sul monitor">
-          <div class="mon-frame">
-            <div class="screen" id="heroScreen">
-              <div class="stories" id="stories" aria-hidden="true"><i></i><i></i><i></i></div>
-              <div class="boot" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+        <div class="m3d m3d-hero" id="heroMon" aria-label="Anteprima dei siti in rotazione sul monitor">
+          <div class="m3d-float"><div class="m3d-intro"><div class="m3d-tilt">
+            <div class="mon-body">
+              <div class="mon-frame">
+                <div class="screen" id="heroScreen">
+                  <div class="stories" id="stories" aria-hidden="true"><i></i><i></i><i></i></div>
+                  <div class="boot" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+                </div>
+              </div>
+              <i class="face back" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></i><i class="face l"></i><i class="face r"></i><i class="face t"></i><i class="face b"></i>
             </div>
-          </div>
-          <div class="mon-neck" aria-hidden="true"></div>
-          <div class="mon-base" aria-hidden="true"></div>
+            <div class="mon-neck" aria-hidden="true"></div>
+            <div class="mon-base" aria-hidden="true"></div>
+          </div></div></div>
+          <div class="m3d-shadow" aria-hidden="true"></div>
         </div>
       </div>
       <div class="tabs" id="tabs" role="group" aria-label="Scegli il sito da mostrare">
@@ -624,6 +689,11 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
     </div>
   </div>
 </section>
+
+<div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee">
+  <span>Siti web</span><span>Ristoranti</span><span>Pizzerie</span><span>Pub &amp; bar</span><span>Studi dentistici</span><span>Studi professionali</span><span>Attività locali</span>
+  <span>Siti web</span><span>Ristoranti</span><span>Pizzerie</span><span>Pub &amp; bar</span><span>Studi dentistici</span><span>Studi professionali</span><span>Attività locali</span>
+</div></div>
 
 <!-- ============ STATS ============ -->
 <section class="stats on-light" aria-label="In numeri">
@@ -659,7 +729,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 <section class="pf" id="portfolio" aria-labelledby="pf-h">
   <div class="wrap">
     <div class="pf-head">
-      <h2 id="pf-h" class="mega rv">Portfolio <em class="s">tre homepage, tre schermi.</em></h2>
+      <h2 id="pf-h" class="mega rv" data-px="0.12">Portfolio <em class="s">tre homepage, tre schermi.</em></h2>
       <div class="pf-side rv">
         <p>Homepage progettate da zero per tre settori diversi: una su monitor, una su tablet, una su smartphone. Ogni sito che consegno funziona così su tutti e tre.</p>
         <a class="btn btn-line" href="#contatti">Voglio il mio sito <span class="arr">→</span></a>
@@ -672,10 +742,18 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
         <p>Visite prenotabili online e trattamenti spiegati con chiarezza.</p>
         <ul class="feat"><li>Prenotazione visite</li><li>Pagine trattamenti</li><li>SEO locale</li></ul>
         <div class="acts"><a class="btn btn-blue" href="#contatti" data-pre="Studio dentistico">Voglio un sito così</a></div>
-        <div class="monitor mon-show" aria-label="Homepage dello Studio Dentistico Moretti su monitor">
-          <div class="mon-frame"><div class="screen" data-demo="3"></div></div>
-          <div class="mon-neck" aria-hidden="true"></div>
-          <div class="mon-base" aria-hidden="true"></div>
+        <div class="mon-show-wrap">
+          <div class="m3d m3d-scroll" aria-label="Homepage dello Studio Dentistico Moretti su monitor">
+            <div class="m3d-float"><div class="m3d-intro"><div class="m3d-tilt">
+              <div class="mon-body">
+                <div class="mon-frame"><div class="screen" data-demo="3"></div></div>
+                <i class="face back" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></i><i class="face l"></i><i class="face r"></i><i class="face t"></i><i class="face b"></i>
+              </div>
+              <div class="mon-neck" aria-hidden="true"></div>
+              <div class="mon-base" aria-hidden="true"></div>
+            </div></div></div>
+            <div class="m3d-shadow" aria-hidden="true"></div>
+          </div>
         </div>
       </article>
 
@@ -952,7 +1030,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
       <div class="foot-col"><b>Info</b><a href="#settori">Settori</a><a href="#prezzi">Prezzi</a><a href="#faq">FAQ</a></div>
       <div class="foot-col"><b>Social</b><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.behance.net/" target="_blank" rel="noopener">Behance</a></div>
     </div>
-    <div class="foot-giant mega" aria-hidden="true">Local up <em class="s">studio.</em></div>
+    <div class="foot-giant mega" aria-hidden="true" data-px="-0.15">Local up <em class="s">studio.</em></div>
     <div class="foot-bottom">
       <span>© 2026 Local Up Studio · P.IVA 00000000000</span>
       <span>Progettato e sviluppato a mano</span>
@@ -960,6 +1038,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   </div>
 </footer>
 
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="m-cta" id="mCta"><a class="btn btn-chalk" href="#contatti">Richiedi un preventivo</a></div>
 
 <template id="tpl-demos">
@@ -1114,8 +1193,126 @@ const CONFIG = {
   function restart(delay) { clearInterval(timer); if (!reduce) timer = setInterval(() => show((cur + 1) % demos.length), 5200); }
   // Let the boot screen finish before the first story bar starts
   show(0); bars[0].className = "";
-  setTimeout(() => { show(0); restart(); }, reduce ? 0 : 2300);
+  setTimeout(() => { show(0); restart(); }, reduce ? 0 : 3100);
   tabs.forEach(b => b.addEventListener("click", () => { show(+b.dataset.i); restart(); }));
+
+  /* ---- Motion: one rAF loop for tilt, scroll-linked bits and cursor ---- */
+  const fine = matchMedia("(pointer: fine)").matches;
+  const heroMon = document.getElementById("heroMon");
+  const heroTilt = heroMon.querySelector(".m3d-tilt");
+  const showMon = document.querySelector(".m3d-scroll");
+  const showTilt = showMon && showMon.querySelector(".m3d-tilt");
+  const marquee = document.getElementById("marquee");
+  const progress = document.getElementById("progress");
+  const pxEls = [...document.querySelectorAll("[data-px]")];
+  const cursor = document.getElementById("cursor");
+  const BASE = { rx: 5, ry: -16 };
+  const tilt = { rx: BASE.rx, ry: BASE.ry, tx: BASE.rx, ty: BASE.ry };
+  let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
+  let mq = 0, lastY = scrollY, vel = 0;
+
+  if (fine && !reduce) {
+    addEventListener("pointermove", e => {
+      mx = e.clientX; my = e.clientY; cursor.classList.add("on");
+      const r = heroMon.getBoundingClientRect();
+      if (r.bottom > 0) {
+        tilt.ty = BASE.ry + (e.clientX / innerWidth - .5) * 26;
+        tilt.tx = BASE.rx - (e.clientY / innerHeight - .5) * 14;
+      }
+    }, { passive: true });
+    document.addEventListener("pointerleave", () => { cursor.classList.remove("on"); tilt.tx = BASE.rx; tilt.ty = BASE.ry; });
+    document.querySelectorAll("a, button, .svc-row, .tile, .chip").forEach(el => {
+      el.addEventListener("pointerenter", () => cursor.classList.add("big"));
+      el.addEventListener("pointerleave", () => cursor.classList.remove("big"));
+    });
+    // Magnetic buttons
+    document.querySelectorAll(".btn").forEach(b => {
+      b.addEventListener("pointermove", e => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = "translate(" + ((e.clientX - r.left - r.width / 2) * .18) + "px," + ((e.clientY - r.top - r.height / 2) * .28) + "px)";
+      });
+      b.addEventListener("pointerleave", () => { b.style.transform = ""; });
+    });
+    // Devices tilt inside portfolio tiles
+    document.querySelectorAll(".tile").forEach(t => {
+      const d = t.querySelector(".device"); if (!d) return;
+      t.addEventListener("pointermove", e => {
+        const r = t.getBoundingClientRect();
+        d.style.setProperty("--ty", ((e.clientX - r.left) / r.width - .5) * 16);
+        d.style.setProperty("--tx", -((e.clientY - r.top) / r.height - .5) * 10);
+      });
+      t.addEventListener("pointerleave", () => { d.style.setProperty("--tx", 0); d.style.setProperty("--ty", 0); });
+    });
+  }
+
+  function frame() {
+    const y = scrollY, vh = innerHeight;
+    vel += ((y - lastY) - vel) * .1; lastY = y;
+    // Hero monitor: pointer on desktop, gentle scroll + sway on touch
+    if (!fine) {
+      const t = performance.now() / 1000;
+      tilt.ty = BASE.ry + Math.sin(t * .6) * 6 + Math.min(y, 600) * .02;
+      tilt.tx = BASE.rx + Math.min(y, 600) * .015;
+    }
+    tilt.rx += (tilt.tx - tilt.rx) * .08; tilt.ry += (tilt.ty - tilt.ry) * .08;
+    heroTilt.style.setProperty("--rx", tilt.rx.toFixed(2));
+    heroTilt.style.setProperty("--ry", tilt.ry.toFixed(2));
+    heroMon.style.setProperty("--gx", (tilt.ry - BASE.ry) * 1.4);
+    // Portfolio monitor opens up as it scrolls into view
+    if (showTilt) {
+      const r = showMon.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * .75)));
+      showTilt.style.setProperty("--rx", ((1 - p) * 32).toFixed(2));
+      showTilt.style.setProperty("--ry", ((1 - p) * -10).toFixed(2));
+    }
+    // Marquee speeds up and reverses with scroll direction
+    const dir = vel < -0.5 ? -1 : 1;
+    mq += (1.1 + Math.abs(vel) * .35) * dir;
+    const half = marquee.scrollWidth / 2;
+    if (half) { mq = ((mq % half) + half) % half; marquee.style.transform = "translate3d(" + (-mq) + "px,0,0)"; }
+    // Parallax headings
+    pxEls.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      el.style.transform = "translate3d(" + ((r.top + r.height / 2 - vh / 2) * +el.dataset.px).toFixed(1) + "px,0,0)";
+    });
+    // Scroll progress
+    progress.style.transform = "scaleX(" + (y / Math.max(1, document.documentElement.scrollHeight - vh)).toFixed(4) + ")";
+    // Cursor follower
+    if (fine) { cx += (mx - cx) * .2; cy += (my - cy) * .2; cursor.style.transform = "translate3d(" + cx + "px," + cy + "px,0)"; }
+    requestAnimationFrame(frame);
+  }
+  if (!reduce) requestAnimationFrame(frame);
+  else { heroTilt.style.setProperty("--rx", BASE.rx); heroTilt.style.setProperty("--ry", BASE.ry); }
+
+  /* ---- Word-by-word reveal for headings below the fold ---- */
+  if ("IntersectionObserver" in window && !reduce) {
+    const wio = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.remove("split-wait"); wio.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -10% 0px" });
+    document.querySelectorAll("h2.mega").forEach(h => {
+      if (h.getBoundingClientRect().top < innerHeight) return;
+      let i = 0;
+      [...h.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            const w = document.createElement("span"); w.className = "w";
+            const inner = document.createElement("span"); inner.textContent = part; inner.style.setProperty("--i", i++);
+            w.appendChild(inner); frag.appendChild(w);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1) {
+          const w = document.createElement("span"); w.className = "w";
+          const inner = document.createElement("span"); inner.style.setProperty("--i", i++);
+          n.replaceWith(w); inner.appendChild(n); w.appendChild(inner);
+        }
+      });
+      h.classList.add("split-wait"); wio.observe(h);
+    });
+  }
 
   /* ---- Nav ---- */
   const nav = document.getElementById("nav"), tog = document.getElementById("navToggle");
