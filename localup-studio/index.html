@@ -511,6 +511,74 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .foot-giant em.s { font-size: .5em; letter-spacing: -.02em; color: rgba(242,242,240,.6); }
 .foot-bottom { margin-top: 36px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--grey-d); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 
+/* ---------- Devices story: MacBook + iPhone in CSS 3D, driven by scroll ---------- */
+.dv { position: relative; height: 340vh; background: var(--black); border-bottom: 1px solid var(--line-d); }
+.dv-stick { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.4fr); align-items: center; }
+.dv-copy { position: relative; z-index: 3; padding-top: 70px; display: grid; gap: 34px; }
+.dv-copy h2 { font-size: clamp(40px, 4.6vw, 76px); }
+.dv-steps { display: grid; gap: 22px; position: relative; padding-left: 26px; }
+.dv-steps::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 1px; background: var(--line-d); }
+.dv-line { position: absolute; left: 0; top: 4px; bottom: 4px; width: 1px; background: var(--chalk); transform-origin: top; transform: scaleY(0); }
+.dv-step { opacity: .28; transition: opacity .5s var(--ease), transform .5s var(--ease); transform: translateX(-6px); }
+.dv-step.on { opacity: 1; transform: none; }
+.dv-step .label { font-size: 11px; color: var(--grey); }
+.dv-step h3 { margin-top: 6px; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(20px, 1.8vw, 28px); letter-spacing: -.02em; line-height: 1; }
+.dv-step p { margin-top: 8px; color: rgba(242,242,240,.7); font-size: 15px; max-width: 380px; }
+.dv-stage { position: relative; height: 100%; perspective: 2000px; perspective-origin: 50% 40%; display: grid; place-items: center; }
+.dv-scale { transform: scale(var(--k, 1)); transform-style: preserve-3d; }
+.dv-world, .mb, .mb-lid, .ip, .ip-body { transform-style: preserve-3d; }
+.dv-world { position: relative; width: 0; height: 0; }
+
+/* MacBook (silver) — deck 620×420, lid 620×408 */
+.mb { position: absolute; left: 0; top: 0; }
+.mb-deck { position: absolute; left: -310px; top: -210px; width: 620px; height: 420px; border-radius: 16px; transform: rotateX(90deg);
+  background: linear-gradient(180deg, #e4e5e7, #d2d3d6 60%, #c9cacd); box-shadow: inset 0 0 0 1px rgba(255,255,255,.6), inset 0 -2px 0 rgba(0,0,0,.08); }
+.mb-deck .kb { position: absolute; left: 52px; right: 52px; top: 26px; height: 214px; border-radius: 8px; background: #b9babd; padding: 6px; display: grid; grid-template-columns: repeat(15, 1fr); grid-template-rows: .6fr repeat(5, 1fr); gap: 4px; box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+.mb-deck .kb span { background: linear-gradient(180deg, #2a2a2c, #161617); border-radius: 4px; box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 1px 1px rgba(0,0,0,.4); }
+.mb-deck .tp { position: absolute; left: 50%; width: 270px; margin-left: -135px; top: 254px; height: 150px; border-radius: 10px; background: linear-gradient(180deg, #d7d8db, #cbccd0); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08), inset 0 1px 3px rgba(0,0,0,.12); }
+.mb-deck .grill { position: absolute; top: 26px; height: 214px; width: 30px; background-image: radial-gradient(circle, rgba(0,0,0,.35) .8px, transparent 1.2px); background-size: 5px 5px; opacity: .6; }
+.mb-deck .grill.l { left: 12px; } .mb-deck .grill.r { right: 12px; }
+.mb-front { position: absolute; left: -310px; top: 0; width: 620px; height: 12px; border-radius: 0 0 14px 14px; transform: translateZ(210px);
+  background: linear-gradient(180deg, #c3c4c7, #8e8f93); }
+.mb-front::after { content: ""; position: absolute; left: 50%; width: 110px; margin-left: -55px; top: 0; height: 5px; border-radius: 0 0 6px 6px; background: rgba(0,0,0,.18); }
+.mb-shadow { position: absolute; left: -380px; top: -260px; width: 760px; height: 520px; transform: translateY(14px) rotateX(90deg);
+  background: radial-gradient(closest-side, rgba(0,0,0,.85), transparent); filter: blur(14px); }
+.mb-lid { position: absolute; left: -310px; top: -408px; width: 620px; height: 408px; transform-origin: 50% 100%; transform: translateZ(-206px) rotateX(calc(var(--lid, 12) * 1deg)); }
+.mb-lid .in, .mb-lid .out { position: absolute; inset: 0; border-radius: 18px 18px 6px 6px; backface-visibility: hidden; }
+.mb-lid .in { background: #0b0b0c; padding: 16px 14px 22px; box-shadow: inset 0 0 0 1.5px #3a3a3c, inset 0 0 0 3px #0b0b0c, 0 0 0 1px #9a9b9f; }
+.mb-lid .in .screen { border-radius: 6px; }
+.mb-lid .in .notch { position: absolute; left: 50%; top: 16px; width: 92px; margin-left: -46px; height: 15px; background: #0b0b0c; border-radius: 0 0 9px 9px; z-index: 30; }
+.mb-lid .in .notch::after { content: ""; position: absolute; left: 50%; top: 4px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: radial-gradient(circle, #2a3a55 0 30%, #111 40%); }
+.mb-lid .in .chin { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; font-size: 8px; letter-spacing: .3em; color: #6e6e73; font-weight: 600; }
+.mb-lid .off { position: absolute; inset: 16px 14px 22px; border-radius: 6px; background: #000; z-index: 25; opacity: var(--off, 0); pointer-events: none; }
+.mb-lid .out { transform: rotateY(180deg) translateZ(1px); background: radial-gradient(ellipse at 40% 30%, #eeeef0, #cfd0d3 60%, #b4b5b9); display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(255,255,255,.5); }
+.mb-lid .out img { width: 64px; opacity: .45; filter: grayscale(1); }
+.mb-lid .edge { position: absolute; left: 6px; right: 6px; top: 0; height: 5px; background: linear-gradient(180deg, #a6a7ab, #d9dadd); transform-origin: top; transform: rotateX(90deg); }
+
+/* iPhone (natural titanium) — 210×440, 10px deep, sliced edges */
+.ip { position: absolute; left: 0; top: 0; }
+.ip-body { position: absolute; left: -105px; top: -220px; width: 210px; height: 440px; }
+.ip-slice { position: absolute; inset: 0; border-radius: 36px; background: linear-gradient(90deg, #8d8a85, #d8d4cd 30%, #b9b5ae 60%, #85827d); }
+.ip-btn { position: absolute; width: 3px; border-radius: 2px; background: linear-gradient(90deg, #77746f, #b5b1aa); }
+.ip-btn.pwr { right: -3px; top: 128px; height: 70px; }
+.ip-btn.v1 { left: -3px; top: 112px; height: 44px; }
+.ip-btn.v2 { left: -3px; top: 166px; height: 44px; }
+.ip-btn.act { left: -3px; top: 70px; height: 24px; }
+.ip-front, .ip-back { position: absolute; inset: 0; border-radius: 36px; backface-visibility: hidden; }
+.ip-front { transform: translateZ(5.5px); background: #050505; padding: 8px; box-shadow: inset 0 0 0 1.5px #5c5a56; }
+.ip-screen { position: relative; width: 100%; height: 100%; border-radius: 29px; overflow: hidden; background: #0a0a0a; container-type: inline-size; }
+.ip-screen::after { content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none; background: linear-gradient(120deg, rgba(255,255,255,.14), rgba(255,255,255,0) 35%); }
+.ip-back { transform: rotateY(180deg) translateZ(5.5px); background: linear-gradient(140deg, #e3dfd8, #c9c5be 45%, #b3afa8); box-shadow: inset 0 0 0 1.5px #a19d96; }
+.ip-cam { position: absolute; left: 14px; top: 14px; width: 96px; height: 96px; border-radius: 26px; background: linear-gradient(140deg, #d6d2cb, #bdb9b2); box-shadow: inset 0 0 0 1px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.18); }
+.ip-cam i { position: absolute; width: 38px; height: 38px; border-radius: 50%;
+  background: radial-gradient(circle, #0a0c12 0 26%, #1f2a3d 30%, #0b0b0d 44%, #2c2c2e 58%, #58575a 66%, #2a2a2c 72%, #9b9893 80%, #6d6a65 100%);
+  box-shadow: 0 2px 3px rgba(0,0,0,.35); }
+.ip-cam i:nth-child(1) { left: 8px; top: 8px; } .ip-cam i:nth-child(2) { left: 8px; top: 50px; } .ip-cam i:nth-child(3) { left: 50px; top: 29px; }
+.ip-cam b { position: absolute; right: 9px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle, #fff7df, #d8cfb8); }
+.ip-cam u { position: absolute; right: 11px; bottom: 11px; width: 8px; height: 8px; border-radius: 50%; background: #1d1d1f; }
+.ip-back img { position: absolute; left: 50%; top: 50%; width: 46px; margin: -26px 0 0 -23px; opacity: .3; filter: grayscale(1); }
+.ip-shadow { position: absolute; left: -130px; top: -60px; width: 260px; height: 120px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.8), transparent); filter: blur(12px); transform: translateY(250px) rotateX(90deg); }
+
 /* ---------- Motion extras ---------- */
 .marquee { border-block: 1px solid var(--line-d); overflow: hidden; padding-block: clamp(16px, 2vw, 26px); background: var(--black); }
 .marquee-track { display: flex; width: max-content; will-change: transform; }
@@ -572,6 +640,12 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .foot-grid > :first-child { grid-column: span 2; }
   .mon-show-wrap { width: 100%; }
   .show-row { grid-template-columns: 1fr; }
+  .dv-stick { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-items: start; }
+  .dv-copy { padding-top: 96px; gap: 16px; }
+  .dv-copy h2 { font-size: clamp(32px, 8vw, 52px); }
+  .dv-steps { gap: 0; min-height: 96px; }
+  .dv-step { position: absolute; left: 26px; right: 0; top: 0; transform: translateY(8px); opacity: 0; }
+  .dv-step.on { opacity: 1; transform: none; }
 }
 @media (max-width: 820px) {
   .stats-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 50px 20px; }
@@ -616,6 +690,8 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   html { scroll-behavior: auto; }
   .js .rv.pre { transform: none; opacity: 1; }
   .split-wait .w > span { transform: none; }
+  .dv { height: auto; }
+  .dv-stick { position: relative; height: auto; min-height: 720px; }
   .cursor { display: none; }
 }
 </style>
@@ -694,6 +770,76 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   <span>Siti web</span><span>Ristoranti</span><span>Pizzerie</span><span>Pub &amp; bar</span><span>Studi dentistici</span><span>Studi professionali</span><span>Attività locali</span>
   <span>Siti web</span><span>Ristoranti</span><span>Pizzerie</span><span>Pub &amp; bar</span><span>Studi dentistici</span><span>Studi professionali</span><span>Attività locali</span>
 </div></div>
+
+<!-- ============ DEVICES STORY (scroll) ============ -->
+<section class="dv" id="schermi" aria-labelledby="dv-h">
+  <div class="dv-stick">
+    <div class="wrap dv-copy" style="max-width:none">
+      <h2 id="dv-h" class="mega">Un sito. <em class="s">Ogni schermo.</em></h2>
+      <div class="dv-steps" id="dvSteps">
+        <span class="dv-line" id="dvLine" aria-hidden="true"></span>
+        <div class="dv-step on"><span class="label">01 / Computer</span><h3>Si apre e racconta</h3><p>Sul computer il tuo sito ha spazio: foto grandi, servizi chiari, prenotazione sempre in primo piano.</p></div>
+        <div class="dv-step"><span class="label">02 / Smartphone</span><h3>Pensato per il pollice</h3><p>La maggior parte dei clienti ti cerca dal telefono. Ogni pulsante è dove arriva il pollice.</p></div>
+        <div class="dv-step"><span class="label">03 / Ovunque</span><h3>Lo aggiorni una volta</h3><p>Un solo sito che si adatta a ogni schermo. Cambi un orario e cambia ovunque, subito.</p></div>
+      </div>
+    </div>
+    <div class="dv-stage" id="dvStage" aria-label="MacBook e iPhone che mostrano due siti di esempio">
+      <div class="dv-scale" id="dvScale">
+        <div class="dv-world" id="dvWorld">
+          <div class="mb" id="mb">
+            <div class="mb-shadow" aria-hidden="true"></div>
+            <div class="mb-deck"><i class="grill l"></i><i class="grill r"></i><div class="kb" id="kb"></div><div class="tp"></div></div>
+            <div class="mb-front" aria-hidden="true"></div>
+            <div class="mb-lid" id="mbLid">
+              <i class="edge" aria-hidden="true"></i>
+              <div class="in"><div class="screen" data-demo="1"></div><span class="notch" aria-hidden="true"></span><span class="chin" aria-hidden="true">LOCAL UP</span><span class="off" id="mbOff"></span></div>
+              <div class="out" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+            </div>
+          </div>
+          <div class="ip" id="ip">
+            <div class="ip-shadow" aria-hidden="true"></div>
+            <div class="ip-body">
+              <i class="ip-slice" style="transform:translateZ(-4.5px)"></i><i class="ip-slice" style="transform:translateZ(-3px)"></i><i class="ip-slice" style="transform:translateZ(-1.5px)"></i><i class="ip-slice" style="transform:translateZ(0px)"></i><i class="ip-slice" style="transform:translateZ(1.5px)"></i><i class="ip-slice" style="transform:translateZ(3px)"></i><i class="ip-slice" style="transform:translateZ(4.5px)"></i>
+              <i class="ip-btn pwr"></i><i class="ip-btn v1"></i><i class="ip-btn v2"></i><i class="ip-btn act"></i>
+              <div class="ip-front"><div class="ip-screen">
+                <span class="island" aria-hidden="true"></span>
+              <div class="pfeed">
+                <div class="pn"><b>luppolo</b><i></i></div>
+                <span class="pk">PUB · BERGAMO ALTA</span>
+                <h4>Birre artigianali.<br>Cucina fino a tardi.</h4>
+                <div class="pglass">
+                  <svg viewBox="0 0 100 160" aria-hidden="true">
+                    <path d="M23 42 L77 42 L71.5 147 L28.5 147 Z" fill="#f5f5f7" fill-opacity=".22"/>
+                    <path d="M21 22 Q30 12 40 20 Q50 10 60 20 Q70 12 79 22 L77.6 42 L22.4 42 Z" fill="#f5f5f7"/>
+                    <path d="M20 20 L80 20 L72 150 L28 150 Z" fill="none" stroke="#f5f5f7" stroke-width="2" stroke-linejoin="round"/>
+                    <g fill="#f5f5f7" fill-opacity=".6"><circle cx="40" cy="80" r="1.6"/><circle cx="58" cy="96" r="1.2"/><circle cx="47" cy="118" r="1.8"/><circle cx="62" cy="64" r="1.3"/><circle cx="36" cy="130" r="1.1"/></g>
+                  </svg>
+                  <span><b>24</b>SPINE</span>
+                </div>
+                <span class="pcta">Prenota un tavolo</span>
+                <div class="plist">
+                  <small>Questa settimana</small>
+                  <div><b>Gio</b><span>Quiz night</span><em>21:00</em></div>
+                  <div><b>Ven</b><span>Live acustico</span><em>22:00</em></div>
+                  <div><b>Sab</b><span>Partita su maxischermo</span><em>20:45</em></div>
+                </div>
+                <div class="plist">
+                  <small>Alla spina</small>
+                  <div><b>IPA</b><span>Luppolo IPA · 6,2%</span><em>€ 6</em></div>
+                  <div><b>Wit</b><span>Blanche · 4,8%</span><em>€ 5,5</em></div>
+                  <div><b>Stout</b><span>Nera · 5,5%</span><em>€ 6</em></div>
+                </div>
+                <p class="pfoot">Via Gombito 8 · Bergamo<br>Tutti i giorni 18:00 — 01:00</p>
+              </div>
+              </div></div>
+              <div class="ip-back" aria-hidden="true"><div class="ip-cam"><i></i><i></i><i></i><b></b><u></u></div><img src="assets/logo-mark.png" alt=""></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ STATS ============ -->
 <section class="stats on-light" aria-label="In numeri">
@@ -1196,6 +1342,55 @@ const CONFIG = {
   setTimeout(() => { show(0); restart(); }, reduce ? 0 : 3100);
   tabs.forEach(b => b.addEventListener("click", () => { show(+b.dataset.i); restart(); }));
 
+  /* ---- Devices story: MacBook opens, iPhone flies in, both settle ---- */
+  const dv = document.getElementById("schermi"), dvScale = document.getElementById("dvScale"), dvStage = document.getElementById("dvStage");
+  const mb = document.getElementById("mb"), mbLid = document.getElementById("mbLid"), mbOff = document.getElementById("mbOff");
+  const ip = document.getElementById("ip"), dvWorld = document.getElementById("dvWorld");
+  const dvSteps = [...document.querySelectorAll(".dv-step")], dvLine = document.getElementById("dvLine");
+  (function keys() {
+    const kb = document.getElementById("kb"), spans = [];
+    for (let i = 0; i < 15; i++) spans.push(1);              // function row
+    for (let r = 0; r < 4; r++) for (let i = 0; i < 14; i++) spans.push(i === 13 ? 2 : 1);
+    [1, 1, 1, 2, 5, 2, 1, 1, 1].forEach(w => spans.push(w)); // bottom row with space bar
+    spans.forEach(w => { const k = document.createElement("span"); if (w > 1) k.style.gridColumn = "span " + w; kb.appendChild(k); });
+  })();
+  const clamp01 = v => Math.min(1, Math.max(0, v));
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const seg = (p, a, b) => ease(clamp01((p - a) / (b - a)));
+  let dvK = 1, narrow = false;
+  function dvSize() {
+    const r = dvStage.getBoundingClientRect();
+    narrow = innerWidth < 960;
+    dvK = Math.min(r.width / (narrow ? 780 : 1040), r.height / 900, 1.1);
+    dvScale.style.setProperty("--k", dvK.toFixed(3));
+  }
+  dvSize(); addEventListener("resize", dvSize);
+  let dvStep = -1;
+  function devices(p) {
+    const o = seg(p, .02, .38), f = seg(p, .4, .74), g = seg(p, .76, 1);
+    const t = performance.now() / 1000;
+    const lid = -90 + 102 * o;
+    mbLid.style.setProperty("--lid", lid.toFixed(2));
+    mbOff.style.opacity = (1 - clamp01((o - .45) / .45)).toFixed(3);
+    const wrx = -30 + 14 * o - 2 * g, wry = -38 + 26 * o - 4 * f + 10 * g;
+    dvWorld.style.transform = "translateY(" + (170 - 30 * o) + "px) rotateX(" + wrx.toFixed(2) + "deg) rotateY(" + wry.toFixed(2) + "deg) scale(" + (.78 + .22 * o).toFixed(3) + ")";
+    const mbx = -(narrow ? 90 : 130) * f;
+    mb.style.transform = "translateX(" + mbx.toFixed(1) + "px)";
+    const fx = narrow ? 250 : 300, fz = 170;
+    const ix = 1500 + (fx - 1500) * f, iy = 380 + (-20 - 380) * f + Math.sin(t * 1.2) * 6 * g;
+    const iry = 200 + (-18 - 200) * f - 12 * g, irz = -28 * (1 - f), irx = 10 * (1 - f);
+    ip.style.transform = "translate3d(" + ix.toFixed(1) + "px," + iy.toFixed(1) + "px," + fz + "px) rotateY(" + iry.toFixed(2) + "deg) rotateZ(" + irz.toFixed(2) + "deg) rotateX(" + irx.toFixed(2) + "deg)";
+    const step = p < .39 ? 0 : p < .75 ? 1 : 2;
+    if (step !== dvStep) { dvStep = step; dvSteps.forEach((s, i) => s.classList.toggle("on", i === step)); }
+    dvLine.style.transform = "scaleY(" + p.toFixed(3) + ")";
+  }
+  function devicesFrame() {
+    const r = dv.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    devices(clamp01(-r.top / Math.max(1, r.height - innerHeight)));
+  }
+  if (reduce) devices(1);
+
   /* ---- Motion: one rAF loop for tilt, scroll-linked bits and cursor ---- */
   const fine = matchMedia("(pointer: fine)").matches;
   const heroMon = document.getElementById("heroMon");
@@ -1276,6 +1471,7 @@ const CONFIG = {
       if (r.bottom < -200 || r.top > vh + 200) return;
       el.style.transform = "translate3d(" + ((r.top + r.height / 2 - vh / 2) * +el.dataset.px).toFixed(1) + "px,0,0)";
     });
+    devicesFrame();
     // Scroll progress
     progress.style.transform = "scaleX(" + (y / Math.max(1, document.documentElement.scrollHeight - vh)).toFixed(4) + ")";
     // Cursor follower
