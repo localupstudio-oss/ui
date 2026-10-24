@@ -9,7 +9,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-
 import { menus, nav, site } from "@/content/site"
 import { cn } from "@/lib/utils"
 
-/** Header trasparente con logo a sinistra e menu a schermo intero (fondo verde con trama) a destra. */
+/** Header trasparente con logo a sinistra e menu a schermo intero (fondo crema con trama, scritte verdi) a destra. */
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -47,7 +47,7 @@ export function Navbar() {
         <div className="mx-auto flex h-20 max-w-[1800px] items-center justify-between px-5 sm:h-24 sm:px-10">
           <Link href="/" aria-label={`${site.fullName} — home`} onClick={close} className="relative block h-9 w-[116px] sm:h-11 sm:w-[142px]">
             <Image
-              src="/images/brand/wordmark-light.png"
+              src={open ? "/images/brand/wordmark-dark.png" : "/images/brand/wordmark-light.png"}
               alt={site.name}
               fill
               priority
@@ -62,7 +62,7 @@ export function Navbar() {
             aria-expanded={open}
             aria-controls="menu-principale"
             aria-label={open ? "Chiudi il menu" : "Apri il menu"}
-            className="group relative grid size-11 place-items-center text-foreground"
+            className={cn("group relative grid size-11 place-items-center", open ? "text-green" : "text-foreground")}
           >
             <span
               className={cn(
@@ -89,7 +89,7 @@ export function Navbar() {
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            className="pattern-fronde fixed inset-0 z-40 flex flex-col overflow-y-auto text-cream"
+            className="pattern-fronde fixed inset-0 z-40 flex flex-col overflow-y-auto text-green"
           >
             <ul className="flex flex-1 flex-col items-center justify-center gap-2 px-5 pt-24 pb-6 text-center sm:gap-3">
               {nav.map((item, i) => (
@@ -128,7 +128,7 @@ export function Navbar() {
                                     {m.label}
                                   </a>
                                 ) : (
-                                  <span className="font-display text-2xl text-cream/45 italic sm:text-3xl">
+                                  <span className="font-display text-2xl text-green/45 italic sm:text-3xl">
                                     {m.label} <span className="align-middle font-sans text-[0.6rem] tracking-[0.2em] not-italic uppercase">presto</span>
                                   </span>
                                 )}
@@ -158,17 +158,17 @@ export function Navbar() {
               transition={{ delay: 0.6 }}
               className="flex flex-col items-center gap-6 px-5 pb-8 sm:flex-row sm:justify-between sm:px-10"
             >
-              <p className="order-2 text-xs text-cream/75 sm:order-1">
+              <p className="order-2 text-xs text-green/80 sm:order-1">
                 {site.address.street} · {site.address.city}
               </p>
               <Link
                 href="#prenota"
                 onClick={close}
-                className="order-1 rounded-full bg-cream px-8 py-3.5 text-[0.95rem] text-ink transition-colors hover:bg-white sm:order-2"
+                className="order-1 rounded-full bg-green px-8 py-3.5 text-[0.95rem] text-cream transition-colors hover:bg-ink sm:order-2"
               >
                 Prenota un tavolo
               </Link>
-              <p className="order-3 text-xs text-cream/75">{site.phone}</p>
+              <p className="order-3 text-xs text-green/80">{site.phone}</p>
             </motion.div>
           </motion.nav>
         )}

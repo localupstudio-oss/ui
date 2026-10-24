@@ -133,7 +133,7 @@
 
 /* Trame del locale ricolorate in verde (tile senza giunture, a mezza scala per gli schermi retina) */
 @utility pattern-fronde {
-  background: #1f5c3a url("/images/brand/pattern/fronde-verde.jpg") center / cover;
+  background: var(--cream) url("/images/brand/pattern/fronde-crema.jpg") center / cover;
 }
 @utility pattern-eliche-crema {
   background-image: url("/images/brand/pattern/eliche-crema.png");
