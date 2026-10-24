@@ -1,32 +1,36 @@
 import { FileText } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
-import { MENU_PDF } from "@/components/menu/churrasco"
 import carta from "@/content/carta.json"
+import { menus } from "@/content/site"
 
 type Categoria = (typeof carta.cucina)[number]
 
-/** Pulsanti grandi che aprono i PDF del menu. */
+/** Un riquadro per ogni menu: apre il PDF ufficiale del locale. */
 export function MenuPdfButtons() {
-  const items = [
-    { href: MENU_PDF.cucina, title: "Menu Food", sub: "Churrasco, tapas, platos, carnes e dulce" },
-    { href: MENU_PDF.drink, title: "Drink List", sub: "Signature e Tiempo Negroni" },
-  ]
   return (
-    <section className="mx-auto grid max-w-5xl gap-5 px-5 py-24 sm:grid-cols-2 sm:px-8">
-      {items.map((it) => (
-        <Reveal key={it.href}>
-          <a
-            href={it.href}
-            target="_blank"
-            rel="noopener"
-            className="group flex h-full flex-col items-center gap-4 border border-border px-8 py-12 text-center transition-colors hover:border-amber hover:bg-bg-2"
-          >
-            <FileText className="size-6 text-amber" aria-hidden />
-            <span className="font-display text-4xl">{it.title}</span>
-            <span className="text-foreground/70">{it.sub}</span>
-            <span className="link-underline mt-2">Apri il PDF</span>
-          </a>
+    <section className="mx-auto grid max-w-6xl grid-cols-1 gap-5 px-5 py-24 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">
+      {menus.map((m) => (
+        <Reveal key={m.label}>
+          {m.href ? (
+            <a
+              href={m.href}
+              target="_blank"
+              rel="noopener"
+              className="group flex h-full flex-col items-center gap-4 border border-border bg-background/60 px-8 py-12 text-center transition-colors hover:border-amber hover:bg-bg-2"
+            >
+              <FileText className="size-6 text-amber" aria-hidden />
+              <span className="font-display text-4xl">{m.label}</span>
+              <span className="text-foreground/70">{m.sub}</span>
+              <span className="link-underline mt-2">Apri il PDF</span>
+            </a>
+          ) : (
+            <div className="flex h-full flex-col items-center gap-4 border border-dashed border-border bg-background/40 px-8 py-12 text-center text-foreground/60">
+              <FileText className="size-6" aria-hidden />
+              <span className="font-display text-4xl">{m.label}</span>
+              <span className="text-sm tracking-[0.2em] uppercase">In arrivo</span>
+            </div>
+          )}
         </Reveal>
       ))}
     </section>

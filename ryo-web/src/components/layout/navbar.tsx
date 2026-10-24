@@ -6,12 +6,17 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion"
 
-import { nav, site } from "@/content/site"
+import { menus, nav, site } from "@/content/site"
 import { cn } from "@/lib/utils"
 
-/** Header trasparente con logo a sinistra e menu a schermo intero (fondo crema) a destra. */
+/** Header trasparente con logo a sinistra e menu a schermo intero (fondo verde con trama) a destra. */
 export function Navbar() {
   const [open, setOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const close = () => {
+    setOpen(false)
+    setMenuOpen(false)
+  }
   const [scrolled, setScrolled] = useState(false)
   const { scrollY } = useScroll()
   const pathname = usePathname()
@@ -23,7 +28,7 @@ export function Navbar() {
     if (!open) return
     const prev = document.body.style.overflow
     document.body.style.overflow = "hidden"
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false)
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close()
     window.addEventListener("keydown", onKey)
     return () => {
       document.body.style.overflow = prev
@@ -40,9 +45,9 @@ export function Navbar() {
         )}
       >
         <div className="mx-auto flex h-20 max-w-[1800px] items-center justify-between px-5 sm:h-24 sm:px-10">
-          <Link href="/" aria-label={`${site.fullName} — home`} onClick={() => setOpen(false)} className="relative block h-9 w-[116px] sm:h-11 sm:w-[142px]">
+          <Link href="/" aria-label={`${site.fullName} — home`} onClick={close} className="relative block h-9 w-[116px] sm:h-11 sm:w-[142px]">
             <Image
-              src={open ? "/images/brand/wordmark-dark.png" : "/images/brand/wordmark-light.png"}
+              src="/images/brand/wordmark-light.png"
               alt={site.name}
               fill
               priority
@@ -53,11 +58,11 @@ export function Navbar() {
 
           <button
             type="button"
-            onClick={() => setOpen((o) => !o)}
+            onClick={() => (open ? close() : setOpen(true))}
             aria-expanded={open}
             aria-controls="menu-principale"
             aria-label={open ? "Chiudi il menu" : "Apri il menu"}
-            className={cn("group relative grid size-11 place-items-center", open ? "text-ink" : "text-foreground")}
+            className="group relative grid size-11 place-items-center text-foreground"
           >
             <span
               className={cn(
@@ -84,9 +89,9 @@ export function Navbar() {
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            className="cream-surface fixed inset-0 z-40 flex flex-col"
+            className="pattern-fronde fixed inset-0 z-40 flex flex-col overflow-y-auto text-cream"
           >
-            <ul className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center sm:gap-3">
+            <ul className="flex flex-1 flex-col items-center justify-center gap-2 px-5 pt-24 pb-6 text-center sm:gap-3">
               {nav.map((item, i) => (
                 <motion.li
                   key={item.href}
@@ -94,14 +99,55 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 + i * 0.07, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    aria-current={pathname === item.href ? "page" : undefined}
-                    className="font-display text-[clamp(2.2rem,6vw,4rem)] text-ink transition-opacity hover:opacity-60"
-                  >
-                    {item.label}
-                  </Link>
+                  {item.href === "/menu" ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setMenuOpen((o) => !o)}
+                        aria-expanded={menuOpen}
+                        aria-controls="sottomenu-menu"
+                        className="font-display text-[clamp(2.2rem,6vw,4rem)] transition-opacity hover:opacity-60"
+                      >
+                        {item.label}
+                        <span aria-hidden className={cn("ml-3 inline-block text-[0.5em] align-middle transition-transform duration-300", menuOpen && "rotate-45")}>+</span>
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {menuOpen && (
+                          <motion.ul
+                            id="sottomenu-menu"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                            className="mx-auto flex max-w-3xl flex-wrap justify-center gap-x-8 gap-y-3 overflow-hidden py-4"
+                          >
+                            {menus.map((m) => (
+                              <li key={m.label}>
+                                {m.href ? (
+                                  <a href={m.href} target="_blank" rel="noopener" className="font-display text-2xl italic transition-opacity hover:opacity-60 sm:text-3xl">
+                                    {m.label}
+                                  </a>
+                                ) : (
+                                  <span className="font-display text-2xl text-cream/45 italic sm:text-3xl">
+                                    {m.label} <span className="align-middle font-sans text-[0.6rem] tracking-[0.2em] not-italic uppercase">presto</span>
+                                  </span>
+                                )}
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={close}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      className="font-display text-[clamp(2.2rem,6vw,4rem)] transition-opacity hover:opacity-60"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </motion.li>
               ))}
             </ul>
@@ -112,17 +158,17 @@ export function Navbar() {
               transition={{ delay: 0.6 }}
               className="flex flex-col items-center gap-6 px-5 pb-8 sm:flex-row sm:justify-between sm:px-10"
             >
-              <p className="order-2 text-xs text-ink/70 sm:order-1">
+              <p className="order-2 text-xs text-cream/75 sm:order-1">
                 {site.address.street} · {site.address.city}
               </p>
               <Link
                 href="#prenota"
-                onClick={() => setOpen(false)}
-                className="order-1 rounded-full bg-ink px-8 py-3.5 text-[0.95rem] text-cream transition-colors hover:bg-green sm:order-2"
+                onClick={close}
+                className="order-1 rounded-full bg-cream px-8 py-3.5 text-[0.95rem] text-ink transition-colors hover:bg-white sm:order-2"
               >
                 Prenota un tavolo
               </Link>
-              <p className="order-3 text-xs text-ink/70">{site.phone}</p>
+              <p className="order-3 text-xs text-cream/75">{site.phone}</p>
             </motion.div>
           </motion.nav>
         )}

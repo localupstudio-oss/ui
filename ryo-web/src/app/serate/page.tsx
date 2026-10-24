@@ -16,7 +16,7 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <main id="contenuto">
+      <main id="contenuto" className="pattern-eliche">
         <PageHero title="Le serate" subtitle="Il giovedì si canta a tavola, il weekend si balla." image="/images/giovedi/microfono-sala.jpg" alt="Serata da RYO" />
         <Nights />
         <Thursday />

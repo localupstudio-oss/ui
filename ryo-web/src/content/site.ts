@@ -53,9 +53,18 @@ export const site = {
   },
 } as const
 
+/** I menu in PDF, aperti dal menu a tendina e dalla pagina /menu. `href` assente = in arrivo. */
+export const menus: { label: string; sub: string; href?: string }[] = [
+  { label: "À la carte", sub: "Tapas, platos, ensaladas, primi, carnes e sides", href: "/menu/ryo-menu-alacarte.pdf" },
+  { label: "Churrasco", sub: "Degustazione alla brace · 38 €", href: "/menu/ryo-menu-churrasco.pdf" },
+  { label: "Combo", sub: "In arrivo" },
+  { label: "Dessert", sub: "Tiramiryo, Bananito, babbà e il dolce della settimana", href: "/menu/ryo-menu-dessert.pdf" },
+  { label: "Cocktail", sub: "Signature e Tiempo Negroni", href: "/menu/ryo-drink-list.pdf" }, // ✎ drink list vecchia, da sostituire
+  { label: "Wine", sub: "In arrivo" },
+]
+
 export const nav = [
   { href: "/menu", label: "Menu" },
-  { href: "/menu#drink", label: "Drink List" },
   { href: "/serate", label: "Le serate" },
   { href: "/eventi", label: "Eventi privati" },
   { href: "/contatti", label: "Location & contatti" },

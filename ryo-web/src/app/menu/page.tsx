@@ -16,7 +16,7 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <main id="contenuto">
+      <main id="contenuto" className="pattern-croci">
         <PageHero title="Il menu" subtitle="Churrascaria, tapas da condividere e cocktail d'autore." image="/images/cucina/paella.jpg" alt="Paella da condividere" position="center 35%" />
         <MenuPdfButtons />
         <ChurrascoFeature id="churrasco" />

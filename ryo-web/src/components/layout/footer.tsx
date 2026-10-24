@@ -20,7 +20,7 @@ export function Footer({ booking = true }: { booking?: boolean }) {
   return (
     <>
     {booking && <Booking />}
-    <footer className="cream-surface">
+    <footer className="cream-surface pattern-eliche-crema">
       {/* Nastro con le anime del locale */}
       <div aria-hidden className="overflow-hidden border-b border-ink/15 bg-[#d9cba9] py-9">
         <div className="animate-marquee flex w-max items-center gap-16 font-display text-3xl whitespace-nowrap text-ink/80 italic">

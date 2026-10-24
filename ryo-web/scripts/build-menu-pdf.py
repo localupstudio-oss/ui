@@ -13,6 +13,7 @@ sostituirle con i file originali del grafico appena disponibili (stessi nomi).
 import json
 from pathlib import Path
 
+import sys
 from reportlab.lib.colors import HexColor
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A5
@@ -328,5 +329,8 @@ def build_drink():
 
 
 OUT.mkdir(parents=True, exist_ok=True)
-build_food()
+# I menu cucina ora sono quelli ufficiali del locale (scripts/build-official-menus.py):
+# build_food() resta solo come riferimento e non sovrascrive più i PDF.
+if "--cucina" in sys.argv:
+    build_food()
 build_drink()
