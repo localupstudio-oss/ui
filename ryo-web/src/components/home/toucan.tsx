@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react"
 import { useReducedMotion } from "framer-motion"
 
 type P = { x: number; y: number }
-const rand = (a: number, b: number) => a + Math.random() * (b - a)
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v))
 const smooth = (t: number) => t * t * (3 - 2 * t)
 
@@ -16,24 +15,28 @@ function catmull(p0: P, p1: P, p2: P, p3: P, t: number): P {
   return { x: f(p0.x, p1.x, p2.x, p3.x), y: f(p0.y, p1.y, p2.y, p3.y) }
 }
 
-/** Nuova meta (in coordinate 0–1 della hero), lontana dall'ultima e fuori dalla zona del logo. */
-function nextWaypoint(last: P): P {
-  let p = last
-  for (let i = 0; i < 10; i++) {
-    p = { x: rand(0.06, 0.94), y: rand(0.18, 0.62) }
-    if (Math.hypot(p.x - last.x, p.y - last.y) > 0.32) break
-  }
-  return p
-}
+/**
+ * Rotta d'ingresso (coordinate 0–1 della hero): entra da sinistra in basso, sale con
+ * un'onda morbida attraversando la pagina ed esce in alto a destra. Un solo passaggio.
+ */
+const ROUTE: P[] = [
+  { x: -0.55, y: 0.78 },
+  { x: -0.18, y: 0.64 },
+  { x: 0.2, y: 0.42 },
+  { x: 0.48, y: 0.36 },
+  { x: 0.76, y: 0.26 },
+  { x: 1.2, y: 0.12 },
+  { x: 1.6, y: 0.02 },
+]
 
 /*
  * Volo del tucano: come in natura, una raffica di battiti rapidi e poi una planata
  * ad ali distese. `wing(t)` restituisce l'apertura dell'ala vista di lato:
  * 1 = ala in alto, 0 = di taglio, negativo = sotto il corpo (scorcio prospettico).
  */
-const FLAP = 0.34 // s per battito
+const FLAP = 0.28 // s per battito
 const FLAPS = 3
-const GLIDE = 1.15 // s di planata
+const GLIDE = 0.8 // s di planata
 const CYCLE = FLAP * FLAPS + GLIDE
 const GLIDE_POSE = 0.55
 function wing(t: number) {
@@ -49,8 +52,8 @@ function wing(t: number) {
 }
 
 /**
- * Il tucano che vola nell'apertura del sito, come la farfalla di Amazónico: entra da sinistra
- * e gira di continuo per la hero su una curva morbida. Tutto è calcolato a ogni fotogramma
+ * Il tucano che vola nell'apertura del sito, come la farfalla di Amazónico: all'ingresso in home
+ * attraversa la pagina una sola volta, da sinistra a destra, su una curva morbida. Tutto è calcolato a ogni fotogramma
  * (requestAnimationFrame) e scritto direttamente nei transform: traiettoria, battito d'ali
  * con le penne che si aprono, leggero sobbalzo a ogni colpo d'ala, virata in 3D quando cambia
  * direzione. Si ferma quando la hero non è visibile; disattivato con "riduci movimento".
@@ -70,8 +73,7 @@ export function ToucanFlight() {
     const farFeathers = [...body.querySelectorAll<SVGPathElement>("[data-wing=far] [data-feather]")]
     const tail = body.querySelector<SVGGElement>("[data-tail]")
 
-    const pts: P[] = [{ x: -0.45, y: 0.7 }, { x: -0.2, y: 0.58 }, { x: 0.3, y: 0.3 }]
-    pts.push(nextWaypoint(pts[2]))
+    const pts: P[] = ROUTE.slice()
     // tratto corrente campionato per lunghezza d'arco → velocità uniforme anche in curva
     let lut: { p: P; s: number }[] = []
     let dist = 0, face = 1, tilt = 0, bank = 0, last = 0, t = 0
@@ -113,12 +115,17 @@ export function ToucanFlight() {
       const W = host.clientWidth
       const w = wing(t), wf = wing(t - 0.045)
       // spinta: un po' più veloce durante i battiti, rallenta in planata
-      const speed = Math.max(90, Math.min(190, W * 0.11)) * (0.88 + 0.2 * w.beating)
+      const speed = Math.max(220, Math.min(420, W * 0.25)) * (0.88 + 0.2 * w.beating)
       dist += speed * dt
       while (dist >= lut[lut.length - 1].s) {
         dist -= lut[lut.length - 1].s
         pts.shift()
-        pts.push(nextWaypoint(pts[pts.length - 1]))
+        if (pts.length < 4) {
+          // uscito dalla pagina: fine dell'effetto
+          cancelAnimationFrame(raf)
+          el.style.display = "none"
+          return
+        }
         build()
       }
       const p = at(dist)
@@ -150,7 +157,7 @@ export function ToucanFlight() {
       last = 0
     })
     io.observe(host)
-    const start = setTimeout(() => (raf = requestAnimationFrame(frame)), 900)
+    const start = setTimeout(() => (raf = requestAnimationFrame(frame)), 600)
     return () => {
       clearTimeout(start)
       cancelAnimationFrame(raf)
