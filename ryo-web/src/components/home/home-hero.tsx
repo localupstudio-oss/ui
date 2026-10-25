@@ -16,7 +16,7 @@ import { ToucanFlight } from "@/components/home/toucan"
  */
 const VIDEO = {
   desktop: { src: "/video/hero-desktop", poster: "/images/hero/poster-desktop.jpg" },
-  mobile: { src: "/video/hero-mobile", poster: "/images/hero/poster-mobile.jpg" },
+  mobile: { src: "/video/hero-mobile-v2", poster: "/images/hero/poster-mobile-sala.jpg" },
 }
 
 export function HomeHero() {
