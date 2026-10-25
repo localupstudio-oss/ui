@@ -1,62 +1,93 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { useEffect } from "react"
+import { motion, useAnimate, useReducedMotion } from "framer-motion"
 
-const STORAGE_KEY = "ryo-toucan-flown"
+const rand = (a: number, b: number) => a + Math.random() * (b - a)
+const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v))
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 /**
- * Il tucano che attraversa l'apertura del sito: un solo volo per sessione,
- * disattivato con "riduci movimento". Disegnato in SVG (nessun file esterno).
+ * Il tucano che vola nell'apertura del sito, come la farfalla di Amazónico: entra da
+ * sinistra e poi gira di continuo tra punti diversi della hero, ad ali aperte, con
+ * battiti morbidi, planate e brevi pause sospese. Disattivato con "riduci movimento".
  */
 export function ToucanFlight() {
   const reduce = useReducedMotion()
-  const [fly, setFly] = useState(false)
+  const [scope, animate] = useAnimate<HTMLDivElement>()
 
   useEffect(() => {
-    if (reduce) return
-    let seen = false
-    try {
-      seen = sessionStorage.getItem(STORAGE_KEY) === "1"
-      sessionStorage.setItem(STORAGE_KEY, "1")
-    } catch {}
-    if (seen) return
-    const t = setTimeout(() => setFly(true), 900)
-    return () => clearTimeout(t)
-  }, [reduce])
+    const el = scope.current
+    const body = el?.firstElementChild as HTMLElement | null
+    if (reduce || !el || !body) return
+    let alive = true
 
-  if (!fly) return null
+    async function fly() {
+      const box = () => {
+        const host = el.parentElement!
+        return { W: host.clientWidth, H: host.clientHeight, s: el.offsetWidth }
+      }
+      let { W, H } = box()
+      let pos = { x: -0.3 * W, y: 0.62 * H }
+      await animate(el, { x: pos.x, y: pos.y, opacity: 1 }, { duration: 0 })
+      await sleep(900)
+      let first = true
+      while (alive) {
+        ;({ W, H } = box())
+        const { s } = box()
+        // Punti di sosta in tutta la hero, lontani dall'ultimo, senza uscire dai bordi
+        let next = pos
+        for (let i = 0; i < 8; i++) {
+          next = { x: clamp(rand(0.04, 0.96) * W - s / 2, 12, W - s - 12), y: rand(0.16, 0.6) * H }
+          if (Math.hypot(next.x - pos.x, next.y - pos.y) > 0.3 * W) break
+        }
+        if (first) next = { x: clamp(rand(0.55, 0.7) * W - s / 2, 12, W - s - 12), y: 0.28 * H }
+        const dir = next.x < pos.x ? -1 : 1
+        const dist = Math.hypot(next.x - pos.x, next.y - pos.y)
+        const duration = Math.min(5.5, Math.max(2.6, dist / (0.2 * Math.max(W, 700))))
+        const lift = rand(0.06, 0.16) * H
+        // arco morbido verso l'alto, senza salire fino al logo
+        const mid = { x: (pos.x + next.x) / 2, y: Math.max(0.13 * H, Math.min(pos.y, next.y) - lift) }
+        const tilt = Math.max(-14, Math.min(14, ((next.y - pos.y) / H) * 40)) * dir
+
+        animate(body, { scaleX: dir }, { duration: 0.45, ease: "easeInOut" })
+        await animate(
+          el,
+          { x: [pos.x, mid.x, next.x], y: [pos.y, mid.y, next.y], rotate: [0, tilt - 6 * dir, 0] },
+          { duration, ease: "easeInOut" },
+        )
+        pos = next
+        first = false
+        if (!alive) break
+        // Sospeso ad ali aperte: leggero su e giù
+        await animate(el, { y: [pos.y, pos.y - rand(8, 16), pos.y] }, { duration: rand(1.4, 2.4), ease: "easeInOut" })
+      }
+    }
+    fly().catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [reduce, animate, scope])
+
+  if (reduce) return null
 
   return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none absolute top-0 left-0 z-20 w-[170px] sm:w-[300px]"
-      initial={{ x: "-25vw", y: "70vh", rotate: -14, scale: 0.8 }}
-      animate={{
-        x: ["-25vw", "18vw", "42vw", "64vw", "112vw"],
-        y: ["70vh", "38vh", "30vh", "34vh", "4vh"],
-        rotate: [-14, -6, 2, -4, -16],
-        scale: [0.8, 1, 1.08, 1.04, 0.9],
-      }}
-      transition={{ duration: 6.2, times: [0, 0.28, 0.5, 0.7, 1], ease: "easeInOut" }}
-      onAnimationComplete={() => setFly(false)}
-    >
-      <motion.div animate={{ y: [0, -10, 0, 8, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}>
+    <div ref={scope} aria-hidden className="pointer-events-none absolute top-0 left-0 z-20 w-[130px] opacity-0 sm:w-[220px]">
+      <div>
         <ToucanSvg />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }
 
 function ToucanSvg() {
-  const flap = {
-    animate: { scaleY: [1, -0.55, 1] },
-    transition: { duration: 0.42, repeat: Infinity, ease: [0.45, 0, 0.55, 1] as const },
-  }
+  // Due battiti e poi planata ad ali spiegate, come un volo vero (non un frullo continuo)
+  const cycle = { duration: 1.9, repeat: Infinity, times: [0, 0.14, 0.28, 0.42, 0.56, 1], ease: "easeInOut" as const }
+  const flap = { animate: { scaleY: [1, -0.45, 1, -0.45, 1, 1] }, transition: cycle }
   const wingOrigin = { transformOrigin: "122px 104px", transformBox: "view-box" as const }
 
   return (
-    <svg viewBox="0 0 300 200" className="h-auto w-full drop-shadow-[0_18px_22px_rgb(0_0_0/0.45)]">
+    <svg viewBox="0 0 300 200" className="h-auto w-full [filter:drop-shadow(0_0_1.5px_rgb(246_239_224/0.45))_drop-shadow(0_18px_22px_rgb(0_0_0/0.45))]">
       <defs>
         <linearGradient id="beak-top" x1="0" x2="1" y1="0" y2="0">
           <stop offset="0" stopColor="#7cc04b" />
@@ -73,11 +104,12 @@ function ToucanSvg() {
 
       {/* ala posteriore, sfasata */}
       <motion.path
-        d="M118 102 C 104 66, 82 38, 52 26 C 66 50, 78 74, 96 106 Z"
+        d="M126 102 C 118 74, 102 46, 78 24 C 66 13, 52 7, 36 5 C 48 13, 55 20, 59 27 C 50 23, 40 22, 30 24 C 44 30, 53 37, 59 45 C 50 43, 41 44, 33 48 C 48 53, 60 61, 70 72 C 63 72, 56 74, 50 78 C 68 84, 84 96, 98 110 Z"
+        transform="translate(-10 -2) rotate(-8 122 104)"
         fill="#050505"
         style={wingOrigin}
-        animate={{ scaleY: [-0.4, 1, -0.4] }}
-        transition={{ duration: 0.42, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
+        animate={{ scaleY: [0.85, -0.3, 0.85, -0.3, 0.85, 0.85] }}
+        transition={cycle}
       />
 
       {/* coda */}
@@ -102,8 +134,9 @@ function ToucanSvg() {
 
       {/* ala anteriore */}
       <motion.g style={wingOrigin} {...flap}>
-        <path d="M124 102 C 108 62, 82 28, 46 14 C 62 42, 78 72, 98 108 Z" fill="#1b1b1b" />
-        <path d="M112 92 C 96 66, 80 46, 62 32 M104 98 C 90 76, 76 58, 58 46" stroke="#2f2f2f" strokeWidth="1.6" fill="none" />
+        <path d="M126 102 C 118 74, 102 46, 78 24 C 66 13, 52 7, 36 5 C 48 13, 55 20, 59 27 C 50 23, 40 22, 30 24 C 44 30, 53 37, 59 45 C 50 43, 41 44, 33 48 C 48 53, 60 61, 70 72 C 63 72, 56 74, 50 78 C 68 84, 84 96, 98 110 Z" fill="#1a1a1a" />
+        {/* penne remiganti */}
+        <path d="M118 96 C 104 70, 84 44, 50 16 M112 100 C 96 78, 74 56, 44 36 M106 104 C 90 88, 70 72, 48 60" stroke="#333" strokeWidth="1.5" fill="none" strokeLinecap="round" />
       </motion.g>
     </svg>
   )
