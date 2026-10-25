@@ -32,6 +32,9 @@ export function ChurrascoFeature({ id }: { id?: string }) {
         <div aria-hidden className="absolute inset-3 -z-10 border border-amber/60 sm:inset-5" />
         <div aria-hidden className="absolute inset-[18px] -z-10 border border-amber/25 sm:inset-[26px]" />
 
+        <span className="absolute top-7 left-7 rounded-full border border-amber/70 bg-black/45 px-4 py-1.5 text-xs font-medium tracking-[0.2em] text-amber-light uppercase backdrop-blur-sm sm:top-10 sm:left-10">
+          Consigliato
+        </span>
         <div className="lg:w-1/2">
         <p className="text-sm tracking-[0.3em] text-amber uppercase">L&apos;esperienza della casa</p>
         <h2 className="mt-6 font-display text-[clamp(3.2rem,9vw,7rem)] leading-none italic">Churrasco</h2>

@@ -1,9 +1,10 @@
 import Image from "next/image"
-import { Clock, Music2, Ticket, Star } from "lucide-react"
+import { Clock, MessageCircle, Music2, Ticket, Star } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
 import { SectionHeading } from "@/components/section-heading"
 import { nights } from "@/content/experience"
+import { waMessage, whatsappUrl } from "@/content/site"
 
 /** Le tre serate della settimana, ognuna con la sua locandina. */
 export function Nights() {
@@ -24,7 +25,7 @@ export function Nights() {
         <div className="mt-16 grid gap-10 md:grid-cols-3 md:gap-6">
           {nights.map((n, i) => (
             <Reveal key={n.day} delay={i * 0.1} className="flex flex-col">
-              <a href={n.href ?? "#prenota"} className="group block overflow-hidden rounded-sm">
+              <div className="group block overflow-hidden rounded-sm">
                 <div className="relative aspect-[1170/1901]">
                   <Image
                     src={n.image}
@@ -34,7 +35,7 @@ export function Nights() {
                     className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
                   />
                 </div>
-              </a>
+              </div>
               <div className="mt-6 text-center">
                 <p className="text-sm tracking-[0.2em] text-amber uppercase">{n.day}</p>
                 <h3 className="mt-2 font-display text-3xl">{n.title}</h3>
@@ -45,8 +46,14 @@ export function Nights() {
                   {n.entry && <Row icon={Ticket} value={n.entry} />}
                   <Row icon={Star} value={n.highlight} />
                 </dl>
-                <a href={n.href ?? "#prenota"} className="link-underline mt-6 inline-block text-lg">
-                  {n.href ? "Scopri la serata" : `Prenota per ${n.day.toLowerCase()}`}
+                {/* Le serate si prenotano in chat, con il messaggio già scritto per quella serata */}
+                <a
+                  href={whatsappUrl(waMessage.serata(n.title, n.day))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-7 inline-flex items-center gap-2.5 rounded-full bg-[#25d366] px-7 py-3.5 font-medium text-[#062e16] transition-colors hover:bg-[#3ee07a]"
+                >
+                  <MessageCircle className="size-4" /> Prenota la serata
                 </a>
               </div>
             </Reveal>

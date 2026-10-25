@@ -29,24 +29,42 @@ export function HomeIntro() {
   )
 }
 
+/**
+ * Striscia di foto in sequenza fissa, ripetuta: locale → cibo in tavola → drink →
+ * persone che si divertono → scatto professionale.
+ */
 const strip = [
-  { src: "/images/drink/highball-rosa.jpg", alt: "Highball rosa tra foglie tropicali" },
-  { src: "/images/cucina/tartare.jpg", alt: "Tartare" },
-  { src: "/images/giovedi/calici-microfono.jpg", alt: "Calici e microfono della serata del giovedì" },
-  { src: "/images/drink/cocktail-foglia.jpg", alt: "Cocktail con foglia essiccata" },
-  { src: "/images/cucina/paella.jpg", alt: "Paella da condividere" },
-  { src: "/images/eventi/bancone-scimmia.jpg", alt: "Il bancone di sera" },
-  { src: "/images/drink/bicchiere-ryo.jpg", alt: "Cocktail nel bicchiere RYO" },
-  { src: "/images/cucina/burger.jpg", alt: "Burger con patate" },
-  { src: "/images/giovedi/microfoni-menu.jpg", alt: "I microfoni sul menu cucina" },
+  // giro 1
+  { src: "/images/home/locale-bancone-bar.jpg", alt: "Il bancone di RYO sotto le lampade in rattan" },
+  { src: "/images/home/cibo-bowl-tapas.jpg", alt: "Bowl, riso e tapas da condividere in tavola" },
+  { src: "/images/home/drink-tiki.jpg", alt: "Cocktail nel tiki mug RYO con menta" },
+  { src: "/images/home/persone-ballo.jpg", alt: "Due amiche ballano tra i tavoli" },
+  { src: "/images/home/pro-dj.jpg", alt: "DJ set alla consolle" },
+  // giro 2
+  { src: "/images/home/locale-sala-felci.jpg", alt: "La sala sotto il soffitto di felci" },
+  { src: "/images/home/cibo-tacos.jpg", alt: "Tacos e tartare con un cocktail" },
+  { src: "/images/home/drink-negroni.jpg", alt: "Brindisi con due Negroni" },
+  { src: "/images/home/persone-risata.jpg", alt: "Una risata a tavola tra calici di rosso" },
+  { src: "/images/home/pro-chitarrista.jpg", alt: "Musica dal vivo: chitarra e voce" },
+  // giro 3
+  { src: "/images/home/locale-pappagallo.jpg", alt: "Il pappagallo tra le piante della sala" },
+  { src: "/images/galleria/tavola-condivisa.jpg", alt: "Una tavola di piatti da condividere" },
   { src: "/images/drink/calice-stelo-verde.jpg", alt: "Cocktail nel calice dallo stelo verde" },
+  { src: "/images/home/persone-gruppo.jpg", alt: "Amici cantano insieme durante la serata" },
+  { src: "/images/home/pro-duo-acustico.jpg", alt: "Duo acustico in sala" },
+  // giro 4
+  { src: "/images/locale/sala-giungla.jpg", alt: "La sala con la carta da parati tropicale" },
+  { src: "/images/cucina/tacos-e-vino.jpg", alt: "Tacos e vino in tavola" },
+  { src: "/images/drink/cocktail-foglia.jpg", alt: "Cocktail con foglia essiccata" },
+  { src: "/images/home/persone-calice.jpg", alt: "Un sorriso con il calice in mano" },
+  { src: "/images/cucina/churrasco-spiedo.jpg", alt: "Il passador taglia la carne dallo spiedo" },
 ]
 
-/** Fila di foto che scorre lentamente da sola (si ferma al passaggio del mouse). */
+/** Fila di foto che scorre da sola (si ferma al passaggio del mouse). */
 export function PhotoStrip() {
   return (
     <section aria-label="Galleria" className="group overflow-hidden pb-28 sm:pb-36">
-      <div className="animate-marquee flex w-max gap-5 group-hover:[animation-play-state:paused] sm:gap-8">
+      <div className="animate-marquee-fast flex w-max gap-5 group-hover:[animation-play-state:paused] sm:gap-8">
         {[...strip, ...strip].map((p, i) => (
           <div key={i} aria-hidden={i >= strip.length} className="relative h-[52vh] max-h-[560px] min-h-[320px] w-[min(68vw,420px)] shrink-0 overflow-hidden">
             <Image src={p.src} alt={i >= strip.length ? "" : p.alt} fill sizes="420px" className="object-cover" />

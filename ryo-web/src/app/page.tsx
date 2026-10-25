@@ -2,7 +2,7 @@ import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import { HomeHero } from "@/components/home/home-hero"
 import { FeatureCard, HomeIntro, PhotoStrip } from "@/components/home/home-blocks"
-import { ChurrascoFeature, MENU_PDF } from "@/components/menu/churrasco"
+import { ChurrascoFeature } from "@/components/menu/churrasco"
 
 export default function HomePage() {
   return (
@@ -15,7 +15,7 @@ export default function HomePage() {
         <ChurrascoFeature />
         <div className="h-5 sm:h-8" />
         <div className="grid gap-5 px-3 pb-5 sm:gap-8 sm:px-10 sm:pb-8">
-          <FeatureCard href="/menu" title="Il menu" image="/images/galleria/tavola-condivisa.jpg" alt="Tavola con paella, crudi e cocktail" position="center 60%" />
+          <FeatureCard href="/menu" title="Il menu" image="/images/cucina/tavola-menu.jpg" alt="Una tavola apparecchiata con burger, tapas e cocktail al sole" position="center 58%" />
           <div className="grid gap-5 sm:gap-8 md:grid-cols-2">
             <FeatureCard
               size="half"
@@ -31,30 +31,10 @@ export default function HomePage() {
               href="/eventi"
               title="Feste ed eventi privati"
               meta="Compleanni | Feste | Cene di gruppo"
-              cta="Richiedi un preventivo"
-              image="/images/giovedi/tavolata.jpg"
-              alt="Una tavolata di amici da RYO"
-            />
-          </div>
-          <div className="grid gap-5 sm:gap-8 md:grid-cols-2">
-            <FeatureCard
-              size="half"
-              href={MENU_PDF.drink}
-              external
-              title="Drink List"
-              meta="Signature | Tiempo Negroni"
-              cta="Apri la drink list"
-              image="/images/drink/highball-rosa.jpg"
-              alt="Highball rosa tra foglie tropicali"
-            />
-            <FeatureCard
-              size="half"
-              href="/contatti"
-              title="Location"
-              meta="Corso Umberto I, 1 | Cava de' Tirreni"
-              cta="Come arrivare"
-              image="/images/locale/sala-giungla.jpg"
-              alt="La sala di RYO"
+              cta="Organizza la tua festa"
+              image="/images/eventi/festa-torta.jpg"
+              alt="Una festa di compleanno da RYO con torta e fontane di luce"
+              position="center 40%"
             />
           </div>
         </div>

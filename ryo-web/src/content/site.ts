@@ -74,3 +74,16 @@ export const whatsappUrl = (text = "Ciao RYO! Vorrei prenotare un tavolo") =>
   `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`
 
 export const fullAddress = `${site.address.street}, ${site.address.zip} ${site.address.city} (${site.address.province})`
+
+/**
+ * Messaggi WhatsApp precompilati: il cliente trova già la richiesta scritta e
+ * completa solo i campi dopo i due punti.
+ */
+export const waMessage = {
+  tavolo: () =>
+    "Ciao RYO! 👋 Vorrei prenotare un tavolo.\n\nGiorno: \nOrario: \nNumero di persone: \nNome: \n\nGrazie!",
+  serata: (title: string, day: string) =>
+    `Ciao RYO! 👋 Vorrei prenotare un tavolo per «${title}» (${day.toLowerCase()}).\n\nData: \nNumero di persone: \nOrario di arrivo: \nNome: \n\nGrazie!`,
+  evento: (tipo = "una festa privata") =>
+    `Ciao RYO! 🎉 Vorrei organizzare ${tipo} da voi.\n\nData: \nNumero di ospiti: \nOccasione (es. compleanno, 30 anni, laurea): \nNome: \nIdee o richieste particolari: \n\nAspetto vostre notizie, grazie!`,
+}

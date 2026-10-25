@@ -2,15 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { DemoBadge } from "@/components/demo-badge"
-import { Booking } from "@/components/sections/booking"
 import { fullAddress, nav, site, whatsappUrl } from "@/content/site"
 
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`
 
 const brands = ["Churrascaria", "Tapas", "Cocktail", "Quelli che il Giovedì", "This is RYO Weekend", "Cava de' Tirreni"]
 
-/** Footer con il modulo di prenotazione in fondo a ogni pagina (disattivabile dove il modulo c'è già). */
-export function Footer({ booking = true }: { booking?: boolean }) {
+/** Footer crema; la prenotazione si apre in una finestra dai pulsanti "Prenota". */
+export function Footer() {
   const socials = [
     { label: "Instagram", href: site.social.instagram },
     { label: "Facebook", href: site.social.facebook },
@@ -19,7 +18,6 @@ export function Footer({ booking = true }: { booking?: boolean }) {
 
   return (
     <>
-    {booking && <Booking />}
     <footer className="cream-surface pattern-eliche-crema">
       {/* Nastro con le anime del locale */}
       <div aria-hidden className="overflow-hidden border-b border-ink/15 bg-[#d9cba9] py-9">

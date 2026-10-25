@@ -25,7 +25,7 @@ export function LegalPage({ title, updated, children }: { title: string; updated
           {children}
         </div>
       </main>
-      <Footer booking={false} />
+      <Footer />
     </>
   )
 }

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Montserrat, Playfair_Display } from "next/font/google"
 
+import { BookingDialog } from "@/components/booking-dialog"
 import { fullAddress, site } from "@/content/site"
 import "./globals.css"
 
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Vai al contenuto
         </a>
         {children}
+        <BookingDialog />
         <script
           type="application/ld+json"
           // JSON statico generato dal content layer: nessun input utente.

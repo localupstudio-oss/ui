@@ -7,6 +7,7 @@ import { Mic2, UtensilsCrossed, Music4 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/motion/reveal"
 import { thursday } from "@/content/experience"
+import { waMessage, whatsappUrl } from "@/content/site"
 import { cn } from "@/lib/utils"
 
 const icons = [UtensilsCrossed, Mic2, Music4]
@@ -71,7 +72,7 @@ export function Thursday() {
             </dl>
 
             <Button asChild size="lg" className="mt-9 h-12 px-7">
-              <a href="#prenota">Prenota il tuo giovedì</a>
+              <a href={whatsappUrl(waMessage.serata("Quelli che il Giovedì", "Giovedì"))} target="_blank" rel="noopener noreferrer">Prenota il tuo giovedì su WhatsApp</a>
             </Button>
           </Reveal>
 

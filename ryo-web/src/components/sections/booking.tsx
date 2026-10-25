@@ -1,115 +1,72 @@
 "use client"
 
-import Image from "next/image"
-import { useActionState, useRef, useState, useSyncExternalStore } from "react"
+import { useActionState, useState, useSyncExternalStore } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, Loader2, MessageCircle, PartyPopper } from "lucide-react"
 
 import { submitBooking } from "@/app/actions/booking"
-import { experiences, type Experience } from "@/content/experience"
-import { site, whatsappUrl } from "@/content/site"
+import { site, waMessage, whatsappUrl } from "@/content/site"
 import { formatDate, nightOf } from "@/lib/booking-summary"
-import { addMonths, EVENT_TYPES, GUESTS_MAX, TIME_SLOTS, todayInRome, validateBooking, weekday, type BookingState, type FieldErrors } from "@/lib/validation/booking"
+import { addMonths, GUESTS_MAX, TIME_SLOTS, todayInRome, validateBooking, weekday, type BookingState, type FieldErrors } from "@/lib/validation/booking"
 import { cn } from "@/lib/utils"
-
-type Mode = "tavolo" | "evento"
 
 const initial: BookingState = { status: "idle" }
 const noopSubscribe = () => () => {}
 const closed = site.closedWeekdays as readonly number[]
 
 /**
- * Modulo "Prenota un tavolo" sul modello dei grandi ristoranti: calendario a giorni tondi,
- * persone + orario + Prenota, poi i dati di contatto. Sotto, le serate della settimana
- * e le feste private: ogni scheda preimposta il calendario o apre la richiesta evento.
+ * Prenotazione del tavolo, mostrata nella finestra che si apre dai pulsanti "Prenota"
+ * (e sulla pagina /prenota): prima la via più rapida, WhatsApp con il messaggio già
+ * scritto; poi il modulo con calendario a giorni tondi, persone, orario e contatti.
+ * Feste ed eventi vanno direttamente in chat con un messaggio dedicato.
  */
-export function Booking({ defaultTab = "tavolo" }: { defaultTab?: Mode }) {
-  const [mode, setMode] = useState<Mode>(defaultTab)
+export function BookingPanel({ titleId }: { titleId?: string }) {
   const [date, setDate] = useState<string>()
-  const [eventType, setEventType] = useState<string>()
-  // Ogni nuova scelta dall'esterno (scheda serata, cambio modulo) ricrea il form da zero.
   const [formKey, setFormKey] = useState(0)
-  const widgetRef = useRef<HTMLDivElement>(null)
   // "Oggi" (ora di Roma) solo nel browser: il prerender non dipende dalla data di build.
   const today = useSyncExternalStore(noopSubscribe, todayInRome, () => null)
-
-  function switchMode(next: Mode, type?: string) {
-    setMode(next)
-    setEventType(type)
-    setFormKey((k) => k + 1)
-    widgetRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
-
-  function pickExperience(e: Experience) {
-    if (e.weekday === undefined) return switchMode("evento", "compleanno")
-    if (today) setDate(nextWeekday(today, e.weekday))
-    if (mode !== "tavolo") setMode("tavolo")
-    setFormKey((k) => k + 1)
-    widgetRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
+  const eventUrl = whatsappUrl(waMessage.evento())
 
   return (
-    <section id="prenota" className="cream-surface border-t border-ink/10 py-24 sm:py-32">
-      <div ref={widgetRef} className="mx-auto max-w-3xl scroll-mt-24 px-5 text-center sm:px-8">
-        <h2 className="font-display text-[clamp(2.6rem,6vw,4.4rem)] leading-none">
-          {mode === "tavolo" ? "Prenota un tavolo" : "Feste ed eventi"}
-        </h2>
-        <p className="mx-auto mt-7 max-w-[60ch] text-[0.95rem] leading-relaxed text-ink/75">
-          {mode === "tavolo" ? (
-            <>
-              Siamo aperti dal mercoledì alla domenica e accettiamo prenotazioni fino a 6 mesi in anticipo, per tavoli fino a {GUESTS_MAX} persone.
-              La prenotazione è confermata dal nostro staff via WhatsApp o telefono. Per gruppi più numerosi, compleanni e feste usa «Feste ed eventi».
-            </>
-          ) : (
-            <>
-              Compleanni, feste dei 30 anni, lauree e cene aziendali da 10 a 200 ospiti. Raccontaci la tua idea: ti ricontattiamo con menu,
-              allestimento e preventivo su misura.
-            </>
-          )}
-        </p>
+    <div className="mx-auto max-w-3xl text-center">
+      <h2 id={titleId} className="font-display text-[clamp(2.3rem,6vw,3.8rem)] leading-none">Prenota un tavolo</h2>
+      <p className="mx-auto mt-5 max-w-[56ch] text-[0.95rem] leading-relaxed text-ink/75">
+        Siamo aperti dal mercoledì alla domenica. Scrivici su WhatsApp con il messaggio già pronto, oppure scegli giorno, orario e persone qui sotto:
+        ti confermiamo noi il tavolo.
+      </p>
 
-        <div className="mt-12 text-left">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={`${mode}-${formKey}`}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {mode === "tavolo" ? (
-                <TableBooking today={today} date={date} onDate={setDate} onGroup={() => switchMode("evento")} onReset={() => setFormKey((k) => k + 1)} />
-              ) : (
-                <EventBooking today={today} date={date} onDate={setDate} defaultType={eventType} onReset={() => setFormKey((k) => k + 1)} />
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      <a
+        href={whatsappUrl(waMessage.tavolo())}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 inline-flex items-center justify-center gap-2.5 rounded-full bg-[#25d366] px-8 py-4 font-medium text-[#062e16] transition-colors hover:bg-[#3ee07a]"
+      >
+        <MessageCircle className="size-5" /> Prenota su WhatsApp
+      </a>
 
-        <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <a
-            href={whatsappUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 rounded-full border border-ink px-6 py-3.5 transition-colors hover:bg-ink hover:text-cream"
-          >
-            <MessageCircle className="size-4" /> Scrivici su WhatsApp
-          </a>
-          <button
-            type="button"
-            onClick={() => switchMode(mode === "tavolo" ? "evento" : "tavolo")}
-            className="inline-flex items-center justify-center gap-2.5 rounded-full border border-ink px-6 py-3.5 transition-colors hover:bg-ink hover:text-cream"
-          >
-            {mode === "tavolo" ? <><PartyPopper className="size-4" /> Feste ed eventi</> : "Prenota un tavolo"}
-          </button>
-        </div>
-        <p className="mt-5 text-sm text-ink/65">
+      <div className="my-10 flex items-center gap-4 text-xs tracking-[0.25em] text-ink/50 uppercase">
+        <span className="h-px flex-1 bg-ink/15" /> oppure con il modulo <span className="h-px flex-1 bg-ink/15" />
+      </div>
+
+      <div className="text-left">
+        <TableBooking key={formKey} today={today} date={date} onDate={setDate} onGroup={() => window.open(eventUrl, "_blank", "noopener")} onReset={() => setFormKey((k) => k + 1)} />
+      </div>
+
+      <div className="mt-10 flex flex-col items-center gap-3 border-t border-ink/15 pt-8 text-sm text-ink/70">
+        <p>Più di {GUESTS_MAX} persone, una festa o un compleanno?</p>
+        <a
+          href={eventUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2.5 rounded-full border border-ink px-6 py-3 text-ink transition-colors hover:bg-ink hover:text-cream"
+        >
+          <PartyPopper className="size-4" /> Organizza il tuo evento su WhatsApp
+        </a>
+        <p>
           Oppure chiamaci al <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="link-underline">{site.phone}</a>
         </p>
       </div>
-
-      <Experiences onPick={pickExperience} />
-    </section>
+    </div>
   )
 }
 
@@ -209,48 +166,6 @@ function TableBooking({ today, date, onDate, onGroup, onReset }: FlowProps & { o
   )
 }
 
-/* ───────────────────────── Feste ed eventi privati ───────────────────────── */
-
-function EventBooking({ today, date, onDate, defaultType, onReset }: FlowProps & { defaultType?: string }) {
-  const [state, formAction, pending] = useActionState(submitBooking, initial)
-  const [eventType, setEventType] = useState(defaultType ?? "")
-  const [clientErrors, setClientErrors] = useState<FieldErrors>({})
-  const errors: FieldErrors = { ...(state.status === "error" ? state.fieldErrors : {}), ...clientErrors }
-
-  if (state.status === "success") return <Success state={state} onReset={onReset} />
-
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    const result = validateBooking(Object.fromEntries(new FormData(e.currentTarget)))
-    if (result.ok) return setClientErrors({})
-    e.preventDefault()
-    setClientErrors(result.fieldErrors)
-    e.currentTarget.querySelector<HTMLElement>(`[name="${Object.keys(result.fieldErrors)[0]}"]`)?.focus()
-  }
-
-  return (
-    <form action={formAction} onSubmit={onSubmit} noValidate className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-      <input type="hidden" name="kind" value="evento" />
-      <input type="hidden" name="date" value={date ?? ""} />
-      <Honeypot />
-
-      <div className="sm:col-span-2">
-        {/* Le feste si possono organizzare anche nei giorni di chiusura, su richiesta. */}
-        <Calendar today={today} value={date} onChange={onDate} isClosed={() => false} />
-        <p className="mt-4 min-h-6 text-center text-sm text-ink/75" aria-live="polite">{date && cap(formatDate(date))}</p>
-        <ErrorText errors={errors.date} center />
-      </div>
-
-      <SelectField label="Tipo di evento" id="evento-type" name="eventType" value={eventType} onChange={setEventType} error={errors.eventType}>
-        <option value="" disabled>Seleziona</option>
-        {Object.entries(EVENT_TYPES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-      </SelectField>
-      <TextField label="Numero di ospiti" id="evento-guests" name="guests" type="number" inputMode="numeric" min={10} max={200} defaultValue={30} error={errors.guests} />
-      <ContactFields prefix="evento" errors={errors} notesPlaceholder="Es. festa dei 30 anni, torta, musica, menu churrasco…" company />
-      <FormFooter state={state} errors={errors} pending={pending} label="Invia la richiesta" />
-    </form>
-  )
-}
-
 /* ───────────────────────── Calendario ───────────────────────── */
 
 const WEEKDAYS = ["L", "M", "M", "G", "V", "S", "D"]
@@ -331,38 +246,6 @@ function Calendar({ today, value, onChange, isClosed }: { today: string | null; 
           )
         })}
       </div>
-    </div>
-  )
-}
-
-/* ───────────────────────── Le nostre serate ───────────────────────── */
-
-function Experiences({ onPick }: { onPick: (e: Experience) => void }) {
-  return (
-    <div className="mx-auto mt-28 max-w-[1400px] px-5 sm:px-10">
-      <h3 className="text-center text-sm font-medium tracking-[0.3em] text-ink/70 uppercase">Le nostre serate</h3>
-      <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-        {experiences.map((e) => (
-          <li key={e.key} className="flex flex-col">
-            <button type="button" onClick={() => onPick(e)} className="group relative aspect-[4/5] overflow-hidden text-left" aria-label={`${e.title}: ${e.weekday === undefined ? "richiedi informazioni" : "prenota"}`}>
-              <Image src={e.image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover object-top transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]" />
-              {e.soon && (
-                <span className="absolute top-4 left-4 rounded-full bg-cream px-3 py-1 text-xs font-medium tracking-wide">Novità in arrivo</span>
-              )}
-            </button>
-            <p className="mt-6 text-xs font-medium tracking-[0.25em] text-ink/60 uppercase">{e.label}</p>
-            <h4 className="mt-2 font-display text-3xl">{e.title}</h4>
-            <p className="mt-3 flex-1 leading-relaxed text-ink/75">{e.text}</p>
-            <button
-              type="button"
-              onClick={() => onPick(e)}
-              className="mt-6 self-start rounded-full border border-ink px-7 py-3 text-sm transition-colors hover:bg-ink hover:text-cream"
-            >
-              {e.weekday === undefined ? "Organizza la tua festa" : `Prenota ${e.weekday === 0 ? "la" : "il"} ${e.label.toLowerCase()}`}
-            </button>
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }
@@ -468,13 +351,6 @@ function Success({ state, onReset }: { state: Extract<BookingState, { status: "s
 function ErrorText({ errors, center }: { errors?: string[]; center?: boolean }) {
   if (!errors?.length) return null
   return <p className={cn("text-sm text-[#a5481f]", center && "text-center")} role="alert">{errors[0]}</p>
-}
-
-/** Prima data (oggi compreso) che cade nel giorno della settimana indicato. */
-function nextWeekday(fromIso: string, wd: number) {
-  const d = new Date(`${fromIso}T12:00:00Z`)
-  d.setUTCDate(d.getUTCDate() + ((wd - d.getUTCDay() + 7) % 7))
-  return d.toISOString().slice(0, 10)
 }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
