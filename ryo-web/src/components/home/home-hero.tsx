@@ -2,47 +2,69 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import { motion, useReducedMotion } from "framer-motion"
 import { Pause, Play } from "lucide-react"
 
 import { ToucanFlight } from "@/components/home/toucan"
 
-/** Foto del locale che si alternano a tutto schermo (al posto del video). */
-const slides = [
-  { src: "/images/giovedi/microfono-sala.jpg", alt: "La sala di RYO sotto le felci e le lampade in rattan durante una serata" },
-  { src: "/images/locale/bancone.jpg", alt: "Il bancone di RYO illuminato tra felci sospese" },
-  { src: "/images/giovedi/bottle-service.jpg", alt: "Bottle service sotto il soffitto di felci" },
-  { src: "/images/locale/sala-giungla.jpg", alt: "La sala con carta da parati tropicale e tavoli in legno" },
-  { src: "/images/galleria/tavola-condivisa.jpg", alt: "Una tavola di piatti da condividere e cocktail" },
-]
-const INTERVAL = 6500
+/**
+ * Video di apertura (montaggio in loop di ~25 s, scripts/edit-hero-video.py):
+ * orizzontale a tre pannelli per gli schermi larghi, verticale per il telefono.
+ * Si vede subito il fotogramma fisso; il video si scarica solo se il movimento è
+ * consentito e la connessione non è in risparmio dati.
+ */
+const VIDEO = {
+  desktop: { src: "/video/hero-desktop", poster: "/images/hero/poster-desktop.jpg" },
+  mobile: { src: "/video/hero-mobile", poster: "/images/hero/poster-mobile.jpg" },
+}
 
 export function HomeHero() {
   const reduce = useReducedMotion()
-  const [index, setIndex] = useState(0)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
   const [paused, setPaused] = useState(false)
 
+  // Sceglie il file in base allo schermo e lo collega al <video> solo nel browser.
   useEffect(() => {
-    if (paused || reduce) return
-    const t = setTimeout(() => setIndex((i) => (i + 1) % slides.length), INTERVAL)
-    return () => clearTimeout(t)
-  }, [index, paused, reduce])
+    const v = videoRef.current
+    if (!v || reduce) return
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
+    if (saveData) return
+    const wide = window.matchMedia("(min-aspect-ratio: 1/1) and (min-width: 900px)").matches
+    // WebM VP9 (più leggero) dove supportato, MP4 H.264 per Safari e iPhone.
+    const ext = v.canPlayType('video/webm; codecs="vp9"') ? "webm" : "mp4"
+    v.src = `${wide ? VIDEO.desktop.src : VIDEO.mobile.src}.${ext}`
+    v.play().catch(() => {})
+  }, [reduce])
+
+  function togglePause() {
+    const v = videoRef.current
+    if (!v) return
+    if (v.paused) {
+      v.play().catch(() => {})
+      setPaused(false)
+    } else {
+      v.pause()
+      setPaused(true)
+    }
+  }
 
   return (
-    <section aria-roledescription="carosello" aria-label="Il locale" className="relative isolate h-[100svh] min-h-[620px] overflow-hidden bg-black">
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={slides[index].src}
-          className="absolute inset-0 -z-20"
-          initial={{ opacity: 0, scale: 1.12 }}
-          animate={{ opacity: 1, scale: reduce ? 1 : 1.02 }}
-          exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 1.8, ease: "easeInOut" }, scale: { duration: INTERVAL / 1000 + 1.8, ease: "linear" } }}
-        >
-          <Image src={slides[index].src} alt={slides[index].alt} fill priority={index === 0} sizes="100vw" quality={85} className="object-cover" />
-        </motion.div>
-      </AnimatePresence>
+    <section aria-label="Benvenuti da RYO" className="relative isolate h-[100svh] min-h-[620px] overflow-hidden bg-black">
+      {/* Fotogramma fisso: visibile subito, resta se il video non parte */}
+      <Image src={VIDEO.desktop.poster} alt="" fill priority sizes="100vw" className="-z-30 object-cover portrait:hidden" />
+      <Image src={VIDEO.mobile.poster} alt="" fill priority sizes="100vw" className="-z-30 object-cover landscape:hidden" />
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden
+        onPlaying={() => setPlaying(true)}
+        className={`absolute inset-0 -z-20 size-full object-cover transition-opacity duration-[1200ms] ${playing ? "opacity-100" : "opacity-0"}`}
+      />
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(90%_70%_at_50%_50%,rgb(0_0_0/0.15),rgb(0_0_0/0.55))]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-black/50 to-transparent" />
 
@@ -73,29 +95,15 @@ export function HomeHero() {
         </Link>
       </motion.div>
 
-      <div className="absolute right-5 bottom-12 hidden items-center gap-3 sm:right-10 sm:flex">
-        <div className="flex gap-1.5" role="tablist" aria-label="Scegli foto">
-          {slides.map((s, i) => (
-            <button
-              key={s.src}
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Foto ${i + 1}`}
-              onClick={() => setIndex(i)}
-              className="grid h-6 w-7 place-items-center"
-            >
-              <span className={`block h-px w-full transition-colors ${i === index ? "bg-white" : "bg-white/35"}`} />
-            </button>
-          ))}
-        </div>
+      {playing && (
         <button
-          onClick={() => setPaused((p) => !p)}
-          aria-label={paused ? "Riprendi le foto" : "Metti in pausa le foto"}
-          className="grid size-9 place-items-center rounded-full text-white/80 transition hover:text-white"
+          onClick={togglePause}
+          aria-label={paused ? "Riproduci il video" : "Metti in pausa il video"}
+          className="absolute right-5 bottom-12 hidden size-10 place-items-center rounded-full text-white/80 transition hover:text-white sm:right-10 sm:grid"
         >
           {paused ? <Play className="size-4" /> : <Pause className="size-4" />}
         </button>
-      </div>
+      )}
     </section>
   )
 }
