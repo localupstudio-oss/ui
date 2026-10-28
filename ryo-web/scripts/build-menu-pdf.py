@@ -333,4 +333,6 @@ OUT.mkdir(parents=True, exist_ok=True)
 # build_food() resta solo come riferimento e non sovrascrive più i PDF.
 if "--cucina" in sys.argv:
     build_food()
-build_drink()
+# La drink list ora è scripts/build-drink-list.py: build_drink() solo su richiesta.
+if "--drink-vecchia" in sys.argv:
+    build_drink()

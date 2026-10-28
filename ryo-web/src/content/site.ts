@@ -59,7 +59,7 @@ export const menus: { label: string; sub: string; href?: string }[] = [
   { label: "Churrasco", sub: "Degustazione alla brace · 38 €", href: "/menu/ryo-menu-churrasco.pdf" },
   { label: "Combo", sub: "In arrivo" },
   { label: "Dessert", sub: "Tiramiryo, Bananito, babbà e il dolce della settimana", href: "/menu/ryo-menu-dessert.pdf" },
-  { label: "Cocktail", sub: "Signature e Tiempo Negroni", href: "/menu/ryo-drink-list.pdf" }, // ✎ drink list vecchia, da sostituire
+  { label: "Cocktail", sub: "Cocktails d'autore e analcolici", href: "/menu/ryo-drink-list.pdf" },
   { label: "Wine", sub: "In arrivo" },
 ]
 
