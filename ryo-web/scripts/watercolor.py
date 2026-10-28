@@ -126,3 +126,29 @@ class Sheet:
 
     def save(self, path, quality=86):
         Image.fromarray(np.clip(self.rgb, 0, 255).astype(np.uint8)).save(path, quality=quality, optimize=True)
+
+    def place(self, path, x_pt, y_pt, w_pt, flip=False, fade=0.0):
+        """Incolla un acquerello su fondo bianco in modalità «moltiplica»: il bianco sparisce
+        e la pittura si fonde con il fiume e l'acqua già stesi. fade = sfuma i bordi (in punti)."""
+        im = Image.open(path).convert("RGB")
+        if flip:
+            im = im.transpose(Image.FLIP_LEFT_RIGHT)
+        w = int(w_pt * PT)
+        h = int(w * im.height / im.width)
+        im = im.resize((w, h), Image.LANCZOS)
+        a = np.asarray(im, np.float32) / 255
+        # fondo della pittura → bianco puro (la carta), così non resta il rettangolo
+        paper = np.percentile(a.reshape(-1, 3), 97, axis=0)
+        a = np.clip(a / np.maximum(paper, 0.5) * 1.015, 0, 1)
+        if fade:
+            f = int(fade * PT)
+            ramp = np.ones((h, w), np.float32)
+            for axis, n in ((0, h), (1, w)):
+                r = np.clip(np.minimum(np.arange(n), np.arange(n)[::-1]) / f, 0, 1)
+                ramp *= r[:, None] if axis == 0 else r[None, :]
+            a = 1 - (1 - a) * ramp[..., None]
+        x0, y0 = int(x_pt * PT), int(y_pt * PT)
+        xa, ya = max(0, x0), max(0, y0)
+        xb, yb = min(self.w, x0 + w), min(self.h, y0 + h)
+        self.rgb[ya:yb, xa:xb] *= a[ya - y0: yb - y0, xa - x0: xb - x0]
+        return h / PT

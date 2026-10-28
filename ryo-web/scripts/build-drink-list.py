@@ -27,6 +27,7 @@ from watercolor import Sheet  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ART = ROOT / "scripts" / "drink-art"
+PAINT = ART / "acquerello"  # scene ad acquerello (sostituire con gli originali ad alta risoluzione, stessi nomi)
 FONTS = ROOT / "scripts" / "fonts"
 OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "public" / "menu" / "ryo-drink-list.pdf"
 
@@ -145,56 +146,51 @@ def entry(c, item, cx, y, width=215):
 SLOTS = [(395, 150), (205, 262), (395, 478), (205, 590)]  # (centro x, y) — fascia libera 330–445 per il fiume
 
 
-def cocktail_page(c, items, mirror, animal, seed):
+def scene_height(name, w):
+    from PIL import Image as _I
+    im = _I.open(PAINT / f"{name}.jpg")
+    return w * im.height / im.width
+
+
+def cocktail_page(c, items, mirror, scene, seed):
     slots = [((W - x) if mirror else x, y) for x, y in SLOTS][: len(items)]
+    name, sw = scene
+    sh = scene_height(name, sw)
 
     def paint(s):
-        # nastro principale nella fascia tra le voci, piccolo ricciolo nell'angolo libero in alto
         rng = random.Random(seed)
+        # il fiume: parte dal lato della scena, attraversa la pagina tra le voci e torna giù verso l'acqua
         xs = [-20 + i * 106 + rng.uniform(-14, 14) for i in range(7)]
         sign = rng.choice([-1, 1])
         ys = [392 + sign * (-1) ** i * rng.uniform(26, 42) for i in range(7)]
+        if mirror:
+            xs = [W - x for x in xs]
         s.ribbon(list(zip(xs, ys)), 30, seed=seed, twist=150 + seed * 7)
         cx = 40 if mirror else W - 40
         sg = 1 if mirror else -1
         s.ribbon([(cx - sg * 50, -10), (cx + sg * 5, 30), (cx - sg * 20, 70), (cx + sg * 30, 100), (cx + sg * 70, 104)], 18, seed=seed + 20, twist=80)
-        s.wash(752, 100, seed=seed + 3)
-        bx = 140 if mirror else W - 140
-        s.dab(bx, 772, 120, 12, (120, 150, 110), seed=seed + 4, alpha=0.28)
+        s.wash(H - 58, 70, seed=seed + 3)
+        x = -10 if mirror else W - sw + 10
+        s.place(PAINT / f"{name}.jpg", x, H - sh - 6, sw, flip=not mirror, fade=26)
 
     background(c, paint)
-    # fronde dall'angolo in alto, dal lato opposto al ricciolo del fiume
-    if mirror:
-        image(c, "foglie-dx", W - 18, 18, 150, anchor="r")
-    else:
-        image(c, "foglie-sx", 18, 18, 165)
     for item, (x, y) in zip(items, slots):
         entry(c, item, x, y)
-    # animale in basso, dal lato libero, appoggiato sull'acqua
-    name, w = animal
-    img = ImageReader(str(ART / f"{name}.png"))
-    iw, ih = img.getSize()
-    h = w * ih / iw
-    if mirror:
-        image(c, name, 26, H - 26 - h, w)
-    else:
-        image(c, name, W - 26, H - 26 - h, w, anchor="r")
 
 
 def cover(c):
     def paint(s):
         s.ribbon([(330, -10), (430, 40), (390, 120), (470, 170), (440, 250), (540, 300), (620, 290)], 34, seed=41, twist=130)
-        s.wash(730, 120, seed=43)
-        s.dab(470, 750, 110, 13, (150, 120, 80), seed=44, alpha=0.3)
+        s.wash(H - 70, 80, seed=43)
+        s.place(PAINT / "ara.jpg", -20, 560, 300, fade=26)
 
     background(c, paint)
-    image(c, "foglie-sx", 18, 18, 150)
     cx = W / 2
-    image(c, "logo", cx, 330, 280, anchor="c")
-    spaced(c, "COCKTAILS", cx, H - 452, "SansLight", 9, 6, OLIVE)
+    image(c, "logo", cx, 250, 280, anchor="c")
+    spaced(c, "COCKTAILS", cx, H - 372, "SansLight", 9, 6, OLIVE)
     c.setFont("SerifIt", 30)
     c.setFillColor(RED)
-    c.drawCentredString(cx, H - 486, "menù")
+    c.drawCentredString(cx, H - 406, "menù")
     lines = [
         "“Come le acque del fiume scorrono libere e travolgenti,",
         "così l'arte della mixology dà vita a cocktail",
@@ -202,20 +198,19 @@ def cover(c):
         "Un viaggio tra profumi, colori e sapori tropicali,",
         "dove ogni sorso racconta una storia.”",
     ]
-    y = 528
+    y = 448
     c.setFont("SerifIt", 11)
     c.setFillColor(OLIVE)
     for i, line in enumerate(lines):
         c.drawCentredString(cx, H - y, line)
         y += 16 + (8 if i == 2 else 0)
-    image(c, "parrot", 30, H - 26 - 150 * 499 / 418, 150)
 
 
 def analcolici(c):
     def paint(s):
         s.ribbon([(-20, 120), (80, 92), (180, 135), (290, 95), (400, 132), (500, 100), (615, 125)], 22, seed=61, twist=110)
-        s.ribbon([(-20, 640), (90, 600), (200, 670), (320, 610), (410, 660)], 30, seed=62, twist=140)
-        s.wash(752, 100, seed=63)
+        s.wash(H - 58, 70, seed=63)
+        s.place(PAINT / "tucano.jpg", W - 300, H - scene_height("tucano", 310) - 6, 310, fade=26)
 
     background(c, paint)
     x0, x1 = 92, W - 92
@@ -242,7 +237,6 @@ def analcolici(c):
     c.setFont("SansLight", 7)
     c.setFillColor(INK)
     c.drawString(x0, H - (y - 18), "Prezzi in euro.")
-    image(c, "fenicottero", W - 26, H - 26 - 240 * 385 / 487, 240, anchor="r")
 
 
 def main():
@@ -251,9 +245,9 @@ def main():
     c.setAuthor("RYO Churrascaria | Tapas | Cocktail")
     cover(c)
     c.showPage()
-    animals = [("scimmia", 190), ("tucano", 215), ("iguana", 165), ("giaguaro", 215), ("foglie-dx", 200)]
+    scenes = [("tucano", 300), ("scimmia", 300), ("giaguaro", 300), ("iguana", 300), ("ara", 250)]
     for n, start in enumerate(range(0, len(COCKTAILS), 4)):
-        cocktail_page(c, COCKTAILS[start:start + 4], n % 2 == 1, animals[n % len(animals)], seed=11 + n * 5)
+        cocktail_page(c, COCKTAILS[start:start + 4], n % 2 == 1, scenes[n], seed=11 + n * 5)
         c.showPage()
     analcolici(c)
     c.showPage()
