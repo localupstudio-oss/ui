@@ -210,7 +210,7 @@ def analcolici(c):
     def paint(s):
         s.ribbon([(-20, 120), (80, 92), (180, 135), (290, 95), (400, 132), (500, 100), (615, 125)], 22, seed=61, twist=110)
         s.wash(H - 58, 70, seed=63)
-        s.place(PAINT / "tucano.jpg", W - 300, H - scene_height("tucano", 310) - 6, 310, fade=26)
+        s.place(PAINT / "fenicottero.jpg", W - 300, H - scene_height("fenicottero", 310) - 6, 310, fade=26)
 
     background(c, paint)
     x0, x1 = 92, W - 92
@@ -245,7 +245,7 @@ def main():
     c.setAuthor("RYO Churrascaria | Tapas | Cocktail")
     cover(c)
     c.showPage()
-    scenes = [("tucano", 300), ("scimmia", 300), ("giaguaro", 300), ("iguana", 300), ("ara", 250)]
+    scenes = [("tucano", 300), ("scimmia", 300), ("giaguaro", 300), ("iguana", 300), ("colibri", 300)]
     for n, start in enumerate(range(0, len(COCKTAILS), 4)):
         cocktail_page(c, COCKTAILS[start:start + 4], n % 2 == 1, scenes[n], seed=11 + n * 5)
         c.showPage()
