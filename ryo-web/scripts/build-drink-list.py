@@ -1,14 +1,18 @@
 """
-Drink list di RYO in PDF (A4), impaginata in stile "carta da grande ristorante": carta crema,
-cornice sottile oro, nomi in maiuscoletto spaziato, ingredienti in corsivo, illustrazioni del
-locale come vignette e il fiume turchese che scorre lungo il bordo.
+Drink list di RYO in PDF (A4), nello stile delle carte "ad acquerello" dei grandi
+ristoranti: carta bianca, il fiume come nastro d'acquerello che attraversa le pagine,
+una striscia d'acqua in fondo e un animale del locale per pagina. Voci sfalsate a
+destra e a sinistra, nome e prezzo in serif, ingredienti in bastoni.
 
-Testi identici alla bozza del locale (Drinklist_RYO_bozza_2.pdf); logo e illustrazioni sono
-ritagliati dalla bozza (scripts/drink-art/).
+Testi dalla bozza del locale (Drinklist_RYO_bozza_2.pdf); logo e illustrazioni
+ritagliati dalla bozza (scripts/drink-art/); acquerelli generati da scripts/watercolor.py.
 
-  python3 scripts/build-drink-list.py   →  public/menu/ryo-drink-list.pdf
+  python3 scripts/build-drink-list.py [uscita.pdf]   (predefinito: public/menu/ryo-drink-list.pdf)
 """
-import math
+import random
+import re
+import sys
+import tempfile
 from pathlib import Path
 
 from reportlab.lib.colors import HexColor
@@ -18,27 +22,25 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from watercolor import Sheet  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 ART = ROOT / "scripts" / "drink-art"
 FONTS = ROOT / "scripts" / "fonts"
-import sys
 OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "public" / "menu" / "ryo-drink-list.pdf"
 
-for name, file in [("Serif", "PlayfairDisplay-Regular"), ("SerifMed", "PlayfairDisplay-Medium"), ("SerifIt", "PlayfairDisplay-Italic"),
-                   ("Sans", "Montserrat-Regular"), ("SansLight", "Montserrat-Light"), ("SansMed", "Montserrat-Medium"), ("SansSemi", "Montserrat-SemiBold")]:
+for name, file in [("SerifBold", "PlayfairDisplay-SemiBold"), ("Serif", "PlayfairDisplay-Regular"), ("SerifIt", "PlayfairDisplay-Italic"),
+                   ("Sans", "Montserrat-Regular"), ("SansLight", "Montserrat-Light"), ("SansSemi", "Montserrat-SemiBold")]:
     pdfmetrics.registerFont(TTFont(name, str(FONTS / f"{file}.ttf")))
 
-# Colori del locale (dalla bozza): crema, viola del logo, rosso, turchese del fiume, oro
-PAPER = HexColor("#f4ecd3")
-PURPLE = HexColor("#4a2d6b")
-RED = HexColor("#cf2f3a")
-GOLD = HexColor("#b8955a")
-TEAL = HexColor("#5dbb9f")
-TEAL_LIGHT = HexColor("#93d7c0")
-PEACH = HexColor("#f1d3b3")
+PURPLE = HexColor("#3d2a5a")  # viola del logo
+RED = HexColor("#c8323c")
+INK = HexColor("#3a3a3a")
+TEAL = HexColor("#2f7f84")
+OLIVE = HexColor("#8a7a52")
 
 W, H = A4
-M = 22  # margine della cornice
 
 COCKTAILS = [
     ("Hakka", "Vodka, Sake, Lychee, Cocco, Lime, Perrier.", "€ 12,00", "Tumbler basso"),
@@ -68,189 +70,179 @@ ANALCOLICI = [
 ]
 
 
+def short_price(p):
+    """«€ 12,00» → «12», «€ 9,50» → «9,5»: il prezzo accanto al nome, come nelle carte d'autore."""
+    n = re.sub(r"[^\d,]", "", p)
+    return n.replace(",00", "").rstrip("0") if "," in n and not n.endswith(",00") else n.replace(",00", "")
+
+
 def spaced(c, text, x, y, font, size, tracking, color, anchor="center"):
-    """Testo con spaziatura tra le lettere (maiuscoletto da carta dei vini)."""
-    c.setFont(font, size)
-    c.setFillColor(color)
     w = pdfmetrics.stringWidth(text, font, size) + tracking * (len(text) - 1)
-    x0 = x - w / 2 if anchor == "center" else x
+    x0 = {"center": x - w / 2, "left": x, "right": x - w}[anchor]
     t = c.beginText(x0, y)
     t.setFont(font, size)
+    t.setFillColor(color)
     t.setCharSpace(tracking)
     t.textOut(text)
-    t.setCharSpace(0)  # la spaziatura non deve passare ai testi successivi
+    t.setCharSpace(0)
     c.drawText(t)
     return w
 
 
-def image(c, name, x, y, w=None, h=None, anchor="bl"):
+def image(c, name, x, y_top, w, anchor="l", flip=False):
+    """Immagine con il bordo superiore a y_top (coordinate dall'alto)."""
     img = ImageReader(str(ART / f"{name}.png"))
     iw, ih = img.getSize()
-    if w and not h:
-        h = w * ih / iw
-    if h and not w:
-        w = h * iw / ih
-    if "r" in anchor:
+    h = w * ih / iw
+    if anchor == "r":
         x -= w
-    if "t" in anchor:
-        y -= h
-    if "c" in anchor:
+    elif anchor == "c":
         x -= w / 2
-    c.drawImage(img, x, y, w, h, mask="auto")
-    return w, h
+    c.saveState()
+    if flip:
+        c.translate(2 * x + w, 0)
+        c.scale(-1, 1)
+    c.drawImage(img, x, H - y_top - h, w, h, mask="auto")
+    c.restoreState()
+    return h
 
 
-def river(c, side):
-    """Il fiume turchese della bozza come nastro sinuoso lungo un bordo della pagina."""
-    def edge(offset, amp, phase):
-        pts = []
-        for i in range(0, 61):
-            y = H - i * H / 60
-            x = offset + amp * math.sin(i / 60 * math.pi * 2.6 + phase)
-            pts.append((x if side == "left" else W - x, y))
-        return pts
-    for (o1, o2, col) in [(0, 40, PEACH), (0, 33, TEAL), (0, 20, TEAL_LIGHT)]:
-        a = edge(o2, 7, 0.4)
-        p = c.beginPath()
-        p.moveTo(W if side == "right" else 0, H)
-        for x, y in a:
-            p.lineTo(x, y)
-        p.lineTo(W if side == "right" else 0, 0)
-        p.close()
-        c.setFillColor(col)
-        c.drawPath(p, stroke=0, fill=1)
-    # filo d'oro sul bordo del fiume
-    a = edge(36, 7, 0.4)
-    c.setStrokeColor(GOLD)
-    c.setLineWidth(0.6)
-    p = c.beginPath()
-    p.moveTo(*a[0])
-    for x, y in a[1:]:
-        p.lineTo(x, y)
-    c.drawPath(p, stroke=1, fill=0)
+def background(c, paint):
+    """Dipinge gli acquerelli della pagina e li mette come sfondo."""
+    s = Sheet(W, H)
+    paint(s)
+    with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
+        s.save(f.name)
+        c.drawImage(f.name, 0, 0, W, H)
 
 
-def frame(c, side):
-    c.setFillColor(PAPER)
-    c.rect(0, 0, W, H, stroke=0, fill=1)
-    river(c, side)
-    c.setStrokeColor(GOLD)
-    c.setLineWidth(0.5)
-    c.rect(M, M, W - 2 * M, H - 2 * M, stroke=1, fill=0)
-
-
-def ornament(c, x, y, w=60):
-    """Filetto oro con rombo centrale."""
-    c.setStrokeColor(GOLD)
-    c.setLineWidth(0.6)
-    c.line(x - w, y, x - 6, y)
-    c.line(x + 6, y, x + w, y)
-    c.setFillColor(GOLD)
-    p = c.beginPath()
-    p.moveTo(x, y + 3.2); p.lineTo(x + 3.2, y); p.lineTo(x, y - 3.2); p.lineTo(x - 3.2, y); p.close()
-    c.drawPath(p, stroke=0, fill=1)
-
-
-def header(c, title, cx):
-    spaced(c, title.upper(), cx, H - 92, "SerifMed", 20, 6, PURPLE)
-    ornament(c, cx, H - 110, 70)
-
-
-def entry(c, item, cx, y, width=320):
+def entry(c, item, cx, y, width=215):
+    """Voce centrata: «Nome  prezzo», ingredienti, bicchiere. y = linea di base del nome (dall'alto)."""
     name, ingredients, price, glass = item
-    spaced(c, name.upper(), cx, y, "SerifMed", 15, 2.8, RED)
-    y -= 19
-    if ingredients:
-        c.setFillColor(PURPLE)
-        for line in simpleSplit(ingredients, "SerifIt", 11.5, width):
-            c.setFont("SerifIt", 11.5)
-            c.drawCentredString(cx, y, line)
-            y -= 15
-    y -= 2
-    # prezzo e bicchiere sulla stessa riga, separati da un puntino oro
-    pw = pdfmetrics.stringWidth(price, "SansMed", 11)
-    gl = glass.upper() if glass else ""
-    gw = (pdfmetrics.stringWidth(gl, "Sans", 6.6) + 1.6 * (len(gl) - 1)) if gl else 0
-    gap = 16 if gl else 0
-    x0 = cx - (pw + gap + gw) / 2
+    p = short_price(price)
+    nw = pdfmetrics.stringWidth(name, "SerifBold", 17)
+    pw = pdfmetrics.stringWidth(p, "SerifBold", 14)
+    x0 = cx - (nw + 8 + pw) / 2
+    c.setFont("SerifBold", 17)
     c.setFillColor(PURPLE)
-    c.setFont("SansMed", 11)
-    c.drawString(x0, y, price)
-    if gl:
-        c.setFillColor(GOLD)
-        c.circle(x0 + pw + gap / 2, y + 3.4, 1.2, stroke=0, fill=1)
-        spaced(c, gl, x0 + pw + gap, y + 0.6, "Sans", 6.6, 1.6, GOLD, anchor="left")
+    c.drawString(x0, H - y, name)
+    c.setFont("SerifBold", 14)
+    c.setFillColor(RED)
+    c.drawString(x0 + nw + 8, H - y, p)
+    y += 19
+    if ingredients:
+        c.setFont("Sans", 10.4)
+        c.setFillColor(INK)
+        for line in simpleSplit(ingredients, "Sans", 10.4, width):
+            c.drawCentredString(cx, H - y, line)
+            y += 14
+    if glass:
+        y += 2
+        spaced(c, glass.upper(), cx, H - y, "SansLight", 6.8, 1.9, TEAL)
     return y
 
 
-def entry_height(item, width=320):
-    _, ingredients, _, _ = item
-    lines = len(simpleSplit(ingredients, "SerifIt", 11.5, width)) if ingredients else 0
-    return 19 + lines * 15 + 2
+SLOTS = [(395, 150), (205, 262), (395, 478), (205, 590)]  # (centro x, y) — fascia libera 330–445 per il fiume
 
 
-def list_page(c, title, items, side, art, art_anchor, page_no, top=None):
-    frame(c, side)
-    # area di testo spostata dal lato del fiume
-    cx = W / 2 + (14 if side == "left" else -14)
-    header(c, title, cx)
-    # vignetta
-    if art:
-        name, w = art
-        if art_anchor == "br":
-            image(c, name, W - M - (46 if side == "right" else 0), M, w=w, anchor="br")
-        else:
-            image(c, name, M + (46 if side == "left" else 0), M, w=w, anchor="bl")
-    # voci distribuite in modo uniforme nello spazio disponibile
-    y_top = top or H - 158
-    y_bottom = 214 if art else 90
-    heights = [entry_height(i) for i in items]
-    gap = (y_top - y_bottom - sum(heights)) / max(1, len(items) - 1)
-    gap = min(gap, 58 if len(items) > 3 else 80)
-    y = y_top
-    for item, h in zip(items, heights):
-        entry(c, item, cx, y)
-        y -= h + gap
+def cocktail_page(c, items, mirror, animal, seed):
+    slots = [((W - x) if mirror else x, y) for x, y in SLOTS][: len(items)]
 
+    def paint(s):
+        # nastro principale nella fascia tra le voci, piccolo ricciolo nell'angolo libero in alto
+        rng = random.Random(seed)
+        xs = [-20 + i * 106 + rng.uniform(-14, 14) for i in range(7)]
+        sign = rng.choice([-1, 1])
+        ys = [392 + sign * (-1) ** i * rng.uniform(26, 42) for i in range(7)]
+        s.ribbon(list(zip(xs, ys)), 30, seed=seed, twist=150 + seed * 7)
+        cx = 40 if mirror else W - 40
+        sg = 1 if mirror else -1
+        s.ribbon([(cx - sg * 50, -10), (cx + sg * 5, 30), (cx - sg * 20, 70), (cx + sg * 30, 100), (cx + sg * 70, 104)], 18, seed=seed + 20, twist=80)
+        s.wash(752, 100, seed=seed + 3)
+        bx = 140 if mirror else W - 140
+        s.dab(bx, 772, 120, 12, (120, 150, 110), seed=seed + 4, alpha=0.28)
 
-def footer(c, cx, page_no):
-    spaced(c, "RYO  ·  CHURRASCARIA  |  TAPAS  |  COCKTAIL", cx, M + 12, "Sans", 6, 1.8, GOLD)
+    background(c, paint)
+    # fronde dall'angolo in alto, dal lato opposto al ricciolo del fiume
+    if mirror:
+        image(c, "foglie-dx", W - 18, 18, 150, anchor="r")
+    else:
+        image(c, "foglie-sx", 18, 18, 165)
+    for item, (x, y) in zip(items, slots):
+        entry(c, item, x, y)
+    # animale in basso, dal lato libero, appoggiato sull'acqua
+    name, w = animal
+    img = ImageReader(str(ART / f"{name}.png"))
+    iw, ih = img.getSize()
+    h = w * ih / iw
+    if mirror:
+        image(c, name, 26, H - 26 - h, w)
+    else:
+        image(c, name, W - 26, H - 26 - h, w, anchor="r")
 
 
 def cover(c):
-    frame(c, "right")
-    image(c, "foglie-sx", M, H - M, w=150, anchor="tl")
-    cx = W / 2 - 20
-    image(c, "logo", cx, H - 268, w=290, anchor="bc")
-    spaced(c, "COCKTAILS", cx, H - 312, "SerifMed", 15, 9, GOLD)
-    spaced(c, "MENÙ", cx, H - 352, "SerifMed", 34, 12, RED)
-    ornament(c, cx, H - 376, 80)
-    # testo introduttivo della bozza, con le parole evidenziate
+    def paint(s):
+        s.ribbon([(330, -10), (430, 40), (390, 120), (470, 170), (440, 250), (540, 300), (620, 290)], 34, seed=41, twist=130)
+        s.wash(730, 120, seed=43)
+        s.dab(470, 750, 110, 13, (150, 120, 80), seed=44, alpha=0.3)
+
+    background(c, paint)
+    image(c, "foglie-sx", 18, 18, 150)
+    cx = W / 2
+    image(c, "logo", cx, 330, 280, anchor="c")
+    spaced(c, "COCKTAILS", cx, H - 452, "SansLight", 9, 6, OLIVE)
+    c.setFont("SerifIt", 30)
+    c.setFillColor(RED)
+    c.drawCentredString(cx, H - 486, "menù")
     lines = [
-        [("Come le acque del fiume scorrono libere e travolgenti,", "SerifIt")],
-        [("così l'arte della ", "SerifIt"), ("MIXOLOGY", "SansSemi")],
-        [("dà vita a cocktail che racchiudono l'anima del Rio.", "SerifIt")],
-        None,
-        [("Un viaggio tra profumi, colori e sapori tropicali,", "SerifIt")],
-        [("dove ogni sorso ", "SerifIt"), ("RACCONTA UNA STORIA.", "SansSemi")],
+        "“Come le acque del fiume scorrono libere e travolgenti,",
+        "così l'arte della mixology dà vita a cocktail",
+        "che racchiudono l'anima del Rio.",
+        "Un viaggio tra profumi, colori e sapori tropicali,",
+        "dove ogni sorso racconta una storia.”",
     ]
-    y = H - 414
-    for line in lines:
-        if line is None:
-            y -= 10
-            continue
-        sizes = {"SerifIt": 12, "SansSemi": 9.6}
-        tw = sum(pdfmetrics.stringWidth(t, f, sizes[f]) + (1.2 * len(t) if f == "SansSemi" else 0) for t, f in line)
-        x = cx - tw / 2
-        for t, f in line:
-            if f == "SansSemi":
-                x += spaced(c, t, x, y + 0.5, f, sizes[f], 1.2, RED, anchor="left") + 1.2
-            else:
-                c.setFont(f, sizes[f]); c.setFillColor(PURPLE); c.drawString(x, y, t)
-                x += pdfmetrics.stringWidth(t, f, sizes[f])
-        y -= 19
-    image(c, "parrot", M + 6, M, w=230, anchor="bl")
-    image(c, "foglie-dx", W - M - 46, H - M, w=130, anchor="tr")
+    y = 528
+    c.setFont("SerifIt", 11)
+    c.setFillColor(OLIVE)
+    for i, line in enumerate(lines):
+        c.drawCentredString(cx, H - y, line)
+        y += 16 + (8 if i == 2 else 0)
+    image(c, "parrot", 30, H - 26 - 150 * 499 / 418, 150)
+
+
+def analcolici(c):
+    def paint(s):
+        s.ribbon([(-20, 120), (80, 92), (180, 135), (290, 95), (400, 132), (500, 100), (615, 125)], 22, seed=61, twist=110)
+        s.ribbon([(-20, 640), (90, 600), (200, 670), (320, 610), (410, 660)], 30, seed=62, twist=140)
+        s.wash(752, 100, seed=63)
+
+    background(c, paint)
+    x0, x1 = 92, W - 92
+    c.setFont("SerifBold", 24)
+    c.setFillColor(PURPLE)
+    c.drawString(x0, H - 220, "Analcolici")
+    y = 276
+    for name, ingredients, price, glass in ANALCOLICI:
+        c.setFont("SerifBold", 15)
+        c.setFillColor(PURPLE)
+        c.drawString(x0, H - y, name)
+        c.setFont("SerifBold", 13)
+        c.setFillColor(RED)
+        c.drawRightString(x1, H - y, short_price(price))
+        yy = y + 15
+        c.setFont("Sans", 9.6)
+        c.setFillColor(INK)
+        for line in simpleSplit(ingredients, "Sans", 9.6, 330):
+            c.drawString(x0, H - yy, line)
+            yy += 13
+        if glass:
+            spaced(c, glass.upper(), x0, H - yy - 1, "SansLight", 6.4, 1.8, TEAL, anchor="left")
+        y = yy + 44
+    c.setFont("SansLight", 7)
+    c.setFillColor(INK)
+    c.drawString(x0, H - (y - 18), "Prezzi in euro.")
+    image(c, "fenicottero", W - 26, H - 26 - 240 * 385 / 487, 240, anchor="r")
 
 
 def main():
@@ -259,13 +251,11 @@ def main():
     c.setAuthor("RYO Churrascaria | Tapas | Cocktail")
     cover(c)
     c.showPage()
-    pages = [(COCKTAILS[0:7], "left", ("scimmia", 170), "br"),
-             (COCKTAILS[7:13], "right", ("tucano", 190), "bl"),
-             (COCKTAILS[13:19], "left", ("giaguaro", 200), "br")]
-    for n, (items, side, art, anchor) in enumerate(pages, start=2):
-        list_page(c, "Cocktails", items, side, art, anchor, n)
+    animals = [("scimmia", 190), ("tucano", 215), ("iguana", 165), ("giaguaro", 215), ("foglie-dx", 200)]
+    for n, start in enumerate(range(0, len(COCKTAILS), 4)):
+        cocktail_page(c, COCKTAILS[start:start + 4], n % 2 == 1, animals[n % len(animals)], seed=11 + n * 5)
         c.showPage()
-    list_page(c, "Analcolici", ANALCOLICI, "right", ("fenicottero", 230), "bl", 5, top=H - 170)
+    analcolici(c)
     c.showPage()
     c.save()
     print("creato", OUT)
