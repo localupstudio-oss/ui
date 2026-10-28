@@ -2,9 +2,8 @@ import type { Metadata } from "next"
 
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
-import { PageHero } from "@/components/home/home-blocks"
-import { ChurrascoFeature } from "@/components/menu/churrasco"
-import { MenuCarta, MenuPdfButtons } from "@/components/menu/menu-page"
+import { MenuCarta } from "@/components/menu/menu-page"
+import { MenuShowcase } from "@/components/menu/menu-showcase"
 
 export const metadata: Metadata = {
   title: "Menu",
@@ -17,10 +16,10 @@ export default function Page() {
     <>
       <Navbar />
       <main id="contenuto" className="pattern-croci">
-        <PageHero title="Il menu" subtitle="Churrascaria, tapas da condividere e cocktail d'autore." image="/images/cucina/paella.jpg" alt="Paella da condividere" position="center 35%" />
-        <MenuPdfButtons />
-        <ChurrascoFeature id="churrasco" />
-        <MenuCarta />
+        <MenuShowcase />
+        <div className="pt-24">
+          <MenuCarta />
+        </div>
       </main>
       <Footer />
     </>

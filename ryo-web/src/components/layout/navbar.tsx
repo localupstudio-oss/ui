@@ -6,20 +6,33 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion"
 
-import { menus, nav, site } from "@/content/site"
+import { nav, site } from "@/content/site"
 import { cn } from "@/lib/utils"
+
+const TOP_KEY = "ryo-nav-top"
 
 /** Header trasparente con logo a sinistra e menu a schermo intero (fondo crema con trama, scritte verdi) a destra. */
 export function Navbar() {
   const [open, setOpen] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  // Sblocca subito lo scroll: se si naviga con la pagina ancora bloccata, il router
+  // non riesce a riportarla in cima e la nuova pagina si apre a metà.
   const close = () => {
+    document.body.style.overflow = ""
     setOpen(false)
-    setMenuOpen(false)
   }
   const [scrolled, setScrolled] = useState(false)
   const { scrollY } = useScroll()
   const pathname = usePathname()
+
+  // Arrivati da un link del menu a tendina: si parte dall'inizio della pagina, subito.
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem(TOP_KEY)) {
+        sessionStorage.removeItem(TOP_KEY)
+        window.scrollTo({ top: 0, behavior: "instant" })
+      }
+    } catch {}
+  }, [pathname])
 
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 40))
 
@@ -99,55 +112,21 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 + i * 0.07, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {item.href === "/menu" ? (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => setMenuOpen((o) => !o)}
-                        aria-expanded={menuOpen}
-                        aria-controls="sottomenu-menu"
-                        className="font-display text-[clamp(2.2rem,6vw,4rem)] transition-opacity hover:opacity-60"
-                      >
-                        {item.label}
-                        <span aria-hidden className={cn("ml-3 inline-block text-[0.5em] align-middle transition-transform duration-300", menuOpen && "rotate-45")}>+</span>
-                      </button>
-                      <AnimatePresence initial={false}>
-                        {menuOpen && (
-                          <motion.ul
-                            id="sottomenu-menu"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                            className="mx-auto flex max-w-3xl flex-wrap justify-center gap-x-8 gap-y-3 overflow-hidden py-4"
-                          >
-                            {menus.map((m) => (
-                              <li key={m.label}>
-                                {m.href ? (
-                                  <a href={m.href} target="_blank" rel="noopener" className="font-display text-2xl italic transition-opacity hover:opacity-60 sm:text-3xl">
-                                    {m.label}
-                                  </a>
-                                ) : (
-                                  <span className="font-display text-2xl text-green/45 italic sm:text-3xl">
-                                    {m.label} <span className="align-middle font-sans text-[0.6rem] tracking-[0.2em] not-italic uppercase">presto</span>
-                                  </span>
-                                )}
-                              </li>
-                            ))}
-                          </motion.ul>
-                        )}
-                      </AnimatePresence>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      onClick={close}
-                      aria-current={pathname === item.href ? "page" : undefined}
-                      className="font-display text-[clamp(2.2rem,6vw,4rem)] transition-opacity hover:opacity-60"
-                    >
-                      {item.label}
-                    </Link>
-                  )}
+                  <Link
+                    href={item.href}
+                    scroll={false}
+                    onClick={() => {
+                      // la nuova pagina deve aprirsi dall'inizio (vedi effetto sotto)
+                      try {
+                        sessionStorage.setItem(TOP_KEY, "1")
+                      } catch {}
+                      close()
+                    }}
+                    aria-current={pathname === item.href ? "page" : undefined}
+                    className="font-display text-[clamp(2.2rem,6vw,4rem)] transition-opacity hover:opacity-60"
+                  >
+                    {item.label}
+                  </Link>
                 </motion.li>
               ))}
             </ul>

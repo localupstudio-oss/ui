@@ -215,7 +215,7 @@
           "bicchiere": "Tumbler basso"
         },
         {
-          "nome": "Bossa nova",
+          "nome": "Bossa Nova",
           "descrizione": "Tequila, Campari, Estratto di mango e peperone",
           "prezzo": "12 €",
           "bicchiere": "Tumbler basso"
@@ -228,24 +228,24 @@
         },
         {
           "nome": "Machu Picchu",
-          "descrizione": "Pisco, Cordiale di limone passion fruit pepe rosa",
+          "descrizione": "Pisco, Cordiale di limone, Passion fruit, Pepe rosa",
           "prezzo": "10 €",
           "bicchiere": "Coppetta piccola"
         },
         {
           "nome": "La Bombonera",
-          "descrizione": "Rum, The verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda",
+          "descrizione": "Rum, Tè verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda",
           "prezzo": "10 €",
           "bicchiere": "Bicchiere tiki"
         },
         {
-          "nome": "Ryo collins",
+          "nome": "RYO Collins",
           "descrizione": "Vodka, Pesca, Lychee, Lime, Fermentato frutti rossi, Tonica",
           "prezzo": "12 €"
         },
         {
-          "nome": "Old fashion della foresta",
-          "descrizione": "Diplomatico Mantuano, Fava di tonka, Honey mix, Angostura",
+          "nome": "Old Fashioned della foresta",
+          "descrizione": "Diplomático Mantuano, Fava di tonka, Honey mix, Angostura",
           "prezzo": "11 €"
         },
         {
@@ -255,7 +255,7 @@
           "bicchiere": "Bicchiere calice"
         },
         {
-          "nome": "Monkey business",
+          "nome": "Monkey Business",
           "descrizione": "Woodford Bourbon, Banana, Limone, Miele, Ginger beer",
           "prezzo": "10 €"
         },
@@ -266,12 +266,12 @@
           "bicchiere": "Coppa grande"
         },
         {
-          "nome": "Save the jungle",
-          "descrizione": "Cachaca, Vermouth aromatizzato al tamarillo, Lime, Agave, Ginger Ale",
+          "nome": "Save the Jungle",
+          "descrizione": "Cachaça, Vermouth aromatizzato al tamarillo, Lime, Agave, Ginger Ale",
           "prezzo": "10 €"
         },
         {
-          "nome": "Copacabana dark",
+          "nome": "Copacabana Dark",
           "descrizione": "Rum, Vaniglia, Cocco, Caffè espresso",
           "prezzo": "11 €",
           "bicchiere": "Bicchiere coppetta"
@@ -284,18 +284,18 @@
         },
         {
           "nome": "Samba",
-          "descrizione": "Gin mare, Cordiale pompelmo rosa e rosmarino, Olio al basilico",
+          "descrizione": "Gin Mare, Cordiale pompelmo rosa e rosmarino, Olio al basilico",
           "prezzo": "11 €"
         },
         {
-          "nome": "Negron chill",
+          "nome": "Negroni Chill",
           "descrizione": "Campari, Cynar, Assenzio, Cedro, Zenzero",
           "prezzo": "10 €",
           "bicchiere": "Tumbler basso"
         },
         {
-          "nome": "Sud america-no",
-          "descrizione": "Martini riserva bitter, Punt e mes, Soda all ananas",
+          "nome": "Sud America-no",
+          "descrizione": "Martini Riserva Bitter, Punt e Mes, Soda all'ananas",
           "prezzo": "9 €",
           "bicchiere": "Tumbler basso"
         },
@@ -307,12 +307,12 @@
         },
         {
           "nome": "Choco Negroni",
-          "descrizione": "Martini Rubino Vermouth, Bitter Fusetti cacao, Bombay, Bitter cioccolato",
+          "descrizione": "Martini Rubino Vermouth, Bitter Fusetti cacao, Bombay, Bitter al cioccolato",
           "prezzo": "10 €",
           "bicchiere": "Tumbler basso"
         },
         {
-          "nome": "Barrel boulevardier",
+          "nome": "Barrel Boulevardier",
           "descrizione": "",
           "prezzo": "12 €",
           "bicchiere": "Tumbler basso"
@@ -324,14 +324,14 @@
       "nome": "Analcolici",
       "piatti": [
         {
-          "nome": "Jardim botanico",
-          "descrizione": "Pompelmo rosa, Basilico Acqua frizzante",
+          "nome": "Jardim Botânico",
+          "descrizione": "Pompelmo rosa, Basilico, Acqua frizzante",
           "prezzo": "8 €",
           "bicchiere": "Tumbler alto"
         },
         {
-          "nome": "Il rito",
-          "descrizione": "Infuso di the nero, Estratto di ananas, Cannella, Lime, Foglie di menta",
+          "nome": "Il Rito",
+          "descrizione": "Infuso di tè nero, Estratto di ananas, Cannella, Lime, Foglie di menta",
           "prezzo": "8 €",
           "bicchiere": "Tumbler alto"
         },

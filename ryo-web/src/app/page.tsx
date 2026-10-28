@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import { HomeHero } from "@/components/home/home-hero"
 import { FeatureCard, HomeIntro, PhotoStrip } from "@/components/home/home-blocks"
-import { ChurrascoFeature } from "@/components/menu/churrasco"
 
 export default function HomePage() {
   return (
@@ -12,7 +11,6 @@ export default function HomePage() {
         <HomeHero />
         <HomeIntro />
         <PhotoStrip />
-        <ChurrascoFeature />
         <div className="h-5 sm:h-8" />
         <div className="grid gap-5 px-3 pb-5 sm:gap-8 sm:px-10 sm:pb-8">
           <FeatureCard href="/menu" title="Il menu" image="/images/cucina/tavola-menu.jpg" alt="Una tavola apparecchiata con burger, tapas e cocktail al sole" position="center 58%" />
