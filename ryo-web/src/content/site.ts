@@ -83,11 +83,38 @@ export const fullAddress = `${site.address.street}, ${site.address.zip} ${site.a
  * Messaggi WhatsApp precompilati: il cliente trova già la richiesta scritta e
  * completa solo i campi dopo i due punti.
  */
+export type EventKind = "compleanno" | "privato" | "aziendale" | "altro"
+
+/** Intestazione e campi del messaggio WhatsApp per ogni serata della settimana. */
+const NIGHT_WA: Record<string, { emoji: string; text: (title: string) => string }> = {
+  Mercoledì: { emoji: "🌿", text: () => "un tavolo per mercoledì" },
+  Giovedì: { emoji: "🎤", text: (t) => `un tavolo cena per «${t}» di giovedì` },
+  Venerdì: { emoji: "🎶", text: (t) => `un tavolo per «${t}» di venerdì` },
+  Sabato: { emoji: "🔥", text: (t) => `la «${t}» di sabato` },
+  Domenica: { emoji: "🌴", text: () => "un tavolo per domenica" },
+}
+
+/** Messaggio di apertura e campi da completare per ogni tipo di evento privato. */
+export const EVENT_WA: Record<EventKind, { emoji: string; intro: string; fields: string[] }> = {
+  compleanno: { emoji: "🎂", intro: "Vorrei organizzare un compleanno da voi.", fields: ["Data", "Numero di ospiti", "Anni che si festeggiano", "Torta o allestimento", "Nome"] },
+  privato: { emoji: "🎉", intro: "Vorrei organizzare una festa privata da voi (laurea, anniversario, addio al celibato/nubilato…).", fields: ["Data", "Numero di ospiti", "Occasione", "Nome"] },
+  aziendale: { emoji: "💼", intro: "Vorrei organizzare una cena aziendale da voi.", fields: ["Azienda", "Data", "Numero di ospiti", "Menu (churrasco / à la carte)", "Nome e ruolo"] },
+  altro: { emoji: "✨", intro: "Vorrei organizzare un evento da voi.", fields: ["Data", "Numero di ospiti", "Tipo di evento", "Nome"] },
+}
+
+/**
+ * Messaggi WhatsApp precompilati: il cliente trova già la richiesta scritta e
+ * completa solo i campi dopo i due punti. Uno diverso per ogni tipo di prenotazione.
+ */
 export const waMessage = {
   tavolo: () =>
-    "Ciao RYO! 👋 Vorrei prenotare un tavolo.\n\nGiorno: \nOrario: \nNumero di persone: \nNome: \n\nGrazie!",
-  serata: (title: string, day: string) =>
-    `Ciao RYO! 👋 Vorrei prenotare un tavolo per «${title}» (${day.toLowerCase()}).\n\nData: \nNumero di persone: \nOrario di arrivo: \nNome: \n\nGrazie!`,
-  evento: (tipo = "una festa privata") =>
-    `Ciao RYO! 🎉 Vorrei organizzare ${tipo} da voi.\n\nData: \nNumero di ospiti: \nOccasione (es. compleanno, 30 anni, laurea): \nNome: \nIdee o richieste particolari: \n\nAspetto vostre notizie, grazie!`,
+    "Ciao RYO! 🍽️ Vorrei prenotare un tavolo.\n\nGiorno: \nOrario: \nNumero di persone: \nNome: \n\nGrazie!",
+  serata: (title: string, day: string) => {
+    const n = NIGHT_WA[day] ?? { emoji: "👋", text: () => `un tavolo per «${title}»` }
+    return `Ciao RYO! ${n.emoji} Vorrei prenotare ${n.text(title)}.\n\nData: \nNumero di persone: \nOrario di arrivo: \nNome: \n\nGrazie!`
+  },
+  evento: (kind: EventKind = "privato") => {
+    const e = EVENT_WA[kind]
+    return `Ciao RYO! ${e.emoji} ${e.intro}\n\n${e.fields.map((f) => `${f}: `).join("\n")}\n\nAspetto vostre notizie, grazie!`
+  },
 }

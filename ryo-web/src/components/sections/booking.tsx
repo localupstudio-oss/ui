@@ -25,7 +25,7 @@ export function BookingPanel({ titleId }: { titleId?: string }) {
   const [formKey, setFormKey] = useState(0)
   // "Oggi" (ora di Roma) solo nel browser: il prerender non dipende dalla data di build.
   const today = useSyncExternalStore(noopSubscribe, todayInRome, () => null)
-  const eventUrl = whatsappUrl(waMessage.evento())
+  const eventUrl = whatsappUrl(waMessage.evento("privato"))
 
   return (
     <div className="mx-auto max-w-3xl text-center">
