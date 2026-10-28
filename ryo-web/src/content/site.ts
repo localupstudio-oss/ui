@@ -56,15 +56,15 @@ export const site = {
 /**
  * I menu in PDF, aperti dalla schermata /menu (e dal menu a tendina). `href` assente = in arrivo.
  * `image` è la copertina che compare a fianco quando il cliente passa sul nome.
- * ✎ copertine provvisorie: sostituire con le foto definitive di ogni menu (Churrasco già definitiva).
+ * ✎ copertine provvisorie per Combo e Dessert; le altre sono definitive.
  */
 export const menus: { label: string; sub: string; href?: string; image: string; alt: string }[] = [
-  { label: "À la carte", sub: "Tapas, platos, ensaladas, primi, carnes e sides", href: "/menu/ryo-menu-alacarte.pdf", image: "/images/cucina/tavola-menu.jpg", alt: "Una tavola apparecchiata con burger, tapas e cocktail" },
+  { label: "À la carte", sub: "Tapas, platos, ensaladas, primi, carnes e sides", href: "/menu/ryo-menu-alacarte.pdf", image: "/images/menu/alacarte.jpg", alt: "Si versa il vino bianco su una tavola di tacos, tapas e calamari" },
   { label: "Churrasco", sub: "Degustazione alla brace · 38 €", href: "/menu/ryo-menu-churrasco.pdf", image: "/images/cucina/churrasco-spiedo.jpg", alt: "Il passador taglia la picanha dallo spiedo" },
   { label: "Combo", sub: "In arrivo", image: "/images/home/cibo-bowl-tapas.jpg", alt: "Bowl, riso e tapas da condividere" },
   { label: "Dessert", sub: "Tiramiryo, Bananito, babbà e il dolce della settimana", href: "/menu/ryo-menu-dessert.pdf", image: "/images/galleria/dessert-frutta.jpg", alt: "Un dessert alla frutta" },
-  { label: "Cocktail", sub: "Cocktails d'autore e analcolici", href: "/menu/ryo-drink-list.pdf", image: "/images/home/drink-tiki.jpg", alt: "Cocktail nel tiki mug RYO" },
-  { label: "Wine", sub: "In arrivo", image: "/images/home/persone-risata.jpg", alt: "Calici di vino rosso a tavola" },
+  { label: "Cocktail", sub: "Cocktails d'autore e analcolici", href: "/menu/ryo-drink-list.pdf", image: "/images/menu/cocktail.jpg", alt: "Un cocktail con schiuma nella coppa, tra intreccio e velluto tropicale" },
+  { label: "Wine", sub: "In arrivo", image: "/images/menu/wine.jpg", alt: "Si versa il vino rosso nel calice accanto al pannello intagliato" },
 ]
 
 export const nav = [
