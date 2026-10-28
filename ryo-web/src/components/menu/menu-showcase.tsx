@@ -29,7 +29,7 @@ export function MenuShowcase() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Image src={current.image} alt={current.alt} fill priority sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
+            <Image src={current.image} alt={current.alt} fill priority quality={90} sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
           </motion.div>
         </AnimatePresence>
         <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/50 to-transparent lg:hidden" />

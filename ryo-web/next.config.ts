@@ -57,7 +57,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: isPreview,
     formats: ["image/avif", "image/webp"],
-    qualities: [75, 85],
+    qualities: [75, 85, 90],
     deviceSizes: [640, 828, 1080, 1280, 1600, 1920, 2560],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
