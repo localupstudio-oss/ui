@@ -37,11 +37,12 @@ for name, file in [("SerifBold", "PlayfairDisplay-SemiBold"), ("Serif", "Playfai
 
 PURPLE = HexColor("#3d2a5a")  # viola del logo
 RED = HexColor("#c8323c")
-INK = HexColor("#3a3a3a")
+INK = HexColor("#3b2f22")
 TEAL = HexColor("#2f7f84")
-OLIVE = HexColor("#8a7a52")
+OLIVE = HexColor("#6e5a2e")
 
 W, H = A4
+PAPER = (234, 206, 142)  # carta ocra / senape
 
 COCKTAILS = [
     ("Hakka", "Vodka, Sake, Lychee, Cocco, Lime, Perrier.", "€ 12,00", "Tumbler basso"),
@@ -110,40 +111,41 @@ def image(c, name, x, y_top, w, anchor="l", flip=False):
 
 def background(c, paint):
     """Dipinge gli acquerelli della pagina e li mette come sfondo."""
-    s = Sheet(W, H)
+    s = Sheet(W, H, paper=PAPER)
     paint(s)
     with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
         s.save(f.name)
         c.drawImage(f.name, 0, 0, W, H)
 
 
-def entry(c, item, cx, y, width=215):
-    """Voce centrata: «Nome  prezzo», ingredienti, bicchiere. y = linea di base del nome (dall'alto)."""
+def entry(c, item, cx, y, width=250):
+    """Voce centrata: «Nome  prezzo» e ingredienti. y = linea di base del nome (dall'alto)."""
     name, ingredients, price, glass = item
     p = short_price(price)
-    nw = pdfmetrics.stringWidth(name, "SerifBold", 17)
-    pw = pdfmetrics.stringWidth(p, "SerifBold", 14)
+    nw = pdfmetrics.stringWidth(name, "SerifBold", 19)
+    pw = pdfmetrics.stringWidth(p, "SerifBold", 15)
     x0 = cx - (nw + 8 + pw) / 2
-    c.setFont("SerifBold", 17)
+    c.setFont("SerifBold", 19)
     c.setFillColor(PURPLE)
     c.drawString(x0, H - y, name)
-    c.setFont("SerifBold", 14)
+    c.setFont("SerifBold", 15)
     c.setFillColor(RED)
     c.drawString(x0 + nw + 8, H - y, p)
-    y += 19
+    y += 21
     if ingredients:
-        c.setFont("Sans", 10.4)
+        c.setFont("Sans", 11.2)
         c.setFillColor(INK)
-        for line in simpleSplit(ingredients, "Sans", 10.4, width):
+        for line in simpleSplit(ingredients, "Sans", 11.2, width):
             c.drawCentredString(cx, H - y, line)
-            y += 14
-    if glass:
-        y += 2
-        spaced(c, glass.upper(), cx, H - y, "SansLight", 6.8, 1.9, TEAL)
+            y += 15
     return y
 
 
-SLOTS = [(395, 150), (205, 262), (395, 478), (205, 590)]  # (centro x, y) — fascia libera 330–445 per il fiume
+SLOTS = {  # (centro x, y) per numero di voci — la fascia del fiume resta libera
+    4: [(395, 150), (205, 262), (395, 478), (205, 590)],
+    3: [(375, 170), (220, 300), (375, 520)],
+}
+RIVER_Y = {4: 390, 3: 418}
 
 
 def scene_height(name, w):
@@ -152,23 +154,30 @@ def scene_height(name, w):
     return w * im.height / im.width
 
 
-def cocktail_page(c, items, mirror, scene, seed):
-    slots = [((W - x) if mirror else x, y) for x, y in SLOTS][: len(items)]
+def cocktail_page(c, items, mirror, scene, seed, extra=None):
+    """extra = (nome, larghezza): una seconda illustrazione piccola nell'angolo in alto libero."""
+    slots = [((W - x) if mirror else x, y) for x, y in SLOTS[len(items)]]
     name, sw = scene
     sh = scene_height(name, sw)
 
     def paint(s):
         rng = random.Random(seed)
-        # il fiume: parte dal lato della scena, attraversa la pagina tra le voci e torna giù verso l'acqua
-        xs = [-20 + i * 106 + rng.uniform(-14, 14) for i in range(7)]
+        # il fiume attraversa la pagina tra le voci, con anse morbide
+        y0 = RIVER_Y[len(items)]
+        xs = [-40 + i * 113 + rng.uniform(-12, 12) for i in range(7)]
         sign = rng.choice([-1, 1])
-        ys = [392 + sign * (-1) ** i * rng.uniform(26, 42) for i in range(7)]
+        ys = [y0 + sign * (-1) ** i * rng.uniform(18, 32) for i in range(7)]
         if mirror:
             xs = [W - x for x in xs]
-        s.ribbon(list(zip(xs, ys)), 30, seed=seed, twist=150 + seed * 7)
+        s.river(list(zip(xs, ys)), 46, seed=seed)
         cx = 40 if mirror else W - 40
         sg = 1 if mirror else -1
-        s.ribbon([(cx - sg * 50, -10), (cx + sg * 5, 30), (cx - sg * 20, 70), (cx + sg * 30, 100), (cx + sg * 70, 104)], 18, seed=seed + 20, twist=80)
+        if extra:
+            ename, ew = extra
+            s.place(PAINT / f"{ename}.jpg", (W - ew - 14 if mirror else 14), 18, ew, flip=not mirror, fade=22)
+        else:
+            # un affluente che scende dall'angolo
+            s.river([(cx - sg * 30, -20), (cx + sg * 8, 40), (cx - sg * 14, 90), (cx + sg * 40, 120), (cx + sg * 90, 128)], 22, seed=seed + 20)
         s.wash(H - 58, 70, seed=seed + 3)
         x = -10 if mirror else W - sw + 10
         s.place(PAINT / f"{name}.jpg", x, H - sh - 6, sw, flip=not mirror, fade=26)
@@ -180,7 +189,8 @@ def cocktail_page(c, items, mirror, scene, seed):
 
 def cover(c):
     def paint(s):
-        s.ribbon([(330, -10), (430, 40), (390, 120), (470, 170), (440, 250), (540, 300), (620, 290)], 34, seed=41, twist=130)
+        s.river([(360, -30), (440, 40), (400, 120), (470, 180), (450, 250), (540, 300), (640, 290)], 44, seed=41)
+        s.place(PAINT / "farfalle.jpg", 22, 40, 150, fade=20)
         s.wash(H - 70, 80, seed=43)
         s.place(PAINT / "ara.jpg", -20, 560, 300, fade=26)
 
@@ -208,35 +218,34 @@ def cover(c):
 
 def analcolici(c):
     def paint(s):
-        s.ribbon([(-20, 120), (80, 92), (180, 135), (290, 95), (400, 132), (500, 100), (615, 125)], 22, seed=61, twist=110)
+        s.river([(-40, 120), (80, 92), (190, 135), (300, 100), (410, 130), (510, 100), (640, 120)], 34, seed=61)
+        s.place(PAINT / "colibri.jpg", 14, 560, 210, flip=True, fade=22)
         s.wash(H - 58, 70, seed=63)
         s.place(PAINT / "fenicottero.jpg", W - 300, H - scene_height("fenicottero", 310) - 6, 310, fade=26)
 
     background(c, paint)
     x0, x1 = 92, W - 92
-    c.setFont("SerifBold", 24)
+    c.setFont("SerifBold", 28)
     c.setFillColor(PURPLE)
-    c.drawString(x0, H - 220, "Analcolici")
+    c.drawString(x0, H - 222, "Analcolici")
     y = 276
     for name, ingredients, price, glass in ANALCOLICI:
-        c.setFont("SerifBold", 15)
+        c.setFont("SerifBold", 18)
         c.setFillColor(PURPLE)
         c.drawString(x0, H - y, name)
-        c.setFont("SerifBold", 13)
+        c.setFont("SerifBold", 15)
         c.setFillColor(RED)
         c.drawRightString(x1, H - y, short_price(price))
-        yy = y + 15
-        c.setFont("Sans", 9.6)
+        yy = y + 18
+        c.setFont("Sans", 11)
         c.setFillColor(INK)
-        for line in simpleSplit(ingredients, "Sans", 9.6, 330):
+        for line in simpleSplit(ingredients, "Sans", 11, 330):
             c.drawString(x0, H - yy, line)
-            yy += 13
-        if glass:
-            spaced(c, glass.upper(), x0, H - yy - 1, "SansLight", 6.4, 1.8, TEAL, anchor="left")
-        y = yy + 44
-    c.setFont("SansLight", 7)
+            yy += 15
+        y = yy + 40
+    c.setFont("SansLight", 8)
     c.setFillColor(INK)
-    c.drawString(x0, H - (y - 18), "Prezzi in euro.")
+    c.drawString(x0, H - (y - 14), "Prezzi in euro.")
 
 
 def main():
@@ -245,9 +254,11 @@ def main():
     c.setAuthor("RYO Churrascaria | Tapas | Cocktail")
     cover(c)
     c.showPage()
-    scenes = [("tucano", 300), ("scimmia", 300), ("giaguaro", 300), ("iguana", 300), ("colibri", 300)]
-    for n, start in enumerate(range(0, len(COCKTAILS), 4)):
-        cocktail_page(c, COCKTAILS[start:start + 4], n % 2 == 1, scenes[n], seed=11 + n * 5)
+    groups = [COCKTAILS[0:4], COCKTAILS[4:7], COCKTAILS[7:10], COCKTAILS[10:13], COCKTAILS[13:16], COCKTAILS[16:19]]
+    scenes = [("tucano", 300), ("scimmia", 300), ("giaguaro", 300), ("bradipo", 300), ("iguana", 300), ("capibara", 300)]
+    extras = [None, ("farfalle", 140), None, None, ("farfalle", 130), None]
+    for n, items in enumerate(groups):
+        cocktail_page(c, items, n % 2 == 1, scenes[n], seed=11 + n * 5, extra=extras[n])
         c.showPage()
     analcolici(c)
     c.showPage()

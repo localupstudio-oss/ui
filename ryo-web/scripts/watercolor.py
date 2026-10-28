@@ -111,7 +111,7 @@ class Sheet:
         for i, c in enumerate(colors):
             sel = np.clip(1 - np.abs(tint * 2.2 - i * 1.1), 0, 1)
             a = band * sel * (0.30 + 0.38 * streak) * (0.6 + 0.6 * depth)
-            self._lay(a, c)
+            self._paint(a * 1.1, c)
         # riga più scura sul pelo dell'acqua
         crest = np.exp(-(((Y - edge[None, :] - 3 * PT) / (2.4 * PT)) ** 2)) * 0.3 * (streak > 0.35)
         self._lay(crest, colors[1])
@@ -152,3 +152,98 @@ class Sheet:
         xb, yb = min(self.w, x0 + w), min(self.h, y0 + h)
         self.rgb[ya:yb, xa:xb] *= a[ya - y0: yb - y0, xa - x0: xb - x0]
         return h / PT
+
+    def _paint(self, alpha, color):
+        """Velatura coprente (per i riflessi chiari, che col «moltiplica» non si potrebbero fare)."""
+        a = np.clip(alpha, 0, 1)[..., None]
+        self.rgb = self.rgb * (1 - a) + np.array(color, np.float32) * a
+
+    def river(self, pts_pt, width_pt, seed=1, water=((158, 212, 200), (96, 170, 166), (52, 122, 128)), bank=(150, 150, 90)):
+        """Un fiume vero visto dall'alto: rive erbose sfumate, acqua a velature, canale più
+        profondo che segue le anse, riflessi della corrente e bordi bagnati irregolari."""
+        rng = np.random.default_rng(seed)
+        path = [(x * PT, y * PT) for x, y in _catmull([tuple(p) for p in pts_pt], n=40)]
+        s = [0.0]
+        for a, b in zip(path, path[1:]):
+            s.append(s[-1] + math.dist(a, b))
+        L = s[-1] or 1
+        ph = rng.random(3) * 6.28
+        n = len(path)
+
+        def width(i):
+            t = s[i] / L
+            return width_pt * PT * (0.8 + 0.24 * math.sin(t * 7 + ph[0]) + 0.1 * math.sin(t * 19 + ph[1]))
+
+        normals, curv = [], []
+        for i in range(n):
+            j, k = min(i + 1, n - 1), max(i - 1, 0)
+            dx, dy = path[j][0] - path[k][0], path[j][1] - path[k][1]
+            l = math.hypot(dx, dy) or 1
+            normals.append((-dy / l, dx / l))
+        for i in range(n):
+            j, k = min(i + 2, n - 1), max(i - 2, 0)
+            a1 = math.atan2(*reversed(normals[k])); a2 = math.atan2(*reversed(normals[j]))
+            curv.append(((a2 - a1 + math.pi) % (2 * math.pi)) - math.pi)
+
+        def band(scale, offset_k=0.0, jitter=0.0):
+            img = Image.new("L", (self.w, self.h), 0)
+            d = ImageDraw.Draw(img)
+            left, right = [], []
+            for i, (x, y) in enumerate(path):
+                w = width(i) * scale * (1 + jitter * (rng.random() - 0.5))
+                off = curv[i] * offset_k * width(i)  # il canale profondo scivola verso l'esterno dell'ansa
+                nx, ny = normals[i]
+                cx, cy = x + nx * off, y + ny * off
+                left.append((cx + nx * w / 2, cy + ny * w / 2))
+                right.append((cx - nx * w / 2, cy - ny * w / 2))
+            d.polygon(left + right[::-1], fill=255)
+            return np.asarray(img, np.float32) / 255
+
+        def wobble(m, amp, scale, sd):
+            dx = (_noise(self.h, self.w, scale, sd) - 0.5) * amp * PT
+            dy = (_noise(self.h, self.w, scale, sd + 1) - 0.5) * amp * PT
+            im = Image.fromarray((m * 255).astype(np.uint8))
+            arr = np.asarray(im, np.float32) / 255
+            yy, xx = np.mgrid[0: self.h, 0: self.w]
+            xs = np.clip((xx + dx).astype(int), 0, self.w - 1)
+            ys = np.clip((yy + dy).astype(int), 0, self.h - 1)
+            return arr[ys, xs]
+
+        blur = lambda m, r: np.asarray(Image.fromarray((np.clip(m, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(r)), np.float32) / 255
+        n1 = _noise(self.h, self.w, 70, seed + 3)
+        n2 = _noise(self.h, self.w, 16, seed + 4)
+        # rive: ombra verde larga, poi una riva di sabbia chiara a ridosso dell'acqua
+        banks = blur(wobble(band(1.6, jitter=0.25), 12, 40, seed + 5), 7 * PT)
+        self._lay(banks * (0.12 + 0.14 * n1), bank)
+        sand = blur(wobble(band(1.22, jitter=0.3), 6, 26, seed + 10), 1.5 * PT)
+        self._paint(sand * (0.35 + 0.3 * n2), (245, 228, 186))
+        # ciuffi di vegetazione lungo gli argini
+        tufts = Image.new("L", (self.w, self.h), 0)
+        td = ImageDraw.Draw(tufts)
+        for i in range(0, n, 9):
+            if rng.random() < 0.55:
+                side = 1 if rng.random() < 0.5 else -1
+                nx, ny = normals[i]
+                r = width(i) * (0.62 + rng.random() * 0.25)
+                cx, cy = path[i][0] + nx * side * r, path[i][1] + ny * side * r
+                for _ in range(rng.integers(2, 6)):
+                    rr = (1.5 + rng.random() * 4) * PT
+                    ox, oy = (rng.random() - 0.5) * 8 * PT, (rng.random() - 0.5) * 8 * PT
+                    td.ellipse([cx + ox - rr, cy + oy - rr * 0.7, cx + ox + rr, cy + oy + rr * 0.7], fill=int(150 + rng.random() * 100))
+        tf = blur(np.asarray(tufts, np.float32) / 255, 1.2 * PT) * (0.6 + 0.4 * n2)
+        self._lay(tf * 0.55, (96, 138, 74))
+        # acqua a velature coprenti: turchese chiaro, canale più intenso, bordi bagnati
+        body = blur(wobble(band(1.0, jitter=0.08), 4, 22, seed + 6), 1.2)
+        inner = blur(np.asarray(Image.fromarray((body * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(11)), np.float32) / 255, 3)
+        edge = np.clip(body - inner, 0, 1)
+        self._paint(body * (0.72 + 0.2 * n1), water[0])
+        deep = blur(wobble(band(0.55, offset_k=0.9, jitter=0.3), 6, 30, seed + 7), 5 * PT)
+        self._paint(deep * (0.30 + 0.25 * n2) * body, water[1])
+        core = blur(wobble(band(0.2, offset_k=1.1, jitter=0.5), 6, 30, seed + 8), 4 * PT)
+        self._paint(core * 0.22 * body, water[2])
+        self._paint(edge * (0.35 + 0.35 * n2), water[2])
+        # luce sull'acqua: macchie chiare irregolari, non linee
+        glint = blur(np.clip((n2 - 0.6) * 4, 0, 1) * inner, 2.5 * PT)
+        self._paint(glint * 0.45, (232, 245, 238))
+        # granulazione del pigmento
+        self._lay(body * 0.06 * (_noise(self.h, self.w, 5, seed + 9) > 0.6), water[2])
