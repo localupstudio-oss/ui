@@ -1,101 +1,44 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import { useActionState, useState } from "react"
 import { CheckCircle2, ChevronDown, Loader2, MessageCircle } from "lucide-react"
 
 import { submitBooking } from "@/app/actions/booking"
 import { EVENT_WA, site, waMessage, whatsappUrl, type EventKind } from "@/content/site"
-import { EVENT_TYPES, validateBooking, type BookingState, type FieldErrors } from "@/lib/validation/booking"
+import { EVENT_GUESTS_MAX, validateBooking, type BookingState, type FieldErrors } from "@/lib/validation/booking"
 import { cn } from "@/lib/utils"
 
-type Occasion = { kind: EventKind; title: string; text: string[]; image: string; alt: string; company?: boolean }
+const KINDS: EventKind[] = ["compleanno", "privato", "aziendale"]
+const LABEL: Record<string, string> = { compleanno: "Compleanno", privato: "Festa privata", aziendale: "Cena aziendale" }
 
-/** Le tre modalità di festa privata, ognuna con la sua sezione (foto + testo + modulo). */
-const occasions: Occasion[] = [
-  {
-    kind: "compleanno",
-    title: "Compleanni",
-    text: [
-      "Festa dei 18, dei 30 o dei 40 anni, o semplicemente la tua: da RYO il compleanno diventa una serata tra tapas, churrasco e cocktail d'autore, con torta, musica e il tavolo riservato sotto le felci.",
-      "Ci occupiamo noi dell'allestimento e del menu, da 10 a 200 ospiti.",
-    ],
-    image: "/images/eventi/festa-torta.jpg",
-    alt: "Una festa di compleanno da RYO con torta e fontane di luce",
-  },
-  {
-    kind: "privato",
-    title: "Feste private",
-    text: [
-      "Lauree, anniversari, addii al celibato e al nubilato, rimpatriate tra amici: costruiamo la serata intorno a te, dalla cena fino al dopocena in musica.",
-      "La sala si adatta al tuo gruppo, anche in esclusiva per le occasioni più grandi.",
-    ],
-    image: "/images/giovedi/festa-al-tavolo.jpg",
-    alt: "Amici che festeggiano a tavola",
-  },
-  {
-    kind: "aziendale",
-    title: "Cene aziendali",
-    text: [
-      "Cene di team, presentazioni, brindisi di fine anno e incontri con i clienti: un menu dedicato o la Churrasco Experience, con un servizio curato dall'inizio alla fine.",
-      "Prepariamo preventivo e menu su misura per la tua azienda.",
-    ],
-    image: "/images/giovedi/tavolata.jpg",
-    alt: "Una lunga tavolata da RYO",
-    company: true,
-  },
-]
-
+/** Feste ed eventi privati: una foto e un solo modulo, con la scelta del tipo di evento. */
 export function EventEnquiry() {
+  const [kind, setKind] = useState<EventKind>("compleanno")
   return (
-    <div className="pattern-croci">
-      {occasions.map((o, i) => (
-        <OccasionSection key={o.kind} occasion={o} flip={i % 2 === 1} first={i === 0} />
-      ))}
-      <p className="px-5 py-16 text-center text-sm text-foreground/70">
-        Preferisci parlarne a voce? Chiamaci al{" "}
-        <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="link-underline">
-          {site.phone}
-        </a>
-      </p>
-    </div>
-  )
-}
-
-function OccasionSection({ occasion: o, flip, first }: { occasion: Occasion; flip: boolean; first: boolean }) {
-  return (
-    <section id={o.kind} className="grid grid-cols-1 lg:min-h-[100svh] lg:grid-cols-2">
-      {/* foto: metà schermo, ferma mentre si compila il modulo */}
-      <div className={cn("relative h-[58svh] lg:sticky lg:top-0 lg:h-[100svh]", flip && "lg:order-2")}>
-        <Image src={o.image} alt={o.alt} fill priority={first} sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
+    <section className="pattern-croci grid grid-cols-1 lg:min-h-[100svh] lg:grid-cols-2">
+      <div className="relative h-[42svh] lg:h-auto">
+        <Image src="/images/eventi/festa-torta.jpg" alt="Una festa da RYO con torta e fontane di luce" fill priority sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/45 to-transparent" />
       </div>
-      <div className={cn("flex justify-center px-5 py-16 sm:px-10 lg:py-36", flip && "lg:order-1")}>
-        <div className="w-full max-w-[560px]">
-          <h2 className="font-display text-[clamp(2.4rem,4vw,3.4rem)] leading-tight text-[#f6efe0]">{o.title}</h2>
-          {o.text.map((t) => (
-            <p key={t} className="mt-6 text-[1.05rem] leading-relaxed text-foreground/75">
-              {t}
-            </p>
-          ))}
-          <p className="mt-6 text-[1.05rem] leading-relaxed text-foreground/75">
-            Per informazioni e preventivi compila il modulo qui sotto, oppure scrivici direttamente su WhatsApp:
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link href="/menu" className="rounded-full border border-foreground/80 px-7 py-3 transition-colors hover:bg-foreground hover:text-background">
-              Vedi i menu
-            </Link>
-            <a
-              href={whatsappUrl(waMessage.evento(o.kind))}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-foreground/80 px-7 py-3 transition-colors hover:bg-foreground hover:text-background"
-            >
-              <MessageCircle className="size-4" /> Scrivici su WhatsApp
+      <div className="flex justify-center px-5 pt-12 pb-16 sm:px-10 lg:pt-32 lg:pb-20">
+        <div className="w-full max-w-[540px]">
+          <h1 className="font-display text-[clamp(2.3rem,4vw,3.3rem)] leading-tight text-[#f6efe0]">Feste ed eventi privati</h1>
+          <p className="mt-5 text-[1.05rem] leading-relaxed text-foreground/75">
+            Compleanni, feste private e cene aziendali fino a {EVENT_GUESTS_MAX} ospiti, con menu, allestimento e musica pensati per te. Compila il modulo
+            oppure{" "}
+            <a href={whatsappUrl(waMessage.evento(kind))} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 underline underline-offset-4">
+              <MessageCircle className="size-4" /> scrivici su WhatsApp
             </a>
-          </div>
-          <EventForm occasion={o} />
+            .
+          </p>
+          <EventForm kind={kind} onKind={setKind} />
+          <p className="mt-10 text-sm text-foreground/60">
+            Preferisci parlarne a voce? Chiamaci al{" "}
+            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="link-underline">
+              {site.phone}
+            </a>
+          </p>
         </div>
       </div>
     </section>
@@ -107,17 +50,17 @@ const box =
   "w-full rounded-none border-0 bg-[#f6efe0] px-4 py-4 text-[1.02rem] text-ink placeholder:text-ink/55 outline-none ring-amber/70 transition focus:ring-2"
 
 /** Modulo dell'evento: una volta inviato, apre WhatsApp con la richiesta già compilata per quel tipo di festa. */
-function EventForm({ occasion: o }: { occasion: Occasion }) {
+function EventForm({ kind, onKind }: { kind: EventKind; onKind: (k: EventKind) => void }) {
   const [state, action, pending] = useActionState(submitBooking, initial)
   const [first, setFirst] = useState("")
   const [last, setLast] = useState("")
   const [clientErrors, setClientErrors] = useState<FieldErrors>({})
   const errors: FieldErrors = { ...(state.status === "error" ? state.fieldErrors : {}), ...clientErrors }
-  const id = (n: string) => `${o.kind}-${n}`
+  const id = (n: string) => `evento-${n}`
 
   if (state.status === "success") {
     return (
-      <div role="status" className="mt-12 flex flex-col items-start gap-4 border-t border-foreground/15 pt-10">
+      <div role="status" className="mt-10 flex flex-col items-start gap-4 border-t border-foreground/15 pt-10">
         <CheckCircle2 className="size-10 text-leaf" />
         <p className="font-display text-3xl text-[#f6efe0]">Ci siamo quasi!</p>
         <p className="text-foreground/75">{state.message}</p>
@@ -146,7 +89,7 @@ function EventForm({ occasion: o }: { occasion: Occasion }) {
   const err = (k: string) => errors[k]?.[0]
 
   return (
-    <form action={action} onSubmit={onSubmit} onInput={() => Object.keys(clientErrors).length && setClientErrors({})} noValidate className="mt-12 grid grid-cols-2 gap-x-4 gap-y-5">
+    <form action={action} onSubmit={onSubmit} onInput={() => Object.keys(clientErrors).length && setClientErrors({})} noValidate className="mt-8 grid grid-cols-2 gap-x-4 gap-y-4">
       <input type="hidden" name="kind" value="evento" />
       <input type="hidden" name="name" value={`${first.trim()} ${last.trim()}`.trim()} />
       <div aria-hidden className="absolute -left-[9999px] h-0 overflow-hidden">
@@ -161,35 +104,37 @@ function EventForm({ occasion: o }: { occasion: Occasion }) {
       <Field label="Cognome*" error={err("last")}>
         <input id={id("last")} value={last} onChange={(e) => setLast(e.target.value)} placeholder="Cognome*" autoComplete="family-name" maxLength={40} aria-invalid={!!err("last") || undefined} className={box} />
       </Field>
-      <Field label="Azienda" error={err("company")} wide>
-        <input name="company" placeholder={o.company ? "Azienda" : "Azienda (facoltativo)"} autoComplete="organization" maxLength={120} className={box} />
-      </Field>
-      <Field label="Email*" error={err("email")} wide>
-        <input name="email" type="email" placeholder="Email*" autoComplete="email" maxLength={120} aria-invalid={!!err("email") || undefined} className={box} />
-      </Field>
-      <Field label="Telefono*" error={err("phone")} wide>
-        <input name="phone" type="tel" placeholder="Telefono*" autoComplete="tel" maxLength={20} aria-invalid={!!err("phone") || undefined} className={box} />
-      </Field>
-      <Field label="Numero di ospiti*" error={err("guests")}>
-        <input name="guests" type="number" inputMode="numeric" min={10} max={200} placeholder="Numero di ospiti*" aria-invalid={!!err("guests") || undefined} className={box} />
-      </Field>
-      <Field label="Data dell'evento*" error={err("date")}>
-        <input name="date" type="date" aria-invalid={!!err("date") || undefined} className={cn(box, "[color-scheme:light]")} />
-      </Field>
       <Field label="Tipo di evento" error={err("eventType")} wide>
         <span className="relative block">
-          <select name="eventType" defaultValue={o.kind} className={cn(box, "appearance-none pr-10")}>
-            {(Object.keys(EVENT_TYPES) as EventKind[]).map((k) => (
+          <select name="eventType" value={kind} onChange={(e) => onKind(e.target.value as EventKind)} className={cn(box, "appearance-none pr-10")}>
+            {KINDS.map((k) => (
               <option key={k} value={k}>
-                {EVENT_WA[k].emoji} {EVENT_TYPES[k]}
+                {EVENT_WA[k].emoji} {LABEL[k]}
               </option>
             ))}
           </select>
           <ChevronDown aria-hidden className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 text-ink/70" />
         </span>
       </Field>
+      {kind === "aziendale" && (
+        <Field label="Azienda" error={err("company")} wide>
+          <input name="company" placeholder="Azienda" autoComplete="organization" maxLength={120} className={box} />
+        </Field>
+      )}
+      <Field label="Email*" error={err("email")}>
+        <input name="email" type="email" placeholder="Email*" autoComplete="email" maxLength={120} aria-invalid={!!err("email") || undefined} className={box} />
+      </Field>
+      <Field label="Telefono*" error={err("phone")}>
+        <input name="phone" type="tel" placeholder="Telefono*" autoComplete="tel" maxLength={20} aria-invalid={!!err("phone") || undefined} className={box} />
+      </Field>
+      <Field label="Numero di ospiti*" error={err("guests")}>
+        <input name="guests" type="number" inputMode="numeric" min={10} max={EVENT_GUESTS_MAX} placeholder={`Ospiti* (max ${EVENT_GUESTS_MAX})`} aria-invalid={!!err("guests") || undefined} className={box} />
+      </Field>
+      <Field label="Data dell'evento*" error={err("date")}>
+        <input name="date" type="date" aria-invalid={!!err("date") || undefined} className={cn(box, "[color-scheme:light]")} />
+      </Field>
       <Field label="Informazioni aggiuntive" error={err("notes")} wide>
-        <textarea name="notes" rows={6} maxLength={500} placeholder="Informazioni aggiuntive (torta, musica, menu, allergie…)" className={cn(box, "resize-none")} />
+        <textarea name="notes" rows={3} maxLength={500} placeholder="Informazioni aggiuntive (torta, musica, menu, allergie…)" className={cn(box, "resize-none")} />
       </Field>
 
       <label className="col-span-2 flex items-start gap-3 text-sm text-foreground/75">

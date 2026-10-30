@@ -11,6 +11,7 @@ z.config({ jitless: true })
 export const TIME_SLOTS = ["18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"] as const
 export const EVENT_TYPES = { compleanno: "Compleanno (18, 30, 40 anni…)", privato: "Festa privata / laurea", aziendale: "Cena aziendale", altro: "Altro" } as const
 export const GUESTS_MAX = 12
+export const EVENT_GUESTS_MAX = 60
 
 export const todayInRome = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date()) // YYYY-MM-DD
 
@@ -55,7 +56,7 @@ export const privateEventSchema = z.object({
   ...contact,
   date: futureDate,
   eventType: z.enum(Object.keys(EVENT_TYPES) as [keyof typeof EVENT_TYPES, ...(keyof typeof EVENT_TYPES)[]], "Seleziona il tipo di evento"),
-  guests: z.coerce.number("Numero ospiti non valido").int().min(10, "Minimo 10 ospiti").max(200, "Massimo 200 ospiti"),
+  guests: z.coerce.number("Numero ospiti non valido").int().min(10, "Minimo 10 ospiti").max(EVENT_GUESTS_MAX, `Massimo ${EVENT_GUESTS_MAX} ospiti`),
   company: z.string().trim().max(120).optional().default(""),
 })
 

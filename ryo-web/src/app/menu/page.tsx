@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
-import { MenuCarta } from "@/components/menu/menu-page"
 import { MenuShowcase } from "@/components/menu/menu-showcase"
 
 export const metadata: Metadata = {
@@ -17,9 +16,6 @@ export default function Page() {
       <Navbar />
       <main id="contenuto" className="pattern-croci">
         <MenuShowcase />
-        <div className="pt-24">
-          <MenuCarta />
-        </div>
       </main>
       <Footer />
     </>
