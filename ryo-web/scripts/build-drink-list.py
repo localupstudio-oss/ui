@@ -61,10 +61,12 @@ COCKTAILS = [
     ("Samba", "Gin Mare, Cordiale pompelmo rosa e rosmarino, Olio al basilico.", "€ 11,00", None),
     ("Negroni Chill", "Campari, Cynar, Assenzio, Cedro, Zenzero.", "€ 10,00", "Tumbler basso"),
     ("Sud America-no", "Martini Riserva Bitter, Punt e Mes, Soda all'ananas.", "€ 9,00", "Tumbler basso"),
-    ("Barrel Negroni", None, "€ 10,00", "Tumbler basso"),
+    ("Barrel Negroni", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
     ("Choco Negroni", "Martini Rubino Vermouth, Bitter Fusetti cacao, Bombay, Bitter al cioccolato.", "€ 10,00", "Tumbler basso"),
-    ("Barrel Boulevardier", None, "€ 12,00", "Tumbler basso"),
+    ("Barrel Boulevardier", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
 ]
+SOFT_DRINK = ("5", ["Perrier acqua frizzante", "Soda all'ananas", "Soda al pompelmo rosa", "Soda al limone", "Tonica Indian", "Ginger beer", "Coca-Cola", "Coca-Cola Zero", "Tassoni"])
+BIRRE = [("Nastro Azzurro", "5"), ("Corona", "5"), ("Birra artigianale rossa", "7"), ("Birra artigianale bionda", "7")]
 ANALCOLICI = [
     ("Jardim Botânico", "Pompelmo rosa, Basilico, Acqua frizzante.", "€ 8,00", "Tumbler alto"),
     ("Il Rito", "Infuso di tè nero, Estratto di ananas, Cannella, Lime, Foglie di menta.", "€ 8,00", "Tumbler alto"),
@@ -135,6 +137,11 @@ def entry(c, item, cx, y, width=250):
     if ingredients:
         c.setFont("Sans", 11.2)
         c.setFillColor(INK)
+        if ingredients == "Ricetta segreta":
+            c.setFont("SerifIt", 13)
+            c.setFillColor(OLIVE)
+            c.drawCentredString(cx, H - y, ingredients)
+            return y + 15
         for line in simpleSplit(ingredients, "Sans", 11.2, width):
             c.drawCentredString(cx, H - y, line)
             y += 15
@@ -144,8 +151,9 @@ def entry(c, item, cx, y, width=250):
 SLOTS = {  # (centro x, y) per numero di voci — la fascia del fiume resta libera
     4: [(395, 150), (205, 262), (395, 478), (205, 590)],
     3: [(375, 170), (220, 300), (375, 520)],
+    5: [(395, 100), (205, 196), (395, 398), (205, 494), (395, 590)],
 }
-RIVER_Y = {4: 390, 3: 418}
+RIVER_Y = {4: 390, 3: 418, 5: 312}
 
 
 def scene_height(name, w):
@@ -166,18 +174,19 @@ def cocktail_page(c, items, mirror, scene, seed, extra=None):
         y0 = RIVER_Y[len(items)]
         xs = [-40 + i * 113 + rng.uniform(-12, 12) for i in range(7)]
         sign = rng.choice([-1, 1])
-        ys = [y0 + sign * (-1) ** i * rng.uniform(18, 32) for i in range(7)]
+        amp = (10, 18) if len(items) == 5 else (18, 32)
+        ys = [y0 + sign * (-1) ** i * rng.uniform(*amp) for i in range(7)]
         if mirror:
             xs = [W - x for x in xs]
-        s.river(list(zip(xs, ys)), 46, seed=seed)
-        cx = 40 if mirror else W - 40
-        sg = 1 if mirror else -1
+        s.river(list(zip(xs, ys)), 40 if len(items) == 5 else 46, seed=seed)
+        cx = W - 40 if mirror else 40
+        sg = -1 if mirror else 1
         if extra:
             ename, ew = extra
-            s.place(PAINT / f"{ename}.jpg", (W - ew - 14 if mirror else 14), 18, ew, flip=not mirror, fade=22)
+            s.place(PAINT / f"{ename}.jpg", (W - ew - 14 if mirror else 14), 18, ew, flip=mirror, fade=22)
         else:
             # un affluente che scende dall'angolo
-            s.river([(cx - sg * 30, -20), (cx + sg * 8, 40), (cx - sg * 14, 90), (cx + sg * 40, 120), (cx + sg * 90, 128)], 22, seed=seed + 20)
+            s.river([(cx + sg * 30, -20), (cx - sg * 8, 40), (cx + sg * 14, 90), (cx - sg * 30, 125), (cx - sg * 80, 135)], 22, seed=seed + 20)
         s.wash(H - 58, 70, seed=seed + 3)
         x = -10 if mirror else W - sw + 10
         s.place(PAINT / f"{name}.jpg", x, H - sh - 6, sw, flip=not mirror, fade=26)
@@ -192,28 +201,48 @@ def cover(c):
         s.river([(360, -30), (440, 40), (400, 120), (470, 180), (450, 250), (540, 300), (640, 290)], 44, seed=41)
         s.place(PAINT / "farfalle.jpg", 22, 40, 150, fade=20)
         s.wash(H - 70, 80, seed=43)
-        s.place(PAINT / "ara.jpg", -20, 560, 300, fade=26)
+        s.place(PAINT / "ara.jpg", -20, 520, 340, fade=26)
 
     background(c, paint)
     cx = W / 2
-    image(c, "logo", cx, 250, 280, anchor="c")
-    spaced(c, "COCKTAILS", cx, H - 372, "SansLight", 9, 6, OLIVE)
-    c.setFont("SerifIt", 30)
+    image(c, "logo", cx, 290, 300, anchor="c")
+    spaced(c, "COCKTAILS", cx, H - 420, "SansLight", 10, 7, OLIVE)
+    c.setFont("SerifIt", 36)
     c.setFillColor(RED)
-    c.drawCentredString(cx, H - 406, "menù")
+    c.drawCentredString(cx, H - 460, "menù")
+
+
+def intro(c):
+    """Seconda pagina: il racconto del fiume, come la citazione d'apertura delle grandi carte."""
+    def paint(s):
+        s.river([(-40, 150), (90, 120), (200, 170), (320, 130), (430, 165), (540, 130), (640, 150)], 40, seed=51)
+        s.wash(H - 58, 70, seed=53)
+        s.place(PAINT / "bradipo.jpg", W - 330, H - scene_height("bradipo", 340) - 6, 340, fade=26)
+        s.place(PAINT / "farfalle.jpg", 20, 540, 150, flip=True, fade=20)
+
+    background(c, paint)
+    cx = W / 2
     lines = [
-        "“Come le acque del fiume scorrono libere e travolgenti,",
-        "così l'arte della mixology dà vita a cocktail",
-        "che racchiudono l'anima del Rio.",
-        "Un viaggio tra profumi, colori e sapori tropicali,",
-        "dove ogni sorso racconta una storia.”",
+        "“Come le acque del fiume",
+        "scorrono libere e travolgenti,",
+        "così l'arte della mixology",
+        "dà vita a cocktail che racchiudono",
+        "l'anima del Rio.",
+        None,
+        "Un viaggio tra profumi, colori",
+        "e sapori tropicali, dove ogni sorso",
+        "racconta una storia.”",
     ]
-    y = 448
-    c.setFont("SerifIt", 11)
-    c.setFillColor(OLIVE)
-    for i, line in enumerate(lines):
+    y = 262
+    for line in lines:
+        if line is None:
+            y += 18
+            continue
+        c.setFont("SerifIt", 19)
+        c.setFillColor(PURPLE)
         c.drawCentredString(cx, H - y, line)
-        y += 16 + (8 if i == 2 else 0)
+        y += 28
+    spaced(c, "RYO  ·  CHURRASCARIA  |  TAPAS  |  COCKTAIL", cx, H - (y + 30), "SansLight", 8, 3, OLIVE)
 
 
 def analcolici(c):
@@ -248,19 +277,62 @@ def analcolici(c):
     c.drawString(x0, H - (y - 14), "Prezzi in euro.")
 
 
+def list_title(c, x0, x1, y, title, price=None):
+    c.setFont("SerifBold", 28)
+    c.setFillColor(PURPLE)
+    c.drawString(x0, H - y, title)
+    if price:
+        c.setFont("SerifBold", 20)
+        c.setFillColor(RED)
+        c.drawRightString(x1, H - y, price)
+
+
+def soft_e_birre(c):
+    def paint(s):
+        s.river([(-40, 110), (80, 85), (190, 125), (300, 92), (410, 122), (510, 92), (640, 112)], 34, seed=71)
+        s.wash(H - 58, 70, seed=73)
+        s.place(PAINT / "iguana.jpg", W - 250, H - scene_height("iguana", 260) - 6, 260, fade=26)
+
+    background(c, paint)
+    x0, x1 = 92, W - 92
+    price, names = SOFT_DRINK
+    list_title(c, x0, x1, 200, "Soft drink", price)
+    y = 236
+    c.setFont("Sans", 12.5)
+    c.setFillColor(INK)
+    for name in names:
+        c.drawString(x0, H - y, name)
+        y += 21
+    list_title(c, x0, x1, y + 34, "Birre")
+    y += 74
+    for name, p in BIRRE:
+        c.setFont("SerifBold", 16)
+        c.setFillColor(PURPLE)
+        c.drawString(x0, H - y, name)
+        c.setFont("SerifBold", 15)
+        c.setFillColor(RED)
+        c.drawRightString(x1, H - y, p)
+        y += 30
+
+
 def main():
     c = canvas.Canvas(str(OUT), pagesize=A4)
     c.setTitle("RYO · Cocktails menù")
     c.setAuthor("RYO Churrascaria | Tapas | Cocktail")
     cover(c)
     c.showPage()
-    groups = [COCKTAILS[0:4], COCKTAILS[4:7], COCKTAILS[7:10], COCKTAILS[10:13], COCKTAILS[13:16], COCKTAILS[16:19]]
-    scenes = [("tucano", 300), ("scimmia", 300), ("giaguaro", 300), ("bradipo", 300), ("iguana", 300), ("capibara", 300)]
-    extras = [None, ("farfalle", 140), None, None, ("farfalle", 130), None]
+    intro(c)
+    c.showPage()
+    # 5 cocktail per pagina; l'ultima raccoglie la famiglia Negroni
+    groups = [COCKTAILS[0:5], COCKTAILS[5:10], COCKTAILS[10:14], COCKTAILS[14:19]]
+    scenes = [("tucano", 230), ("scimmia", 230), ("giaguaro", 230), ("capibara", 230)]
+    extras = [("farfalle", 130), None, ("farfalle", 120), None]
     for n, items in enumerate(groups):
         cocktail_page(c, items, n % 2 == 1, scenes[n], seed=11 + n * 5, extra=extras[n])
         c.showPage()
     analcolici(c)
+    c.showPage()
+    soft_e_birre(c)
     c.showPage()
     c.save()
     print("creato", OUT)
