@@ -24,7 +24,7 @@ export const site = {
     country: "IT",
   },
   phone: "+39 329 697 4492", // ✔ schede pubbliche (da riconfermare)
-  whatsapp: "393296974492", // ✎ sostituire con il numero WhatsApp Business quando disponibile
+  whatsapp: "393296974492", // ✔ numero WhatsApp Business
   email: "info@ryococktailbar.it", // ✔
 
   social: {
