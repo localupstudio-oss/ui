@@ -127,7 +127,7 @@ class Sheet:
     def save(self, path, quality=86):
         Image.fromarray(np.clip(self.rgb, 0, 255).astype(np.uint8)).save(path, quality=quality, optimize=True)
 
-    def place(self, path, x_pt, y_pt, w_pt, flip=False, fade=0.0):
+    def place(self, path, x_pt, y_pt, w_pt, flip=False, fade=0.0, strength=1.0):
         """Incolla un acquerello su fondo bianco in modalità «moltiplica»: il bianco sparisce
         e la pittura si fonde con il fiume e l'acqua già stesi. fade = sfuma i bordi (in punti)."""
         im = Image.open(path).convert("RGB")
@@ -147,6 +147,8 @@ class Sheet:
                 r = np.clip(np.minimum(np.arange(n), np.arange(n)[::-1]) / f, 0, 1)
                 ramp *= r[:, None] if axis == 0 else r[None, :]
             a = 1 - (1 - a) * ramp[..., None]
+        if strength < 1:
+            a = 1 - (1 - a) * strength  # velatura più leggera
         x0, y0 = int(x_pt * PT), int(y_pt * PT)
         xa, ya = max(0, x0), max(0, y0)
         xb, yb = min(self.w, x0 + w), min(self.h, y0 + h)
