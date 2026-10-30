@@ -169,46 +169,67 @@ def img_h(name, w):
     return scene_height(name, w)
 
 
-def jungle_frame(s, mirror, seed, scene=None, top_border=True):
-    """Paesaggio d'acquerello continuo: il fiume scende lungo un lato della pagina e sfocia
-    nel fiume in basso; sul lato opposto la vegetazione della giungla; l'animale in riva."""
-    rw = 190  # larghezza del fiume verticale
-    rh = img_h("fiume-verticale", rw)
+def river_line(s, p0, p1, width=170, strength=0.8):
+    """Fiume reale ad acquerello lungo la retta p0 → p1 (anche obliqua), fatto di tratti raccordati."""
+    import math
+    (x0, y0), (x1, y1) = p0, p1
+    L = math.hypot(x1 - x0, y1 - y0)
+    seg = img_h("fiume-verticale", width) * 0.9
+    n = max(1, math.ceil(L / seg))
+    ang = math.degrees(math.atan2(x1 - x0, y1 - y0))  # 0 = verticale verso il basso
+    for i in range(n):
+        t = (i + 0.5) / n
+        s.place_rotated(PAINT / "fiume-verticale.jpg", x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, width, ang,
+                        flip=i % 2 == 1, fade=18, strength=strength)
+
+
+def jungle_frame(s, mirror, seed, scene=None, top_border=True, river=True, side=False):
+    """Paesaggio: piante negli angoli in alto e sui lati, fiume reale che attraversa la pagina
+    in obliquo fino all'acqua in basso, animale sulla riva in un angolo in basso."""
+    X = (lambda x: W - x) if mirror else (lambda x: x)
     bw = W + 60
     bh = img_h("fiume-orizzontale", bw)
-    by = H - bh * 0.78  # si vede la riva con gli alberi e l'acqua, il resto esce dalla pagina
-    rx = -30 if mirror else W - rw + 30
-    s.place(PAINT / "fiume-verticale.jpg", rx, -20, rw, flip=mirror, fade=10, strength=0.78)
-    s.place(PAINT / "fiume-verticale.jpg", rx, rh - 90, rw, flip=not mirror, fade=16, strength=0.78)
-    s.place(PAINT / "fiume-orizzontale.jpg", -30, by, bw, flip=mirror, fade=8, strength=0.72)
+    by = H - bh * 0.5  # in basso solo l'acqua e la riva
+    if river and side:  # pagine-elenco e copertina: il fiume scende lungo il bordo
+        river_line(s, (X(W - 95), -40), (X(W - 140), H - 150), width=165)
+    elif river:
+        # scende quasi dritto a destra, poi piega in obliquo verso l'acqua in basso a sinistra
+        pts = [(430, -40), (430, 280), (190, 520), (150, 735)]
+        for a, b in zip(pts, pts[1:]):
+            river_line(s, (X(a[0]), a[1]), (X(b[0]), b[1]), width=140)
+    s.place(PAINT / "fiume-orizzontale.jpg", -30, by, bw, flip=mirror, fade=10, strength=0.7)
     if top_border:
-        gw = 130
-        s.place(PAINT / "giungla-lato.jpg", (W - gw + 6 if mirror else -6), -6, gw, flip=mirror, fade=30, strength=0.85)
+        gw = 112
+        s.place(PAINT / "giungla-lato.jpg", -8, -8, gw, fade=26, strength=0.9)
+        s.place(PAINT / "giungla-lato.jpg", W - gw + 8, -8, gw, flip=True, fade=26, strength=0.9)
+        # ciuffi più piccoli a metà dei lati
+        s.place(PAINT / "giungla-lato.jpg", (W - 80 if mirror else -14), 330, 92, flip=mirror, fade=24, strength=0.8)
     if scene:
         name, sw = scene
         sh = img_h(name, sw)
-        # l'animale sta sulla riva, sopra il fiume in basso, dal lato opposto al fiume verticale
-        s.place(PAINT / f"{name}.jpg", (W - sw - 150 if mirror else 150), by - sh * 0.3, sw, flip=not mirror, fade=24)
+        # dal lato opposto a dove il fiume raggiunge l'acqua
+        left = (not mirror) if side else mirror
+        s.place(PAINT / f"{name}.jpg", (6 if left else W - sw - 6), H - sh - 10, sw, flip=not left, fade=24)
+
+
+SPOTS = [(200, 112, 200), (192, 222, 190), (168, 336, 180), (450, 474, 190), (436, 586, 200)]  # (centro x, y, larghezza)
 
 
 def cocktail_page(c, items, mirror, scene, seed, extra=None):
-    """Cinque voci in colonna nello spazio tra la giungla e il fiume."""
-    cx = W - 232 if mirror else 232
+    """Voci sparse negli spazi liberi ai due lati del fiume obliquo."""
 
     def paint(s):
         jungle_frame(s, mirror, seed, scene=scene)
 
     background(c, paint)
-    y = 112
-    gap = (470 - 112) / max(1, len(items) - 1) if len(items) > 1 else 0
-    for item in items:
-        entry(c, item, cx, y, width=250)
-        y += gap
+    spots = SPOTS if len(items) == 5 else [SPOTS[0], SPOTS[2], SPOTS[3], SPOTS[4]]
+    for item, (x, y, w) in zip(items, spots):
+        entry(c, item, (W - x) if mirror else x, y, width=w)
 
 
 def cover(c):
     def paint(s):
-        jungle_frame(s, False, 41)
+        jungle_frame(s, False, 41, side=True)
         s.place(PAINT / "ara.jpg", 10, 470, 300, fade=26)
 
     background(c, paint)
@@ -223,7 +244,7 @@ def cover(c):
 def intro(c):
     """Seconda pagina: il racconto del fiume, come la citazione d'apertura delle grandi carte."""
     def paint(s):
-        jungle_frame(s, True, 51, scene=("bradipo", 210), top_border=False)
+        jungle_frame(s, True, 51, scene=("bradipo", 240), top_border=False, side=True)
         s.place(PAINT / "farfalle.jpg", W - 170, 30, 140, fade=20)
 
     background(c, paint)
@@ -253,7 +274,7 @@ def intro(c):
 
 def analcolici(c):
     def paint(s):
-        jungle_frame(s, True, 61, scene=("fenicottero", 200), top_border=False)
+        jungle_frame(s, True, 61, scene=("fenicottero", 240), top_border=False, side=True)
         s.place(PAINT / "colibri.jpg", W - 175, 24, 150, fade=18)
 
     background(c, paint)
@@ -293,7 +314,7 @@ def list_title(c, x0, x1, y, title, price=None):
 
 def soft_e_birre(c):
     def paint(s):
-        jungle_frame(s, False, 71, top_border=False)
+        jungle_frame(s, False, 71, top_border=False, side=True)
         s.place(PAINT / "iguana.jpg", 20, 22, 170, flip=True, fade=20)
 
     background(c, paint)
@@ -328,7 +349,7 @@ def main():
     c.showPage()
     # 5 cocktail per pagina; l'ultima raccoglie la famiglia Negroni
     groups = [COCKTAILS[0:5], COCKTAILS[5:10], COCKTAILS[10:14], COCKTAILS[14:19]]
-    scenes = [("tucano", 200), ("scimmia", 200), ("giaguaro", 200), ("capibara", 200)]
+    scenes = [("tucano", 220), ("scimmia", 220), ("giaguaro", 220), ("capibara", 220)]
     extras = [("farfalle", 130), None, ("farfalle", 120), None]
     for n, items in enumerate(groups):
         cocktail_page(c, items, n % 2 == 1, scenes[n], seed=11 + n * 5, extra=extras[n])

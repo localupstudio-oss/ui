@@ -249,3 +249,34 @@ class Sheet:
         self._paint(glint * 0.45, (232, 245, 238))
         # granulazione del pigmento
         self._lay(body * 0.06 * (_noise(self.h, self.w, 5, seed + 9) > 0.6), water[2])
+
+    def place_rotated(self, path, cx_pt, cy_pt, w_pt, angle, flip=False, flipv=False, fade=0.0, strength=1.0):
+        """Come place(), ma ruotata di `angle` gradi (antiorario) attorno al centro (cx, cy)."""
+        im = Image.open(path).convert("RGB")
+        if flip:
+            im = im.transpose(Image.FLIP_LEFT_RIGHT)
+        if flipv:
+            im = im.transpose(Image.FLIP_TOP_BOTTOM)
+        w = int(w_pt * PT)
+        h = int(w * im.height / im.width)
+        im = im.resize((w, h), Image.LANCZOS)
+        a = np.asarray(im, np.float32) / 255
+        paper = np.percentile(a.reshape(-1, 3), 97, axis=0)
+        a = np.clip(a / np.maximum(paper, 0.5) * 1.015, 0, 1)
+        if fade:
+            f = int(fade * PT)
+            ramp = np.ones((h, w), np.float32)
+            for axis, n in ((0, h), (1, w)):
+                r = np.clip(np.minimum(np.arange(n), np.arange(n)[::-1]) / f, 0, 1)
+                ramp *= r[:, None] if axis == 0 else r[None, :]
+            a = 1 - (1 - a) * ramp[..., None]
+        if strength < 1:
+            a = 1 - (1 - a) * strength
+        rot = Image.fromarray((a * 255).astype(np.uint8)).rotate(angle, resample=Image.BICUBIC, expand=True, fillcolor=(255, 255, 255))
+        a = np.asarray(rot, np.float32) / 255
+        rh, rw = a.shape[:2]
+        x0, y0 = int(cx_pt * PT - rw / 2), int(cy_pt * PT - rh / 2)
+        xa, ya = max(0, x0), max(0, y0)
+        xb, yb = min(self.w, x0 + rw), min(self.h, y0 + rh)
+        if xb > xa and yb > ya:
+            self.rgb[ya:yb, xa:xb] *= a[ya - y0: yb - y0, xa - x0: xb - x0]
