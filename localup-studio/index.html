@@ -475,8 +475,11 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .foot-bottom { margin-top: 36px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--grey-d); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 
 /* ---------- Devices story: MacBook + iPhone in CSS 3D, driven by scroll ---------- */
-.dv { position: relative; overflow: hidden; color: var(--black); padding-block: clamp(90px, 10vw, 140px);
+/* Pinned: the section is 240vh tall, the scene stays fixed on screen while the MacBook opens */
+.dv { position: relative; height: 240vh; color: var(--black);
   background: radial-gradient(120% 90% at 72% 42%, #f6f6f7 0%, #e7e7e9 55%, #d8d8db 100%); }
+.dv-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; padding-top: 70px; }
+.dv-pin > .wrap { width: 100%; }
 .dv-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.3fr); gap: clamp(30px, 4vw, 60px); align-items: center; }
 .dv-copy { display: grid; gap: 26px; justify-items: start; position: relative; z-index: 2; }
 .dv-copy h2 { font-size: clamp(42px, 5vw, 84px); }
@@ -567,6 +570,39 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .shot figcaption { grid-template-columns: 1fr; padding: 22px 20px 24px; }
 }
 
+/* ---------- Hero iMac: thin slab, white bezel, aluminium chin, bent stand ---------- */
+.imac { --d: clamp(6px, .8vw, 10px); --r: clamp(12px, 1.5vw, 20px); padding-bottom: 12%; perspective-origin: 50% 20%; }
+.imac .imac-intro, .imac .m3d-tilt, .imac .mon-body, .imac-stand { transform-style: preserve-3d; }
+.imac-front { position: relative; border-radius: var(--r); overflow: hidden; background: #f4f4f6;
+  padding: 2.4% 2.4% 0; box-shadow: 0 0 0 1px rgba(255,255,255,.7) inset; }
+.imac-front .screen { border-radius: 3px; }
+.imac-chin { aspect-ratio: 100 / 11; margin: 2.4% -2.6% 0; background: linear-gradient(180deg, #e4e5e8, #c9cacd 70%, #b9babd); border-top: 1px solid rgba(0,0,0,.08); }
+.imac .face.back { background: radial-gradient(ellipse at 40% 30%, #f1f1f3, #cfd0d3 55%, #a9aaae); }
+.imac .face.l, .imac .face.r { background: linear-gradient(90deg, #a7a8ac, #dcdde0, #a7a8ac); }
+.imac .face.t { background: linear-gradient(180deg, #b9babe, #ececee, #b9babe); }
+.imac .face.b { background: linear-gradient(180deg, #8f9094, #6b6c70); }
+.imac-stand { position: absolute; left: 0; right: 0; top: 0; bottom: 0; pointer-events: none; }
+.imac-stand .arm { position: absolute; left: 39%; width: 22%; top: 58%; height: 53%; border-radius: 4px;
+  background: linear-gradient(90deg, #8e8f93, #d9dadd 35%, #eeeef0 55%, #b2b3b7); transform: translateZ(calc(var(--d) * -1 - 30px)); }
+.imac-stand .foot { position: absolute; left: 39%; width: 22%; top: 111%; height: 38%; border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, #d4d5d8, #f0f0f2 60%, #c3c4c7); transform-origin: top; transform: translateZ(calc(var(--d) * -1 - 30px)) rotateX(90deg); }
+.imac-shadow { position: absolute; left: 22%; right: 22%; bottom: 0; height: 9%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.8), transparent); filter: blur(10px); }
+
+/* One-time intro: rises and turns into place, then the screen powers on */
+.imac-intro { animation: imacIn 1.7s cubic-bezier(.16,.84,.24,1) .15s both; }
+@keyframes imacIn {
+  from { transform: translateY(70px) rotateY(-34deg) rotateX(10deg) scale(.9); }
+  to { transform: none; }
+}
+.imac-shadow { animation: imacShadow 1.7s cubic-bezier(.16,.84,.24,1) .15s both; }
+@keyframes imacShadow { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+.imac .boot { position: absolute; inset: 0; z-index: 30; background: #000; display: grid; place-items: center; pointer-events: none; animation: bootOff .6s ease 2.5s both; }
+.imac .boot img { width: 13cqw; filter: invert(1); opacity: 0; animation: bootLogo 1.4s ease 1.2s both; }
+@keyframes bootLogo { 0% { opacity: 0; transform: scale(.94); } 35%, 100% { opacity: 1; transform: none; } }
+@keyframes bootOff { to { opacity: 0; visibility: hidden; } }
+.imac .sheen { position: absolute; inset: 0; z-index: 31; pointer-events: none; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.28) 50%, transparent 65%); transform: translateX(-120%); animation: sheen 1.2s ease-in-out 3s both; }
+@keyframes sheen { to { transform: translateX(120%); } }
+
 /* ---------- Calm site: only the devices section moves ---------- */
 .hero h1 .ln > span, .hero-sub, .hero-actions, .panel, .m3d-float, .m3d-hero .m3d-intro, .m3d-shadow, .seal::before, .pfeed { animation: none; }
 
@@ -607,8 +643,10 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .foot-grid > :first-child { grid-column: span 2; }
   .mon-show-wrap { width: 100%; }
   .show-row { grid-template-columns: 1fr; }
-  .dv-grid { grid-template-columns: 1fr; }
-  .dv-stage { height: clamp(300px, 78vw, 560px); }
+  .dv-grid { grid-template-columns: 1fr; gap: 10px; }
+  .dv-copy { gap: 16px; }
+  .dv-copy > p, .dv-list { display: none; }
+  .dv-stage { height: min(80vw, 52svh); }
 }
 @media (max-width: 820px) {
   .stats-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 50px 20px; }
@@ -649,6 +687,10 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .plan { padding: 32px 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .imac-intro, .imac-shadow { animation: none !important; }
+  .imac .boot, .imac .sheen { display: none; }
+  .dv { height: auto; }
+  .dv-pin { position: relative; height: auto; padding-block: 120px 90px; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
@@ -696,19 +738,21 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
     <div class="panel">
       <div class="panel-head"><span class="label">Local Up Studio — <span id="demoName">Forno 1956</span></span><span class="dots3" aria-hidden="true"><i></i><i></i><i></i></span></div>
       <div class="panel-body">
-        <div class="m3d m3d-hero" id="heroMon" aria-label="Anteprima dei siti in rotazione sul monitor">
-          <div class="m3d-float"><div class="m3d-intro"><div class="m3d-tilt" style="--rx:5;--ry:-15">
+        <div class="m3d imac" id="heroMon" aria-label="iMac che mostra i siti di esempio">
+          <div class="imac-intro"><div class="m3d-tilt" style="--rx:-5;--ry:-16">
+            <div class="imac-stand" aria-hidden="true"><i class="arm"></i><i class="foot"></i></div>
             <div class="mon-body">
-              <div class="mon-frame">
+              <div class="imac-front">
                 <div class="screen" id="heroScreen">
+                  <div class="boot" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+                  <i class="sheen" aria-hidden="true"></i>
                 </div>
+                <div class="imac-chin" aria-hidden="true"></div>
               </div>
               <i class="face back" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></i><i class="face l"></i><i class="face r"></i><i class="face t"></i><i class="face b"></i>
             </div>
-            <div class="mon-neck" aria-hidden="true"></div>
-            <div class="mon-base" aria-hidden="true"></div>
-          </div></div></div>
-          <div class="m3d-shadow" aria-hidden="true"></div>
+          </div></div>
+          <div class="imac-shadow" aria-hidden="true"></div>
         </div>
       </div>
       <div class="tabs" id="tabs" role="group" aria-label="Scegli il sito da mostrare">
@@ -722,6 +766,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 
 <!-- ============ DEVICES STORY (scroll) ============ -->
 <section class="dv" id="schermi" aria-labelledby="dv-h">
+  <div class="dv-pin">
   <div class="wrap dv-grid">
     <div class="dv-copy rv">
       <span class="label">Su ogni schermo</span>
@@ -790,6 +835,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
         </div>
       </div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -1244,16 +1290,18 @@ const CONFIG = {
   // x 430 is clear of the deck's right edge (230) by 100px+, bottom on y 12, so it never touches or covers the MacBook.
   mb.style.transform = "translateX(-150px)";
   function devices(p) {
-    const o = seg(p, 0, .6), e = seg(p, .25, .85);
+    const o = seg(p, .06, .6), e = seg(p, .42, .92);
     mbLid.style.setProperty("--lid", (-78 + 90 * o).toFixed(2));
     mbOff.style.opacity = (1 - clamp01((o - .35) / .5)).toFixed(3);
     dvWorld.style.transform = "translateY(120px) rotateX(" + (-20 + 3 * o).toFixed(2) + "deg) rotateY(" + (-38 + 8 * o).toFixed(2) + "deg)";
     ip.style.transform = "translate3d(430px," + (-133 - 90 * (1 - e)).toFixed(1) + "px,120px) rotateY(" + (-14 - 8 * (1 - e)).toFixed(2) + "deg) scale(.66)";
   }
+  // Progress runs only while the section is pinned (scene fully on screen): 0 when it locks, 1 when it releases.
+  const dvSec = document.getElementById("schermi");
   function devicesFrame() {
-    const r = dvStage.getBoundingClientRect();
+    const r = dvSec.getBoundingClientRect();
     if (r.bottom < 0 || r.top > innerHeight) return;
-    devices(clamp01((innerHeight - r.top) / (innerHeight * .9)));
+    devices(clamp01(-r.top / Math.max(1, r.height - innerHeight)));
   }
   devices(reduce ? 1 : 0);
 
