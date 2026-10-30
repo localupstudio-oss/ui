@@ -29,8 +29,8 @@ export const site = {
 
   social: {
     instagram: "https://www.instagram.com/ryococktailbar/", // ✔
-    tiktok: "", // ✎ inserire URL
-    facebook: "", // ✎ inserire URL
+    tiktok: "https://www.tiktok.com/@ryococktailbar", // ✔
+    facebook: "https://www.facebook.com/profile.php?id=61553488403054", // ✔
   },
 
   /** ✔ Orari ufficiali (ottobre 2026). Periodi di chiusura volutamente non indicati. */

@@ -14,6 +14,8 @@ export function Contacts() {
     { icon: Phone, label: "Telefono", value: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` },
     { icon: MessageCircle, label: "WhatsApp", value: "Scrivici in chat", href: whatsappUrl() },
     { icon: AtSign, label: "Instagram", value: "@ryococktailbar", href: site.social.instagram },
+    ...(site.social.facebook ? [{ icon: AtSign, label: "Facebook", value: "RYO Cocktail Bar", href: site.social.facebook }] : []),
+    ...(site.social.tiktok ? [{ icon: AtSign, label: "TikTok", value: "@ryococktailbar", href: site.social.tiktok }] : []),
     { icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
   ]
 
