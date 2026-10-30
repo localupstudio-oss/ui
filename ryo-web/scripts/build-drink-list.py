@@ -151,10 +151,10 @@ def entry(c, item, cx, y, width=250):
 
 # Per ogni paesaggio: dove cade la carta libera (centro x della colonna, larghezza, y delle 5 voci)
 COCKTAIL_PAGES = [
-    ("tucano", False, 192, 205, [80, 166, 252, 338, 422]),  # fiume a destra, tucano in basso a destra
-    ("scimmia", False, 392, 192, [96, 186, 276, 366, 456]),  # fiume a sinistra, scimmia in basso a sinistra
+    ("tucano", False, 200, 200, [78, 160, 242, 324, 404]),  # fiume a destra, tucano in basso a destra
+    ("scimmia", False, 394, 190, [124, 204, 284, 362, 438]),  # fiume a sinistra, scimmia in basso a sinistra
     ("giaguaro", False, 215, 220, [96, 186, 276, 366, 450]),  # fiume a destra, giaguaro in basso a destra
-    ("capibara", False, 376, 185, [92, 180, 268, 356, 444]),  # fiume a sinistra, capibara in basso a sinistra
+    ("capibara", False, 368, 205, [112, 193, 274, 342, 436]),  # fiume a sinistra, capibara in basso a sinistra
 ]
 
 
@@ -166,19 +166,19 @@ def cocktail_page(c, items, layout):
 
 
 def cover(c):
-    scene(c, "ara")  # ara in volo sul fiume, carta libera in alto a sinistra
-    cx = 200
-    image(c, "logo", cx, 120, 250, anchor="c")
-    spaced(c, "COCKTAILS", cx, H - 318, "SansLight", 10, 7, OLIVE)
+    scene(c, "ara")  # ara in volo sul fiume, logo al centro della carta libera
+    cx = W / 2
+    image(c, "logo", cx, 150, 260, anchor="c")
+    spaced(c, "COCKTAILS", cx, H - 268, "SansLight", 10, 7, OLIVE)
     c.setFont("SerifIt", 36)
     c.setFillColor(RED)
-    c.drawCentredString(cx, H - 358, "menù")
+    c.drawCentredString(cx, H - 308, "menù")
 
 
 def intro(c):
     """Seconda pagina: il racconto del fiume, come la citazione d'apertura delle grandi carte."""
     scene(c, "iguana", mirror=True)  # iguana in basso a destra, carta libera a sinistra
-    cx = 248
+    cx = 290
     lines = [
         "“Come le acque del fiume",
         "scorrono libere e travolgenti,",
@@ -190,7 +190,7 @@ def intro(c):
         "e sapori tropicali, dove ogni sorso",
         "racconta una storia.”",
     ]
-    y = 250
+    y = 285
     for line in lines:
         if line is None:
             y += 18
@@ -204,18 +204,18 @@ def intro(c):
 
 def analcolici(c):
     scene(c, "fenicottero")  # fiume a sinistra, fenicottero e colibrì in basso a destra
-    x0, x1 = 178, 452
+    x0, x1 = 198, 452
     c.setFont("SerifBold", 28)
     c.setFillColor(PURPLE)
-    c.drawString(x0, H - 150, "Analcolici")
-    y = 204
+    c.drawString(x0, H - 165, "Analcolici")
+    y = 219
     for name, ingredients, price, glass in ANALCOLICI:
         c.setFont("SerifBold", 18)
         c.setFillColor(PURPLE)
         c.drawString(x0, H - y, name)
         c.setFont("SerifBold", 15)
         c.setFillColor(RED)
-        c.drawRightString(x1, H - y, short_price(price))
+        c.drawString(x0 + pdfmetrics.stringWidth(name, "SerifBold", 18) + 9, H - y, short_price(price))
         yy = y + 18
         c.setFont("Sans", 11)
         c.setFillColor(INK)
@@ -228,28 +228,28 @@ def analcolici(c):
     c.drawString(x0, H - (y - 14), "Prezzi in euro.")
 
 
-def list_title(c, x0, x1, y, title, price=None):
+def list_title(c, x0, y, title, price=None):
     c.setFont("SerifBold", 28)
     c.setFillColor(PURPLE)
     c.drawString(x0, H - y, title)
-    if price:
+    if price:  # prezzo unico della sezione, subito dopo il titolo
         c.setFont("SerifBold", 20)
         c.setFillColor(RED)
-        c.drawRightString(x1, H - y, price)
+        c.drawString(x0 + pdfmetrics.stringWidth(title, "SerifBold", 28) + 12, H - y, price)
 
 
 def soft_e_birre(c):
     scene(c, "iguana")  # fiume a destra, iguana sul sasso in basso a sinistra
-    x0, x1 = 78, 352
+    x0 = 92
     price, names = SOFT_DRINK
-    list_title(c, x0, x1, 120, "Soft drink", price)
-    y = 153
+    list_title(c, x0, 146, "Soft drink", price)
+    y = 179
     c.setFont("Sans", 12.5)
     c.setFillColor(INK)
     for name in names:
         c.drawString(x0, H - y, name)
         y += 20
-    list_title(c, x0, x1, y + 26, "Birre")
+    list_title(c, x0, y + 26, "Birre")
     y += 62
     for name, p in BIRRE:
         c.setFont("SerifBold", 16)
@@ -257,7 +257,7 @@ def soft_e_birre(c):
         c.drawString(x0, H - y, name)
         c.setFont("SerifBold", 15)
         c.setFillColor(RED)
-        c.drawRightString(x1, H - y, p)
+        c.drawString(x0 + pdfmetrics.stringWidth(name, "SerifBold", 16) + 9, H - y, p)
         y += 27
 
 
