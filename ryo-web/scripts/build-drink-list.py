@@ -124,10 +124,13 @@ def entry(c, item, cx, y, width=250):
     """Voce centrata: «Nome  prezzo» e ingredienti. y = linea di base del nome (dall'alto)."""
     name, ingredients, price, glass = item
     p = short_price(price)
-    nw = pdfmetrics.stringWidth(name, "SerifBold", 19)
+    fs = 19
+    while fs > 14 and pdfmetrics.stringWidth(name, "SerifBold", fs) + 8 + pdfmetrics.stringWidth(p, "SerifBold", 15) > width + 30:
+        fs -= 0.5
+    nw = pdfmetrics.stringWidth(name, "SerifBold", fs)
     pw = pdfmetrics.stringWidth(p, "SerifBold", 15)
     x0 = cx - (nw + 8 + pw) / 2
-    c.setFont("SerifBold", 19)
+    c.setFont("SerifBold", fs)
     c.setFillColor(PURPLE)
     c.drawString(x0, H - y, name)
     c.setFont("SerifBold", 15)
@@ -162,66 +165,68 @@ def scene_height(name, w):
     return w * im.height / im.width
 
 
+def img_h(name, w):
+    return scene_height(name, w)
+
+
+def jungle_frame(s, mirror, seed, scene=None, top_border=True):
+    """Paesaggio d'acquerello continuo: il fiume scende lungo un lato della pagina e sfocia
+    nel fiume orizzontale in basso; sul lato opposto la vegetazione della giungla."""
+    rw = 235  # larghezza del fiume verticale
+    rh = img_h("fiume-verticale", rw)
+    bw = W + 40
+    bh = img_h("fiume-orizzontale", bw)
+    by = H - bh + 18
+    # fiume in basso (a tutta pagina) e fiume che scende dall'alto fino a raggiungerlo
+    s.place(PAINT / "fiume-orizzontale.jpg", -20, by, bw, flip=mirror, fade=6)
+    s.place(PAINT / "fiume-verticale.jpg", (-25 if mirror else W - rw + 25), -10, rw, flip=mirror, fade=10)
+    s.place(PAINT / "fiume-verticale.jpg", (-25 if mirror else W - rw + 25), rh - 70, rw, flip=not mirror, fade=14)
+    if top_border:
+        gw = 150
+        s.place(PAINT / "giungla-lato.jpg", (W - gw + 6 if mirror else -6), -6, gw, flip=mirror, fade=8)
+    if scene:
+        name, sw = scene
+        sh = img_h(name, sw)
+        s.place(PAINT / f"{name}.jpg", (W - sw - 10 if mirror else 10), H - sh - 14, sw, flip=not mirror, fade=22)
+
+
 def cocktail_page(c, items, mirror, scene, seed, extra=None):
-    """extra = (nome, larghezza): una seconda illustrazione piccola nell'angolo in alto libero."""
-    slots = [((W - x) if mirror else x, y) for x, y in SLOTS[len(items)]]
-    name, sw = scene
-    sh = scene_height(name, sw)
+    """Cinque voci in colonna nello spazio tra la giungla e il fiume."""
+    cx = W - 248 if mirror else 248
 
     def paint(s):
-        rng = random.Random(seed)
-        # il fiume attraversa la pagina tra le voci, con anse morbide
-        y0 = RIVER_Y[len(items)]
-        xs = [-40 + i * 113 + rng.uniform(-12, 12) for i in range(7)]
-        sign = rng.choice([-1, 1])
-        amp = (10, 18) if len(items) == 5 else (18, 32)
-        ys = [y0 + sign * (-1) ** i * rng.uniform(*amp) for i in range(7)]
-        if mirror:
-            xs = [W - x for x in xs]
-        s.river(list(zip(xs, ys)), 40 if len(items) == 5 else 46, seed=seed)
-        cx = W - 40 if mirror else 40
-        sg = -1 if mirror else 1
-        if extra:
-            ename, ew = extra
-            s.place(PAINT / f"{ename}.jpg", (W - ew - 14 if mirror else 14), 18, ew, flip=mirror, fade=22)
-        else:
-            # un affluente che scende dall'angolo
-            s.river([(cx + sg * 30, -20), (cx - sg * 8, 40), (cx + sg * 14, 90), (cx - sg * 30, 125), (cx - sg * 80, 135)], 22, seed=seed + 20)
-        s.wash(H - 58, 70, seed=seed + 3)
-        x = -10 if mirror else W - sw + 10
-        s.place(PAINT / f"{name}.jpg", x, H - sh - 6, sw, flip=not mirror, fade=26)
+        jungle_frame(s, mirror, seed, scene=scene)
 
     background(c, paint)
-    for item, (x, y) in zip(items, slots):
-        entry(c, item, x, y)
+    y = 128
+    gap = (560 - 128) / max(1, len(items) - 1) if len(items) > 1 else 0
+    for item in items:
+        entry(c, item, cx, y, width=250)
+        y += gap
 
 
 def cover(c):
     def paint(s):
-        s.river([(360, -30), (440, 40), (400, 120), (470, 180), (450, 250), (540, 300), (640, 290)], 44, seed=41)
-        s.place(PAINT / "farfalle.jpg", 22, 40, 150, fade=20)
-        s.wash(H - 70, 80, seed=43)
-        s.place(PAINT / "ara.jpg", -20, 520, 340, fade=26)
+        jungle_frame(s, False, 41)
+        s.place(PAINT / "ara.jpg", 10, 470, 300, fade=26)
 
     background(c, paint)
-    cx = W / 2
-    image(c, "logo", cx, 290, 300, anchor="c")
-    spaced(c, "COCKTAILS", cx, H - 420, "SansLight", 10, 7, OLIVE)
+    cx = 250
+    image(c, "logo", cx, 250, 270, anchor="c")
+    spaced(c, "COCKTAILS", cx, H - 368, "SansLight", 10, 7, OLIVE)
     c.setFont("SerifIt", 36)
     c.setFillColor(RED)
-    c.drawCentredString(cx, H - 460, "menù")
+    c.drawCentredString(cx, H - 408, "menù")
 
 
 def intro(c):
     """Seconda pagina: il racconto del fiume, come la citazione d'apertura delle grandi carte."""
     def paint(s):
-        s.river([(-40, 150), (90, 120), (200, 170), (320, 130), (430, 165), (540, 130), (640, 150)], 40, seed=51)
-        s.wash(H - 58, 70, seed=53)
-        s.place(PAINT / "bradipo.jpg", W - 330, H - scene_height("bradipo", 340) - 6, 340, fade=26)
-        s.place(PAINT / "farfalle.jpg", 20, 540, 150, flip=True, fade=20)
+        jungle_frame(s, True, 51, scene=("bradipo", 260), top_border=False)
+        s.place(PAINT / "farfalle.jpg", W - 170, 30, 140, fade=20)
 
     background(c, paint)
-    cx = W / 2
+    cx = 345
     lines = [
         "“Come le acque del fiume",
         "scorrono libere e travolgenti,",
@@ -238,22 +243,20 @@ def intro(c):
         if line is None:
             y += 18
             continue
-        c.setFont("SerifIt", 19)
+        c.setFont("SerifIt", 17)
         c.setFillColor(PURPLE)
         c.drawCentredString(cx, H - y, line)
-        y += 28
+        y += 26
     spaced(c, "RYO  ·  CHURRASCARIA  |  TAPAS  |  COCKTAIL", cx, H - (y + 30), "SansLight", 8, 3, OLIVE)
 
 
 def analcolici(c):
     def paint(s):
-        s.river([(-40, 120), (80, 92), (190, 135), (300, 100), (410, 130), (510, 100), (640, 120)], 34, seed=61)
-        s.place(PAINT / "colibri.jpg", 14, 560, 210, flip=True, fade=22)
-        s.wash(H - 58, 70, seed=63)
-        s.place(PAINT / "fenicottero.jpg", W - 300, H - scene_height("fenicottero", 310) - 6, 310, fade=26)
+        jungle_frame(s, True, 61, scene=("fenicottero", 250), top_border=False)
+        s.place(PAINT / "colibri.jpg", W - 175, 24, 150, fade=18)
 
     background(c, paint)
-    x0, x1 = 92, W - 92
+    x0, x1 = 228, W - 58
     c.setFont("SerifBold", 28)
     c.setFillColor(PURPLE)
     c.drawString(x0, H - 222, "Analcolici")
@@ -268,7 +271,7 @@ def analcolici(c):
         yy = y + 18
         c.setFont("Sans", 11)
         c.setFillColor(INK)
-        for line in simpleSplit(ingredients, "Sans", 11, 330):
+        for line in simpleSplit(ingredients, "Sans", 11, x1 - x0 - 30):
             c.drawString(x0, H - yy, line)
             yy += 15
         y = yy + 40
@@ -289,12 +292,10 @@ def list_title(c, x0, x1, y, title, price=None):
 
 def soft_e_birre(c):
     def paint(s):
-        s.river([(-40, 110), (80, 85), (190, 125), (300, 92), (410, 122), (510, 92), (640, 112)], 34, seed=71)
-        s.wash(H - 58, 70, seed=73)
-        s.place(PAINT / "iguana.jpg", W - 250, H - scene_height("iguana", 260) - 6, 260, fade=26)
+        jungle_frame(s, False, 71, scene=("iguana", 240), top_border=False)
 
     background(c, paint)
-    x0, x1 = 92, W - 92
+    x0, x1 = 60, W - 232
     price, names = SOFT_DRINK
     list_title(c, x0, x1, 200, "Soft drink", price)
     y = 236
