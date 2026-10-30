@@ -211,111 +211,97 @@
         {
           "nome": "Hakka",
           "descrizione": "Vodka, Sake, Lychee, Cocco, Lime, Perrier",
-          "prezzo": "12 €",
-          "bicchiere": "Tumbler basso"
+          "prezzo": "12"
         },
         {
           "nome": "Bossa Nova",
           "descrizione": "Tequila, Campari, Estratto di mango e peperone",
-          "prezzo": "12 €",
-          "bicchiere": "Tumbler basso"
+          "prezzo": "12"
         },
         {
           "nome": "Carioca",
           "descrizione": "Woodford whisky, Lampone, Lime, Zucchero, Foam di vino rosso",
-          "prezzo": "10 €",
-          "bicchiere": "Bicchiere coppetta"
+          "prezzo": "10"
         },
         {
           "nome": "Machu Picchu",
           "descrizione": "Pisco, Cordiale di limone, Passion fruit, Pepe rosa",
-          "prezzo": "10 €",
-          "bicchiere": "Coppetta piccola"
+          "prezzo": "10"
         },
         {
           "nome": "La Bombonera",
           "descrizione": "Rum, Tè verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda",
-          "prezzo": "10 €",
-          "bicchiere": "Bicchiere tiki"
+          "prezzo": "10"
         },
         {
           "nome": "RYO Collins",
           "descrizione": "Vodka, Pesca, Lychee, Lime, Fermentato frutti rossi, Tonica",
-          "prezzo": "12 €"
+          "prezzo": "12"
         },
         {
           "nome": "Old Fashioned della foresta",
           "descrizione": "Diplomático Mantuano, Fava di tonka, Honey mix, Angostura",
-          "prezzo": "11 €"
+          "prezzo": "11"
         },
         {
           "nome": "Sangria Blanca",
           "descrizione": "Gin, Amaro dolce, Vino aromatizzato con frutta tropicale",
-          "prezzo": "10 €",
-          "bicchiere": "Bicchiere calice"
+          "prezzo": "10"
         },
         {
           "nome": "Monkey Business",
           "descrizione": "Woodford Bourbon, Banana, Limone, Miele, Ginger beer",
-          "prezzo": "10 €"
+          "prezzo": "10"
         },
         {
           "nome": "Floradora",
           "descrizione": "Gin, Violetta, Maraschino, Lime, Aria di aloe vera",
-          "prezzo": "11 €",
-          "bicchiere": "Coppa grande"
+          "prezzo": "11"
         },
         {
           "nome": "Save the Jungle",
           "descrizione": "Cachaça, Vermouth aromatizzato al tamarillo, Lime, Agave, Ginger Ale",
-          "prezzo": "10 €"
+          "prezzo": "10"
         },
         {
           "nome": "Copacabana Dark",
           "descrizione": "Rum, Vaniglia, Cocco, Caffè espresso",
-          "prezzo": "11 €",
-          "bicchiere": "Bicchiere coppetta"
+          "prezzo": "11"
         },
         {
           "nome": "Umeshu",
           "descrizione": "Fusetti giapponese, Sake, Roku gin",
-          "prezzo": "12 €",
-          "bicchiere": "Tumbler basso"
+          "prezzo": "12"
         },
         {
           "nome": "Samba",
           "descrizione": "Gin Mare, Cordiale pompelmo rosa e rosmarino, Olio al basilico",
-          "prezzo": "11 €"
+          "prezzo": "11"
         },
         {
           "nome": "Negroni Chill",
           "descrizione": "Campari, Cynar, Assenzio, Cedro, Zenzero",
-          "prezzo": "10 €",
-          "bicchiere": "Tumbler basso"
+          "prezzo": "10"
         },
         {
           "nome": "Sud America-no",
           "descrizione": "Martini Riserva Bitter, Punt e Mes, Soda all'ananas",
-          "prezzo": "9 €",
-          "bicchiere": "Tumbler basso"
+          "prezzo": "9"
         },
         {
           "nome": "Barrel Negroni",
-          "descrizione": "",
-          "prezzo": "10 €",
-          "bicchiere": "Tumbler basso"
+          "descrizione": "Ricetta segreta",
+          "prezzo": "12"
         },
         {
           "nome": "Choco Negroni",
           "descrizione": "Martini Rubino Vermouth, Bitter Fusetti cacao, Bombay, Bitter al cioccolato",
-          "prezzo": "10 €",
-          "bicchiere": "Tumbler basso"
+          "prezzo": "10"
         },
         {
           "nome": "Barrel Boulevardier",
-          "descrizione": "",
-          "prezzo": "12 €",
-          "bicchiere": "Tumbler basso"
+          "descrizione": "Ricetta segreta",
+          "prezzo": "12"
         }
       ]
     },
@@ -326,20 +312,94 @@
         {
           "nome": "Jardim Botânico",
           "descrizione": "Pompelmo rosa, Basilico, Acqua frizzante",
-          "prezzo": "8 €",
-          "bicchiere": "Tumbler alto"
+          "prezzo": "8"
         },
         {
           "nome": "Il Rito",
           "descrizione": "Infuso di tè nero, Estratto di ananas, Cannella, Lime, Foglie di menta",
-          "prezzo": "8 €",
-          "bicchiere": "Tumbler alto"
+          "prezzo": "8"
         },
         {
           "nome": "Rio 0.0",
           "descrizione": "Distillato analcolico, Cetriolo, Soda allo zenzero piccante",
-          "prezzo": "9 €",
-          "bicchiere": "Bicchiere calice"
+          "prezzo": "9"
+        }
+      ]
+    },
+    {
+      "id": "soft-drink",
+      "nome": "Soft drink",
+      "piatti": [
+        {
+          "nome": "Perrier acqua frizzante",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Soda all'ananas",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Soda al pompelmo rosa",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Soda al limone",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Tonica Indian",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Ginger beer",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Coca-Cola",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Coca-Cola Zero",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Tassoni",
+          "descrizione": "",
+          "prezzo": "5"
+        }
+      ]
+    },
+    {
+      "id": "birre",
+      "nome": "Birre",
+      "piatti": [
+        {
+          "nome": "Nastro Azzurro",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Corona",
+          "descrizione": "",
+          "prezzo": "5"
+        },
+        {
+          "nome": "Birra artigianale rossa",
+          "descrizione": "",
+          "prezzo": "7"
+        },
+        {
+          "nome": "Birra artigianale bionda",
+          "descrizione": "",
+          "prezzo": "7"
         }
       ]
     }
