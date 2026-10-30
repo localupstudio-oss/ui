@@ -7,6 +7,8 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Local Up Studio progetta e sviluppa siti web su misura per ristoranti, pub, pizzerie, bar, studi dentistici, studi professionali e attività locali. Due sviluppatori, dal design al lancio.">
 <link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0F1C24">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
@@ -14,16 +16,20 @@
 /* Layout: editorial agency structure — black hero with wave texture and a 3D monitor,
    one scroll-driven studio scene (MacBook + iPhone), studio product shots for the portfolio. */
 :root {
-  --black: #050505;
-  --coal: #111111;
-  --coal-2: #1a1a1a;
-  --bone: #efefed;       /* light band, slightly off pure white */
+  /* Brand palette — Petrolio */
+  --pet: #0A5E6E;        /* primary: logo, buttons on light, headings accents (7.4:1 on white) */
+  --deep: #073F4A;       /* hover, intense fills */
+  --aqua: #1FA2B5;       /* accent on dark only (5.7:1 on ink; too weak on white) */
+  --black: #0F1C24;      /* "Inchiostro": dark bands and text, replaces pure black */
+  --coal: #142630;
+  --coal-2: #1A2F3A;
+  --bone: #EEF3F4;       /* "Nebbia": light band */
   --white: #ffffff;
-  --chalk: #f2f2f0;      /* text on black */
-  --grey: #8a8a8a;
-  --grey-d: #5c5c5c;
-  --line-d: rgba(242,242,240,.16);
-  --line-l: rgba(5,5,5,.14);
+  --chalk: #F4F8F9;      /* text on dark */
+  --grey: #8A9AA1;
+  --grey-d: #5E6F76;
+  --line-d: rgba(244,248,249,.16);
+  --line-l: rgba(15,28,36,.14);
 
   --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
   --body: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -51,7 +57,9 @@ button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
 p { margin: 0; }
-em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -.01em; }
+em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -.01em; color: var(--aqua); }
+.on-light em.s, .on-bone em.s, .dv em.s, .shot.light em.s { color: var(--pet); }
+.dv .label, .on-bone .label, .on-light .label { color: var(--pet); }
 
 .wrap { width: 100%; max-width: calc(var(--max) + 48px); margin-inline: auto; padding-left: var(--gut); padding-right: var(--gut-r); }
 .label { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
@@ -75,12 +83,12 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 }
 .btn .arr { transition: transform .3s var(--ease); font-size: 16px; letter-spacing: 0; }
 .btn:hover .arr { transform: translateX(5px); }
-.btn-chalk { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
-.btn-chalk:hover { background: transparent; color: var(--chalk); }
+.btn-chalk { background: var(--aqua); color: var(--black); border-color: var(--aqua); }
+.btn-chalk:hover { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
 .btn-line { color: var(--chalk); border-color: var(--line-d); }
-.btn-line:hover { border-color: var(--chalk); background: var(--chalk); color: var(--black); }
-.btn-ink { background: var(--black); color: var(--white); border-color: var(--black); }
-.btn-ink:hover { background: transparent; color: var(--black); }
+.btn-line:hover { border-color: var(--aqua); background: transparent; color: var(--aqua); }
+.btn-ink { background: var(--pet); color: var(--white); border-color: var(--pet); }
+.btn-ink:hover { background: var(--deep); border-color: var(--deep); color: var(--white); }
 .btn-ink-line { color: var(--black); border-color: var(--line-l); }
 .btn-ink-line:hover { background: var(--black); color: var(--white); border-color: var(--black); }
 
@@ -90,10 +98,10 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
   transition: background .4s var(--ease), border-color .4s, backdrop-filter .4s;
   border-bottom: 1px solid transparent;
 }
-.nav.solid { background: rgba(5,5,5,.86); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-color: var(--line-d); }
+.nav.solid { background: rgba(15,28,36,.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-color: var(--line-d); }
 .nav-in { display: flex; align-items: center; gap: 28px; height: 104px; transition: height .4s var(--ease); }
 .nav.solid .nav-in { height: 76px; }
-.brand img { height: 46px; width: auto; filter: invert(1); }
+.brand img { height: 44px; width: auto; }
 .nav-links { display: flex; gap: clamp(20px, 3.4vw, 56px); margin-left: auto; font-size: 13px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(242,242,240,.82); }
 .nav-links a { position: relative; padding-block: 6px; }
 .nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--chalk); transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease); }
@@ -180,7 +188,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 .tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 22px; border: 1px solid var(--line-d); }
 .tabs button { min-height: 62px; border: 0; background: transparent; color: var(--chalk); cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; transition: background .3s, color .3s; }
 .tabs button + button { border-left: 1px solid var(--line-d); }
-.tabs button[aria-pressed="true"] { background: var(--chalk); color: var(--black); }
+.tabs button[aria-pressed="true"] { background: var(--aqua); color: var(--black); }
 .tabs button:hover:not([aria-pressed="true"]) { background: rgba(255,255,255,.06); }
 
 /* ---------- Concept sites inside screens (sized in cqw) ---------- */
@@ -259,7 +267,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 .stat { display: grid; gap: 18px; }
 .stat.r { justify-items: end; text-align: right; }
 .stat .num { display: inline-flex; align-items: flex-end; font-family: var(--display); font-weight: 500; font-size: clamp(76px, 10.5vw, 168px); line-height: .8; letter-spacing: -.055em; font-variant-numeric: tabular-nums; }
-.stat .num small { font-size: .2em; font-weight: 600; letter-spacing: 0; line-height: 1; margin-left: .12em; padding-bottom: .1em; }
+.stat .num small { color: var(--pet); font-size: .2em; font-weight: 600; letter-spacing: 0; line-height: 1; margin-left: .12em; padding-bottom: .1em; }
 .stat .label { font-size: 13px; }
 .s1 { grid-column: 1; grid-row: 1; } .s2 { grid-column: 3; grid-row: 1; } .s3 { grid-column: 1; grid-row: 2; } .s4 { grid-column: 3; grid-row: 2; }
 .seal { grid-column: 2; grid-row: 1 / 3; width: clamp(220px, 26vw, 380px); aspect-ratio: 1; max-width: 100%; border-radius: 50%; position: relative; display: grid; place-items: center;
@@ -270,7 +278,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
   animation: spin 14s linear infinite; }
 .seal::after { content: ""; position: absolute; inset: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.08); }
-.seal img { width: 50%; filter: grayscale(1) drop-shadow(0 1px 0 #fff) drop-shadow(0 6px 8px rgba(0,0,0,.22)); }
+.seal img { width: 54%; filter: drop-shadow(0 1px 0 #fff) drop-shadow(0 6px 8px rgba(15,28,36,.22)); }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- Services: giant rows ---------- */
@@ -280,7 +288,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 .svc-intro h2 { margin-top: 18px; font-size: clamp(40px, 5vw, 76px); }
 .svc-intro p { color: rgba(242,242,240,.75); font-size: 18px; max-width: 460px; }
 .svc-row { position: relative; border-bottom: 1px solid var(--line-d); cursor: pointer; outline-offset: -4px; }
-.svc-row::before { content: ""; position: absolute; inset: 0; background: var(--chalk); transform: scaleY(0); transform-origin: bottom; transition: transform .55s var(--ease); }
+.svc-row::before { content: ""; position: absolute; inset: 0; background: var(--bone); transform: scaleY(0); transform-origin: bottom; transition: transform .55s var(--ease); }
 .svc-row > .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 120px 1fr 120px; align-items: center; padding-block: clamp(18px, 2.4vw, 30px); transition: color .4s var(--ease); }
 .svc-row .no { font-size: 13px; font-weight: 700; letter-spacing: .14em; }
 .svc-row .name { text-align: center; font-family: var(--display); font-weight: 500; text-transform: uppercase; font-size: clamp(34px, 7.4vw, 116px); line-height: 1; letter-spacing: -.045em; }
@@ -291,6 +299,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 .svc-row .desc > p { overflow: hidden; text-align: center; max-width: 640px; margin-inline: auto; font-size: 17px; color: #444; }
 .svc-row:hover::before, .svc-row.open::before { transform: scaleY(1); }
 .svc-row:hover > .wrap, .svc-row.open > .wrap { color: var(--black); }
+.svc-row:hover .no, .svc-row.open .no, .svc-row:hover .pm, .svc-row.open .pm { color: var(--pet); opacity: 1; }
 .svc-row.open .desc { grid-template-rows: 1fr; }
 .svc-row.open .desc > p { padding-top: 14px; }
 .svc-row.open .pm::after { transform: translate(-50%,-50%) rotate(0); }
@@ -299,7 +308,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
 .pf { padding-block: clamp(90px, 11vw, 150px); }
 .pf-head { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; margin-bottom: clamp(50px, 6vw, 80px); }
 .pf-head h2 { font-size: clamp(64px, 13vw, 210px); letter-spacing: -.065em; line-height: .82; }
-.pf-head h2 em.s { display: block; font-size: .42em; letter-spacing: -.02em; margin-top: .12em; line-height: 1; color: rgba(242,242,240,.7); }
+.pf-head h2 em.s { display: block; font-size: .42em; letter-spacing: -.02em; margin-top: .12em; line-height: 1; color: var(--aqua); }
 .pf-side { max-width: 380px; display: grid; gap: 26px; justify-items: start; color: rgba(242,242,240,.75); }
 .tile .feat { list-style: none; padding: 0; margin: 18px 0 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .tile .feat li { font-size: 12.5px; font-weight: 500; padding: 5px 11px; border-radius: 99px; border: 1px solid currentColor; opacity: .7; letter-spacing: 0; }
@@ -390,7 +399,7 @@ summary::-webkit-details-marker { display: none; }
 summary .pm { flex: none; width: 36px; height: 36px; border: 1px solid var(--line-l); position: relative; transition: background .3s; }
 summary .pm::before, summary .pm::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--black); transform: translate(-50%,-50%); transition: transform .35s var(--ease); }
 summary .pm::after { transform: translate(-50%,-50%) rotate(90deg); }
-details[open] summary .pm { background: var(--black); border-color: var(--black); }
+details[open] summary .pm { background: var(--pet); border-color: var(--pet); }
 details[open] summary .pm::before, details[open] summary .pm::after { background: #fff; }
 details[open] summary .pm::after { transform: translate(-50%,-50%) rotate(0); }
 details .ans { padding: 0 60px 28px 0; color: #4a4a4a; font-size: 17px; line-height: 1.6; max-width: 660px; }
@@ -413,14 +422,14 @@ form { display: grid; gap: 26px; min-width: 0; align-content: start; }
 .field input, .field textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(242,242,240,.28); border-radius: 0; color: var(--chalk); font: inherit; font-size: 18px; padding: 12px 0; transition: border-color .2s; }
 .field textarea { min-height: 110px; resize: vertical; }
 .field input::placeholder, .field textarea::placeholder { color: #555; }
-.field input:focus, .field textarea:focus { outline: none; border-color: var(--chalk); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--aqua); }
 .field input[aria-invalid="true"] { border-color: #ff6961; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; border: 0; padding: 0; margin: 0; min-width: 0; }
 .chips legend { padding: 0; margin-bottom: 12px; }
 .chips input { position: absolute; opacity: 0; pointer-events: none; }
 .chips label.chip { font-size: 14px; padding: 10px 16px; border: 1px solid rgba(242,242,240,.24); cursor: pointer; transition: all .25s var(--ease); color: var(--chalk); }
 .chips label.chip:hover { border-color: var(--chalk); }
-.chips input:checked + label.chip { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
+.chips input:checked + label.chip { background: var(--aqua); color: var(--black); border-color: var(--aqua); }
 .chips input:focus-visible + label.chip { outline: 2px solid var(--chalk); outline-offset: 2px; }
 .form-foot { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
 .form-foot small { color: #6a6a6a; font-size: 13px; max-width: 280px; }
@@ -440,7 +449,7 @@ form { display: grid; gap: 26px; min-width: 0; align-content: start; }
 .how-steps li { padding: 18px 20px 6px 0; font-size: 15px; color: #444; display: grid; gap: 6px; align-content: start; }
 .how-steps li + li { padding-left: 20px; border-left: 1px solid var(--line-l); }
 .how-steps span { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #777; }
-.how-steps b { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 20px; letter-spacing: -.02em; color: var(--black); }
+.how-steps b { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 20px; letter-spacing: -.02em; color: var(--pet); }
 @media (max-width: 820px) {
   .how-steps { grid-template-columns: 1fr; }
   .how-steps li, .how-steps li + li { padding: 14px 0; border-left: 0; border-top: 1px solid var(--line-l); }
@@ -465,19 +474,19 @@ form { display: grid; gap: 26px; min-width: 0; align-content: start; }
 @media (max-width: 960px) { .foot-cta { grid-template-columns: 1fr; } }
 footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow: hidden; }
 .foot-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 32px; padding-bottom: 50px; border-bottom: 1px solid var(--line-d); }
-.foot-grid img { width: 220px; filter: invert(1); }
+.foot-grid img { width: 260px; }
 .foot-grid p { color: var(--grey); font-size: 15px; margin-top: 20px; max-width: 300px; }
 .foot-col { display: grid; gap: 12px; align-content: start; font-size: 15px; }
 .foot-col b { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
 .foot-col a:hover { text-decoration: underline; }
 .foot-giant { margin-top: 50px; font-size: clamp(60px, 14.6vw, 240px); white-space: nowrap; line-height: .8; letter-spacing: -.065em; }
-.foot-giant em.s { font-size: .5em; letter-spacing: -.02em; color: rgba(242,242,240,.6); }
+.foot-giant em.s { font-size: .5em; letter-spacing: -.02em; color: var(--aqua); }
 .foot-bottom { margin-top: 36px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--grey-d); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 
 /* ---------- Devices story: MacBook + iPhone in CSS 3D, driven by scroll ---------- */
 /* Pinned: the section is 240vh tall, the scene stays fixed on screen while the MacBook opens */
 .dv { position: relative; height: 240vh; color: var(--black);
-  background: radial-gradient(120% 90% at 72% 42%, #f6f6f7 0%, #e7e7e9 55%, #d8d8db 100%); }
+  background: radial-gradient(120% 90% at 72% 42%, #F6FAFB 0%, #E6EEF0 55%, #D6E1E4 100%); }
 .dv-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; padding-top: 70px; }
 .dv-pin > .wrap { width: 100%; }
 .dv-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.3fr); gap: clamp(30px, 4vw, 60px); align-items: center; }
@@ -551,8 +560,8 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .shots { display: grid; gap: 14px; }
 .shots-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .shot { margin: 0; display: flex; flex-direction: column; overflow: hidden; }
-.shot.light { background: radial-gradient(120% 90% at 65% 35%, #f6f6f7, #e4e4e7 60%, #d5d5d8); color: var(--black); }
-.shot.dark { background: radial-gradient(110% 85% at 50% 28%, #3c3c3f, #1d1d1f 55%, #0e0e0f); color: var(--chalk); }
+.shot.light { background: radial-gradient(120% 90% at 65% 35%, #F6FAFB, #E4EDEF 60%, #D4E0E3); color: var(--black); }
+.shot.dark { background: radial-gradient(110% 85% at 50% 28%, #22404D, #142630 55%, #0B151B); color: var(--chalk); }
 .shot-stage { position: relative; height: clamp(300px, 32vw, 500px); perspective: 2400px; perspective-origin: 50% 25%; display: grid; place-items: center; }
 .shot-stage.tall { height: clamp(320px, 44vw, 640px); }
 .shot-scale { transform: scale(var(--k, 1)); transform-style: preserve-3d; }
@@ -597,7 +606,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .imac-shadow { animation: imacShadow 1.7s cubic-bezier(.16,.84,.24,1) .15s both; }
 @keyframes imacShadow { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
 .imac .boot { position: absolute; inset: 0; z-index: 30; background: #000; display: grid; place-items: center; pointer-events: none; animation: bootOff .6s ease 2.5s both; }
-.imac .boot img { width: 13cqw; filter: invert(1); opacity: 0; animation: bootLogo 1.4s ease 1.2s both; }
+.imac .boot img { width: 13cqw; opacity: 0; animation: bootLogo 1.4s ease 1.2s both; }
 @keyframes bootLogo { 0% { opacity: 0; transform: scale(.94); } 35%, 100% { opacity: 1; transform: none; } }
 @keyframes bootOff { to { opacity: 0; visibility: hidden; } }
 .imac .sheen { position: absolute; inset: 0; z-index: 31; pointer-events: none; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.28) 50%, transparent 65%); transform: translateX(-120%); animation: sheen 1.2s ease-in-out 3s both; }
@@ -655,7 +664,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .m-cta {
     display: flex; position: fixed; z-index: 45; left: 0; right: 0; bottom: 0;
     padding: 10px var(--gut-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gut);
-    background: rgba(5,5,5,.9); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    background: rgba(15,28,36,.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border-top: 1px solid var(--line-d); transform: translateY(110%); transition: transform .5s var(--ease);
   }
   .m-cta.show { transform: none; }
@@ -701,7 +710,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="Local Up Studio, torna all'inizio"><img src="assets/logo.png" alt="Local Up Studio" width="81" height="46"></a>
+    <a class="brand" href="#top" aria-label="Local Up Studio, torna all'inizio"><img src="assets/logo-orizzontale-scuro.png" alt="Local Up Studio" width="104" height="44"></a>
     <nav class="nav-links" id="navLinks" aria-label="Principale">
       <a href="#top">Home</a>
       <a href="#servizi">Servizi</a>
@@ -744,12 +753,12 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
             <div class="mon-body">
               <div class="imac-front">
                 <div class="screen" id="heroScreen">
-                  <div class="boot" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+                  <div class="boot" aria-hidden="true"><img src="assets/simbolo-petrolio-scuro.png" alt=""></div>
                   <i class="sheen" aria-hidden="true"></i>
                 </div>
                 <div class="imac-chin" aria-hidden="true"></div>
               </div>
-              <i class="face back" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></i><i class="face l"></i><i class="face r"></i><i class="face t"></i><i class="face b"></i>
+              <i class="face back" aria-hidden="true"><img src="assets/simbolo-petrolio.png" alt=""></i><i class="face l"></i><i class="face r"></i><i class="face t"></i><i class="face b"></i>
             </div>
           </div></div>
           <div class="imac-shadow" aria-hidden="true"></div>
@@ -790,7 +799,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
             <div class="mb-lid" id="mbLid">
               <i class="edge" aria-hidden="true"></i>
               <div class="in"><div class="screen" data-demo="1"></div><span class="notch" aria-hidden="true"></span><span class="chin" aria-hidden="true">LOCAL UP</span><span class="off" id="mbOff"></span></div>
-              <div class="out" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+              <div class="out" aria-hidden="true"><img src="assets/simbolo-petrolio.png" alt=""></div>
             </div>
           </div>
           <div class="ip" id="ip">
@@ -829,7 +838,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
                 <p class="pfoot">Via Gombito 8 · Bergamo<br>Tutti i giorni 18:00 — 01:00</p>
               </div>
               </div></div>
-              <div class="ip-back" aria-hidden="true"><div class="ip-cam"><i></i><i></i><i></i><b></b><u></u></div><img src="assets/logo-mark.png" alt=""></div>
+              <div class="ip-back" aria-hidden="true"><div class="ip-cam"><i></i><i></i><i></i><b></b><u></u></div><img src="assets/simbolo-petrolio.png" alt=""></div>
             </div>
           </div>
         </div>
@@ -844,7 +853,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   <div class="wrap stats-grid">
     <div class="stat s1 rv"><span class="num"><span class="count" data-to="100">100</span><small>%</small></span><span class="label">Codice scritto a mano</span></div>
     <div class="stat s2 r rv"><span class="num"><span class="count" data-to="48">48</span><small>ORE</small></span><span class="label">Per ricevere il preventivo</span></div>
-    <div class="seal rv"><img src="assets/logo-mark.png" alt="" width="215" height="245"></div>
+    <div class="seal rv"><img src="assets/simbolo-petrolio.png" alt="" width="609" height="669"></div>
     <div class="stat s3 rv"><span class="num"><span class="count" data-to="3">3</span><small>SETT.</small></span><span class="label">Dal primo caffè al sito online</span></div>
     <div class="stat s4 r rv"><span class="num"><span class="count" data-to="0">0</span><small>TEMPLATE</small></span><span class="label">Siti fatti con lo stampino</span></div>
   </div>
@@ -967,7 +976,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
     </div>
     <div class="foot-grid">
       <div>
-        <img src="assets/logo.png" alt="Local Up Studio" width="220" height="125">
+        <img src="assets/logo-orizzontale-scuro.png" alt="Local Up Studio" width="260" height="110">
         <p>Siti web su misura per locali, ristoranti, studi e attività. Un piccolo studio di due persone, in tutta Italia.</p>
       </div>
       <div class="foot-col"><b>Studio</b><a href="#servizi">Servizi</a><a href="#come-lavoriamo">Come lavoriamo</a><a href="#portfolio">Portfolio</a></div>
@@ -1037,7 +1046,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
     <div class="mb-deck"><i class="grill l"></i><i class="grill r"></i><div class="kb"></div><div class="tp"></div></div>
     <div class="mb-front" aria-hidden="true"></div>
     <div class="mb-side" aria-hidden="true"></div><div class="mb-side l" aria-hidden="true"></div>
-    <div class="mb-lid"><i class="edge" aria-hidden="true"></i><div class="in"><div class="screen"></div><span class="notch" aria-hidden="true"></span><span class="chin" aria-hidden="true">LOCAL UP</span></div><div class="out" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div></div>
+    <div class="mb-lid"><i class="edge" aria-hidden="true"></i><div class="in"><div class="screen"></div><span class="notch" aria-hidden="true"></span><span class="chin" aria-hidden="true">LOCAL UP</span></div><div class="out" aria-hidden="true"><img src="assets/simbolo-petrolio.png" alt=""></div></div>
   </div>
 </template>
 <template id="tpl-phone">
@@ -1045,7 +1054,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
     <i class="ip-slice" style="transform:translateZ(-4.5px)"></i><i class="ip-slice" style="transform:translateZ(-3px)"></i><i class="ip-slice" style="transform:translateZ(-1.5px)"></i><i class="ip-slice" style="transform:translateZ(0px)"></i><i class="ip-slice" style="transform:translateZ(1.5px)"></i><i class="ip-slice" style="transform:translateZ(3px)"></i><i class="ip-slice" style="transform:translateZ(4.5px)"></i>
     <i class="ip-btn pwr"></i><i class="ip-btn v1"></i><i class="ip-btn v2"></i><i class="ip-btn act"></i>
     <div class="ip-front"><div class="ip-screen"></div></div>
-    <div class="ip-back" aria-hidden="true"><div class="ip-cam"><i></i><i></i><i></i><b></b><u></u></div><img src="assets/logo-mark.png" alt=""></div>
+    <div class="ip-back" aria-hidden="true"><div class="ip-cam"><i></i><i></i><i></i><b></b><u></u></div><img src="assets/simbolo-petrolio.png" alt=""></div>
   </div>
 </template>
 <template id="tpl-screen-feed"><span class="island" aria-hidden="true"></span>
