@@ -25,7 +25,7 @@ export const site = {
   },
   phone: "+39 329 697 4492", // ✔ schede pubbliche (da riconfermare)
   whatsapp: "393296974492", // ✎ sostituire con il numero WhatsApp Business quando disponibile
-  email: "info@ryococktailbar.it", // ✎
+  email: "info@ryococktailbar.it", // ✔
 
   social: {
     instagram: "https://www.instagram.com/ryococktailbar/", // ✔
@@ -33,23 +33,27 @@ export const site = {
     facebook: "", // ✎ inserire URL
   },
 
-  /** ✔ "Aperti dal mercoledì alla domenica" — orari esatti ✎ */
+  /** ✔ Orari ufficiali (ottobre 2026). Periodi di chiusura volutamente non indicati. */
   hours: [
     { days: "Lunedì", value: "Chiuso" },
     { days: "Martedì", value: "Chiuso" },
-    { days: "Mercoledì", value: "19:00 – 01:00" },
-    { days: "Giovedì", value: "19:00 – 01:00" },
-    { days: "Venerdì", value: "19:00 – 02:00" },
-    { days: "Sabato", value: "19:00 – 02:00" },
-    { days: "Domenica", value: "19:00 – 01:00" },
+    { days: "Mercoledì", value: "18:30 – 01:00" },
+    { days: "Giovedì", value: "18:30 – 03:00" },
+    { days: "Venerdì", value: "18:30 – 03:00" },
+    { days: "Sabato", value: "18:30 – 03:00" },
+    { days: "Domenica", value: "18:30 – 01:00" },
   ],
+  /** ✔ La cucina chiude sempre a mezzanotte. */
+  kitchenCloses: "00:00",
   /** Giorni di chiusura (0 = domenica … 6 = sabato) usati anche dalla validazione prenotazioni. */
   closedWeekdays: [1, 2],
 
   company: {
-    legalName: "Ragione sociale S.r.l.", // ✎
-    vat: "IT00000000000", // ✎
-    rea: "SA-000000", // ✎
+    legalName: "Rigo Services S.r.l.", // ✔
+    vat: "05981510653", // ✔
+    rea: "SA-488417", // ✔
+    legalSeat: "Corso Mazzini, 39 – 84013 Cava de' Tirreni (SA)", // ✔ sede legale
+    legalRep: "Franco De Felicis", // ✔ rappresentante legale
   },
 } as const
 

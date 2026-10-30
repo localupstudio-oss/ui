@@ -70,12 +70,8 @@ const jsonLd = {
   },
   hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`,
   openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "19:00",
-      closes: "01:00",
-    },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Wednesday", "Sunday"], opens: "18:30", closes: "01:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Thursday", "Friday", "Saturday"], opens: "18:30", closes: "03:00" },
   ],
   sameAs: Object.values(site.social).filter(Boolean),
 }

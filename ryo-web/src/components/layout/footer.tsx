@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { DemoBadge } from "@/components/demo-badge"
 import { fullAddress, nav, site, whatsappUrl } from "@/content/site"
 
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`
@@ -78,7 +77,7 @@ export function Footer() {
         </div>
 
         <div className="lg:col-span-3">
-          <h3 className="flex items-center gap-2 text-sm tracking-wide text-ink/60">Orari <DemoBadge /></h3>
+          <h3 className="flex items-center gap-2 text-sm tracking-wide text-ink/60">Orari</h3>
           <dl className="mt-5 grid grid-cols-[1fr_auto] gap-x-6 gap-y-2 text-sm">
             {site.hours.map((h) => (
               <div key={h.days} className="contents">
@@ -87,6 +86,7 @@ export function Footer() {
               </div>
             ))}
           </dl>
+          <p className="mt-3 text-sm text-ink/65">Cucina fino a mezzanotte</p>
           <p className="mt-6 text-sm leading-relaxed text-ink/75">{fullAddress}</p>
         </div>
       </div>
@@ -94,7 +94,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-[1800px] flex-col gap-6 border-t border-ink/15 px-5 py-8 text-xs text-ink/70 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <div className="flex items-center gap-4">
           <Image src="/images/brand/wordmark-dark.png" alt="" width={84} height={26} className="h-auto w-[84px]" />
-          <span>© {site.company.legalName} · P.IVA {site.company.vat}</span>
+          <span>© {site.company.legalName} · P.IVA {site.company.vat} · REA {site.company.rea} · Sede legale {site.company.legalSeat}</span>
         </div>
         <p className="flex flex-wrap gap-x-6 gap-y-2">
           <Link href="/privacy" className="hover:text-ink">Privacy Policy</Link>

@@ -31,7 +31,7 @@ export function BookingPanel({ titleId }: { titleId?: string }) {
     <div className="mx-auto max-w-3xl text-center">
       <h2 id={titleId} className="font-display text-[clamp(2.3rem,6vw,3.8rem)] leading-none">Prenota un tavolo</h2>
       <p className="mx-auto mt-5 max-w-[56ch] text-[0.95rem] leading-relaxed text-ink/75">
-        Siamo aperti dal mercoledì alla domenica. Scrivici su WhatsApp con il messaggio già pronto, oppure scegli giorno, orario e persone qui sotto:
+        Siamo aperti dal mercoledì alla domenica dalle 18:30, cucina fino a mezzanotte. Scrivici su WhatsApp con il messaggio già pronto, oppure scegli giorno, orario e persone qui sotto:
         ti confermiamo noi il tavolo.
       </p>
 

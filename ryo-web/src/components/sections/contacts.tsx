@@ -1,7 +1,6 @@
 import Image from "next/image"
 import { AtSign, Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react"
 
-import { DemoBadge } from "@/components/demo-badge"
 import { Reveal } from "@/components/motion/reveal"
 import { fullAddress, site, whatsappUrl } from "@/content/site"
 
@@ -67,7 +66,7 @@ export function Contacts() {
             </ul>
           </Reveal>
           <Reveal delay={0.1}>
-            <h2 className="flex items-center gap-3 font-display text-4xl">Orari <DemoBadge /></h2>
+            <h2 className="flex items-center gap-3 font-display text-4xl">Orari</h2>
             <dl className="mt-6 grid grid-cols-[1fr_auto] gap-x-6 gap-y-3">
               {site.hours.map((h) => (
                 <div key={h.days} className="contents">
@@ -76,6 +75,7 @@ export function Contacts() {
                 </div>
               ))}
             </dl>
+            <p className="mt-6 text-sm text-foreground/70">La cucina chiude a mezzanotte.</p>
           </Reveal>
         </div>
       </div>

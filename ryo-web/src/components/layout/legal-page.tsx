@@ -18,7 +18,7 @@ export function LegalPage({ title, updated, children }: { title: string; updated
         <p className="mt-2 text-sm text-muted-foreground">Ultimo aggiornamento: {updated}</p>
         {site.demo && (
           <p className="mt-6 rounded-2xl border border-dashed border-orange/50 bg-orange/10 p-4 text-sm text-orange">
-            Bozza da far verificare a un consulente legale e completare con i dati del titolare prima della pubblicazione.
+            Testo da far verificare al consulente del locale prima della pubblicazione definitiva.
           </p>
         )}
         <div className="mt-10 space-y-6 leading-relaxed text-foreground/85 [&_h2]:mt-10 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:text-foreground [&_li]:ml-5 [&_li]:list-disc [&_ul]:space-y-1">

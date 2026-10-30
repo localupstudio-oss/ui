@@ -7,7 +7,8 @@ z.config({ jitless: true })
 
 /** Schema condiviso client/server: la stessa regola valida il form nel browser e nella Server Action. */
 
-export const TIME_SLOTS = ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"] as const
+/** Orari prenotabili: dall'apertura (18:30) fino alle 23:00, la cucina chiude a mezzanotte. */
+export const TIME_SLOTS = ["18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"] as const
 export const EVENT_TYPES = { compleanno: "Compleanno (18, 30, 40 anni…)", privato: "Festa privata / laurea", aziendale: "Cena aziendale", altro: "Altro" } as const
 export const GUESTS_MAX = 12
 
