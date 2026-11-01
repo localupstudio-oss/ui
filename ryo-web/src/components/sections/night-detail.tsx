@@ -26,6 +26,7 @@ export function NightDetail({ night: n }: { night: Night }) {
               {t}
             </p>
           ))}
+          {n.stickers && <Stickers items={n.stickers} />}
           <dl className="mt-8 grid gap-2.5 text-sm">
             {n.time && <Row icon={Clock} value={n.time} />}
             <Row icon={Music2} value={n.lineup.join(" · ")} />
@@ -90,6 +91,30 @@ function Slideshow({ photos }: { photos: Night["photos"] }) {
         </div>
       )}
     </div>
+  )
+}
+
+// Colori degli sticker veri della serata: rosso, verde, arancio, blu.
+const STICKER = ["text-[#d4202b]", "text-[#0f8a5a]", "text-[#e8742a]", "text-[#2a8fd8]"]
+const TILT = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"]
+
+/** Le frasi degli sticker sul tavolo, come piccoli adesivi bianchi un po' storti. */
+function Stickers({ items }: { items: string[] }) {
+  return (
+    <ul aria-label="Gli sticker della serata" className="mt-6 flex flex-wrap gap-2.5">
+      {items.map((t, i) => (
+        <li
+          key={t}
+          className={cn(
+            "rounded-md bg-[#f6efe0] px-3 py-1.5 font-sans text-[0.72rem] font-extrabold leading-tight tracking-wide uppercase shadow-[0_2px_6px_rgb(0_0_0/0.35)]",
+            STICKER[i % STICKER.length],
+            TILT[(i * 3) % TILT.length],
+          )}
+        >
+          {t}
+        </li>
+      ))}
+    </ul>
   )
 }
 

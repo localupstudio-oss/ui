@@ -22,11 +22,12 @@ export type Night = {
   about: string[]
   /** Foto che si alternano nella pagina della serata. */
   photos: { src: string; alt: string }[]
+  /** Frasi degli sticker che si trovano sul tavolo. */
+  stickers?: string[]
 }
 
 /**
  * ✔ Dalle locandine di ottobre 2026. Il sabato è sospeso per ora.
- * ✎ Venerdì: in arrivo altre foto della serata (gente che balla) da aggiungere a `photos`.
  */
 export const nights: Night[] = [
   {
@@ -65,12 +66,40 @@ export const nights: Night[] = [
       "Il venerdì da RYO si accende T'immagini, la serata firmata Friends Events per chi ha voglia di cantare, ballare e fare tardi con gli amici: un pubblico giovane, dai 20 ai 35 anni, e l'energia delle grandi feste.",
       "Si parte con le canzoni italiane più amate, da cantare a squarciagola tavolo dopo tavolo, tra un cocktail e l'altro. Dopo circa un'ora il DJ set di Lorenzo Barbarulo alza il ritmo e la sala diventa una pista.",
       "E la prossima canzone potrebbe essere la tua: sul tavolo trovi il QR code di T'immagini. Scansiona, scegli il pezzo e preparati a cantarlo con tutta la sala. Divertimento assicurato: prenota il tavolo e porta i tuoi amici.",
+      "Sul tavolo ti aspettano anche gli sticker della serata, con le frasi più amate delle canzoni italiane: scegli la tua e portala addosso tutta la notte.",
     ],
     photos: [
       { src: "/images/serate/venerdi/neon-timmagini.jpg", alt: "L'insegna al neon di T'immagini sulla parete a listelli di RYO" },
-      { src: "/images/serate/venerdi/tavolo-timmagini.jpg", alt: "Un tavolo apparecchiato per T'immagini, con il QR code delle canzoni e gli adesivi della serata" },
-      { src: "/images/serate/venerdi/neon-sul-tavolo.jpg", alt: "Il neon di T'immagini sopra un tavolo pronto per la serata" },
+      { src: "/images/serate/venerdi/tavolo-timmagini.jpg", alt: "Un tavolo apparecchiato per T'immagini, con il QR code delle canzoni e gli sticker della serata" },
+      { src: "/images/serate/venerdi/brindisi-neon.jpg", alt: "Brindisi a tavola sotto il neon di T'immagini" },
+      { src: "/images/serate/venerdi/coro-al-microfono.jpg", alt: "Un gruppo di amici canta insieme al microfono di T'immagini" },
+      { src: "/images/serate/venerdi/si-balla.jpg", alt: "Si balla davanti al bancone di RYO" },
+      { src: "/images/serate/venerdi/duetto-qr.jpg", alt: "Un duetto al microfono, con il QR code delle canzoni sul tavolo" },
+      { src: "/images/serate/venerdi/dj-set.jpg", alt: "Il DJ set di T'immagini" },
+      { src: "/images/serate/venerdi/serenata.jpg", alt: "Una serenata in ginocchio al microfono tra i tavoli" },
+      { src: "/images/serate/venerdi/tre-amiche.jpg", alt: "Tre amiche brindano con gli sticker della serata" },
+      { src: "/images/serate/venerdi/risate.jpg", alt: "Due amiche ridono abbracciate al tavolo" },
+      { src: "/images/serate/venerdi/canta.jpg", alt: "Un'ospite canta al microfono dal suo tavolo" },
+      { src: "/images/serate/venerdi/brindisi-tavolo.jpg", alt: "Calici di vino rosso alzati per un brindisi" },
+      { src: "/images/serate/venerdi/microfono.jpg", alt: "Un'ospite al microfono di Friends Events" },
+      { src: "/images/serate/venerdi/amiche.jpg", alt: "Due amiche sorridenti durante la serata" },
       { src: "/images/serate/venerdi/qr-canzoni.jpg", alt: "Il QR code sul tavolo: scansiona, scegli la canzone, canta" },
+    ],
+    stickers: [
+      "Tu mi mandi in tilt",
+      "Amarsi a morsi",
+      "Balliamo e poi ci pensiamo",
+      "Nessuno mi può giudicare",
+      "Siamo solo noi",
+      "Ti porto via con me, in questa notte fantastica",
+      "Lo scopriremo solo vivendo",
+      "Se qualcosa ti fa sentire vivo, aumenta la dose",
+      "Solo se ti rende felice!",
+      "Di chi ti ricordi per sorridere?",
+      "Chi è causa del suo mal beva più spesso",
+      "Santa pazienza che non ho",
+      "Amici mai…",
+      "T'immagini",
     ],
   },
 ]
