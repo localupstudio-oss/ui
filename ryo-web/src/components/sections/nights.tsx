@@ -31,6 +31,7 @@ export function Nights() {
                     src={n.image}
                     alt={`${n.title}, il ${n.day.toLowerCase()} da RYO`}
                     fill
+                    quality={90}
                     sizes="(min-width: 768px) 440px, 100vw"
                     style={{ objectPosition: n.imagePosition }}
                     className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"

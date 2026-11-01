@@ -21,8 +21,9 @@ export default function HomePage() {
               title="Gli eventi della settimana"
               meta="Giovedì | Venerdì"
               cta="Scopri le serate"
-              image="/images/giovedi/microfono-tavola.jpg"
-              alt="Il microfono della serata del giovedì sul menu tropicale"
+              image="/images/serate/giovedi/cantano-braccia-alzate.jpg"
+              alt="Ospiti cantano a braccia alzate tra le felci di RYO"
+              position="60% center"
             />
             <FeatureCard
               size="half"

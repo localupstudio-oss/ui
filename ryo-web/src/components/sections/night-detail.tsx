@@ -10,7 +10,7 @@ import type { Night } from "@/content/experience"
 import { waMessage, whatsappUrl } from "@/content/site"
 import { cn } from "@/lib/utils"
 
-const EVERY = 4500
+const EVERY = 2800
 
 /** Pagina della serata: foto che si alternano da un lato, racconto breve e WhatsApp dall'altro. */
 export function NightDetail({ night: n }: { night: Night }) {
@@ -69,9 +69,9 @@ function Slideshow({ photos }: { photos: Night["photos"] }) {
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 1.1 }, scale: { duration: EVERY / 1000 + 1.1, ease: "linear" } }}
+          transition={{ opacity: { duration: 0.7 }, scale: { duration: EVERY / 1000 + 0.7, ease: "linear" } }}
         >
-          <Image src={p.src} alt={p.alt} fill priority={i === 0} sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
+          <Image src={p.src} alt={p.alt} fill priority={i === 0} quality={90} sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
         </motion.div>
       </AnimatePresence>
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />

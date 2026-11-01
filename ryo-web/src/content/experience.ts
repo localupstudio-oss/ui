@@ -37,8 +37,8 @@ export const nights: Night[] = [
     lineup: ["DJ set Peter Torre", "Voice Carmine Caudino"],
     entry: "Solo con tavolo cena o tavolo drink",
     highlight: "Si cena, si canta, si balla",
-    image: "/images/serate/giovedi/cantano-braccia-alzate.jpg",
-    imagePosition: "55% center",
+    image: "/images/giovedi/microfono-tavola.jpg",
+    imagePosition: "center 85%",
     about: [
       "Il giovedì da RYO è l'appuntamento di chi ama la buona compagnia e le serate fatte bene: un pubblico adulto e brillante, una cena curata tra felci e lampade in rattan, cocktail d'autore e calici che non restano mai vuoti.",
       "Poi la voce di Carmine Caudino accende la sala: le più belle canzoni italiane da cantare tutti insieme, con il microfono che passa di tavolo in tavolo. Quando arriva il DJ set di Peter Torre ci si alza in piedi, si brinda e si balla fino a tardi.",
