@@ -19,7 +19,7 @@ export default function HomePage() {
               size="half"
               href="/serate"
               title="Gli eventi della settimana"
-              meta="Giovedì | Venerdì | Sabato"
+              meta="Giovedì | Venerdì"
               cta="Scopri le serate"
               image="/images/giovedi/microfono-tavola.jpg"
               alt="Il microfono della serata del giovedì sul menu tropicale"

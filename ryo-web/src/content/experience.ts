@@ -6,6 +6,8 @@
  */
 
 export type Night = {
+  /** Indirizzo della pagina della serata: /serate/<slug>. */
+  slug: string
   day: "Giovedì" | "Venerdì" | "Sabato"
   title: string
   mood: string
@@ -15,13 +17,19 @@ export type Night = {
   highlight: string
   /** Locandina della serata (verticale). */
   image: string
-  /** Sezione di approfondimento, se esiste. */
-  href?: string
+  /** Breve racconto della serata, nella sua pagina. */
+  about: string[]
+  /** Foto che si alternano nella pagina della serata. */
+  photos: { src: string; alt: string }[]
 }
 
-/** ✔ Dalle locandine di ottobre 2026. ✎ Da confermare se le serate di venerdì e sabato sono ricorrenti. */
+/**
+ * ✔ Dalle locandine di ottobre 2026. Il sabato è sospeso per ora.
+ * ✎ Foto del venerdì provvisorie: sostituirle con quelle della serata (stessa forma { src, alt }).
+ */
 export const nights: Night[] = [
   {
+    slug: "giovedi",
     day: "Giovedì",
     title: "Quelli che il Giovedì",
     mood: "Cena, karaoke tra i tavoli e festa: il Giovedì RYO.",
@@ -30,9 +38,20 @@ export const nights: Night[] = [
     entry: "Solo con tavolo cena · cocktail bar",
     highlight: "Si canta, si cena, si balla",
     image: "/images/serate/giovedi-ryo.jpg",
-    href: "#giovedi",
+    about: [
+      "Il giovedì da RYO è una festa a tavola: si cena tra felci e lampade in rattan, il microfono passa di mano in mano tra i tavoli e la serata finisce a ballare tutti insieme.",
+      "Piatti da condividere, cocktail d'autore e la voce di Carmine Caudino con il DJ set di Peter Torre. L'ingresso è riservato a chi cena con noi: prenota il tavolo per esserci.",
+    ],
+    photos: [
+      { src: "/images/giovedi/karaoke.jpg", alt: "Un'ospite canta al microfono in mezzo alla sala" },
+      { src: "/images/giovedi/tavolata.jpg", alt: "Una tavolata di amici sotto le lampade in rattan" },
+      { src: "/images/giovedi/cantano-al-tavolo.jpg", alt: "Ospiti che cantano al microfono a tavola" },
+      { src: "/images/giovedi/festa-al-tavolo.jpg", alt: "Un'ospite festeggia a braccia alzate durante la cena" },
+      { src: "/images/giovedi/brindisi.jpg", alt: "Brindisi a tavola con i calici di vino" },
+    ],
   },
   {
+    slug: "venerdi",
     day: "Venerdì",
     title: "T'immagini",
     mood: "Il venerdì di RYO con Friends Events: nuovo menù e nuova drink list.",
@@ -40,15 +59,16 @@ export const nights: Night[] = [
     lineup: ["DJ set Lorenzo Barbarulo", "Friends Events"],
     highlight: "Nuovo menù e nuova drink list",
     image: "/images/serate/venerdi-timmagini.jpg",
-  },
-  {
-    day: "Sabato",
-    title: "Churrasco Experience",
-    mood: "Fuoco, incontri e alchimia liquida. Un nuovo rituale sta per iniziare.",
-    lineup: ["DJ set Lefty"],
-    highlight: "4 tapas, 3 contorni e giro di carne allo spiedo",
-    image: "/images/serate/sabato-churrasco.jpg",
-    href: "/menu#churrasco",
+    about: [
+      "Il venerdì RYO cambia ritmo: con Friends Events la cena diventa festa, tra il nuovo menù, la nuova drink list e il DJ set di Lorenzo Barbarulo.",
+      "Arriva per cena e resta per la musica: tavoli, cocktail e la sala che si accende fino a tardi.",
+    ],
+    photos: [
+      { src: "/images/home/pro-dj.jpg", alt: "Il DJ set in sala da RYO" },
+      { src: "/images/home/persone-ballo.jpg", alt: "Si balla tra i tavoli da RYO" },
+      { src: "/images/home/drink-tiki.jpg", alt: "Un cocktail tiki della drink list" },
+      { src: "/images/home/persone-gruppo.jpg", alt: "Un gruppo di amici festeggia da RYO" },
+    ],
   },
 ]
 
@@ -124,36 +144,6 @@ export const directions = [
 ]
 
 /** "Quelli che il Giovedì" — serata reale del giovedì (prima edizione: ottobre 2026). */
-export const thursday = {
-  name: "Quelli che il Giovedì",
-  logo: "/images/giovedi/logo-quelli-che-il-giovedi.png",
-  claim: "Cena, canta, balla. Tutti insieme.",
-  intro:
-    "Il giovedì da RYO è una festa a tavola: si cena tra felci e lampade in rattan, il microfono passa di mano in mano tra i tavoli e la serata finisce a ballare tutti insieme.",
-  moments: [
-    { title: "Cena", text: "Piatti da condividere e calici di vino al tavolo, sotto le luci calde della sala." },
-    { title: "Canta", text: "Il microfono gira tra i tavoli: chi vuole canta, tutti gli altri fanno il coro." },
-    { title: "Balla", text: "Quando si alza la musica, la sala diventa una pista." },
-  ],
-  details: [
-    { label: "Quando", value: "Giovedì" },
-    { label: "Start", value: "21:30" },
-    { label: "Ingresso", value: "Solo con tavolo cena" },
-    { label: "DJ set", value: "Peter Torre" },
-    { label: "Voice", value: "Carmine Caudino" },
-  ],
-  gallery: [
-    { src: "/images/giovedi/microfono-tavola.jpg", alt: "Il microfono della serata appoggiato sul menu tropicale di RYO", tall: true },
-    { src: "/images/giovedi/microfoni-menu.jpg", alt: "I microfoni della serata accanto al menu cucina di RYO", tall: true },
-    { src: "/images/giovedi/tavolata.jpg", alt: "Una tavolata di amici sotto le lampade in rattan", wide: true },
-    { src: "/images/giovedi/festa-al-tavolo.jpg", alt: "Un'ospite festeggia a braccia alzate durante la cena", tall: true },
-    { src: "/images/giovedi/calici-microfono.jpg", alt: "Calici e microfono della serata sul tavolo", tall: true },
-    { src: "/images/giovedi/brindisi.jpg", alt: "Brindisi a tavola con i calici di vino", tall: true },
-    { src: "/images/giovedi/cantano-al-tavolo.jpg", alt: "Ospiti che cantano al microfono a tavola tra le canne di bambù", tall: true },
-    { src: "/images/giovedi/karaoke.jpg", alt: "Un'ospite canta al microfono in mezzo alla sala", wide: true },
-  ],
-} as const
-
 export type Experience = {
   key: "festa" | "mercoledi" | "giovedi" | "venerdi" | "sabato" | "domenica"
   /** Etichetta breve sopra il titolo. */
