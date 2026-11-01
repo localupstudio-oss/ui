@@ -92,7 +92,7 @@ export type EventKind = "compleanno" | "privato" | "aziendale" | "altro"
 /** Intestazione e campi del messaggio WhatsApp per ogni serata della settimana. */
 const NIGHT_WA: Record<string, { emoji: string; text: (title: string) => string }> = {
   Mercoledì: { emoji: "🌿", text: () => "un tavolo per mercoledì" },
-  Giovedì: { emoji: "🎤", text: (t) => `un tavolo cena per «${t}» di giovedì` },
+  Giovedì: { emoji: "🎤", text: (t) => `un tavolo (cena o drink) per «${t}» di giovedì` },
   Venerdì: { emoji: "🎶", text: (t) => `un tavolo per «${t}» di venerdì` },
   Sabato: { emoji: "🔥", text: (t) => `la «${t}» di sabato` },
   Domenica: { emoji: "🌴", text: () => "un tavolo per domenica" },
