@@ -15,8 +15,9 @@ export type Night = {
   lineup: string[]
   entry?: string
   highlight: string
-  /** Locandina della serata (verticale). */
+  /** Copertina della serata (verticale) e, se serve, il punto da tenere al centro nel ritaglio. */
   image: string
+  imagePosition?: string
   /** Breve racconto della serata, nella sua pagina. */
   about: string[]
   /** Foto che si alternano nella pagina della serata. */
@@ -25,7 +26,7 @@ export type Night = {
 
 /**
  * ✔ Dalle locandine di ottobre 2026. Il sabato è sospeso per ora.
- * ✎ Foto del venerdì provvisorie: sostituirle con quelle della serata (stessa forma { src, alt }).
+ * ✎ Venerdì: in arrivo altre foto della serata (gente che balla) da aggiungere a `photos`.
  */
 export const nights: Night[] = [
   {
@@ -54,20 +55,22 @@ export const nights: Night[] = [
     slug: "venerdi",
     day: "Venerdì",
     title: "T'immagini",
-    mood: "Il venerdì di RYO con Friends Events: nuovo menù e nuova drink list.",
+    mood: "Le canzoni italiane più belle da cantare tutti insieme, poi DJ set fino a tardi. E la musica la scegli tu.",
     time: "Start 21:30",
     lineup: ["DJ set Lorenzo Barbarulo", "Friends Events"],
-    highlight: "Nuovo menù e nuova drink list",
-    image: "/images/serate/venerdi-timmagini.jpg",
+    highlight: "Scansiona il QR, scegli la canzone, canta",
+    image: "/images/serate/venerdi/neon-timmagini.jpg",
+    imagePosition: "80% center",
     about: [
-      "Il venerdì RYO cambia ritmo: con Friends Events la cena diventa festa, tra il nuovo menù, la nuova drink list e il DJ set di Lorenzo Barbarulo.",
-      "Arriva per cena e resta per la musica: tavoli, cocktail e la sala che si accende fino a tardi.",
+      "Il venerdì da RYO si accende T'immagini, la serata firmata Friends Events per chi ha voglia di cantare, ballare e fare tardi con gli amici: un pubblico giovane, dai 20 ai 35 anni, e l'energia delle grandi feste.",
+      "Si parte con le canzoni italiane più amate, da cantare a squarciagola tavolo dopo tavolo, tra un cocktail e l'altro. Dopo circa un'ora il DJ set di Lorenzo Barbarulo alza il ritmo e la sala diventa una pista.",
+      "E la prossima canzone potrebbe essere la tua: sul tavolo trovi il QR code di T'immagini. Scansiona, scegli il pezzo e preparati a cantarlo con tutta la sala. Divertimento assicurato: prenota il tavolo e porta i tuoi amici.",
     ],
     photos: [
-      { src: "/images/home/pro-dj.jpg", alt: "Il DJ set in sala da RYO" },
-      { src: "/images/home/persone-ballo.jpg", alt: "Si balla tra i tavoli da RYO" },
-      { src: "/images/home/drink-tiki.jpg", alt: "Un cocktail tiki della drink list" },
-      { src: "/images/home/persone-gruppo.jpg", alt: "Un gruppo di amici festeggia da RYO" },
+      { src: "/images/serate/venerdi/neon-timmagini.jpg", alt: "L'insegna al neon di T'immagini sulla parete a listelli di RYO" },
+      { src: "/images/serate/venerdi/tavolo-timmagini.jpg", alt: "Un tavolo apparecchiato per T'immagini, con il QR code delle canzoni e gli adesivi della serata" },
+      { src: "/images/serate/venerdi/neon-sul-tavolo.jpg", alt: "Il neon di T'immagini sopra un tavolo pronto per la serata" },
+      { src: "/images/serate/venerdi/qr-canzoni.jpg", alt: "Il QR code sul tavolo: scansiona, scegli la canzone, canta" },
     ],
   },
 ]

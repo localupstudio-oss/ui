@@ -29,9 +29,10 @@ export function Nights() {
                 <div className="relative aspect-[1170/1901]">
                   <Image
                     src={n.image}
-                    alt={`Locandina: ${n.title}, ${n.day.toLowerCase()} da RYO`}
+                    alt={`${n.title}, il ${n.day.toLowerCase()} da RYO`}
                     fill
                     sizes="(min-width: 768px) 440px, 100vw"
+                    style={{ objectPosition: n.imagePosition }}
                     className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
                   />
                 </div>
