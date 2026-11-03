@@ -1,13 +1,14 @@
 """
-Menu Churrasco in una pagina, nello stile del menu à la carte: l'intestazione originale
-(scimmia, tucano, timbro RYO, «Churrasco Menù»), la scritta «Novità» in rosso, un'intro sul
-concept, tapas e antipasti di stagione, la selezione di carni e il prezzo. In basso le foglie e
-il fiore arancio delle altre pagine del menu.
+Menu Churrasco in una pagina, nello stile del menu à la carte: stessi acquerelli (qui la pantera
+e l'ananas col sigillo RYO della pagina Dulce, il ramo con i fiori rossi e le palme), la scritta
+«Churrasco Menù» e le righe del vecchio menu (degustazione, 4 tapas e 3 contorni, prezzo),
+«Novità» in rosso, un'intro sul concept e la selezione di carni.
 
   python3 scripts/menu-churrasco.py   (scrive scripts/menu-pdf/churrasco-menu.jpg)
 """
 from pathlib import Path
 
+import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,15 +19,15 @@ OUT = PAGES / "churrasco-menu.jpg"
 INK = (34, 34, 32)  # testi del menu
 SOFT = (70, 70, 66)  # descrizioni
 RED = (196, 48, 42)
-OLIVE = (152, 156, 118)  # come le icone e il timbro
+OLIVE = (152, 156, 118)  # come le icone e il sigillo
 
 INTRO = (
     "Il rito brasiliano della brace, a modo nostro: tagli scelti cotti lentamente allo spiedo "
     "e serviti al tavolo dal passador, accompagnati da piccoli piatti da condividere."
 )
 STAGIONE = (
-    "Si comincia con 4 tapas e 3 antipasti dello chef, che cambiano con le stagioni: "
-    "ogni giorno scegliamo ingredienti freschi, per portare in tavola il meglio del momento."
+    "Tapas e contorni cambiano con le stagioni: ogni giorno scegliamo ingredienti freschi, "
+    "per portare in tavola il meglio del momento."
 )
 CARNI = [
     ("Salsiccia artigianale", "a punta di coltello, selezione RYO"),
@@ -49,90 +50,119 @@ def wrap(draw, text, font, width):
     return lines + [cur]
 
 
+def soften(piece, top=0, bottom=0, left=0, right=0):
+    """Sfuma nel bianco i lati indicati, così le decorazioni ritagliate non mostrano il taglio."""
+    a = np.asarray(piece).astype(float)
+    h, w = a.shape[:2]
+    k = np.ones((h, w))
+    for n, axis, rev in ((top, 0, False), (bottom, 0, True), (left, 1, False), (right, 1, True)):
+        if not n:
+            continue
+        ramp = np.clip(np.arange(h if axis == 0 else w) / n, 0, 1)
+        ramp = ramp[::-1] if rev else ramp
+        k *= ramp[:, None] if axis == 0 else ramp[None, :]
+    a = 255 - (255 - a) * k[..., None]
+    return Image.fromarray(a.astype(np.uint8))
+
+
 def main():
     p1 = Image.open(PAGES / "pagina-1.jpg").convert("RGB")
-    p2 = Image.open(PAGES / "pagina-2.jpg").convert("RGB")
     p3 = Image.open(PAGES / "pagina-3.jpg").convert("RGB")
+    p4 = Image.open(PAGES / "pagina-4.jpg").convert("RGB")
     W, H = p1.size
     page = Image.new("RGB", (W, H), "white")
-    page.paste(p1.crop((0, 0, W, 520)), (0, 0))  # intestazione originale con «Churrasco Menù»
-    page.paste(Image.new("RGB", (450, 50), "white"), (395, 470))  # via l'inizio di «Degustazione alla brace»
-    fade = Image.linear_gradient("L").resize((W, 50))  # foglie e coda del tucano sfumano nel bianco
-    page.paste(Image.new("RGB", (W, 50), "white"), (0, 470), fade)
 
-    def deco(src, box, at, soft=110, side=None):
-        """Decorazione presa da un'altra pagina: il bordo alto sfuma nel bianco, così non si vede il taglio."""
-        piece = src.crop(box)
-        white = Image.new("RGB", piece.size, "white")
-        mask = Image.linear_gradient("L").rotate(180).resize((piece.width, soft))
-        white.paste(piece.crop((0, soft, piece.width, piece.height)), (0, soft))
-        white.paste(piece.crop((0, 0, piece.width, soft)), (0, 0), Image.eval(mask, lambda v: 255 - v))
-        if side:  # anche il bordo laterale verso il testo sfuma
-            sm = Image.linear_gradient("L").rotate(90 if side == "right" else -90).resize((90, piece.height))
-            x = piece.width - 90 if side == "right" else 0
-            white.paste(Image.new("RGB", (90, piece.height), "white"), (x, 0), sm)
+    def deco(piece, at, scale=1.0):
+        if scale != 1:
+            piece = piece.resize((round(piece.width * scale), round(piece.height * scale)), Image.LANCZOS)
         layer = Image.new("RGB", (W, H), "white")
-        layer.paste(white, at)
+        layer.paste(piece, at)
         return ImageChops.multiply(page, layer)
 
-    page = deco(p3, (0, 1290, 268, H), (0, 1290), side="right")  # monstera in basso a sinistra
-    page = deco(p2, (930, 1360, W, H), (930, 1360), side="left")  # fiore arancio in basso a destra
+    S = 0.8  # le decorazioni un po' più piccole della pagina Dulce, per lasciare spazio al testo
+    # in alto: ramo con i fiori rossi a destra, palme a sinistra (dalla pagina dei Primi, specchiate)
+    flower = soften(p4.crop((740, 0, W, 470)), bottom=90, left=60)
+    page = deco(flower, (W - round(flower.width * S), 0), S)
+    # solo le foglie, sopra il titolo «Riso amazzonico» della pagina dei Primi
+    palms = soften(p3.crop((900, 0, W, 240)), bottom=90, right=70).transpose(Image.FLIP_LEFT_RIGHT)
+    page = deco(palms, (0, 0), S)
+    # in basso: pantera tra le foglie a destra, ananas col sigillo RYO a sinistra
+    panther = soften(p4.crop((885, 820, W, H)), top=110, left=130)  # da x 885: niente lettere dei dolci
+    page = deco(panther, (W - round(panther.width * S), H - round(panther.height * S)), S)
+    pine = soften(p4.crop((0, 1140, 410, H)), top=90, right=40)
+    page = deco(pine, (0, H - round(pine.height * S)), S)
+
+    # «Churrasco Menù» dell'intestazione originale: solo le lettere, senza il timbro e le foglie dietro
+    t = np.asarray(p1.crop((378, 322, 848, 474))).astype(int)
+    lum = t.mean(axis=2)
+    letters = (lum < 115) | ((t[..., 0] > 175) & (t[..., 1] < 175) & (t[..., 2] < 150) & (t[..., 0] - t[..., 2] > 60))
+    t[~letters] = 255
+    t[:80, 430:] = 255  # un ramo del tucano dopo la «o» di Churrasco
+    title = Image.fromarray(t.astype(np.uint8))
+    page = deco(title, (round(W / 2 - title.width / 2), 230))
 
     d = ImageDraw.Draw(page)
-    brush = ImageFont.truetype(str(FONTS / "CaveatBrush-Regular.ttf"), 78)
-    head = ImageFont.truetype(str(FONTS / "CaveatBrush-Regular.ttf"), 64)
-    name = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Medium.ttf"), 33)
-    desc = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 24)
-    body = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 26)
+    brush = ImageFont.truetype(str(FONTS / "CaveatBrush-Regular.ttf"), 70)
+    head = ImageFont.truetype(str(FONTS / "CaveatBrush-Regular.ttf"), 62)
+    name = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Medium.ttf"), 31)
+    desc = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 23)
+    body = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 25)
     price = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Medium.ttf"), 44)
     cx = W / 2
 
-    def centred(y, text, font, fill):
-        d.text((cx, y), text, font=font, fill=fill, anchor="ma")
+    def centred(y, text, font, fill, x=None):
+        d.text((cx if x is None else x, y), text, font=font, fill=fill, anchor="ma")
 
-    # «Novità» in rosso, inclinato come le scritte a pennello del menu
-    t = Image.new("RGBA", (360, 140), (0, 0, 0, 0))
-    ImageDraw.Draw(t).text((10, 10), "Novità", font=brush, fill=RED)
-    t = t.rotate(10, resample=Image.BICUBIC, expand=True)
-    page.paste(t, (850, 330), t)
+    # «Novità» in rosso, sotto «Menù» e un po' inclinato come le scritte a pennello
+    nv = Image.new("RGBA", (330, 130), (0, 0, 0, 0))
+    ImageDraw.Draw(nv).text((10, 10), "Novità", font=brush, fill=RED)
+    nv = nv.rotate(8, resample=Image.BICUBIC, expand=True)
+    page.paste(nv, (round(cx + 150), 330), nv)
 
-    y = 530
-    for line in wrap(d, INTRO, body, 860):
+    def original(box, y, x=None, scale=1.0):
+        """Una riga del vecchio menu, presa così com'è: stesso carattere del grafico."""
+        nonlocal page, d
+        piece = p1.crop(box)
+        if scale != 1:
+            piece = piece.resize((round(piece.width * scale), round(piece.height * scale)), Image.LANCZOS)
+        page = deco(piece, (round((cx if x is None else x) - piece.width / 2), round(y)))
+        d = ImageDraw.Draw(page)
+        return piece.height
+
+    y = 470
+    y += original((398, 482, 838, 524), y) + 14  # «Degustazione alla brace»
+    y += original((283, 527, 955, 555), y) + 34  # «4 tapas, 3 contorni, 5 tipologie di carne alla brace»
+    for line in wrap(d, INTRO, body, 820):
         centred(y, line, body, INK)
-        y += 36
-
-    # tapas e antipasti
-    y += 40
-    centred(y, "Tapas & antipasti", head, INK)
-    y += 86
-    for line in wrap(d, STAGIONE, desc, 820):
+        y += 35
+    y += 10
+    for line in wrap(d, STAGIONE, desc, 780):
         centred(y, line, desc, SOFT)
-        y += 32
+        y += 31
 
-    # carni
-    y += 44
+    y += 40
     centred(y, "Selezione di carne", head, INK)
-    y += 92
+    y += 84
+    y += original((193, 560, 536, 589), y) + 30  # «in base alle disponibilità» del vecchio menu
+    col = 605  # sotto, il testo resta tra l'ananas e la pantera
     for n, info in CARNI:
-        centred(y, n, name, INK)
-        y += 42
-        for line in wrap(d, info, desc, 560):
-            centred(y, line, desc, SOFT)
-            y += 30
+        centred(y, n, name, INK, col)
+        y += 40
+        for line in wrap(d, info, desc, 500):
+            centred(y, line, desc, SOFT, col)
+            y += 29
         y += 18
 
-    # prezzo, con il filo oliva del timbro
-    y += 14
-    d.line((cx - 60, y, cx + 60, y), fill=OLIVE, width=3)
+    y += 12
+    d.line((col - 60, y, col + 60, y), fill=OLIVE, width=3)
     y += 26
-    centred(y, "38€", price, INK)
-    y += 62
-    centred(y, "a persona", desc, SOFT)
-    y += 30
-    centred(y, "le carni possono variare in base alla disponibilità", desc, SOFT)
+    y += original((588, 612, 652, 641), y, col, 1.4) + 22  # «38€» del vecchio menu
+    centred(y, "a persona", desc, SOFT, col)
+    y += 29
+
 
     page.save(OUT, quality=92)
-    print("creato", OUT, "fine testo a y", y + 30)
+    print("creato", OUT, "fine testo a y", y)
 
 
 if __name__ == "__main__":
