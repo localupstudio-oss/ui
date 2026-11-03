@@ -68,7 +68,7 @@ export const menus: { label: string; sub: string; href?: string; image: string; 
   { label: "Combo", sub: "In arrivo", image: "/images/home/cibo-bowl-tapas.jpg", alt: "Bowl, riso e tapas da condividere" },
   { label: "Dessert", sub: "Tiramiryo, Bananito, babbà e il dolce della settimana", href: "/menu/ryo-menu-dessert.pdf", image: "/images/galleria/dessert-frutta.jpg", alt: "Un dessert alla frutta" },
   { label: "Cocktail", sub: "Cocktails d'autore e analcolici", href: "/menu/ryo-drink-list.pdf", image: "/images/menu/cocktail-highball.jpg", alt: "Un highball rosa con scorza d'arancia tra foglie di felce" },
-  { label: "Wine", sub: "In arrivo", image: "/images/menu/wine.jpg", alt: "Si versa il vino rosso nel calice accanto al pannello intagliato" },
+  { label: "Wine", sub: "In arrivo", image: "/images/menu/wine.jpg", alt: "La parete dei vini di RYO: bottiglie e calici sugli scaffali illuminati" },
 ]
 
 export const nav = [
