@@ -376,7 +376,12 @@
           "prezzo": "5"
         },
         {
-          "nome": "Acqua naturale e frizzante",
+          "nome": "Acqua naturale",
+          "descrizione": "",
+          "prezzo": "2"
+        },
+        {
+          "nome": "Acqua frizzante",
           "descrizione": "",
           "prezzo": "2"
         }

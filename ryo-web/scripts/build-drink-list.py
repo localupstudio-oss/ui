@@ -60,7 +60,7 @@ COCKTAILS = [
     ("Barrel Boulevardier", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
 ]
 SOFT_DRINK = ("5", ["Perrier acqua frizzante", "Soda all'ananas", "Soda al pompelmo rosa", "Soda al limone", "Tonica Indian", "Ginger beer", "Coca-Cola", "Coca-Cola Zero", "Tassoni"])
-ACQUA = [("Acqua naturale e frizzante", "2")]
+ACQUA = [("Acqua naturale", "2"), ("Acqua frizzante", "2")]
 BIRRE = [("Nastro Azzurro", "5"), ("Corona", "5"), ("Birra artigianale rossa", "7"), ("Birra artigianale bionda", "7")]
 ANALCOLICI = [
     ("Jardim Botânico", "Pompelmo rosa, Basilico, Acqua frizzante.", "€ 8,00", "Tumbler alto"),
@@ -153,13 +153,13 @@ def entry(c, item, cx, y, width=250):
 # Per ogni paesaggio: dove cade la carta libera (centro x della colonna, larghezza, y delle 5 voci)
 # Per ogni paesaggio le 4 voci, sfalsate una a destra e una a sinistra: (centro x, y, larghezza)
 COCKTAIL_PAGES = [
-    ("iguana", True, [(355, 112, 190), (235, 217, 190), (355, 322, 190), (235, 442, 190)]),
-    ("tucano", False, [(355, 80, 190), (150, 201, 190), (325, 322, 190), (225, 443, 190)]),
-    ("scimmia", False, [(235, 80, 190), (355, 197, 190), (248, 314, 190), (395, 446, 190)]),
-    ("giaguaro", False, [(355, 112, 190), (205, 221, 190), (282, 330, 190), (140, 439, 190)]),
-    ("capibara", False, [(360, 112, 190), (235, 218, 190), (355, 354, 190)]),
+    ("iguana", True, [(338, 85, 175), (410, 191, 175), (274, 297, 175), (346, 418, 175)]),
+    ("tucano", False, [(186, 85, 175), (258, 185, 175), (186, 285, 175), (258, 400, 175)]),
+    ("scimmia", False, [(334, 85, 175), (406, 191, 175), (266, 297, 175), (410, 400, 175)]),
+    ("giaguaro", False, [(194, 85, 175), (266, 191, 175), (130, 312, 175), (202, 418, 175)]),
+    ("capibara", False, [(338, 85, 175), (246, 245, 175), (350, 435, 175)]),
 ]
-ANALCOLICI_PAGE = ("fenicottero", False, [(355, 190, 190), (235, 311, 190), (355, 447, 190)])
+ANALCOLICI_PAGE = ("fenicottero", False, [(274, 175, 175), (346, 290, 175), (246, 420, 175)])
 
 
 def staggered_page(c, items, layout, title=None):
@@ -201,16 +201,16 @@ def soft_e_birre(c):
     scene(c, "iguana")  # fiume a destra, iguana sul sasso in basso a sinistra
     x0 = 92
     price, names = SOFT_DRINK
-    list_title(c, x0, 122, "Soft drink")
-    y = 158
+    list_title(c, x0, 110, "Soft drink")
+    y = 146
     for name, p in [(n, price) for n in names] + ACQUA:
         drink_line(c, x0, y, name, p)
-        y += 23
+        y += 21
     list_title(c, x0, y + 26, "Birre")
     y += 62
     for name, p in BIRRE:
         drink_line(c, x0, y, name, p)
-        y += 23
+        y += 21
 
 
 def drink_line(c, x0, y, name, p):
