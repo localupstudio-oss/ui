@@ -1,6 +1,6 @@
 """
-Menu Churrasco in una pagina, nello stile del menu à la carte: stessi acquerelli (qui la pantera
-e l'ananas col sigillo RYO della pagina Dulce, il ramo con i fiori rossi e le palme), la scritta
+Menu Churrasco in una pagina, nello stile del menu à la carte: stessi acquerelli (la tigre, l'ananas
+col sigillo RYO, il ramo con i fiori rossi, palme e felci), la scritta
 «Churrasco Menù» e le righe del vecchio menu (degustazione, 4 tapas e 3 contorni, prezzo),
 «Novità» in rosso, un'intro sul concept e la selezione di carni.
 
@@ -67,6 +67,7 @@ def soften(piece, top=0, bottom=0, left=0, right=0):
 
 def main():
     p1 = Image.open(PAGES / "pagina-1.jpg").convert("RGB")
+    p2 = Image.open(PAGES / "pagina-2.jpg").convert("RGB")
     p3 = Image.open(PAGES / "pagina-3.jpg").convert("RGB")
     p4 = Image.open(PAGES / "pagina-4.jpg").convert("RGB")
     W, H = p1.size
@@ -83,12 +84,19 @@ def main():
     # in alto: ramo con i fiori rossi a destra, palme a sinistra (dalla pagina dei Primi, specchiate)
     flower = soften(p4.crop((740, 0, W, 470)), bottom=90, left=60)
     page = deco(flower, (W - round(flower.width * S), 0), S)
-    # solo le foglie, sopra il titolo «Riso amazzonico» della pagina dei Primi
-    palms = soften(p3.crop((900, 0, W, 240)), bottom=90, right=70).transpose(Image.FLIP_LEFT_RIGHT)
-    page = deco(palms, (0, 0), S)
-    # in basso: pantera tra le foglie a destra, ananas col sigillo RYO a sinistra
-    panther = soften(p4.crop((885, 820, W, H)), top=110, left=130)  # da x 885: niente lettere dei dolci
-    page = deco(panther, (W - round(panther.width * S), H - round(panther.height * S)), S)
+    # in alto a sinistra: palme con il fiore arancio (pagina dei Primi) e una felce che scende
+    # lungo il bordo (pagina dei Platos), fermandosi prima del titolo
+    page = deco(soften(p3.crop((0, 0, 360, 235)), bottom=70, right=60), (0, 0), 1.1)
+    page = deco(soften(p2.crop((0, 110, 118, 345)), top=60, bottom=80, right=25), (0, 200), 1.25)
+    # in basso: tigre a destra, ananas col sigillo RYO a sinistra
+    # tigre tra le monstere (stesso acquerello delle altre pagine), un po' fuori dal bordo destro
+    tiger = Image.open(ROOT / "scripts" / "menu-art" / "tigre.jpg").convert("RGB")
+    t = np.asarray(tiger).astype(float)
+    paper = np.median(t[t.mean(axis=2) > 235], axis=0)
+    tiger = Image.fromarray(np.clip(t * (255 / paper), 0, 255).astype(np.uint8))  # fondo bianco puro
+    tw = 440
+    tiger = tiger.resize((tw, round(tiger.height * tw / tiger.width)), Image.LANCZOS)
+    page = deco(soften(tiger, top=40, left=30), (W - tw + 60, H - tiger.height + 30))
     pine = soften(p4.crop((0, 1140, 410, H)), top=90, right=40)
     page = deco(pine, (0, H - round(pine.height * S)), S)
 
