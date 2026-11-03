@@ -60,6 +60,7 @@ COCKTAILS = [
     ("Barrel Boulevardier", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
 ]
 SOFT_DRINK = ("5", ["Perrier acqua frizzante", "Soda all'ananas", "Soda al pompelmo rosa", "Soda al limone", "Tonica Indian", "Ginger beer", "Coca-Cola", "Coca-Cola Zero", "Tassoni"])
+ACQUA = [("Acqua naturale e frizzante", "2")]
 BIRRE = [("Nastro Azzurro", "5"), ("Corona", "5"), ("Birra artigianale rossa", "7"), ("Birra artigianale bionda", "7")]
 ANALCOLICI = [
     ("Jardim Botânico", "Pompelmo rosa, Basilico, Acqua frizzante.", "€ 8,00", "Tumbler alto"),
@@ -150,19 +151,26 @@ def entry(c, item, cx, y, width=250):
 
 
 # Per ogni paesaggio: dove cade la carta libera (centro x della colonna, larghezza, y delle 5 voci)
+# Per ogni paesaggio le 4 voci, sfalsate una a destra e una a sinistra: (centro x, y, larghezza)
 COCKTAIL_PAGES = [
-    ("tucano", False, 200, 200, [78, 160, 242, 324, 404]),  # fiume a destra, tucano in basso a destra
-    ("scimmia", False, 394, 190, [124, 204, 284, 362, 438]),  # fiume a sinistra, scimmia in basso a sinistra
-    ("giaguaro", False, 215, 220, [96, 186, 276, 366, 450]),  # fiume a destra, giaguaro in basso a destra
-    ("capibara", False, 368, 205, [112, 193, 274, 342, 436]),  # fiume a sinistra, capibara in basso a sinistra
+    ("iguana", True, [(355, 112, 190), (235, 217, 190), (355, 322, 190), (235, 442, 190)]),
+    ("tucano", False, [(355, 80, 190), (150, 201, 190), (325, 322, 190), (225, 443, 190)]),
+    ("scimmia", False, [(235, 80, 190), (355, 197, 190), (248, 314, 190), (395, 446, 190)]),
+    ("giaguaro", False, [(355, 112, 190), (205, 221, 190), (282, 330, 190), (140, 439, 190)]),
+    ("capibara", False, [(360, 112, 190), (235, 218, 190), (355, 354, 190)]),
 ]
+ANALCOLICI_PAGE = ("fenicottero", False, [(355, 190, 190), (235, 311, 190), (355, 447, 190)])
 
 
-def cocktail_page(c, items, layout):
-    name, mirror, cx, width, ys = layout
+def staggered_page(c, items, layout, title=None):
+    name, mirror, spots = layout
     scene(c, name, mirror)
-    for item, y in zip(items, ys):
-        entry(c, item, cx, y, width=width)
+    if title:
+        c.setFont("SerifBold", 28)
+        c.setFillColor(PURPLE)
+        c.drawCentredString(W / 2, H - 120, title)
+    for item, (x, y, w) in zip(items, spots):
+        entry(c, item, x, y, width=w)
 
 
 def cover(c):
@@ -175,57 +183,8 @@ def cover(c):
     c.drawCentredString(cx, H - 308, "menù")
 
 
-def intro(c):
-    """Seconda pagina: il racconto del fiume, come la citazione d'apertura delle grandi carte."""
-    scene(c, "iguana", mirror=True)  # iguana in basso a destra, carta libera a sinistra
-    cx = 290
-    lines = [
-        "“Come le acque del fiume",
-        "scorrono libere e travolgenti,",
-        "così l'arte della mixology",
-        "dà vita a cocktail che racchiudono",
-        "l'anima del Rio.",
-        None,
-        "Un viaggio tra profumi, colori",
-        "e sapori tropicali, dove ogni sorso",
-        "racconta una storia.”",
-    ]
-    y = 285
-    for line in lines:
-        if line is None:
-            y += 18
-            continue
-        c.setFont("SerifIt", 16)
-        c.setFillColor(PURPLE)
-        c.drawCentredString(cx, H - y, line)
-        y += 25
-    spaced(c, "RYO  ·  CHURRASCARIA  |  TAPAS  |  COCKTAIL", cx, H - (y + 30), "SansLight", 7, 2.4, OLIVE)
-
-
 def analcolici(c):
-    scene(c, "fenicottero")  # fiume a sinistra, fenicottero e colibrì in basso a destra
-    x0, x1 = 198, 452
-    c.setFont("SerifBold", 28)
-    c.setFillColor(PURPLE)
-    c.drawString(x0, H - 165, "Analcolici")
-    y = 219
-    for name, ingredients, price, glass in ANALCOLICI:
-        c.setFont("SerifBold", 18)
-        c.setFillColor(PURPLE)
-        c.drawString(x0, H - y, name)
-        c.setFont("SerifBold", 15)
-        c.setFillColor(RED)
-        c.drawString(x0 + pdfmetrics.stringWidth(name, "SerifBold", 18) + 9, H - y, short_price(price))
-        yy = y + 18
-        c.setFont("Sans", 11)
-        c.setFillColor(INK)
-        for line in simpleSplit(ingredients, "Sans", 11, x1 - x0 - 30):
-            c.drawString(x0, H - yy, line)
-            yy += 15
-        y = yy + 40
-    c.setFont("SansLight", 8)
-    c.setFillColor(INK)
-    c.drawString(x0, H - (y - 14), "Prezzi in euro.")
+    staggered_page(c, ANALCOLICI, ANALCOLICI_PAGE, title="Analcolici")
 
 
 def list_title(c, x0, y, title, price=None):
@@ -242,23 +201,26 @@ def soft_e_birre(c):
     scene(c, "iguana")  # fiume a destra, iguana sul sasso in basso a sinistra
     x0 = 92
     price, names = SOFT_DRINK
-    list_title(c, x0, 146, "Soft drink", price)
-    y = 179
-    c.setFont("Sans", 12.5)
-    c.setFillColor(INK)
-    for name in names:
-        c.drawString(x0, H - y, name)
-        y += 20
+    list_title(c, x0, 122, "Soft drink")
+    y = 158
+    for name, p in [(n, price) for n in names] + ACQUA:
+        drink_line(c, x0, y, name, p)
+        y += 23
     list_title(c, x0, y + 26, "Birre")
     y += 62
     for name, p in BIRRE:
-        c.setFont("SerifBold", 16)
-        c.setFillColor(PURPLE)
-        c.drawString(x0, H - y, name)
-        c.setFont("SerifBold", 15)
-        c.setFillColor(RED)
-        c.drawString(x0 + pdfmetrics.stringWidth(name, "SerifBold", 16) + 9, H - y, p)
-        y += 27
+        drink_line(c, x0, y, name, p)
+        y += 23
+
+
+def drink_line(c, x0, y, name, p):
+    """Una riga dell'elenco con lo stesso carattere dei cocktail: nome in serif viola, prezzo rosso accanto."""
+    c.setFont("SerifBold", 16)
+    c.setFillColor(PURPLE)
+    c.drawString(x0, H - y, name)
+    c.setFont("SerifBold", 15)
+    c.setFillColor(RED)
+    c.drawString(x0 + pdfmetrics.stringWidth(name, "SerifBold", 16) + 8, H - y, p)
 
 
 def main():
@@ -267,12 +229,10 @@ def main():
     c.setAuthor("RYO Churrascaria | Tapas | Cocktail")
     cover(c)
     c.showPage()
-    intro(c)
-    c.showPage()
-    # 5 cocktail per pagina; l'ultima raccoglie la famiglia Negroni
-    groups = [COCKTAILS[0:5], COCKTAILS[5:10], COCKTAILS[10:14], COCKTAILS[14:19]]
+    # 4 cocktail per pagina, sfalsati; l'ultima pagina chiude con i Negroni
+    groups = [COCKTAILS[i:i + 4] for i in range(0, len(COCKTAILS), 4)]
     for items, layout in zip(groups, COCKTAIL_PAGES):
-        cocktail_page(c, items, layout)
+        staggered_page(c, items, layout)
         c.showPage()
     analcolici(c)
     c.showPage()
