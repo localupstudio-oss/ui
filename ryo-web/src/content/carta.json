@@ -210,12 +210,12 @@
       "piatti": [
         {
           "nome": "Hakka",
-          "descrizione": "Vodka, Sake, Lychee, Cocco, Lime, Perrier",
+          "descrizione": "Vodka Grey Goose, Sake, Lychee, Cocco, Lime, Perrier",
           "prezzo": "12"
         },
         {
           "nome": "Bossa Nova",
-          "descrizione": "Tequila, Campari, Estratto di mango e peperone",
+          "descrizione": "Tequila, Martini Bitter, Estratto di mango e peperone",
           "prezzo": "12"
         },
         {
@@ -230,12 +230,12 @@
         },
         {
           "nome": "La Bombonera",
-          "descrizione": "Rum, Tè verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda",
+          "descrizione": "Rum Diplomático, Tè verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda",
           "prezzo": "10"
         },
         {
           "nome": "RYO Collins",
-          "descrizione": "Vodka, Pesca, Lychee, Lime, Fermentato frutti rossi, Tonica",
+          "descrizione": "Vodka Grey Goose, Pesca, Lychee, Lime, Fermentato frutti rossi, Tonica",
           "prezzo": "12"
         },
         {
@@ -245,7 +245,7 @@
         },
         {
           "nome": "Sangria Blanca",
-          "descrizione": "Gin, Amaro dolce, Vino aromatizzato con frutta tropicale",
+          "descrizione": "Fords Gin, Amaro dolce, Vino aromatizzato con frutta tropicale",
           "prezzo": "10"
         },
         {
@@ -255,17 +255,17 @@
         },
         {
           "nome": "Floradora",
-          "descrizione": "Gin, Violetta, Maraschino, Lime, Aria di aloe vera",
+          "descrizione": "Gin Mare, Violetta, Maraschino, Lime, Aria di aloe vera",
           "prezzo": "11"
         },
         {
           "nome": "Save the Jungle",
-          "descrizione": "Cachaça, Vermouth aromatizzato al tamarillo, Lime, Agave, Ginger Ale",
+          "descrizione": "Cachaça, Martini Rubino aromatizzato al tamarillo, Lime, Agave, Ginger Ale",
           "prezzo": "10"
         },
         {
           "nome": "Copacabana Dark",
-          "descrizione": "Rum, Vaniglia, Cocco, Caffè espresso",
+          "descrizione": "Rum, Vaniglia, Cocco, Caffè espresso, Liquore al caffè",
           "prezzo": "11"
         },
         {
@@ -280,7 +280,7 @@
         },
         {
           "nome": "Negroni Chill",
-          "descrizione": "Campari, Cynar, Assenzio, Cedro, Zenzero",
+          "descrizione": "Martini Bitter, Cynar, Assenzio, Cedro, Zenzero",
           "prezzo": "10"
         },
         {
