@@ -10,7 +10,7 @@ import type { Night } from "@/content/experience"
 import { waMessage, whatsappUrl } from "@/content/site"
 import { cn } from "@/lib/utils"
 
-const EVERY = 2800
+const EVERY = 1600
 
 /** Pagina della serata: foto che si alternano da un lato, racconto breve e WhatsApp dall'altro. */
 export function NightDetail({ night: n }: { night: Night }) {
@@ -69,7 +69,7 @@ function Slideshow({ photos }: { photos: Night["photos"] }) {
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 0.7 }, scale: { duration: EVERY / 1000 + 0.7, ease: "linear" } }}
+          transition={{ opacity: { duration: 0.45 }, scale: { duration: EVERY / 1000 + 0.45, ease: "linear" } }}
         >
           <Image src={p.src} alt={p.alt} fill priority={i === 0} quality={90} sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
         </motion.div>
@@ -84,7 +84,7 @@ function Slideshow({ photos }: { photos: Night["photos"] }) {
               onClick={() => setI(k)}
               aria-label={`Foto ${k + 1} di ${photos.length}`}
               aria-current={k === i || undefined}
-              className={cn("h-1.5 rounded-full bg-[#f6efe0] transition-all duration-500", k === i ? "w-7" : "w-1.5 opacity-60")}
+              className={cn("h-1.5 rounded-full bg-[#f6efe0] transition-all duration-300", k === i ? "w-7" : "w-1.5 opacity-60")}
             />
           ))}
         </div>
