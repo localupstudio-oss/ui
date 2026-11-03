@@ -39,21 +39,21 @@ OLIVE = HexColor("#6e5a2e")
 W, H = A4
 
 COCKTAILS = [
-    ("Hakka", "Vodka, Sake, Lychee, Cocco, Lime, Perrier.", "€ 12,00", "Tumbler basso"),
-    ("Bossa Nova", "Tequila, Campari, Estratto di mango e peperone.", "€ 12,00", "Tumbler basso"),
+    ("Hakka", "Vodka Grey Goose, Sake, Lychee, Cocco, Lime, Perrier.", "€ 12,00", "Tumbler basso"),
+    ("Bossa Nova", "Tequila, Martini Bitter, Estratto di mango e peperone.", "€ 12,00", "Tumbler basso"),
     ("Carioca", "Woodford whisky, Lampone, Lime, Zucchero, Foam di vino rosso.", "€ 10,00", "Bicchiere coppetta"),
     ("Machu Picchu", "Pisco, Cordiale di limone, Passion fruit, Pepe rosa.", "€ 10,00", "Coppetta piccola"),
-    ("La Bombonera", "Rum, Tè verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda.", "€ 10,00", "Bicchiere tiki"),
-    ("RYO Collins", "Vodka, Pesca, Lychee, Lime, Fermentato frutti rossi, Tonica.", "€ 12,00", None),
+    ("La Bombonera", "Rum Diplomático, Tè verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda.", "€ 10,00", "Bicchiere tiki"),
+    ("RYO Collins", "Vodka Grey Goose, Pesca, Lychee, Lime, Fermentato frutti rossi, Tonica.", "€ 12,00", None),
     ("Old Fashioned della foresta", "Diplomático Mantuano, Fava di tonka, Honey mix, Angostura.", "€ 11,00", None),
-    ("Sangria Blanca", "Gin, Amaro dolce, Vino aromatizzato con frutta tropicale.", "€ 10,00", "Bicchiere calice"),
+    ("Sangria Blanca", "Fords Gin, Amaro dolce, Vino aromatizzato con frutta tropicale.", "€ 10,00", "Bicchiere calice"),
     ("Monkey Business", "Woodford Bourbon, Banana, Limone, Miele, Ginger beer.", "€ 10,00", None),
-    ("Floradora", "Gin, Violetta, Maraschino, Lime, Aria di aloe vera.", "€ 11,00", "Coppa grande"),
-    ("Save the Jungle", "Cachaça, Vermouth aromatizzato al tamarillo, Lime, Agave, Ginger Ale.", "€ 10,00", None),
-    ("Copacabana Dark", "Rum, Vaniglia, Cocco, Caffè espresso.", "€ 11,00", "Bicchiere coppetta"),
+    ("Floradora", "Gin Mare, Violetta, Maraschino, Lime, Aria di aloe vera.", "€ 11,00", "Coppa grande"),
+    ("Save the Jungle", "Cachaça, Martini Rubino aromatizzato al tamarillo, Lime, Agave, Ginger Ale.", "€ 10,00", None),
+    ("Copacabana Dark", "Rum, Vaniglia, Cocco, Caffè espresso, Liquore al caffè.", "€ 11,00", "Bicchiere coppetta"),
     ("Umeshu", "Fusetti giapponese, Sake, Roku gin.", "€ 12,00", "Tumbler basso"),
     ("Samba", "Gin Mare, Cordiale pompelmo rosa e rosmarino, Olio al basilico.", "€ 11,00", None),
-    ("Negroni Chill", "Campari, Cynar, Assenzio, Cedro, Zenzero.", "€ 10,00", "Tumbler basso"),
+    ("Negroni Chill", "Martini Bitter, Cynar, Assenzio, Cedro, Zenzero.", "€ 10,00", "Tumbler basso"),
     ("Sud America-no", "Martini Riserva Bitter, Punt e Mes, Soda all'ananas.", "€ 9,00", "Tumbler basso"),
     ("Barrel Negroni", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
     ("Choco Negroni", "Martini Rubino Vermouth, Bitter Fusetti cacao, Bombay, Bitter al cioccolato.", "€ 10,00", "Tumbler basso"),
@@ -154,13 +154,13 @@ def entry(c, item, cx, y, width=250, k=1.0):
 # Per ogni paesaggio: dove cade la carta libera (centro x della colonna, larghezza, y delle 5 voci)
 # Per ogni paesaggio le 4 voci, sfalsate una a destra e una a sinistra: (centro x, y, larghezza)
 COCKTAIL_PAGES = [
-    ("iguana", True, [(338, 85, 175), (410, 194, 175), (274, 303, 175), (346, 427, 175)]),
+    ("iguana", True, [(310, 170, 175), (382, 273, 175), (254, 376, 175), (326, 494, 175)]),
     ("tucano", False, [(186, 85, 175), (258, 191, 175), (186, 297, 175), (258, 403, 175)]),
     ("scimmia", False, [(334, 85, 175), (406, 194, 175), (270, 303, 175), (410, 400, 175)]),
     ("giaguaro", False, [(190, 100, 205), (262, 250, 205), (142, 418, 205)]),
     ("capibara", False, [(334, 100, 175), (406, 218, 175), (322, 321, 175), (402, 454, 175)]),
 ]
-ANALCOLICI_PAGE = ("fenicottero", False, [(290, 175, 205), (362, 292, 205), (270, 427, 205)])
+ANALCOLICI_PAGE = ("fenicottero", False, [(288, 255, 205), (360, 360, 205), (276, 483, 205)])
 
 
 def by_name(*names):
@@ -190,14 +190,14 @@ def cover(c):
     scene(c, "ara")  # ara in volo sul fiume, logo al centro della carta libera
     cx = W / 2
     image(c, "logo", cx, 150, 260, anchor="c")
-    spaced(c, "COCKTAILS", cx, H - 268, "SansLight", 10, 7, OLIVE)
+    spaced(c, "COCKTAILS", cx, H - 276, "Sans", 17, 9, OLIVE)
     c.setFont("SerifIt", 36)
     c.setFillColor(RED)
-    c.drawCentredString(cx, H - 308, "menù")
+    c.drawCentredString(cx, H - 322, "menù")
 
 
 def analcolici(c):
-    staggered_page(c, ANALCOLICI, ANALCOLICI_PAGE, title="Analcolici")
+    staggered_page(c, ANALCOLICI, ANALCOLICI_PAGE, title=("Analcolici", 318, 200))
 
 
 def list_title(c, x0, y, title, price=None):
@@ -212,10 +212,10 @@ def list_title(c, x0, y, title, price=None):
 
 def soft_e_birre(c):
     scene(c, "iguana")  # fiume a destra, iguana sul sasso in basso a sinistra
-    x0 = 106
+    x0 = 150
     price, names = SOFT_DRINK
-    list_title(c, x0, 132, "Soft drink")
-    y = 168
+    list_title(c, x0, 172, "Soft drink")
+    y = 208
     for name, p in [(n, price) for n in names] + ACQUA:
         drink_line(c, x0, y, name, p)
         y += 20
