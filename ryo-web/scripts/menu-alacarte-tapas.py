@@ -25,7 +25,7 @@ TITLE = (505, 660, 745, 800)
 DISHES = {
     "croquetas": (80, 830, 550, 1010),
     "polpetta": (760, 830, 1205, 1010),
-    "pollo-carioca": (505, 985, 815, 1130),
+    "pollo-carioca": (505, 962, 815, 1130),
     "pan-tostado": (45, 1115, 580, 1370),
     "gamberi": (795, 1120, 1170, 1360),
     "tortillas": (35, 1420, 590, 1640),
@@ -78,7 +78,7 @@ def main():
     # i piatti da spostare: si incollano in «moltiplica», così il bianco non copre l'ananas
     # i riquadri di Croquetas e Polpetta toccano le lettere di «Pollo Carioca»: si usano senza
     neighbours = src.copy()
-    neighbours.paste(white.crop((512, 981, 808, 1133)), (512, 981))
+    neighbours.paste(white.crop((512, 962, 808, 1133)), (512, 962))
     neighbours.paste(white.crop((538, 828, 560, 1012)), (538, 828))
     tortillas_src = src.copy()
     tortillas_src.paste(white.crop((500, 1505, 640, 1700)), (500, 1505))  # foglie d'ananas dentro il riquadro
