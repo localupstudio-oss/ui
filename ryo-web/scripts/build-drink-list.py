@@ -158,7 +158,7 @@ COCKTAIL_PAGES = [
     ("tucano", False, [(186, 85, 175), (258, 191, 175), (186, 297, 175), (258, 403, 175)]),
     ("scimmia", False, [(334, 85, 175), (406, 194, 175), (270, 303, 175), (410, 400, 175)]),
     ("giaguaro", False, [(190, 100, 205), (262, 250, 205), (142, 418, 205)]),
-    ("capibara", False, [(322, 190, 190), (394, 278, 190), (322, 351, 190), (402, 454, 190)]),
+    ("capibara", False, [(334, 100, 175), (406, 218, 175), (322, 321, 175), (402, 454, 175)]),
 ]
 ANALCOLICI_PAGE = ("fenicottero", False, [(290, 175, 205), (362, 292, 205), (270, 427, 205)])
 
@@ -167,10 +167,10 @@ def by_name(*names):
     return [next(x for x in COCKTAILS if x[0] == n) for n in names]
 
 
-# 4 per pagina; l'ultima raccoglie tutta la famiglia Negroni sotto il suo titolo
+# 4 per pagina; l'ultima raccoglie i Negroni
 COCKTAIL_GROUPS = [COCKTAILS[0:4], COCKTAILS[4:8], COCKTAILS[8:12], by_name("Umeshu", "Samba", "Sud America-no"),
                    by_name("Negroni Chill", "Barrel Negroni", "Choco Negroni", "Barrel Boulevardier")]
-PAGE_TITLES = [None, None, None, None, ("La famiglia Negroni", 382, 146)]
+PAGE_TITLES = [None, None, None, None, None]
 
 
 def staggered_page(c, items, layout, title=None):
