@@ -6,7 +6,7 @@ filo delle crocette di taglio dal PDF di stampa):
   ryo-menu-alacarte.pdf   Tapas, Platos + Ensaladas, Primi + Carnes + Sides, Allergeni
                           (la prima pagina senza Churrasco: scripts/menu-alacarte-tapas.py;
                           la pagina allergeni: scripts/menu-allergeni.py)
-  ryo-menu-churrasco.pdf  solo il riquadro Churrasco Menù
+  ryo-menu-churrasco.pdf  pagina unica del Churrasco Menù (scripts/menu-churrasco.py)
   ryo-menu-dessert.pdf    Dulce
 
   python3 scripts/build-official-menus.py
@@ -36,5 +36,5 @@ def pdf(name, files, title, out=OUT):
 pagine = [f"pagina-{i}.jpg" for i in range(1, 5)]
 pdf("ryo-menu-cucina.pdf", pagine, "RYO — Menu")
 pdf("ryo-menu-alacarte.pdf", ["pagina-1-tapas.jpg", *pagine[1:3], "allergeni.jpg"], "RYO — Menu à la carte")
-pdf("ryo-menu-churrasco.pdf", ["churrasco.jpg"], "RYO — Churrasco Menù")
+pdf("ryo-menu-churrasco.pdf", ["churrasco-menu.jpg"], "RYO — Churrasco Menù")
 pdf("ryo-menu-dessert.pdf", pagine[3:], "RYO — Dulce")
