@@ -50,7 +50,24 @@ export function Contacts() {
           </a>
         </Reveal>
 
-        <div className="grid grid-cols-1 content-start gap-12 lg:col-span-5">
+        {/* Riconoscimento: occupa lo spazio sotto la mappa sugli schermi larghi */}
+        <Reveal className="lg:col-span-7 lg:row-start-2 lg:-mt-10">
+          <div className="grid grid-cols-1 items-center gap-8 border-t border-foreground/15 pt-12 sm:grid-cols-[minmax(0,240px)_1fr] sm:gap-10">
+            <div className="relative mx-auto aspect-[1040/1230] w-full max-w-[240px] overflow-hidden rounded-sm shadow-2xl">
+              <Image src="/images/premi/eccellenze-italiane.jpg" alt="La targa Eccellenze Italiane 2026 – 2027 assegnata a RYO" fill quality={90} sizes="240px" className="object-cover" />
+            </div>
+            <div>
+              <p className="text-sm tracking-[0.2em] text-amber uppercase">Riconoscimento 2026 – 2027</p>
+              <h2 className="mt-3 font-display text-[clamp(2rem,3.2vw,2.8rem)] leading-tight">Eccellenze Italiane</h2>
+              <p className="mt-5 max-w-md leading-relaxed text-foreground/75">
+                RYO è entrato nel Registro Eccellenze Italiane come <em>Recommended Business</em> 2026 – 2027: un riconoscimento alla qualità della
+                nostra cucina, dei cocktail e dell&apos;accoglienza.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="grid grid-cols-1 content-start gap-12 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
           <Reveal>
             <h2 className="font-display text-4xl">Contatti</h2>
             <ul className="mt-6 divide-y divide-border">

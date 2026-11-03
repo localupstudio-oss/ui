@@ -5,7 +5,7 @@ import { fullAddress, nav, site, whatsappUrl } from "@/content/site"
 
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`
 
-const brands = ["Churrascaria", "Tapas", "Cocktail", "Quelli che il Giovedì", "This is RYO Weekend", "Cava de' Tirreni"]
+const brands = ["Churrascaria", "Tapas", "Cocktail", "Quelli che il Giovedì", "This is RYO Weekend", "Eccellenze Italiane 2026 – 2027", "Cava de' Tirreni"]
 
 /** Footer crema; la prenotazione si apre in una finestra dai pulsanti "Prenota". */
 export function Footer() {
