@@ -194,6 +194,33 @@ def cover(c):
     c.setFont("SerifIt", 36)
     c.setFillColor(RED)
     c.drawCentredString(cx, H - 322, "menù")
+    partner_logos(c)
+
+
+LOGHI = ART / "loghi"  # loghi ufficiali dei marchi partner (PNG trasparenti): diplomatico, martini, gin-mare
+PARTNER = ["diplomatico", "martini", "gin-mare"]
+
+
+def partner_logos(c):
+    """In fondo alla copertina, su una fascia di carta: «In collaborazione con» e i loghi dei partner.
+    I loghi vanno messi in scripts/drink-art/loghi/ con questi nomi; finché mancano la fascia non compare."""
+    files = [LOGHI / f"{n}.png" for n in PARTNER if (LOGHI / f"{n}.png").exists()]
+    if not files:
+        return
+    band_h, y0 = 92, 22  # dal fondo della pagina
+    c.saveState()
+    c.setFillColorRGB(0.96, 0.92, 0.82, alpha=0.88)
+    c.roundRect(60, y0, W - 120, band_h, 10, stroke=0, fill=1)
+    c.restoreState()
+    spaced(c, "IN COLLABORAZIONE CON", W / 2, y0 + band_h - 18, "SansLight", 7, 3, OLIVE)
+    slot_w, max_h = (W - 160) / len(files), 44
+    for i, f in enumerate(files):
+        img = ImageReader(str(f))
+        iw, ih = img.getSize()
+        h = min(max_h, (slot_w - 30) * ih / iw)
+        w = h * iw / ih
+        x = 80 + slot_w * i + (slot_w - w) / 2
+        c.drawImage(img, x, y0 + 14 + (max_h - h) / 2, w, h, mask="auto")
 
 
 def analcolici(c):
