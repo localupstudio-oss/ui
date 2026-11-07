@@ -6,10 +6,14 @@ dell'intestazione originale, il giaguaro, l'ananas col sigillo RYO, il ramo con 
 
   python3 scripts/menu-churrasco.py   (scrive scripts/menu-pdf/churrasco-menu.jpg)
 """
+import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFont
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from menu_lettering import Lettering  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 PAGES = ROOT / "scripts" / "menu-pdf"
@@ -20,33 +24,23 @@ INK = (34, 34, 32)  # testi del menu
 RED = (196, 48, 42)
 OLIVE = (152, 156, 118)  # come le icone e il sigillo
 
+# Testi scritti con le lettere del menu à la carte (scripts/menu_lettering.py): servono lettere
+# che compaiono nel menu, per questo le frasi iniziano con «B» e «P» e si scrive «Ryo».
 INTRO = (
-    "Il rito brasiliano della brace, a modo nostro: tagli scelti cotti lentamente allo spiedo "
-    "e portati in tavola già impiattati, insieme a piccoli piatti da condividere."
+    "Brace brasiliana a modo nostro: tagli scelti cotti lentamente allo spiedo e portati "
+    "in tavola, insieme a piccoli piatti da condividere."
 )
 STAGIONE = (
-    "Tapas e contorni cambiano con le stagioni: ogni giorno scegliamo ingredienti freschi, "
+    "Per tapas e contorni scegliamo ogni giorno ingredienti freschi: cambiano con le stagioni, "
     "per portare in tavola il meglio del momento."
 )
 CARNI = [
-    ("Salsiccia artigianale", "a punta di coltello, selezione RYO"),
+    ("Salsiccia artigianale", "a punta di coltello, selezione Ryo"),
     ("Pollo marinato al rosmarino", "succoso e profumato, dorato sulla brace"),
     ("Asado di maiale", "laccato con senape e miele"),
     ("Asado di manzo", "servito con chimichurri"),
-    ("Picanha alla spada", "il taglio simbolo del churrasco, cotto alla spada e servito già tagliato"),
+    ("Picanha alla spada", "il taglio simbolo del churrasco, cotto alla spada"),
 ]
-
-
-def wrap(draw, text, font, width):
-    lines, cur = [], ""
-    for w in text.split():
-        t = f"{cur} {w}".strip()
-        if draw.textlength(t, font=font) <= width:
-            cur = t
-        else:
-            lines.append(cur)
-            cur = w
-    return lines + [cur]
 
 
 def soften(piece, top=0, bottom=0, left=0, right=0):
@@ -111,14 +105,14 @@ def main():
 
     d = ImageDraw.Draw(page)
     brush = ImageFont.truetype(str(FONTS / "CaveatBrush-Regular.ttf"), 70)
-    # stesso carattere e stesse misure dei piatti del menu à la carte (nome 38, descrizione 26, nero)
-    name = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 38)
-    desc = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 26)
-    body = desc
     cx = W / 2
+    lettering = Lettering()  # le lettere del menu à la carte, stesse misure dei piatti
 
-    def centred(y, text, font, fill, x=None):
-        d.text((cx if x is None else x, y), text, font=font, fill=fill, anchor="ma")
+    def centred(y, text, size, x=None):
+        """Riga centrata scritta con le lettere del menu; y è il bordo alto delle maiuscole."""
+        nonlocal page, d
+        page = lettering.draw(page, text, size, cx if x is None else x, y + lettering.cap[size])
+        d = ImageDraw.Draw(page)
 
     # «Novità» in rosso, sotto «Menù» e un po' inclinato come le scritte a pennello
     nv = Image.new("RGBA", (330, 130), (0, 0, 0, 0))
@@ -139,13 +133,13 @@ def main():
     y = 470
     y += original((398, 482, 838, 524), y) + 14  # «Degustazione alla brace»
     y += original((283, 527, 955, 555), y) + 34  # «4 tapas, 3 contorni, 5 tipologie di carne alla brace»
-    for line in wrap(d, INTRO, body, 860):
-        centred(y, line, body, INK)
-        y += 33
+    for line in lettering.balanced(INTRO, "desc", 900):
+        centred(y, line, "desc")
+        y += 34
     y += 10
-    for line in wrap(d, STAGIONE, desc, 780):
-        centred(y, line, desc, INK)
-        y += 33
+    for line in lettering.balanced(STAGIONE, "desc", 860):
+        centred(y, line, "desc")
+        y += 34
 
     # titolo «Carnes» a pennello, preso dal menu à la carte
     y += 26
@@ -158,18 +152,18 @@ def main():
     y += original((193, 560, 536, 589), y) + 30  # «in base alle disponibilità» del vecchio menu
     col = 605  # sotto, il testo resta tra l'ananas e la pantera
     for n, info in CARNI:
-        centred(y, n, name, INK, col)
-        y += 46
-        for line in wrap(d, info, desc, 520):
-            centred(y, line, desc, INK, col)
-            y += 31
+        centred(y, n, "name", col)
+        y += 44
+        for line in lettering.balanced(info, "desc", 560):
+            centred(y, line, "desc", col)
+            y += 32
         y += 16
 
     y += 12
     d.line((col - 60, y, col + 60, y), fill=OLIVE, width=3)
     y += 26
     y += original((588, 612, 652, 641), y, col, 1.4) + 22  # «38€» del vecchio menu
-    centred(y, "a persona", desc, INK, col)
+    centred(y, "a persona", "desc", col)
     y += 29
 
 
