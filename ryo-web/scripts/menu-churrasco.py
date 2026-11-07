@@ -1,6 +1,6 @@
 """
-Menu Churrasco in una pagina, nello stile del menu à la carte: stessi acquerelli (la tigre, l'ananas
-col sigillo RYO, il ramo con i fiori rossi, palme e felci), la scritta
+Menu Churrasco in una pagina, nello stile del menu à la carte: stessi acquerelli (la scimmia sul ramo
+dell'intestazione originale, il giaguaro, l'ananas col sigillo RYO, il ramo con i fiori rossi), la scritta
 «Churrasco Menù» e le righe del vecchio menu (degustazione, 4 tapas e 3 contorni, prezzo),
 «Novità» in rosso, un'intro sul concept e la selezione di carni.
 
@@ -17,7 +17,6 @@ FONTS = ROOT / "scripts" / "fonts"
 OUT = PAGES / "churrasco-menu.jpg"
 
 INK = (34, 34, 32)  # testi del menu
-SOFT = (70, 70, 66)  # descrizioni
 RED = (196, 48, 42)
 OLIVE = (152, 156, 118)  # come le icone e il sigillo
 
@@ -84,13 +83,17 @@ def main():
     # in alto: ramo con i fiori rossi a destra, palme a sinistra (dalla pagina dei Primi, specchiate)
     flower = soften(p4.crop((740, 0, W, 470)), bottom=90, left=60)
     page = deco(flower, (W - round(flower.width * S), 0), S)
-    # in alto a sinistra: palme con il fiore arancio (pagina dei Primi) e una felce che scende
-    # lungo il bordo (pagina dei Platos), fermandosi prima del titolo
-    page = deco(soften(p3.crop((0, 0, 360, 235)), bottom=70, right=60), (0, 0), 1.1)
-    page = deco(soften(p2.crop((0, 110, 118, 345)), top=60, bottom=80, right=25), (0, 200), 1.25)
-    # in basso: tigre a destra, ananas col sigillo RYO a sinistra
-    # tigre tra le monstere (stesso acquerello delle altre pagine), un po' fuori dal bordo destro
-    tiger = Image.open(ROOT / "scripts" / "menu-art" / "tigre.jpg").convert("RGB")
+    # in alto a sinistra l'intestazione originale del menu: la scimmia aggrappata al ramo che entra
+    # da fuori pagina tra monstere e felci, il timbro RYO e «Churrasco Menù» (senza il tucano a destra)
+    page = deco(soften(p1.crop((0, 0, 392, 540)), bottom=70), (0, 0))
+    page = deco(p1.crop((392, 0, 790, 474)), (392, 0))
+    menu = np.asarray(p1.crop((790, 380, 860, 474))).astype(int)  # la fine di «Menù», senza il ramo del tucano
+    menu[menu.mean(axis=2) > 200] = 255
+    menu[:16, 30:] = 255  # la punta del ramo del tucano sopra l'accento
+    page = deco(Image.fromarray(menu.astype(np.uint8)), (790, 380))
+    # in basso: giaguaro dell'Amazzonia a destra, ananas col sigillo RYO a sinistra
+    # giaguaro tra monstere e felci (stesso acquerello delle altre pagine), un po' fuori dal bordo destro
+    tiger = Image.open(ROOT / "scripts" / "menu-art" / "giaguaro.jpg").convert("RGB")
     t = np.asarray(tiger).astype(float)
     paper = np.median(t[t.mean(axis=2) > 235], axis=0)
     tiger = Image.fromarray(np.clip(t * (255 / paper), 0, 255).astype(np.uint8))  # fondo bianco puro
@@ -100,22 +103,13 @@ def main():
     pine = soften(p4.crop((0, 1140, 410, H)), top=90, right=40)
     page = deco(pine, (0, H - round(pine.height * S)), S)
 
-    # «Churrasco Menù» dell'intestazione originale: solo le lettere, senza il timbro e le foglie dietro
-    t = np.asarray(p1.crop((378, 322, 848, 474))).astype(int)
-    lum = t.mean(axis=2)
-    letters = (lum < 115) | ((t[..., 0] > 175) & (t[..., 1] < 175) & (t[..., 2] < 150) & (t[..., 0] - t[..., 2] > 60))
-    t[~letters] = 255
-    t[:80, 430:] = 255  # un ramo del tucano dopo la «o» di Churrasco
-    title = Image.fromarray(t.astype(np.uint8))
-    page = deco(title, (round(W / 2 - title.width / 2), 230))
 
     d = ImageDraw.Draw(page)
     brush = ImageFont.truetype(str(FONTS / "CaveatBrush-Regular.ttf"), 70)
-    head = ImageFont.truetype(str(FONTS / "CaveatBrush-Regular.ttf"), 62)
-    name = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Medium.ttf"), 31)
-    desc = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 23)
-    body = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 25)
-    price = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Medium.ttf"), 44)
+    # stesso carattere e stesse misure dei piatti del menu à la carte (nome 38, descrizione 26, nero)
+    name = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 38)
+    desc = ImageFont.truetype(str(FONTS / "SpaceGrotesk-Regular.ttf"), 26)
+    body = desc
     cx = W / 2
 
     def centred(y, text, font, fill, x=None):
@@ -125,7 +119,7 @@ def main():
     nv = Image.new("RGBA", (330, 130), (0, 0, 0, 0))
     ImageDraw.Draw(nv).text((10, 10), "Novità", font=brush, fill=RED)
     nv = nv.rotate(8, resample=Image.BICUBIC, expand=True)
-    page.paste(nv, (round(cx + 150), 330), nv)
+    page.paste(nv, (850, 372), nv)
 
     def original(box, y, x=None, scale=1.0):
         """Una riga del vecchio menu, presa così com'è: stesso carattere del grafico."""
@@ -140,32 +134,37 @@ def main():
     y = 470
     y += original((398, 482, 838, 524), y) + 14  # «Degustazione alla brace»
     y += original((283, 527, 955, 555), y) + 34  # «4 tapas, 3 contorni, 5 tipologie di carne alla brace»
-    for line in wrap(d, INTRO, body, 820):
+    for line in wrap(d, INTRO, body, 860):
         centred(y, line, body, INK)
-        y += 35
+        y += 33
     y += 10
     for line in wrap(d, STAGIONE, desc, 780):
-        centred(y, line, desc, SOFT)
-        y += 31
+        centred(y, line, desc, INK)
+        y += 33
 
-    y += 40
-    centred(y, "Selezione di carne", head, INK)
-    y += 84
+    # titolo «Carnes» a pennello, preso dal menu à la carte
+    y += 26
+    c = np.asarray(p3.crop((100, 712, 445, 832))).astype(int)
+    c[c.mean(axis=2) > 200] = 255
+    carnes = Image.fromarray(c.astype(np.uint8))
+    page = deco(carnes, (round(cx - carnes.width / 2), y))
+    d = ImageDraw.Draw(page)
+    y += carnes.height + 4
     y += original((193, 560, 536, 589), y) + 30  # «in base alle disponibilità» del vecchio menu
     col = 605  # sotto, il testo resta tra l'ananas e la pantera
     for n, info in CARNI:
         centred(y, n, name, INK, col)
-        y += 40
-        for line in wrap(d, info, desc, 500):
-            centred(y, line, desc, SOFT, col)
-            y += 29
-        y += 18
+        y += 46
+        for line in wrap(d, info, desc, 520):
+            centred(y, line, desc, INK, col)
+            y += 31
+        y += 16
 
     y += 12
     d.line((col - 60, y, col + 60, y), fill=OLIVE, width=3)
     y += 26
     y += original((588, 612, 652, 641), y, col, 1.4) + 22  # «38€» del vecchio menu
-    centred(y, "a persona", desc, SOFT, col)
+    centred(y, "a persona", desc, INK, col)
     y += 29
 
 
