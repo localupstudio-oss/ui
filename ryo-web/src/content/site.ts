@@ -64,7 +64,7 @@ export const site = {
  */
 export const menus: { label: string; sub: string; href?: string; image: string; alt: string }[] = [
   { label: "À la carte", sub: "Tapas, platos, ensaladas, primi, carnes e sides", href: "/menu/ryo-menu-alacarte.pdf", image: "/images/menu/alacarte.jpg", alt: "Si versa il vino bianco su una tavola di tacos, tapas e calamari" },
-  { label: "Churrasco", sub: "Degustazione alla brace · 38 €", href: "/menu/ryo-menu-churrasco.pdf", image: "/images/cucina/churrasco-spiedo.jpg", alt: "Il passador taglia la picanha dallo spiedo" },
+  { label: "Churrasco", sub: "Degustazione alla brace · 38 €", href: "/menu/ryo-menu-churrasco.pdf", image: "/images/cucina/churrasco-spiedo.jpg", alt: "La picanha alla spada appena tolta dalla brace" },
   { label: "Combo", sub: "In arrivo", image: "/images/home/cibo-bowl-tapas.jpg", alt: "Bowl, riso e tapas da condividere" },
   { label: "Dessert", sub: "Tiramiryo, Bananito, babbà e il dolce della settimana", href: "/menu/ryo-menu-dessert.pdf", image: "/images/galleria/dessert-frutta.jpg", alt: "Un dessert alla frutta" },
   { label: "Cocktail", sub: "Cocktails d'autore e analcolici", href: "/menu/ryo-drink-list.pdf", image: "/images/menu/cocktail-highball.jpg", alt: "Un highball rosa con scorza d'arancia tra foglie di felce" },

@@ -16,11 +16,11 @@ export function ChurrascoFeature({ id }: { id?: string }) {
   return (
     <section id={id} className="px-3 sm:px-10">
       <Reveal className="relative isolate mx-auto max-w-[1800px] overflow-hidden bg-[#0a0f0b] px-6 py-20 text-center sm:py-28 lg:py-32">
-        {/* Il passador al tavolo: foto a tutto riquadro sul telefono, metà destra su schermi larghi */}
+        {/* La brace: foto a tutto riquadro sul telefono, metà destra su schermi larghi */}
         <div className="absolute inset-0 -z-20 lg:left-[44%]">
           <Image
             src="/images/cucina/churrasco-spiedo.jpg"
-            alt="Il passador taglia la picanha dallo spiedo al tavolo"
+            alt="La picanha alla spada appena tolta dalla brace"
             fill
             sizes="(min-width:1024px) 56vw, 100vw"
             className="object-cover object-[60%_45%] lg:object-[55%_38%]"

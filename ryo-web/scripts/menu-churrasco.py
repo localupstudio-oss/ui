@@ -22,7 +22,7 @@ OLIVE = (152, 156, 118)  # come le icone e il sigillo
 
 INTRO = (
     "Il rito brasiliano della brace, a modo nostro: tagli scelti cotti lentamente allo spiedo "
-    "e serviti al tavolo dal passador, accompagnati da piccoli piatti da condividere."
+    "e portati in tavola già impiattati, insieme a piccoli piatti da condividere."
 )
 STAGIONE = (
     "Tapas e contorni cambiano con le stagioni: ogni giorno scegliamo ingredienti freschi, "
@@ -33,7 +33,7 @@ CARNI = [
     ("Pollo marinato al rosmarino", "succoso e profumato, dorato sulla brace"),
     ("Asado di maiale", "laccato con senape e miele"),
     ("Asado di manzo", "servito con chimichurri"),
-    ("Picanha alla spada", "il taglio simbolo del churrasco, servito al tavolo direttamente dallo spiedo"),
+    ("Picanha alla spada", "il taglio simbolo del churrasco, cotto alla spada e servito già tagliato"),
 ]
 
 
@@ -86,7 +86,12 @@ def main():
     # in alto a sinistra l'intestazione originale del menu: la scimmia aggrappata al ramo che entra
     # da fuori pagina tra monstere e felci, il timbro RYO e «Churrasco Menù» (senza il tucano a destra)
     page = deco(soften(p1.crop((0, 0, 392, 540)), bottom=70), (0, 0))
-    page = deco(p1.crop((392, 0, 790, 474)), (392, 0))
+    mid = np.asarray(p1.crop((392, 0, 790, 474))).astype(int)
+    mid[mid.mean(axis=2) > 212] = 255  # la carta leggermente grigia ai bordi non deve lasciare un filo verticale
+    ramp = np.clip((np.arange(80)[::-1]) / 80, 0, 1)[None, :, None]  # le foglie in alto sfumano invece di finire di netto
+    mid[:300, -80:] = 255 - (255 - mid[:300, -80:]) * ramp
+    mid = Image.fromarray(mid.astype(np.uint8))
+    page = deco(mid, (392, 0))
     menu = np.asarray(p1.crop((790, 380, 860, 474))).astype(int)  # la fine di «Menù», senza il ramo del tucano
     menu[menu.mean(axis=2) > 200] = 255
     menu[:16, 30:] = 255  # la punta del ramo del tucano sopra l'accento

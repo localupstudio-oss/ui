@@ -60,7 +60,7 @@ const strip = [
   { src: "/images/cucina/tacos-e-vino.jpg", alt: "Tacos e vino in tavola" },
   { src: "/images/drink/cocktail-foglia.jpg", alt: "Cocktail con foglia essiccata" },
   { src: "/images/home/persone-calice.jpg", alt: "Un sorriso con il calice in mano" },
-  { src: "/images/cucina/churrasco-spiedo.jpg", alt: "Il passador taglia la carne dallo spiedo" },
+  { src: "/images/cucina/churrasco-spiedo.jpg", alt: "La carne alla spada appena tolta dalla brace" },
   { src: "/images/serate/venerdi/coro-al-microfono.jpg", alt: "Amici cantano insieme al microfono" },
 ]
 
