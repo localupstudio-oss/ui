@@ -2,15 +2,16 @@
 Menu Churrasco in una pagina, nello stile del menu à la carte: stessi acquerelli (la scimmia sul ramo
 dell'intestazione originale, il giaguaro, l'ananas col sigillo RYO, il ramo con i fiori rossi), la scritta
 «Churrasco Menù» e le righe del vecchio menu (degustazione, 4 tapas e 3 contorni, prezzo),
-«Novità» in rosso, un'intro sul concept e la selezione di carni.
+«Consigliato» in rosso, un'intro sul concept e la selezione di carni.
 
   python3 scripts/menu-churrasco.py   (scrive scripts/menu-pdf/churrasco-menu.jpg)
 """
+import io
 import sys
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageChops, ImageDraw, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from menu_lettering import Lettering  # noqa: E402
@@ -108,17 +109,21 @@ def main():
     cx = W / 2
     lettering = Lettering()  # le lettere del menu à la carte, stesse misure dei piatti
 
+    # i testi nuovi si scrivono su un foglio a parte, che poi prende la stessa resa di stampa
+    # delle pagine originali (leggera sfocatura e compressione) prima di unirsi alla pagina
+    text_layer = Image.new("RGB", (W, H), "white")
+
     def centred(y, text, size, x=None):
         """Riga centrata scritta con le lettere del menu; y è il bordo alto delle maiuscole."""
-        nonlocal page, d
-        page = lettering.draw(page, text, size, cx if x is None else x, y + lettering.cap[size])
-        d = ImageDraw.Draw(page)
+        nonlocal text_layer
+        text_layer = lettering.draw(text_layer, text, size, cx if x is None else x, y + lettering.cap[size], color=(14, 14, 12))
 
-    # «Novità» in rosso, sotto «Menù» e un po' inclinato come le scritte a pennello
-    nv = Image.new("RGBA", (330, 130), (0, 0, 0, 0))
-    ImageDraw.Draw(nv).text((10, 10), "Novità", font=brush, fill=RED)
+    # «Consigliato» in rosso, accanto a «Menù» e un po' inclinato come le scritte a pennello
+    nv = Image.new("RGBA", (460, 130), (0, 0, 0, 0))
+    ImageDraw.Draw(nv).text((10, 10), "Consigliato", font=brush, fill=RED)
     nv = nv.rotate(8, resample=Image.BICUBIC, expand=True)
-    page.paste(nv, (850, 372), nv)
+    nv = nv.filter(ImageFilter.GaussianBlur(0.4))
+    page.paste(nv, (845, 360), nv)
 
     def original(box, y, x=None, scale=1.0):
         """Una riga del vecchio menu, presa così com'è: stesso carattere del grafico."""
@@ -167,6 +172,10 @@ def main():
     y += 29
 
 
+    text_layer = text_layer.filter(ImageFilter.GaussianBlur(0.3))
+    buf = io.BytesIO()
+    text_layer.save(buf, "JPEG", quality=70)
+    page = ImageChops.multiply(page, Image.open(buf).convert("RGB"))
     page.save(OUT, quality=92)
     print("creato", OUT, "fine testo a y", y)
 
