@@ -40,8 +40,8 @@ W, H = A4
 
 COCKTAILS = [
     ("Hakka", "Vodka Grey Goose, Sake, Lychee, Cocco, Lime, Perrier.", "€ 12,00", "Tumbler basso"),
-    ("Bossa Nova", "Tequila, Martini Bitter, Estratto di mango e peperone.", "€ 12,00", "Tumbler basso"),
-    ("Carioca", "Woodford whisky, Lampone, Lime, Zucchero, Foam di vino rosso.", "€ 10,00", "Bicchiere coppetta"),
+    ("Bossa Nova", "Tequila Patrón, Martini Riserva Bitter, Estratto di mango e peperone.", "€ 12,00", "Tumbler basso"),
+    ("Carioca", "Dewar's 12, Lampone, Lime, Zucchero, Foam di vino rosso.", "€ 10,00", "Bicchiere coppetta"),
     ("Machu Picchu", "Pisco, Cordiale di limone, Passion fruit, Pepe rosa.", "€ 10,00", "Coppetta piccola"),
     ("La Bombonera", "Rum Diplomático, Tè verde, Mate, Ananas, Agrumi, Oleo saccarum, Soda.", "€ 10,00", "Bicchiere tiki"),
     ("RYO Collins", "Vodka Grey Goose, Pesca, Lychee, Lime, Fermentato frutti rossi, Tonica.", "€ 12,00", None),
@@ -49,14 +49,14 @@ COCKTAILS = [
     ("Sangria Blanca", "Fords Gin, Amaro dolce, Vino aromatizzato con frutta tropicale.", "€ 10,00", "Bicchiere calice"),
     ("Monkey Business", "Woodford Bourbon, Banana, Limone, Miele, Ginger beer.", "€ 10,00", None),
     ("Floradora", "Gin Mare, Violetta, Maraschino, Lime, Aria di aloe vera.", "€ 11,00", "Coppa grande"),
-    ("Save the Jungle", "Cachaça, Martini Rubino aromatizzato al tamarillo, Lime, Agave, Ginger Ale.", "€ 10,00", None),
-    ("Copacabana Dark", "Rum, Vaniglia, Cocco, Caffè espresso, Liquore al caffè.", "€ 11,00", "Bicchiere coppetta"),
+    ("Save the Jungle", "Cachaça Leblon, Martini Riserva Rubino aromatizzato al tamarillo, Lime, Agave, Ginger Ale.", "€ 10,00", None),
+    ("Copacabana Dark", "Rum Santa Teresa, Vaniglia, Cocco, Caffè espresso, Liquore al caffè.", "€ 11,00", "Bicchiere coppetta"),
     ("Umeshu", "Fusetti giapponese, Sake, Roku gin.", "€ 12,00", "Tumbler basso"),
     ("Samba", "Gin Mare, Cordiale pompelmo rosa e rosmarino, Olio al basilico.", "€ 11,00", None),
-    ("Negroni Chill", "Martini Bitter, Cynar, Assenzio, Cedro, Zenzero.", "€ 10,00", "Tumbler basso"),
+    ("Negroni Chill", "Martini Riserva Bitter, Cynar, Assenzio, Cedro, Zenzero.", "€ 10,00", "Tumbler basso"),
     ("Sud America-no", "Martini Riserva Bitter, Punt e Mes, Soda all'ananas.", "€ 9,00", "Tumbler basso"),
     ("Barrel Negroni", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
-    ("Choco Negroni", "Martini Rubino Vermouth, Bitter Fusetti cacao, Bombay, Bitter al cioccolato.", "€ 10,00", "Tumbler basso"),
+    ("Choco Negroni", "Martini Riserva Rubino, Bitter Fusetti cacao, Bombay, Bitter al cioccolato.", "€ 10,00", "Tumbler basso"),
     ("Barrel Boulevardier", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
 ]
 SOFT_DRINK = ("5", ["Perrier acqua frizzante", "Soda all'ananas", "Soda al pompelmo rosa", "Soda al limone", "Tonica Indian", "Ginger beer", "Coca-Cola", "Coca-Cola Zero", "Tassoni"])
@@ -154,13 +154,13 @@ def entry(c, item, cx, y, width=250, k=1.0):
 # Per ogni paesaggio: dove cade la carta libera (centro x della colonna, larghezza, y delle 5 voci)
 # Per ogni paesaggio le 4 voci, sfalsate una a destra e una a sinistra: (centro x, y, larghezza)
 COCKTAIL_PAGES = [
-    ("iguana", True, [(310, 170, 175), (382, 273, 175), (254, 376, 175), (326, 494, 175)]),
-    ("tucano", False, [(186, 85, 175), (258, 191, 175), (186, 297, 175), (258, 403, 175)]),
-    ("scimmia", False, [(334, 85, 175), (406, 194, 175), (270, 303, 175), (410, 400, 175)]),
-    ("giaguaro", False, [(190, 100, 205), (262, 250, 205), (142, 418, 205)]),
-    ("capibara", False, [(334, 100, 175), (406, 218, 175), (322, 321, 175), (402, 454, 175)]),
+    ("iguana", True, [(334, 140, 200), (406, 255, 200), (270, 387, 200), (342, 502, 200)]),
+    ("tucano", False, [(194, 85, 200), (266, 193, 200), (194, 301, 200), (266, 406, 200)]),
+    ("scimmia", False, [(342, 70, 200), (414, 167, 200), (326, 281, 200), (398, 404, 196)]),
+    ("giaguaro", False, [(202, 100, 225), (274, 236, 225), (154, 407, 225)]),
+    ("capibara", False, [(358, 100, 200), (430, 215, 200), (338, 312, 200), (410, 444, 200)]),
 ]
-ANALCOLICI_PAGE = ("fenicottero", False, [(288, 255, 205), (360, 360, 205), (276, 483, 205)])
+ANALCOLICI_PAGE = ("fenicottero", False, [(300, 235, 225), (372, 353, 225), (288, 491, 225)])
 
 
 def by_name(*names):
@@ -175,7 +175,7 @@ PAGE_TITLES = [None, None, None, None, None]
 
 def staggered_page(c, items, layout, title=None):
     name, mirror, spots = layout
-    k = 1.0 if len(items) >= 4 else 1.22  # 3 voci: più grandi, per non lasciare carta vuota
+    k = 1.18 if len(items) >= 4 else 1.36  # caratteri più grandi; con 3 voci ancora di più, per non lasciare carta vuota
     scene(c, name, mirror)
     if title:
         text, tx, ty = title if isinstance(title, tuple) else (title, W / 2, 120)
@@ -197,7 +197,7 @@ def cover(c):
 
 
 def analcolici(c):
-    staggered_page(c, ANALCOLICI, ANALCOLICI_PAGE, title=("Analcolici", 318, 200))
+    staggered_page(c, ANALCOLICI, ANALCOLICI_PAGE, title=("Analcolici", 318, 172))
 
 
 def list_title(c, x0, y, title, price=None):
@@ -214,26 +214,26 @@ def soft_e_birre(c):
     scene(c, "iguana")  # fiume a destra, iguana sul sasso in basso a sinistra
     x0 = 150
     price, names = SOFT_DRINK
-    list_title(c, x0, 172, "Soft drink")
-    y = 208
+    list_title(c, x0, 128, "Soft drink")
+    y = 166
     for name, p in [(n, price) for n in names] + ACQUA:
         drink_line(c, x0, y, name, p)
-        y += 20
-    list_title(c, x0, y + 26, "Birre")
+        y += 23
+    list_title(c, x0, y + 24, "Birre")
     y += 62
     for name, p in BIRRE:
         drink_line(c, x0, y, name, p)
-        y += 20
+        y += 23
 
 
 def drink_line(c, x0, y, name, p):
     """Una riga dell'elenco con lo stesso carattere dei cocktail: nome in serif viola, prezzo rosso accanto."""
-    c.setFont("SerifBold", 16)
+    c.setFont("SerifBold", 19)
     c.setFillColor(PURPLE)
     c.drawString(x0, H - y, name)
-    c.setFont("SerifBold", 15)
+    c.setFont("SerifBold", 17)
     c.setFillColor(RED)
-    c.drawString(x0 + pdfmetrics.stringWidth(name, "SerifBold", 16) + 8, H - y, p)
+    c.drawString(x0 + pdfmetrics.stringWidth(name, "SerifBold", 19) + 9, H - y, p)
 
 
 def main():
