@@ -215,12 +215,12 @@
         },
         {
           "nome": "Bossa Nova",
-          "descrizione": "Tequila, Martini Bitter, Estratto di mango e peperone",
+          "descrizione": "Tequila Patrón, Martini Riserva Bitter, Estratto di mango e peperone",
           "prezzo": "12"
         },
         {
           "nome": "Carioca",
-          "descrizione": "Woodford whisky, Lampone, Lime, Zucchero, Foam di vino rosso",
+          "descrizione": "Dewar's 12, Lampone, Lime, Zucchero, Foam di vino rosso",
           "prezzo": "10"
         },
         {
@@ -260,12 +260,12 @@
         },
         {
           "nome": "Save the Jungle",
-          "descrizione": "Cachaça, Martini Rubino aromatizzato al tamarillo, Lime, Agave, Ginger Ale",
+          "descrizione": "Cachaça Leblon, Martini Riserva Rubino aromatizzato al tamarillo, Lime, Agave, Ginger Ale",
           "prezzo": "10"
         },
         {
           "nome": "Copacabana Dark",
-          "descrizione": "Rum, Vaniglia, Cocco, Caffè espresso, Liquore al caffè",
+          "descrizione": "Rum Santa Teresa, Vaniglia, Cocco, Caffè espresso, Liquore al caffè",
           "prezzo": "11"
         },
         {
@@ -280,7 +280,7 @@
         },
         {
           "nome": "Negroni Chill",
-          "descrizione": "Martini Bitter, Cynar, Assenzio, Cedro, Zenzero",
+          "descrizione": "Martini Riserva Bitter, Cynar, Assenzio, Cedro, Zenzero",
           "prezzo": "10"
         },
         {
@@ -295,7 +295,7 @@
         },
         {
           "nome": "Choco Negroni",
-          "descrizione": "Martini Rubino Vermouth, Bitter Fusetti cacao, Bombay, Bitter al cioccolato",
+          "descrizione": "Martini Riserva Rubino, Bitter Fusetti cacao, Bombay, Bitter al cioccolato",
           "prezzo": "10"
         },
         {
