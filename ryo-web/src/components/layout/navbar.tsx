@@ -60,7 +60,7 @@ export function Navbar() {
         <div className="mx-auto flex h-20 max-w-[1800px] items-center justify-between px-5 sm:h-24 sm:px-10">
           <Link href="/" aria-label={`${site.fullName} — home`} onClick={close} className="relative block h-9 w-[116px] sm:h-11 sm:w-[142px]">
             <Image
-              src={open ? "/images/brand/wordmark-dark.png" : "/images/brand/wordmark-light.png"}
+              src={open ? "/images/brand/wordmark-dark-brace.png" : "/images/brand/wordmark-light-brace.png"}
               alt={site.name}
               fill
               priority

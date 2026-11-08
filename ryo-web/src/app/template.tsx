@@ -38,7 +38,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
             animate={{ opacity: [0, 1, 1, 0], y: [6, 0, 0, -6] }}
             transition={{ duration: 0.6, times: [0, 0.35, 0.65, 1] }}
           >
-            <Image src="/images/brand/wordmark-light.png" alt="" fill sizes="156px" className="object-contain" />
+            <Image src="/images/brand/wordmark-light-brace.png" alt="" fill sizes="156px" className="object-contain" />
           </motion.div>
         </motion.div>
       )}

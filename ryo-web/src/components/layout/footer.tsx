@@ -93,7 +93,7 @@ export function Footer() {
 
       <div className="mx-auto flex max-w-[1800px] flex-col gap-6 border-t border-ink/15 px-5 py-8 text-xs text-ink/70 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <div className="flex items-center gap-4">
-          <Image src="/images/brand/wordmark-dark.png" alt="" width={84} height={26} className="h-auto w-[84px]" />
+          <Image src="/images/brand/wordmark-dark-brace.png" alt="" width={84} height={26} className="h-auto w-[84px]" />
           <span>© {site.company.legalName} · P.IVA {site.company.vat} · REA {site.company.rea} · Sede legale {site.company.legalSeat}</span>
         </div>
         <p className="flex flex-wrap gap-x-6 gap-y-2">

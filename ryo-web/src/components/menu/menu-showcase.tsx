@@ -60,9 +60,6 @@ export function MenuShowcase() {
             )
           })}
         </ul>
-        <p className="mt-10 max-w-sm text-center text-sm text-foreground/70" aria-live="polite">
-          {current.sub}
-        </p>
       </div>
     </section>
   )

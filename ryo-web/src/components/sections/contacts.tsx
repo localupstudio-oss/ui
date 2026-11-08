@@ -53,8 +53,8 @@ export function Contacts() {
         {/* Riconoscimento: occupa lo spazio sotto la mappa sugli schermi larghi */}
         <Reveal className="lg:col-span-7 lg:row-start-2 lg:-mt-10">
           <div className="grid grid-cols-1 items-center gap-8 border-t border-foreground/15 pt-12 sm:grid-cols-[minmax(0,240px)_1fr] sm:gap-10">
-            <div className="relative mx-auto aspect-[1040/1230] w-full max-w-[240px] overflow-hidden rounded-sm shadow-2xl">
-              <Image src="/images/premi/eccellenze-italiane.jpg" alt="La targa Eccellenze Italiane 2026 – 2027 assegnata a RYO" fill quality={90} sizes="240px" className="object-cover" />
+            <div className="relative mx-auto aspect-[1086/1448] w-full max-w-[240px] overflow-hidden rounded-sm shadow-2xl">
+              <Image src="/images/premi/eccellenze-italiane-2026.jpg" alt="La targa Eccellenze Italiane 2026 – 2027 assegnata a RYO" fill quality={90} sizes="240px" className="object-cover" />
             </div>
             <div>
               <p className="text-sm tracking-[0.2em] text-amber uppercase">Riconoscimento 2026 – 2027</p>
