@@ -60,14 +60,14 @@ COCKTAILS = [
     ("Barrel Boulevardier", "Ricetta segreta", "€ 12,00", "Tumbler basso"),
 ]
 SOFT_DRINK = ("5", ["Perrier acqua frizzante", "Soda all'ananas", "Soda al pompelmo rosa", "Soda al limone", "Tonica Indian", "Ginger beer", "Coca-Cola", "Coca-Cola Zero", "Tassoni"])
-# Spritz Martini (partner): solo gli ingredienti, senza guarnizioni; tutti a 7
+# Spritz Martini (partner): solo gli ingredienti, senza guarnizioni (la menta dell'Hugo è un ingrediente); tutti a 7
 SPRITZ = [
     ("Martini Bitter Spritz", "Martini Riserva Bitter, Prosecco, Soda.", "€ 7,00", None),
-    ("Martini Vibrante Spritz", "Martini Vibrante, Prosecco, Soda.", "€ 7,00", None),
+    ("Martini Vibrante Spritz", "Martini Vibrante, Prosecco, Soda al pompelmo rosa.", "€ 7,00", None),
     ("Martini Bianco Spritz", "Martini Bianco, Prosecco, Soda.", "€ 7,00", None),
     ("Martini Floreale Spritz", "Martini Floreale, St-Germain, Prosecco, Succo di mela.", "€ 7,00", None),
     ("Martini China Spritz", "Martini Amaro China, Prosecco, Soda.", "€ 7,00", None),
-    ("St-Germain Hugo Spritz", "St-Germain, Prosecco, Soda.", "€ 7,00", None),
+    ("St-Germain Hugo Spritz", "St-Germain, Prosecco, Soda, Menta.", "€ 7,00", None),
 ]
 ACQUA = [("Acqua naturale", "2"), ("Acqua frizzante", "2")]
 BIRRE = [("Nastro Azzurro", "5"), ("Corona", "5"), ("Birra artigianale rossa", "7"), ("Birra artigianale bionda", "7")]
@@ -181,7 +181,7 @@ ANALCOLICI_PAGE = ("fenicottero", False, [(290, 112, 245), (350, 230, 245), (276
 
 
 ENTRY_SCALE = {3: 1.36, 4: 1.18, 6: 1.0}
-SPRITZ_PAGES = [("bradipo-20", False, [(266, 152, 270), (318, 250, 270), (266, 348, 270)]), ("bradipo-20", True, [(300, 152, 270), (248, 250, 270), (300, 348, 270)])]  # 3 spritz per pagina, il bradipo specchiato nella seconda
+SPRITZ_PAGES = [("bradipo-20", False, [(266, 152, 270), (318, 250, 270), (266, 348, 270)]), ("ocelot-20", False, [(262, 152, 270), (310, 250, 270), (248, 348, 300)])]  # 3 spritz per pagina: bradipo e ocelot
 
 
 def by_name(*names):
