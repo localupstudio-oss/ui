@@ -13,7 +13,7 @@ export default function HomePage() {
         <PhotoStrip />
         <div className="h-5 sm:h-8" />
         <div className="grid gap-5 px-3 pb-5 sm:gap-8 sm:px-10 sm:pb-8">
-          <FeatureCard href="/menu" title="Il menu" image="/images/home/menu-brindisi.jpg" alt="Un brindisi sopra la tavola tra tacos, tartare, paella e cocktail" position="center 40%" />
+          <FeatureCard href="/menu" title="Il menu" image="/images/home/menu-brindisi-hd.jpg" alt="Un brindisi sopra la tavola tra tacos, tartare, paella e cocktail" position="center 40%" />
           <div className="grid gap-5 sm:gap-8 md:grid-cols-2">
             <FeatureCard
               size="half"
@@ -21,9 +21,9 @@ export default function HomePage() {
               title="Gli eventi della settimana"
               meta="Giovedì | Venerdì"
               cta="Scopri le serate"
-              image="/images/serate/giovedi/cantano-braccia-alzate.jpg"
-              alt="Ospiti cantano a braccia alzate tra le felci di RYO"
-              position="60% center"
+              image="/images/serate/eventi-settimana-dj.jpg"
+              alt="La console del DJ con una rosa rossa e la sala in festa"
+              position="10% center"
             />
             <FeatureCard
               size="half"
@@ -31,9 +31,9 @@ export default function HomePage() {
               title="Feste ed eventi privati"
               meta="Compleanni | Feste | Cene di gruppo"
               cta="Organizza la tua festa"
-              image="/images/eventi/festa-torta.jpg"
+              image="/images/eventi/festa-torta-hd.jpg"
               alt="Una festa di compleanno da RYO con torta e fontane di luce"
-              position="center 40%"
+              position="55% 72%"
             />
           </div>
         </div>

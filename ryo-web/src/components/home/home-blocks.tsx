@@ -101,6 +101,7 @@ export function FeatureCard({ href, external, title, meta, cta = "Scopri", image
           alt={alt}
           fill
           sizes={size === "full" ? "100vw" : "50vw"}
+          quality={90}
           style={{ objectPosition: position }}
           className="-z-20 object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
         />

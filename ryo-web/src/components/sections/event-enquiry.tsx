@@ -18,7 +18,7 @@ export function EventEnquiry() {
   return (
     <section className="pattern-croci grid grid-cols-1 lg:min-h-[100svh] lg:grid-cols-2">
       <div className="relative h-[42svh] lg:h-auto">
-        <Image src="/images/eventi/festa-torta.jpg" alt="Una festa da RYO con torta e fontane di luce" fill priority sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
+        <Image src="/images/eventi/festa-torta-hd.jpg" alt="Una festa da RYO con torta e fontane di luce" fill priority quality={90} sizes="(min-width:1024px) 50vw, 100vw" style={{ objectPosition: "55% 70%" }} className="object-cover" />
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/45 to-transparent" />
       </div>
       <div className="flex justify-center px-5 pt-12 pb-16 sm:px-10 lg:pt-32 lg:pb-20">
