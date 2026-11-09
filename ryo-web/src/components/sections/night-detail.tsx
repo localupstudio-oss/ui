@@ -117,7 +117,7 @@ function Slideshow({ photos }: { photos: Night["photos"] }) {
             alt={show ? p.alt : ""}
             fill
             priority={k === 0}
-            quality={85}
+            quality={92}
             sizes="(min-width:1024px) 50vw, 100vw"
             onLoad={() => setLoaded((s) => (s.has(k) ? s : new Set(s).add(k)))}
             style={{ objectPosition: p.position }}
