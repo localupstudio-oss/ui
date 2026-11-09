@@ -39,29 +39,21 @@ const strip = [
   { src: "/images/home/cibo-bowl-tapas.jpg", alt: "Bowl, riso e tapas da condividere in tavola" },
   { src: "/images/home/drink-tiki.jpg", alt: "Cocktail nel tiki mug RYO con menta" },
   { src: "/images/home/persone-ballo.jpg", alt: "Due amiche ballano tra i tavoli" },
-  { src: "/images/home/pro-dj.jpg", alt: "DJ set alla consolle" },
-  { src: "/images/serate/giovedi/canta-col-gruppo.jpg", alt: "Un gruppo canta stretto attorno al microfono" },
   // giro 2
   { src: "/images/home/locale-sala-felci.jpg", alt: "La sala sotto il soffitto di felci" },
   { src: "/images/home/cibo-tacos.jpg", alt: "Tacos e tartare con un cocktail" },
   { src: "/images/home/drink-negroni.jpg", alt: "Brindisi con due Negroni" },
   { src: "/images/home/persone-risata.jpg", alt: "Una risata a tavola tra calici di rosso" },
-  { src: "/images/home/pro-chitarrista.jpg", alt: "Musica dal vivo: chitarra e voce" },
-  { src: "/images/serate/venerdi/si-balla.jpg", alt: "Si balla davanti al bancone" },
   // giro 3
   { src: "/images/home/locale-pappagallo.jpg", alt: "Il pappagallo tra le piante della sala" },
   { src: "/images/galleria/tavola-condivisa.jpg", alt: "Una tavola di piatti da condividere" },
   { src: "/images/drink/calice-stelo-verde.jpg", alt: "Cocktail nel calice dallo stelo verde" },
-  { src: "/images/home/persone-gruppo.jpg", alt: "Amici cantano insieme durante la serata" },
-  { src: "/images/home/pro-duo-acustico.jpg", alt: "Duo acustico in sala" },
-  { src: "/images/serate/giovedi/coro-in-sala.jpg", alt: "Tutta la sala canta insieme" },
+  { src: "/images/home/persone-gruppo.jpg", alt: "Amici si divertono insieme durante la serata" },
   // giro 4
   { src: "/images/locale/sala-giungla.jpg", alt: "La sala con la carta da parati tropicale" },
   { src: "/images/cucina/tacos-e-vino.jpg", alt: "Tacos e vino in tavola" },
   { src: "/images/drink/cocktail-foglia.jpg", alt: "Cocktail con foglia essiccata" },
   { src: "/images/home/persone-calice.jpg", alt: "Un sorriso con il calice in mano" },
-  { src: "/images/cucina/churrasco-spiedo.jpg", alt: "La carne alla spada appena tolta dalla brace" },
-  { src: "/images/serate/venerdi/coro-al-microfono.jpg", alt: "Amici cantano insieme al microfono" },
 ]
 
 /** Fila di foto che scorre da sola (si ferma al passaggio del mouse). */
