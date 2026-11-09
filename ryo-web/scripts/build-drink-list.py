@@ -172,7 +172,7 @@ def entry(c, item, cx, y, width=250, k=1.0):
 # Per ogni paesaggio le 4 voci, sfalsate una a destra e una a sinistra: (centro x, y, larghezza)
 COCKTAIL_PAGES = [
     ("iguana-20", False, [(236, 132, 200), (326, 228, 200), (236, 330, 200), (300, 415, 190)]),
-    ("tucano-20", False, [(314, 66, 215), (178, 198, 215), (250, 330, 215), (192, 418, 215)]),
+    ("tucano-20", False, [(314, 66, 215), (178, 198, 215), (262, 330, 300), (192, 418, 215)]),
     ("scimmia-20", False, [(250, 66, 200), (322, 175, 200), (250, 292, 200), (322, 424, 200)]),
     ("giaguaro", False, [(184, 58, 225), (206, 156, 225), (180, 266, 225)]),
     ("capibara", False, [(318, 62, 215), (372, 148, 200), (318, 230, 215), (362, 326, 190)]),
@@ -181,7 +181,7 @@ ANALCOLICI_PAGE = ("fenicottero", False, [(290, 112, 245), (350, 230, 245), (276
 
 
 ENTRY_SCALE = {3: 1.36, 4: 1.18, 6: 1.0}
-SPRITZ_PAGES = [("bradipo-20", False, [(266, 122, 270), (318, 222, 270), (266, 322, 270)]), ("bradipo-20", True, [(300, 122, 270), (248, 222, 270), (300, 322, 270)])]  # 3 spritz per pagina, il bradipo specchiato nella seconda
+SPRITZ_PAGES = [("bradipo-20", False, [(266, 152, 270), (318, 250, 270), (266, 348, 270)]), ("bradipo-20", True, [(300, 152, 270), (248, 250, 270), (300, 348, 270)])]  # 3 spritz per pagina, il bradipo specchiato nella seconda
 
 
 def by_name(*names):
@@ -262,7 +262,7 @@ def spritz(c, items, layout):
     c.drawString(x + lw + 14, H - top - lh / 2 - 10, "Spritz")
 
 
-SPRITZ_TOP = 34
+SPRITZ_TOP = 66
 
 
 def analcolici(c):
