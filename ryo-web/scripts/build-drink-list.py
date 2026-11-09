@@ -7,7 +7,7 @@ Nome e prezzo in serif, ingredienti in bastoni.
 Testi dalla bozza del locale (Drinklist_RYO_bozza_2.pdf); logo e illustrazioni
 ritagliati dalla bozza (scripts/drink-art/); paesaggi in scripts/drink-art/acquerello/pagina-*.jpg.
 
-  python3 scripts/build-drink-list.py [uscita.pdf]   (predefinito: public/menu/ryo-drink-list.pdf)
+  python3 scripts/build-drink-list.py [uscita.pdf] [--abbondanza]   (predefinito: public/menu/ryo-drink-list.pdf)
 """
 import re
 import sys
@@ -24,7 +24,11 @@ ROOT = Path(__file__).resolve().parent.parent
 ART = ROOT / "scripts" / "drink-art"
 PAINT = ART / "acquerello"  # scene ad acquerello (sostituire con gli originali ad alta risoluzione, stessi nomi)
 FONTS = ROOT / "scripts" / "fonts"
-OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "public" / "menu" / "ryo-drink-list.pdf"
+ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
+OUT = Path(ARGS[0]) if ARGS else ROOT / "public" / "menu" / "ryo-drink-list.pdf"
+# --abbondanza: versione per la tipografia, 3 mm in più per lato (20,6 × 20,6 cm); il paesaggio esce dal
+# bordo di taglio, testi e loghi restano dove sono rispetto al formato finito 20 × 20
+BLEED = 3 * 2.834645669 if "--abbondanza" in sys.argv else 0
 
 for name, file in [("SerifBold", "PlayfairDisplay-SemiBold"), ("Serif", "PlayfairDisplay-Regular"), ("SerifIt", "PlayfairDisplay-Italic"),
                    ("Sans", "Montserrat-Regular"), ("SansLight", "Montserrat-Light"), ("SansSemi", "Montserrat-SemiBold")]:
@@ -133,10 +137,10 @@ def scene_image(name, mirror=False):
 
 def scene(c, name, mirror=False):
     """Paesaggio a tutta pagina."""
-    c.drawImage(ImageReader(scene_image(name, mirror)), 0, 0, W, H)
+    c.drawImage(ImageReader(scene_image(name, mirror)), -BLEED, -BLEED, W + 2 * BLEED, H + 2 * BLEED)
 
 
-def entry(c, item, cx, y, width=250, k=1.0):
+def entry(c, item, cx, y, width=250, k=1.0, desc_width=None):
     """Voce centrata: «Nome  prezzo» e ingredienti. y = linea di base del nome (dall'alto).
     k ingrandisce tutta la voce: le pagine con meno drink usano caratteri più grandi per riempire la carta."""
     name, ingredients, price, glass = item
@@ -162,7 +166,7 @@ def entry(c, item, cx, y, width=250, k=1.0):
             c.setFillColor(OLIVE)
             c.drawCentredString(cx, H - y, ingredients)
             return y + lh
-        for line in simpleSplit(ingredients, "Sans", inf, width):
+        for line in simpleSplit(ingredients, "Sans", inf, desc_width or width):
             c.drawCentredString(cx, H - y, line)
             y += lh
     return y
@@ -181,7 +185,7 @@ ANALCOLICI_PAGE = ("fenicottero", False, [(290, 112, 245), (350, 230, 245), (276
 
 
 ENTRY_SCALE = {3: 1.36, 4: 1.18, 6: 1.0}
-SPRITZ_PAGES = [("bradipo-20", False, [(266, 152, 270), (318, 250, 270), (266, 348, 270)]), ("ocelot-20", False, [(262, 152, 270), (310, 250, 270), (248, 348, 300)])]  # 3 spritz per pagina: bradipo e ocelot
+SPRITZ_PAGES = [("bradipo-20", False, [(266, 152, 270), (318, 250, 270), (266, 348, 270)]), ("ocelot-20", False, [(262, 148, 270), (310, 234, 270), (283, 322, 270, 180)])]  # 3 spritz per pagina: bradipo e ocelot
 
 
 def by_name(*names):
@@ -205,8 +209,8 @@ def staggered_page(c, items, layout, title=None, logos=False):
         c.setFont("SerifBold", 28)
         c.setFillColor(PURPLE)
         c.drawCentredString(tx, H - ty, text)
-    for item, (x, y, w) in zip(items, spots):
-        entry(c, item, x, y, width=w, k=k)
+    for item, (x, y, w, *dw) in zip(items, spots):  # un quarto valore, se c'è, restringe solo la descrizione
+        entry(c, item, x, y, width=w, k=k, desc_width=dw[0] if dw else None)
 
 
 def cover(c):
@@ -306,7 +310,15 @@ def drink_line(c, x0, y, name, p):
 
 
 def main():
-    c = canvas.Canvas(str(OUT), pagesize=(W, H))
+    class Page(canvas.Canvas):
+        """Ogni pagina parte spostata dell'abbondanza, così il disegno resta riferito al formato finito."""
+
+        def showPage(self):
+            super().showPage()
+            self.translate(BLEED, BLEED)
+
+    c = Page(str(OUT), pagesize=(W + 2 * BLEED, H + 2 * BLEED))
+    c.translate(BLEED, BLEED)
     c.setTitle("RYO · Cocktails menù")
     c.setAuthor("RYO Churrascaria | Tapas | Cocktail")
     cover(c)
@@ -321,8 +333,7 @@ def main():
         spritz(c, SPRITZ[n * 3:n * 3 + 3], layout)
         c.showPage()
     soft_e_birre(c)
-    c.showPage()
-    c.save()
+    c.save()  # chiude anche l'ultima pagina (un showPage in più lascerebbe una pagina vuota)
     print("creato", OUT)
 
 
