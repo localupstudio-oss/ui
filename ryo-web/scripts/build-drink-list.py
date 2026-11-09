@@ -181,7 +181,7 @@ ANALCOLICI_PAGE = ("fenicottero", False, [(290, 112, 245), (350, 230, 245), (276
 
 
 ENTRY_SCALE = {3: 1.36, 4: 1.18, 6: 1.0}
-SPRITZ_PAGE = ("bradipo-20", False, [(262, 120, 340), (318, 170, 340), (262, 220, 340), (318, 270, 340), (262, 320, 340), (318, 370, 340)])
+SPRITZ_PAGES = [("bradipo-20", False, [(266, 122, 270), (318, 222, 270), (266, 322, 270)]), ("bradipo-20", True, [(300, 122, 270), (248, 222, 270), (300, 322, 270)])]  # 3 spritz per pagina, il bradipo specchiato nella seconda
 
 
 def by_name(*names):
@@ -246,9 +246,9 @@ def partner_logos(c):
         c.drawImage(img, x, y0 + 14 + (max_h - h) / 2, w, h, mask="auto")
 
 
-def spritz(c):
-    """Gli spritz del partner Martini: in alto il logo Martini e il titolo, sotto le sei voci sfalsate."""
-    staggered_page(c, SPRITZ, SPRITZ_PAGE)
+def spritz(c, items, layout):
+    """Gli spritz del partner Martini: in alto il logo Martini e il titolo, sotto tre voci sfalsate."""
+    staggered_page(c, items, layout)
     logo = ImageReader(str(LOGHI / "martini.png"))
     iw, ih = logo.getSize()
     lw = 120
@@ -317,8 +317,9 @@ def main():
         c.showPage()
     analcolici(c)
     c.showPage()
-    spritz(c)
-    c.showPage()
+    for n, layout in enumerate(SPRITZ_PAGES):
+        spritz(c, SPRITZ[n * 3:n * 3 + 3], layout)
+        c.showPage()
     soft_e_birre(c)
     c.showPage()
     c.save()
