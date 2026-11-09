@@ -21,7 +21,7 @@ export function NightDetail({ night: n }: { night: Night }) {
   return (
     <section className="pattern-croci grid min-h-[100svh] grid-cols-1 grid-rows-[auto_1fr] lg:grid-cols-2 lg:grid-rows-1">
       <div className="relative h-[30svh] min-[400px]:h-[36svh] lg:h-auto lg:min-h-[100svh]">
-        {n.video ? <Video src={n.video} poster={n.photos[0]?.src} /> : <Slideshow photos={n.photos} />}
+        {n.video ? <Video src={n.video} poster={n.video.replace(/\.mp4$/, ".jpg")} /> : <Slideshow photos={n.photos} />}
       </div>
       <div className="flex items-start px-6 pt-5 pb-6 sm:px-12 lg:items-center lg:px-[clamp(3rem,6vw,7rem)] lg:pt-24 lg:pb-10">
         <div className="w-full max-w-[540px]">
@@ -84,7 +84,12 @@ export function NightDetail({ night: n }: { night: Night }) {
 
 /** Il video della serata: parte da solo, senza audio, in loop, ritagliato quadrato. */
 function Video({ src, poster }: { src: string; poster?: string }) {
-  return <video src={src} poster={poster} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 size-full object-cover" />
+  return (
+    <video poster={poster} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 size-full object-cover">
+      <source src={src.replace(/\.mp4$/, ".webm")} type="video/webm" />
+      <source src={src} type="video/mp4" />
+    </video>
+  )
 }
 
 function Slideshow({ photos }: { photos: Night["photos"] }) {
