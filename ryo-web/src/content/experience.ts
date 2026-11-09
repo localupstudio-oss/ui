@@ -75,8 +75,8 @@ export const nights: Night[] = [
     time: "Start 21:30",
     lineup: ["DJ set Lorenzo Barbarulo", "Friends Events"],
     highlight: "Scansiona il QR, scegli la canzone, canta",
-    image: "/images/serate/venerdi/neon-timmagini.jpg",
-    imagePosition: "80% center",
+    image: "/images/serate/venerdi/neon-timmagini-copertina.jpg",
+    imagePosition: "55% center",
     about: [
       "Il venerdì da RYO si accende T'immagini, la serata firmata Friends Events per chi ha voglia di cantare, ballare e fare tardi con gli amici: un pubblico giovane, dai 20 ai 35 anni, e l'energia delle grandi feste.",
       "Si parte con le canzoni italiane più amate, da cantare a squarciagola tavolo dopo tavolo, tra un cocktail e l'altro. Dopo circa un'ora il DJ set di Lorenzo Barbarulo alza il ritmo e la sala diventa una pista.",
