@@ -19,8 +19,8 @@ export function ChurrascoFeature({ id }: { id?: string }) {
         {/* La brace: foto a tutto riquadro sul telefono, metà destra su schermi larghi */}
         <div className="absolute inset-0 -z-20 lg:left-[44%]">
           <Image
-            src="/images/cucina/churrasco-spiedo.jpg"
-            alt="La picanha alla spada appena tolta dalla brace"
+            src="/images/menu/churrasco-picanha.jpg"
+            alt="Tagli di carne alla brace serviti in tavola con sale grosso"
             fill
             sizes="(min-width:1024px) 56vw, 100vw"
             className="object-cover object-[60%_45%] lg:object-[55%_38%]"
