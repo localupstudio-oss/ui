@@ -135,9 +135,24 @@ def scene_image(name, mirror=False):
     return im.transpose(_I.FLIP_LEFT_RIGHT) if mirror else im
 
 
+# Le immagini entrano nel PDF come JPEG: per il sito 1800 px per lato (circa 230 dpi a 20 cm, file leggero),
+# per la tipografia la risoluzione piena.
+SCENE_PX, SCENE_Q = (2400, 92) if BLEED else (1800, 84)
+
+
 def scene(c, name, mirror=False):
     """Paesaggio a tutta pagina."""
-    c.drawImage(ImageReader(scene_image(name, mirror)), -BLEED, -BLEED, W + 2 * BLEED, H + 2 * BLEED)
+    import io
+
+    im = scene_image(name, mirror)
+    if im.width > SCENE_PX:
+        from PIL import Image as _I
+
+        im = im.resize((SCENE_PX, SCENE_PX), _I.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, "JPEG", quality=SCENE_Q, optimize=True, progressive=True)
+    buf.seek(0)
+    c.drawImage(ImageReader(buf), -BLEED, -BLEED, W + 2 * BLEED, H + 2 * BLEED)
 
 
 def entry(c, item, cx, y, width=250, k=1.0, desc_width=None):
