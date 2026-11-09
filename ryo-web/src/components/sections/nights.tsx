@@ -3,26 +3,14 @@ import Link from "next/link"
 import { ArrowRight, Clock, Music2, Ticket, Star } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
-import { SectionHeading } from "@/components/section-heading"
 import { nights } from "@/content/experience"
 
 /** Le serate della settimana: locandina, due righe e «Scopri» verso la pagina della serata. */
 export function Nights() {
   return (
-    <section id="serate" className="py-28 sm:py-36">
+    <section id="serate" className="pt-6 pb-28 sm:pt-8 sm:pb-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal>
-          <SectionHeading
-            title={
-              <>
-                Le notti <span className="text-hot">di RYO</span>
-              </>
-            }
-            intro="Giovedì si canta a tavola, venerdì si balla. Line-up e ospiti aggiornati ogni settimana su Instagram."
-          />
-        </Reveal>
-
-        <div className="mx-auto mt-16 grid max-w-4xl gap-14 md:grid-cols-2 md:gap-10">
+        <div className="mx-auto grid max-w-4xl gap-14 md:grid-cols-2 md:gap-10">
           {nights.map((n, i) => (
             <Reveal key={n.day} delay={i * 0.1} className="flex flex-col">
               <Link href={`/serate/${n.slug}`} className="group block overflow-hidden rounded-sm">
