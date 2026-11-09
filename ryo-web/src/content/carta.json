@@ -255,7 +255,7 @@
         },
         {
           "nome": "Floradora",
-          "descrizione": "Gin Mare, Violetta, Maraschino, Lime, Aria di aloe vera",
+          "descrizione": "Bombay Sapphire, Violetta, Maraschino, Lime, Aria di aloe vera",
           "prezzo": "11"
         },
         {
@@ -323,6 +323,42 @@
           "nome": "Rio 0.0",
           "descrizione": "Distillato analcolico, Cetriolo, Soda allo zenzero piccante",
           "prezzo": "9"
+        }
+      ]
+    },
+    {
+      "id": "spritz",
+      "nome": "Spritz Martini",
+      "piatti": [
+        {
+          "nome": "Martini Bitter Spritz",
+          "descrizione": "Martini Riserva Bitter, Prosecco, Soda",
+          "prezzo": "7"
+        },
+        {
+          "nome": "Martini Vibrante Spritz",
+          "descrizione": "Martini Vibrante, Prosecco, Soda al pompelmo rosa",
+          "prezzo": "7"
+        },
+        {
+          "nome": "Martini Bianco Spritz",
+          "descrizione": "Martini Bianco, Prosecco, Soda",
+          "prezzo": "7"
+        },
+        {
+          "nome": "Martini Floreale Spritz",
+          "descrizione": "Martini Floreale, St-Germain, Prosecco, Succo di mela",
+          "prezzo": "7"
+        },
+        {
+          "nome": "Martini China Spritz",
+          "descrizione": "Martini Amaro China, Prosecco, Soda",
+          "prezzo": "7"
+        },
+        {
+          "nome": "St-Germain Hugo Spritz",
+          "descrizione": "St-Germain, Prosecco, Soda, Menta",
+          "prezzo": "7"
         }
       ]
     },
