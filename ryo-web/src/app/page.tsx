@@ -13,7 +13,7 @@ export default function HomePage() {
         <PhotoStrip />
         <div className="h-5 sm:h-8" />
         <div className="grid gap-5 px-3 pb-5 sm:gap-8 sm:px-10 sm:pb-8">
-          <FeatureCard href="/menu" title="Il menu" image="/images/home/menu-brindisi-hd.jpg" alt="Un brindisi sopra la tavola tra tacos, tartare, paella e cocktail" position="center 40%" />
+          <FeatureCard href="/menu" title="Il menu" image="/images/home/menu-tavola-giungla.jpg" alt="Una tavola apparecchiata con carne, tapas e vino tra bambù, palme e il divano in velluto verde" position="center 68%" />
           <div className="grid gap-5 sm:gap-8 md:grid-cols-2">
             <FeatureCard
               size="half"

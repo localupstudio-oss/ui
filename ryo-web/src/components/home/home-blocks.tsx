@@ -38,6 +38,7 @@ const strip = [
   { src: "/images/home/locale-bancone-bar.jpg", alt: "Il bancone di RYO sotto le lampade in rattan" },
   { src: "/images/home/cibo-bowl-tapas.jpg", alt: "Bowl, riso e tapas da condividere in tavola" },
   { src: "/images/home/drink-tiki.jpg", alt: "Cocktail nel tiki mug RYO con menta" },
+  { src: "/images/home/drink-affumicato.jpg", alt: "Un cocktail affumicato al momento con il cannello sul bancone" },
   { src: "/images/home/persone-ballo.jpg", alt: "Due amiche ballano tra i tavoli" },
   // giro 2
   { src: "/images/home/locale-sala-felci.jpg", alt: "La sala sotto il soffitto di felci" },
