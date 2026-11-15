@@ -706,6 +706,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .cf-card .tdemo { padding-top: 9cqw; }
 .cf-card .pfeed { padding-top: 10cqw; }
 .cf-card .island { display: none; }
+.cf-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 .cf-card::after { content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
   background: linear-gradient(180deg, rgba(0,0,0,0) 52%, rgba(0,0,0,.55) 74%, rgba(0,0,0,.88) 100%); }
 .cf-label { position: absolute; z-index: 5; left: 0; right: 0; bottom: 7cqw; text-align: center; color: #fff; pointer-events: none; }
@@ -916,6 +917,8 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 
     <div class="cf" id="cf" role="region" aria-roledescription="carosello" aria-label="Progetti" tabindex="0">
       <div class="cf-stage" id="cfStage">
+        <article class="cf-card" data-video="assets/portfolio/ryo.mp4" data-poster="assets/portfolio/ryo-poster.jpg" data-name="RYO" data-sub="Cocktail bar · Cava de' Tirreni" data-pre="Pub / Bar"></article>
+        <article class="cf-card" data-video="assets/portfolio/br.mp4" data-poster="assets/portfolio/br-poster.jpg" data-name="BR Football Performance" data-sub="Shop online · programmi di allenamento" data-pre="Altra attività"></article>
         <article class="cf-card" data-screen="mdemo-0" data-name="Forno 1956" data-sub="Pizzeria · ordini da asporto" data-pre="Ristorante / Pizzeria"></article>
         <article class="cf-card" data-screen="mdemo-1" data-name="Ferri &amp; Associati" data-sub="Commercialisti · consulenze online" data-pre="Studio professionale"></article>
         <article class="cf-card" data-screen="mdemo-2" data-name="Ottanta" data-sub="Cocktail bar · eventi e tavoli" data-pre="Pub / Bar"></article>
@@ -924,10 +927,10 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
       </div>
     </div>
     <div class="cf-info">
-      <div class="cf-meta" aria-live="polite"><span class="label" id="cfCount">01 / 05</span><h3 id="cfName">Forno 1956</h3><p id="cfSub">Pizzeria · ordini da asporto</p></div>
+      <div class="cf-meta" aria-live="polite"><span class="label" id="cfCount">01 / 07</span><h3 id="cfName">RYO</h3><p id="cfSub">Cocktail bar · Cava de' Tirreni</p></div>
     </div>
-    <div class="cf-cta"><a class="btn btn-chalk" href="#contatti" id="cfCta" data-pre="Ristorante / Pizzeria" data-ref="Forno 1956">Voglio un sito così <span class="arr">→</span></a></div>
-    <p class="pf-note">Progetti dimostrativi realizzati da Local Up Studio.</p>
+    <div class="cf-cta"><a class="btn btn-chalk" href="#contatti" id="cfCta" data-pre="Pub / Bar" data-ref="RYO">Voglio un sito così <span class="arr">→</span></a></div>
+    <p class="pf-note">RYO e BR Football Performance sono progetti reali; gli altri sono concept dimostrativi di Local Up Studio.</p>
   </div>
 </section>
 
@@ -1339,9 +1342,16 @@ const CONFIG = {
     const mTpl = document.getElementById("tpl-mdemos").content.children;
     cards.forEach(c => {
       const key = c.dataset.screen;
+      if (c.dataset.video) {                         // real project: screen recording of the live site
+        const v = document.createElement("video");
+        Object.assign(v, { src: c.dataset.video, poster: c.dataset.poster, muted: true, loop: true, playsInline: true, autoplay: true, preload: "metadata" });
+        v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-hidden", "true");
+        c.appendChild(v); c.classList.add("real");
+      } else {
       const node = key.startsWith("mdemo-") ? mTpl[+key.slice(6)].cloneNode(true) : document.getElementById("tpl-screen-" + key).content.cloneNode(true);
       if (node.classList) node.classList.add("on");
       c.appendChild(node);
+      }
       const lab = document.createElement("div"); lab.className = "cf-label";
       lab.innerHTML = "<b></b><span></span>"; lab.firstChild.textContent = c.dataset.name; lab.lastChild.textContent = c.dataset.sub;
       c.appendChild(lab);
