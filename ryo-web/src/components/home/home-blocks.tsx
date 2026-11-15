@@ -83,17 +83,20 @@ type FeatureProps = {
   alt: string
   size?: "full" | "half"
   position?: string
+  /** Testi in alto invece che in basso, quando il soggetto della foto sta nella parte bassa. */
+  textTop?: boolean
 }
 
 /** Grande riquadro fotografico con titolo serif e link sottolineato, con fronda sfocata in primo piano. */
-export function FeatureCard({ href, external, title, meta, cta = "Scopri", image, alt, size = "full", position = "center" }: FeatureProps) {
+export function FeatureCard({ href, external, title, meta, cta = "Scopri", image, alt, size = "full", position = "center", textTop = false }: FeatureProps) {
   return (
     <Reveal className="h-full">
       <Link
         href={href}
         {...(external && { target: "_blank", rel: "noopener" })}
         className={cn(
-          "group relative isolate flex h-full flex-col items-center justify-end overflow-hidden px-6 pb-14 text-center text-[#f6efe0] sm:pb-20",
+          "group relative isolate flex h-full flex-col items-center overflow-hidden px-6 text-center text-[#f6efe0]",
+          textTop ? "justify-start pt-24 sm:pt-28" : "justify-end pb-14 sm:pb-20",
           size === "full" ? "min-h-[72vh] sm:min-h-[85vh]" : "min-h-[70vh] sm:min-h-[90vh]",
         )}
       >
@@ -106,7 +109,7 @@ export function FeatureCard({ href, external, title, meta, cta = "Scopri", image
           style={{ objectPosition: position }}
           className="-z-20 object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
+        <div className={cn("absolute inset-0 -z-10 from-black/70 via-black/15 via-40% to-black/0", textTop ? "bg-gradient-to-b" : "bg-gradient-to-t")} />
         <ForegroundFrond className={size === "full" ? "-left-24 -bottom-32 w-[46%]" : "-right-20 -top-24 w-[70%] rotate-[160deg]"} />
 
         <h2 className="font-display text-[clamp(2.6rem,6vw,5rem)] leading-none">{title}</h2>

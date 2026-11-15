@@ -33,7 +33,8 @@ export default function HomePage() {
               cta="Organizza la tua festa"
               image="/images/eventi/festa-torta-hd.jpg"
               alt="Una festa di compleanno da RYO con torta e fontane di luce"
-              position="55% 72%"
+              position="55% 80%"
+              textTop
             />
           </div>
         </div>
