@@ -158,7 +158,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; text-tra
   from { transform: translateY(90px) translateZ(-420px) rotateY(-150deg) rotateX(22deg); }
   to { transform: none; }
 }
-.m3d-tilt { transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg)); will-change: transform; }
+.m3d-tilt { transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg)); }
 .mon-body { position: relative; }
 .mon-frame {
   position: relative; border-radius: var(--r);
@@ -575,17 +575,42 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .imac .imac-intro, .imac .m3d-tilt, .imac .mon-body, .imac-stand { transform-style: preserve-3d; }
 .imac-front { position: relative; border-radius: var(--r); overflow: hidden; background: #0b0b0d;
   padding: 2.4% 2.4% 0; box-shadow: 0 0 0 1.5px #c3c4c8 inset; }
-.imac-front .screen { border-radius: 3px; }
+.imac-front .screen { border-radius: 3px; aspect-ratio: 16 / 10.75; box-shadow: 0 0 0 1px #000; }
+.imac-front::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.02) 26%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 72%, rgba(255,255,255,.05) 100%); }
+.imac-front .cam { position: absolute; z-index: 2; top: 1%; left: 50%; width: .7%; aspect-ratio: 1; margin-left: -.35%; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #2b3550, #07080c 70%); box-shadow: 0 0 0 1px #1a1b20; }
+#heroScreen .demo { top: 4.7cqw; bottom: auto; height: 62.5cqw; }
+/* Safari window chrome on the iMac screen */
+.bbar { position: absolute; z-index: 15; top: 0; left: 0; right: 0; height: 4.7cqw; display: flex; align-items: center; gap: .8cqw; padding: 0 1.6cqw;
+  background: linear-gradient(180deg, #f6f6f8, #e7e7ea); border-bottom: .1cqw solid #cfcfd5; font-family: -apple-system, "SF Pro Text", Inter, sans-serif; }
+.bbar > i { width: 1.1cqw; height: 1.1cqw; border-radius: 50%; background: #ff5f57; box-shadow: inset 0 0 0 .08cqw rgba(0,0,0,.12); }
+.bbar > i:nth-child(2) { background: #febc2e; } .bbar > i:nth-child(3) { background: #28c840; }
+.bbar .url { margin: 0 auto; width: 36cqw; height: 2.8cqw; border-radius: .9cqw; background: #fff; box-shadow: inset 0 0 0 .1cqw #dcdce1; display: flex; align-items: center; justify-content: center; gap: .6cqw; font-size: 1.25cqw; color: #3a3a3c; letter-spacing: 0; }
+.bbar .lock { position: relative; width: .8cqw; height: .65cqw; margin-top: .35cqw; border-radius: .15cqw; background: #8e8e93; }
+.bbar .lock::before { content: ""; position: absolute; left: .14cqw; right: .14cqw; top: -.5cqw; height: .6cqw; border: .14cqw solid #8e8e93; border-bottom: 0; border-radius: .4cqw .4cqw 0 0; }
+/* Tab switch: the site settles into focus, then light sweeps the glass */
+#heroScreen .demo, .hphone-screen .mdemo { opacity: 0; transform: translateY(2.2%) scale(1.012); filter: blur(5px);
+  transition: opacity .7s var(--ease), transform .95s var(--ease), filter .7s var(--ease); }
+#heroScreen .demo.on, .hphone-screen .mdemo.on { opacity: 1; transform: none; filter: none; }
+.hphone-screen .mdemo.on { transition-delay: .12s; }
+@keyframes sweep { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
+.sweep { animation: sweep 1.1s ease-in-out both !important; }
+/* Auto-advancing tabs with a progress line */
+.tabs button { position: relative; overflow: hidden; }
+.tabs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--cyan); transform: scaleX(0); transform-origin: left; }
+.tabs.auto button[aria-pressed="true"]::after { animation: tabprog 6s linear forwards; }
+@keyframes tabprog { to { transform: scaleX(1); } }
 .imac-chin { aspect-ratio: 100 / 11; margin: 2.4% -2.6% 0; background: linear-gradient(180deg, #e4e5e8, #c9cacd 70%, #b9babd); border-top: 1px solid rgba(0,0,0,.08); }
 .imac .face.back { background: radial-gradient(ellipse at 40% 30%, #f1f1f3, #cfd0d3 55%, #a9aaae); }
 .imac .face.l, .imac .face.r { background: linear-gradient(90deg, #a7a8ac, #dcdde0, #a7a8ac); }
 .imac .face.t { background: linear-gradient(180deg, #b9babe, #ececee, #b9babe); }
 .imac .face.b { background: linear-gradient(180deg, #8f9094, #6b6c70); }
 .imac-stand { position: absolute; left: 0; right: 0; top: 0; bottom: 0; pointer-events: none; }
+.imac-stand .arm::after { content: ""; position: absolute; left: 50%; top: 62%; width: 22%; aspect-ratio: 1; margin-left: -11%; border-radius: 50%; background: radial-gradient(circle, #1b1c20 0 55%, #5b5d62 62%, transparent 70%); }
 .imac-stand .arm { position: absolute; left: 39%; width: 22%; top: 58%; height: 53%; border-radius: 4px;
   background: linear-gradient(90deg, #8e8f93, #d9dadd 35%, #eeeef0 55%, #b2b3b7); transform: translateZ(calc(var(--d) * -1 - 30px)); }
 .imac-stand .foot { position: absolute; left: 39%; width: 22%; top: 111%; height: 38%; border-radius: 0 0 8px 8px;
-  background: linear-gradient(180deg, #d4d5d8, #f0f0f2 60%, #c3c4c7); transform-origin: top; transform: translateZ(calc(var(--d) * -1 - 30px)) rotateX(90deg); }
+  background: linear-gradient(180deg, #c9cacd, #f2f2f4 55%, #d1d2d5 85%, #9fa0a4); box-shadow: inset 0 -2px 0 rgba(0,0,0,.18); transform-origin: top; transform: translateZ(calc(var(--d) * -1 - 30px)) rotateX(90deg); }
 .imac-shadow { position: absolute; left: 22%; right: 22%; bottom: 0; height: 9%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.8), transparent); filter: blur(10px); }
 
 /* One-time intro: rises and turns into place, then the screen powers on */
@@ -610,15 +635,32 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .panel-body { position: relative; }
 .panel-body .imac { width: 84%; }
 .hphone { position: absolute; z-index: 5; right: 0; bottom: 8%; width: 25%; aspect-ratio: 9 / 19.5; max-width: 100%;
-  border-radius: 15% / 7%; padding: 2.3%; background: linear-gradient(145deg, #2b2c31, #0c0c0f);
-  box-shadow: inset 0 0 0 1.5px #a3a5ab, inset 0 0 0 3px #17181b, 0 34px 50px -18px rgba(0,0,0,.8), -14px 24px 40px -24px rgba(0,0,0,.7);
+  border-radius: 16% / 7.4%; padding: 1.1%;
+  /* natural titanium frame: brushed metal with highlights */
+  background: linear-gradient(135deg, #a7a9ae 0%, #e6e7ea 14%, #7c7e83 32%, #45464a 52%, #8c8e93 72%, #d9dadd 88%, #6c6e72 100%);
+  box-shadow:
+    -2px 2px 0 -.5px #707277, -4px 4px 0 -1px #4a4b4f, -5px 6px 0 -1.5px #2e2f32,   /* side thickness */
+    0 40px 60px -24px rgba(0,0,0,.85), -18px 26px 44px -26px rgba(0,0,0,.75);
   animation: phoneIn 1.1s cubic-bezier(.16,.84,.24,1) 1.9s both; }
-.hphone::before, .hphone::after { content: ""; position: absolute; width: 3px; border-radius: 2px; background: linear-gradient(90deg, #6f7176, #b4b6bb); }
-.hphone::before { right: -2px; top: 26%; height: 13%; }
-.hphone::after { left: -2px; top: 22%; height: 18%; }
-.hphone-screen { position: relative; width: 100%; height: 100%; border-radius: 12% / 5.6%; overflow: hidden; background: #000; container-type: inline-size; }
-.hphone-screen::after { content: ""; position: absolute; inset: 0; z-index: 9; pointer-events: none; background: linear-gradient(125deg, rgba(255,255,255,.16), rgba(255,255,255,0) 38%); }
-.hnotch { position: absolute; z-index: 10; top: 0; left: 50%; width: 40cqw; height: 7cqw; margin-left: -20cqw; border-radius: 0 0 4.5cqw 4.5cqw; background: #000; }
+.hphone-bezel { width: 100%; height: 100%; border-radius: 15.2% / 7%; background: #050506; padding: 2.5%; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.hbtn { position: absolute; width: 1.6%; border-radius: 2px; background: linear-gradient(90deg, #5d5f63, #c9cbcf 55%, #7b7d81); }
+.hbtn.pwr { right: -1.2%; top: 25%; height: 12%; }
+.hbtn.act { left: -1.2%; top: 15%; height: 5%; }
+.hbtn.v1 { left: -1.2%; top: 23%; height: 8%; }
+.hbtn.v2 { left: -1.2%; top: 33%; height: 8%; }
+.hphone-screen { position: relative; width: 100%; height: 100%; border-radius: 12.5% / 5.8%; overflow: hidden; background: #000; container-type: inline-size; color: #111; }
+.hphone-screen[data-tone="dark"] { color: #fff; }
+.hphone-screen::after { content: ""; position: absolute; inset: 0; z-index: 12; pointer-events: none; background: linear-gradient(118deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.04) 30%, rgba(255,255,255,0) 42%); }
+.island { position: absolute; z-index: 11; top: 3.2cqw; left: 50%; width: 31cqw; height: 9cqw; margin-left: -15.5cqw; border-radius: 99px; background: #000; }
+.island i { position: absolute; right: 3cqw; top: 50%; width: 3.6cqw; height: 3.6cqw; margin-top: -1.8cqw; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #2a3a5c 0 25%, #0b0f1a 45%, #000 70%); }
+.sbar { position: absolute; z-index: 11; top: 4.6cqw; left: 8cqw; right: 6.5cqw; display: flex; justify-content: space-between; align-items: center; font: 600 4.3cqw/1 -apple-system, "SF Pro Text", Inter, sans-serif; letter-spacing: -.02em; transition: color .6s var(--ease); }
+.sbar .t { margin-left: 2cqw; }
+.sbar .ic { display: flex; align-items: center; gap: 1.4cqw; }
+.sbar svg { height: 3.1cqw; width: auto; fill: currentColor; }
+.sbar svg:last-child { height: 3.4cqw; }
+.hbar { position: absolute; z-index: 11; bottom: 2.4cqw; left: 50%; width: 36cqw; height: 1.4cqw; margin-left: -18cqw; border-radius: 99px; background: currentColor; opacity: .85; transition: background .6s; }
+.hphone .sheen { position: absolute; inset: 0; z-index: 13; pointer-events: none; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.3) 50%, transparent 70%); transform: translateX(-130%); }
+.mdemo { padding-top: 18cqw; }
 @keyframes phoneIn { from { opacity: 0; transform: translate(26px, 40px); } to { opacity: 1; transform: none; } }
 
 /* Phone versions of the client sites (sized in cqw of the phone screen) */
@@ -729,6 +771,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .plan { padding: 32px 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  #heroScreen .demo, .hphone-screen .mdemo { filter: none; transform: none; }
   .hphone { animation: none !important; }
   .imac-intro, .imac-shadow { animation: none !important; }
   .imac .boot, .imac .sheen { display: none; }
@@ -783,11 +826,13 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
       </div>
       <div class="panel-body">
         <div class="m3d imac" id="heroMon" aria-label="iMac che mostra i siti di esempio">
-          <div class="imac-intro"><div class="m3d-tilt" style="--rx:-3;--ry:-8">
+          <div class="imac-intro"><div class="m3d-tilt" style="--rx:0;--ry:0">
             <div class="imac-stand" aria-hidden="true"><i class="arm"></i><i class="foot"></i></div>
             <div class="mon-body">
               <div class="imac-front">
+                <i class="cam" aria-hidden="true"></i>
                 <div class="screen" id="heroScreen">
+                  <div class="bbar" aria-hidden="true"><i></i><i></i><i></i><span class="url"><b class="lock"></b><span id="heroUrl">forno1956.it</span></span></div>
                   <div class="boot" aria-hidden="true"><img src="assets/simbolo.png" alt=""></div>
                   <i class="sheen" aria-hidden="true"></i>
                 </div>
@@ -799,7 +844,19 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
           <div class="imac-shadow" aria-hidden="true"></div>
         </div>
         <div class="hphone" aria-label="iPhone che mostra la versione mobile dello stesso sito">
-          <div class="hphone-screen" id="phoneScreen"><span class="hnotch" aria-hidden="true"></span></div>
+          <i class="hbtn act" aria-hidden="true"></i><i class="hbtn v1" aria-hidden="true"></i><i class="hbtn v2" aria-hidden="true"></i><i class="hbtn pwr" aria-hidden="true"></i>
+          <div class="hphone-bezel">
+            <div class="hphone-screen" id="phoneScreen">
+              <div class="sbar" aria-hidden="true"><span class="t">9:41</span><span class="ic">
+                <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+                <svg viewBox="0 0 16 12"><path d="M8 11.6 5.6 9.1a3.4 3.4 0 0 1 4.8 0z"/><path d="M3.2 6.7a6.8 6.8 0 0 1 9.6 0l-1.5 1.5a4.7 4.7 0 0 0-6.6 0z"/><path d="M.8 4.3a10.2 10.2 0 0 1 14.4 0l-1.5 1.5a8.1 8.1 0 0 0-11.4 0z"/></svg>
+                <svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="2"/><path d="M25 4.5v4a2 2 0 0 0 0-4z" opacity=".5"/></svg>
+              </span></div>
+              <span class="island" aria-hidden="true"><i></i></span>
+              <span class="hbar" aria-hidden="true"></span>
+              <i class="sheen" aria-hidden="true"></i>
+            </div>
+          </div>
         </div>
       </div>
       <div class="tabs" id="tabs" role="group" aria-label="Scegli il sito da mostrare">
@@ -1232,9 +1289,9 @@ const CONFIG = {
 
   /* ---- Concept sites into screens ---- */
   const demos = [
-    { name: "Forno 1956" },
-    { name: "Ferri & Associati" },
-    { name: "Ottanta" }
+    { name: "Forno 1956", url: "forno1956.it", tone: "light" },
+    { name: "Ferri & Associati", url: "ferriassociati.it", tone: "light" },
+    { name: "Ottanta", url: "ottanta.bar", tone: "dark" }
   ];
   const tpl = document.getElementById("tpl-demos");
   let uid = 0;
@@ -1256,11 +1313,31 @@ const CONFIG = {
   function show(i) {
     heroDemos.forEach((d, k) => d.classList.toggle("on", k === i));
     phoneDemos.forEach((d, k) => d.classList.toggle("on", k === i));
+    phone.dataset.tone = demos[i].tone;
+    document.getElementById("heroUrl").textContent = demos[i].url;
     tabs.forEach((b, k) => b.setAttribute("aria-pressed", k === i ? "true" : "false"));
     nameEl.textContent = demos[i].name;
   }
+  let cur = 0, autoTimer = null;
+  const tabBox = document.getElementById("tabs");
+  const sheens = [...document.querySelectorAll("#heroMon .sheen, .hphone .sheen")];
+  function sweepGlass() {
+    sheens.forEach((el, k) => { el.classList.remove("sweep"); void el.offsetWidth; el.style.animationDelay = (k ? .25 : .1) + "s"; el.classList.add("sweep"); });
+  }
+  function go(i, animate) {
+    cur = i; show(i);
+    if (animate && !reduce) sweepGlass();
+    if (tabBox.classList.contains("auto")) {        // restart the progress line on the new tab
+      tabBox.classList.remove("auto"); void tabBox.offsetWidth; tabBox.classList.add("auto");
+      clearTimeout(autoTimer); autoTimer = setTimeout(() => go((cur + 1) % demos.length, true), 6000);
+    }
+  }
   show(0);
-  tabs.forEach(b => b.addEventListener("click", () => show(+b.dataset.i)));
+  // Auto-advance after the intro; stops for good as soon as someone picks a tab
+  if (!reduce) setTimeout(() => { if (!tabBox.dataset.touched) { tabBox.classList.add("auto"); go(0, false); } }, 3300);
+  tabs.forEach(b => b.addEventListener("click", () => {
+    tabBox.dataset.touched = "1"; tabBox.classList.remove("auto"); clearTimeout(autoTimer); go(+b.dataset.i, true);
+  }));
 
   /* ---- Portfolio shots: build MacBooks and iPhones from templates ---- */
   const tplMac = document.getElementById("tpl-mac"), tplPhone = document.getElementById("tpl-phone");
