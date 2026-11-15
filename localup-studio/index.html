@@ -700,7 +700,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .cf-card { --w: calc(min(68vh, 620px) * 9 / 16); position: absolute; left: 50%; top: 0; width: var(--w); height: 100%; margin-left: calc(var(--w) / -2);
   border-radius: 22px; overflow: hidden; background: #000; container-type: inline-size;
   box-shadow: 0 40px 70px -30px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.06);
-  transition: transform .8s cubic-bezier(.2,.75,.2,1), filter .8s ease, opacity .8s ease; will-change: transform; }
+  transition: transform .7s cubic-bezier(.2,.75,.2,1), filter .7s ease, opacity .7s ease; will-change: transform; }
 .cf-card > .mdemo, .cf-card > .tdemo, .cf-card > .pfeed { opacity: 1; }
 .cf-card .mdemo { padding-top: 10cqw; }
 .cf-card .tdemo { padding-top: 9cqw; }
@@ -712,7 +712,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .cf-label b { display: block; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 8.5cqw; line-height: .95; letter-spacing: -.02em; }
 .cf-label span { display: block; margin-top: 1.6cqw; font-size: 3.8cqw; opacity: .82; letter-spacing: .01em; }
 .cf-card.side { cursor: pointer; }
-.cf-info { margin-top: clamp(28px, 4vw, 44px); display: grid; grid-template-columns: 56px 1fr 56px; align-items: center; gap: 16px; max-width: 620px; margin-inline: auto; text-align: center; }
+.cf-info { margin-top: clamp(28px, 4vw, 44px); display: grid; grid-template-columns: 1fr; align-items: center; gap: 16px; max-width: 620px; margin-inline: auto; text-align: center; }
 .cf-meta h3 { margin-top: 8px; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(26px, 3vw, 40px); letter-spacing: -.035em; line-height: 1; }
 .cf-meta p { margin-top: 8px; color: var(--grey); font-size: 16px; }
 .cf-meta .label { color: var(--grey); font-size: 11px; }
@@ -924,9 +924,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
       </div>
     </div>
     <div class="cf-info">
-      <button class="cf-arrow" type="button" id="cfPrev" aria-label="Progetto precedente">←</button>
       <div class="cf-meta" aria-live="polite"><span class="label" id="cfCount">01 / 05</span><h3 id="cfName">Forno 1956</h3><p id="cfSub">Pizzeria · ordini da asporto</p></div>
-      <button class="cf-arrow" type="button" id="cfNext" aria-label="Progetto successivo">→</button>
     </div>
     <div class="cf-cta"><a class="btn btn-chalk" href="#contatti" id="cfCta" data-pre="Ristorante / Pizzeria" data-ref="Forno 1956">Voglio un sito così <span class="arr">→</span></a></div>
     <p class="pf-note">Progetti dimostrativi realizzati da Local Up Studio.</p>
@@ -1370,12 +1368,8 @@ const CONFIG = {
       cta.dataset.pre = c.dataset.pre; cta.dataset.ref = c.dataset.name;
     }
     function go(i) { active = (i % n + n) % n; place(); restart(); }
-    function restart() { clearTimeout(timer); if (!reduce && !hover) timer = setTimeout(() => go(active + 1), 4500); }
-    document.getElementById("cfPrev").addEventListener("click", () => go(active - 1));
-    document.getElementById("cfNext").addEventListener("click", () => go(active + 1));
+    function restart() { clearTimeout(timer); if (!reduce && !hover) timer = setTimeout(() => go(active + 1), 1000); }
     box.addEventListener("keydown", e => { if (e.key === "ArrowLeft") go(active - 1); if (e.key === "ArrowRight") go(active + 1); });
-    box.addEventListener("mouseenter", () => { hover = true; clearTimeout(timer); });
-    box.addEventListener("mouseleave", () => { hover = false; restart(); });
     // Drag / swipe; a tap on a side card brings it to the centre
     let x0 = null, moved = false;
     box.addEventListener("pointerdown", e => { x0 = e.clientX; moved = false; box.classList.add("dragging"); clearTimeout(timer); });
