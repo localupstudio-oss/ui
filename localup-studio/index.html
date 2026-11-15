@@ -691,6 +691,40 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 .m-otto .mhours b { display: block; color: #fff; font-size: 5.4cqw; font-weight: 500; letter-spacing: -.02em; text-transform: none; }
 .m-otto .mbtn { background: #f5f5f7; color: #000; }
 
+/* ---------- Portfolio: 3D card carousel (reels-style vertical cards) ---------- */
+.pf { overflow-x: clip; }
+.cf { position: relative; overflow-x: clip; overflow-y: visible; padding-block: 20px; perspective: 1600px; perspective-origin: 50% 50%; outline: none; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+.cf.dragging { cursor: grabbing; }
+.cf:focus-visible { outline: 2px solid var(--cyan); outline-offset: 8px; }
+.cf-stage { position: relative; height: min(68vh, 620px); min-height: 420px; transform-style: preserve-3d; }
+.cf-card { --w: calc(min(68vh, 620px) * 9 / 16); position: absolute; left: 50%; top: 0; width: var(--w); height: 100%; margin-left: calc(var(--w) / -2);
+  border-radius: 22px; overflow: hidden; background: #000; container-type: inline-size;
+  box-shadow: 0 40px 70px -30px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.06);
+  transition: transform .8s cubic-bezier(.2,.75,.2,1), filter .8s ease, opacity .8s ease; will-change: transform; }
+.cf-card > .mdemo, .cf-card > .tdemo, .cf-card > .pfeed { opacity: 1; }
+.cf-card .mdemo { padding-top: 10cqw; }
+.cf-card .tdemo { padding-top: 9cqw; }
+.cf-card .pfeed { padding-top: 10cqw; }
+.cf-card .island { display: none; }
+.cf-card::after { content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 52%, rgba(0,0,0,.55) 74%, rgba(0,0,0,.88) 100%); }
+.cf-label { position: absolute; z-index: 5; left: 0; right: 0; bottom: 7cqw; text-align: center; color: #fff; pointer-events: none; }
+.cf-label b { display: block; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 8.5cqw; line-height: .95; letter-spacing: -.02em; }
+.cf-label span { display: block; margin-top: 1.6cqw; font-size: 3.8cqw; opacity: .82; letter-spacing: .01em; }
+.cf-card.side { cursor: pointer; }
+.cf-info { margin-top: clamp(28px, 4vw, 44px); display: grid; grid-template-columns: 56px 1fr 56px; align-items: center; gap: 16px; max-width: 620px; margin-inline: auto; text-align: center; }
+.cf-meta h3 { margin-top: 8px; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: clamp(26px, 3vw, 40px); letter-spacing: -.035em; line-height: 1; }
+.cf-meta p { margin-top: 8px; color: var(--grey); font-size: 16px; }
+.cf-meta .label { color: var(--grey); font-size: 11px; }
+.cf-arrow { width: 56px; height: 56px; border: 1px solid var(--line-d); background: transparent; color: var(--chalk); font-size: 20px; cursor: pointer; transition: border-color .3s, color .3s; }
+.cf-arrow:hover { border-color: var(--cyan); color: var(--cyan); }
+.cf-cta { margin-top: 22px; display: flex; justify-content: center; }
+.pf-note { text-align: center; }
+@media (max-width: 600px) {
+  .cf-stage { height: min(62vh, 520px); min-height: 380px; }
+  .cf-card { --w: calc(min(62vh, 520px) * 9 / 16); border-radius: 18px; }
+}
+
 /* ---------- Calm site: only the devices section moves ---------- */
 .hero h1 .ln > span, .hero-sub, .hero-actions, .panel, .m3d-float, .m3d-hero .m3d-intro, .m3d-shadow, .seal::before, .pfeed { animation: none; }
 
@@ -771,6 +805,7 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
   .plan { padding: 32px 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .cf-card { transition: none; }
   #heroScreen .demo, .hphone-screen .mdemo { filter: none; transform: none; }
   .hphone { animation: none !important; }
   .imac-intro, .imac-shadow { animation: none !important; }
@@ -879,43 +914,21 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
       </div>
     </div>
 
-    <div class="shots">
-      <figure class="shot light">
-        <div class="shot-stage tall" data-w="1000" data-h="700" aria-label="Sito dello Studio Dentistico Moretti su MacBook">
-          <div class="shot-scale"><div class="dv-world" style="transform: translateY(130px) rotateX(-17deg) rotateY(-30deg)"><div class="mac" data-demo="3"></div></div></div>
-        </div>
-        <figcaption>
-          <div><span class="label">Studio dentistico · Sito web</span><h3>Studio Dentistico Moretti</h3><p>Prenotazione delle visite online e pagine dedicate ai trattamenti.</p></div>
-          <a class="btn btn-ink" href="#contatti" data-pre="Studio dentistico">Voglio un sito così <span class="arr">→</span></a>
-        </figcaption>
-      </figure>
-
-      <div class="shots-row">
-        <figure class="shot light">
-          <div class="shot-stage" data-w="640" data-h="640" aria-label="Siti di Trattoria Sale e Luppolo su due iPhone">
-            <div class="shot-shadow" aria-hidden="true"></div>
-            <div class="shot-scale"><div class="dv-world">
-              <div class="phone3d" data-screen="sale" style="transform: translate3d(-95px,20px,0) rotateX(50deg) rotateZ(-32deg) rotateY(-10deg)"></div>
-              <div class="phone3d" data-screen="feed" style="transform: translate3d(95px,-20px,140px) rotateX(50deg) rotateZ(-32deg) rotateY(-10deg)"></div>
-            </div></div>
-          </div>
-          <figcaption>
-            <div><span class="label">Ristorante e pub · Smartphone</span><h3>Trattoria Sale · Luppolo</h3><p>Menu del giorno, eventi e tavoli prenotabili dal telefono.</p></div>
-            <a class="btn btn-ink" href="#contatti" data-pre="Ristorante / Pizzeria">Voglio un sito così <span class="arr">→</span></a>
-          </figcaption>
-        </figure>
-
-        <figure class="shot dark">
-          <div class="shot-stage" data-w="1000" data-h="720" aria-label="Sito del cocktail bar Ottanta su MacBook">
-            <div class="shot-scale"><div class="dv-world" style="transform: translateY(130px) rotateX(-16deg) rotateY(30deg)"><div class="mac" data-demo="2"></div></div></div>
-          </div>
-          <figcaption>
-            <div><span class="label">Cocktail bar · Sito web</span><h3>Ottanta</h3><p>Atmosfera notturna, eventi e lista drink in primo piano.</p></div>
-            <a class="btn btn-chalk" href="#contatti" data-pre="Pub / Bar">Voglio un sito così <span class="arr">→</span></a>
-          </figcaption>
-        </figure>
+    <div class="cf" id="cf" role="region" aria-roledescription="carosello" aria-label="Progetti" tabindex="0">
+      <div class="cf-stage" id="cfStage">
+        <article class="cf-card" data-screen="mdemo-0" data-name="Forno 1956" data-sub="Pizzeria · ordini da asporto" data-pre="Ristorante / Pizzeria"></article>
+        <article class="cf-card" data-screen="mdemo-1" data-name="Ferri &amp; Associati" data-sub="Commercialisti · consulenze online" data-pre="Studio professionale"></article>
+        <article class="cf-card" data-screen="mdemo-2" data-name="Ottanta" data-sub="Cocktail bar · eventi e tavoli" data-pre="Pub / Bar"></article>
+        <article class="cf-card" data-screen="feed" data-name="Luppolo" data-sub="Pub · birre e serate" data-pre="Pub / Bar"></article>
+        <article class="cf-card" data-screen="sale" data-name="Trattoria Sale" data-sub="Trattoria · menu del giorno" data-pre="Ristorante / Pizzeria"></article>
       </div>
     </div>
+    <div class="cf-info">
+      <button class="cf-arrow" type="button" id="cfPrev" aria-label="Progetto precedente">←</button>
+      <div class="cf-meta" aria-live="polite"><span class="label" id="cfCount">01 / 05</span><h3 id="cfName">Forno 1956</h3><p id="cfSub">Pizzeria · ordini da asporto</p></div>
+      <button class="cf-arrow" type="button" id="cfNext" aria-label="Progetto successivo">→</button>
+    </div>
+    <div class="cf-cta"><a class="btn btn-chalk" href="#contatti" id="cfCta" data-pre="Ristorante / Pizzeria" data-ref="Forno 1956">Voglio un sito così <span class="arr">→</span></a></div>
     <p class="pf-note">Progetti dimostrativi realizzati da Local Up Studio.</p>
   </div>
 </section>
@@ -1060,23 +1073,6 @@ footer { border-top: 1px solid var(--line-d); padding-block: 80px 34px; overflow
 
 <div class="m-cta" id="mCta"><a class="btn btn-chalk" href="#contatti">Richiedi un preventivo</a></div>
 
-<template id="tpl-mac">
-  <div class="mb">
-    <div class="mb-shadow" aria-hidden="true"></div>
-    <div class="mb-deck"><i class="grill l"></i><i class="grill r"></i><div class="kb"></div><div class="tp"></div></div>
-    <div class="mb-front" aria-hidden="true"></div>
-    <div class="mb-side" aria-hidden="true"></div><div class="mb-side l" aria-hidden="true"></div>
-    <div class="mb-lid"><i class="edge" aria-hidden="true"></i><div class="in"><div class="screen"></div><span class="notch" aria-hidden="true"></span><span class="chin" aria-hidden="true">LOCAL UP</span></div><div class="out" aria-hidden="true"><img src="assets/simbolo.png" alt=""></div></div>
-  </div>
-</template>
-<template id="tpl-phone">
-  <div class="ip-body">
-    <i class="ip-slice" style="transform:translateZ(-4.5px)"></i><i class="ip-slice" style="transform:translateZ(-3px)"></i><i class="ip-slice" style="transform:translateZ(-1.5px)"></i><i class="ip-slice" style="transform:translateZ(0px)"></i><i class="ip-slice" style="transform:translateZ(1.5px)"></i><i class="ip-slice" style="transform:translateZ(3px)"></i><i class="ip-slice" style="transform:translateZ(4.5px)"></i>
-    <i class="ip-btn pwr"></i><i class="ip-btn v1"></i><i class="ip-btn v2"></i><i class="ip-btn act"></i>
-    <div class="ip-front"><div class="ip-screen"></div></div>
-    <div class="ip-back" aria-hidden="true"><div class="ip-cam"><i></i><i></i><i></i><b></b><u></u></div><img src="assets/simbolo.png" alt=""></div>
-  </div>
-</template>
 <template id="tpl-screen-feed"><span class="island" aria-hidden="true"></span>
               <div class="pfeed">
                 <div class="pn"><b>luppolo</b><i></i></div>
@@ -1339,34 +1335,58 @@ const CONFIG = {
     tabBox.dataset.touched = "1"; tabBox.classList.remove("auto"); clearTimeout(autoTimer); go(+b.dataset.i, true);
   }));
 
-  /* ---- Portfolio shots: build MacBooks and iPhones from templates ---- */
-  const tplMac = document.getElementById("tpl-mac"), tplPhone = document.getElementById("tpl-phone");
-  document.querySelectorAll(".mac[data-demo]").forEach(slot => {
-    const mac = tplMac.content.firstElementChild.cloneNode(true);
-    mac.querySelector(".screen").appendChild(cloneDemo(+slot.dataset.demo)).classList.add("on");
-    slot.replaceWith(mac);
-  });
-  document.querySelectorAll(".phone3d[data-screen]").forEach(slot => {
-    const body = tplPhone.content.firstElementChild.cloneNode(true);
-    body.querySelector(".ip-screen").appendChild(document.getElementById("tpl-screen-" + slot.dataset.screen).content.cloneNode(true));
-    slot.appendChild(body);
-  });
-  const stages = [...document.querySelectorAll(".shot-stage")];
-  function fitShots() {
-    stages.forEach(st => {
-      const r = st.getBoundingClientRect();
-      st.querySelector(".shot-scale").style.setProperty("--k", Math.min(r.width / +st.dataset.w, r.height / +st.dataset.h, 1).toFixed(3));
+  /* ---- Portfolio carousel ---- */
+  (function carousel() {
+    const box = document.getElementById("cf"), cards = [...document.querySelectorAll(".cf-card")], n = cards.length;
+    const mTpl = document.getElementById("tpl-mdemos").content.children;
+    cards.forEach(c => {
+      const key = c.dataset.screen;
+      const node = key.startsWith("mdemo-") ? mTpl[+key.slice(6)].cloneNode(true) : document.getElementById("tpl-screen-" + key).content.cloneNode(true);
+      if (node.classList) node.classList.add("on");
+      c.appendChild(node);
+      const lab = document.createElement("div"); lab.className = "cf-label";
+      lab.innerHTML = "<b></b><span></span>"; lab.firstChild.textContent = c.dataset.name; lab.lastChild.textContent = c.dataset.sub;
+      c.appendChild(lab);
     });
-  }
-  fitShots(); addEventListener("resize", fitShots);
-
-  /* ---- Keyboards for the portfolio MacBooks ---- */
-  (function keys() {
-    const spans = [];
-    for (let i = 0; i < 15; i++) spans.push(1);
-    for (let r = 0; r < 4; r++) for (let i = 0; i < 14; i++) spans.push(i === 13 ? 2 : 1);
-    [1, 1, 1, 2, 5, 2, 1, 1, 1].forEach(w => spans.push(w));
-    document.querySelectorAll(".kb").forEach(kb => spans.forEach(w => { const k = document.createElement("span"); if (w > 1) k.style.gridColumn = "span " + w; kb.appendChild(k); }));
+    const nameEl = document.getElementById("cfName"), subEl = document.getElementById("cfSub"), countEl = document.getElementById("cfCount"), cta = document.getElementById("cfCta");
+    let active = 0, timer = null, hover = false;
+    // Position table by distance from the centre card: side cards turn their outer edge away, far cards sit deep behind
+    function place() {
+      const w = cards[0].offsetWidth;
+      cards.forEach((c, i) => {
+        let d = i - active; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
+        const a = Math.abs(d), sgn = Math.sign(d);
+        let t, f, o = 1, z;
+        if (a === 0) { t = "translate3d(0,0,0)"; f = "none"; z = 10; }
+        else if (a === 1) { t = `translate3d(${sgn * w * 1.02}px,0,-${w * .55}px) rotateY(${sgn * 34}deg)`; f = "brightness(.55)"; z = 6; }
+        else if (a === 2) { t = `translate3d(${sgn * w * .78}px,0,-${w * 2.4}px) rotateY(${sgn * 34}deg)`; f = "brightness(.32)"; z = 2; }
+        else { t = `translate3d(0,0,-${w * 3}px)`; f = "brightness(.2)"; o = 0; z = 0; }
+        c.style.transform = t; c.style.filter = f; c.style.opacity = o; c.style.zIndex = z;
+        c.classList.toggle("side", a > 0); c.setAttribute("aria-hidden", a > 0 ? "true" : "false");
+      });
+      const c = cards[active];
+      nameEl.textContent = c.dataset.name; subEl.textContent = c.dataset.sub;
+      countEl.textContent = String(active + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
+      cta.dataset.pre = c.dataset.pre; cta.dataset.ref = c.dataset.name;
+    }
+    function go(i) { active = (i % n + n) % n; place(); restart(); }
+    function restart() { clearTimeout(timer); if (!reduce && !hover) timer = setTimeout(() => go(active + 1), 4500); }
+    document.getElementById("cfPrev").addEventListener("click", () => go(active - 1));
+    document.getElementById("cfNext").addEventListener("click", () => go(active + 1));
+    box.addEventListener("keydown", e => { if (e.key === "ArrowLeft") go(active - 1); if (e.key === "ArrowRight") go(active + 1); });
+    box.addEventListener("mouseenter", () => { hover = true; clearTimeout(timer); });
+    box.addEventListener("mouseleave", () => { hover = false; restart(); });
+    // Drag / swipe; a tap on a side card brings it to the centre
+    let x0 = null, moved = false;
+    box.addEventListener("pointerdown", e => { x0 = e.clientX; moved = false; box.classList.add("dragging"); clearTimeout(timer); });
+    addEventListener("pointerup", e => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0; x0 = null; box.classList.remove("dragging");
+      if (Math.abs(dx) > 40) { moved = true; go(active + (dx < 0 ? 1 : -1)); } else restart();
+    });
+    cards.forEach((c, i) => c.addEventListener("click", () => { if (!moved && i !== active) go(i); }));
+    addEventListener("resize", place);
+    place(); restart();
   })();
 
   /* ---- Nav ---- */
@@ -1403,7 +1423,7 @@ const CONFIG = {
     const pre = trigger && trigger.dataset.pre;
     if (pre) { const r = form.querySelector('input[name="type"][value="' + pre + '"]'); if (r) r.checked = true; }
     const fig = trigger && trigger.closest("figure");
-    ref = fig ? fig.querySelector("h3").textContent.trim() : "";
+    ref = (trigger && trigger.dataset.ref) || (fig ? fig.querySelector("h3").textContent.trim() : "");
     form.hidden = false; done.hidden = true;
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
     setTimeout(() => document.getElementById("q-name").focus(), 50);
