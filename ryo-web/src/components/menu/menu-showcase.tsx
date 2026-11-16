@@ -17,7 +17,8 @@ export function MenuShowcase() {
   const current = menus[active]
 
   return (
-    <section aria-label="I menu" className="relative grid min-h-[100svh] grid-cols-1 lg:grid-cols-2">
+    <section aria-labelledby="menu-titolo" className="relative grid min-h-[100svh] grid-cols-1 lg:grid-cols-2">
+      <h1 id="menu-titolo" className="sr-only">I menu di RYO</h1>
       {/* copertina: metà destra su schermi larghi, fascia in alto sul telefono */}
       <div className="relative h-[46svh] overflow-hidden lg:order-2 lg:h-auto">
         <AnimatePresence initial={false}>

@@ -57,7 +57,7 @@ export function ChurrascoFeature({ id }: { id?: string }) {
           <a
             href={MENU_PDF.churrasco}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="rounded-full border border-foreground/80 px-8 py-3.5 transition-colors hover:bg-foreground hover:text-background"
           >
             Sfoglia il menu

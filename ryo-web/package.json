@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:preview": "STATIC_PREVIEW=1 next build",
+    "build:preview": "STATIC_PREVIEW=1 next build && node scripts/netlify-headers.mjs",
     "menu:pdf": "python3 scripts/build-official-menus.py && python3 scripts/build-drink-list.py",
     "start": "next start",
     "lint": "eslint"
