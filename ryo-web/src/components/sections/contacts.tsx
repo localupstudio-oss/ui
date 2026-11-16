@@ -25,7 +25,7 @@ export function Contacts() {
         <Reveal className="lg:col-span-7">
           <a href={mapsPlace} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-sm border border-border" aria-label={`Apri ${site.fullName} su Google Maps`}>
             <div className="relative aspect-[1170/620]">
-              <Image src="/images/contatti/mappa-ryo.png" alt={`Mappa di Cava de' Tirreni con la posizione di ${site.name}`} fill sizes="(min-width:1024px) 58vw, 100vw" className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]" />
+              <Image src="/images/contatti/mappa-ryo-v2.png" alt={`Mappa di Cava de' Tirreni con la posizione di ${site.name}`} fill sizes="(min-width:1024px) 58vw, 100vw" className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]" />
               {/* segnaposto RYO al posto di quello di Google, con etichetta in stile sito */}
               <span className="absolute top-[63%] left-[51.3%] -translate-x-1/2 -translate-y-full">
                 <span className="absolute bottom-0 left-1/2 size-10 -translate-x-1/2 translate-y-1/2 animate-ping rounded-full bg-amber/40" />

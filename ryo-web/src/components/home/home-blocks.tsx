@@ -13,7 +13,7 @@ export function HomeIntro() {
           Entra nella giungla di RYO
         </h2>
         <p className="mx-auto mt-10 max-w-[62ch] text-lg leading-relaxed text-pretty text-foreground/80">
-          Felci che scendono dal soffitto, luci calde e legno: nel cuore di Cava de&apos; Tirreni la churrascaria incontra le tapas da condividere e i
+          Felci che scendono dal soffitto, luci calde e dettagli tropicali: nel cuore di Cava de&apos; Tirreni la churrascaria incontra le tapas da condividere e i
           cocktail d&apos;autore. Qui una cena diventa facilmente una festa.
         </p>
         <div className="mt-14 flex flex-wrap justify-center gap-4">
@@ -39,7 +39,7 @@ const strip = [
   { src: "/images/home/cibo-bowl-tapas.jpg", alt: "Bowl, riso e tapas da condividere in tavola" },
   { src: "/images/home/drink-tiki.jpg", alt: "Cocktail nel tiki mug RYO con menta" },
   { src: "/images/home/drink-affumicato.jpg", alt: "Un cocktail affumicato al momento con il cannello sul bancone" },
-  { src: "/images/home/persone-ballo.jpg", alt: "Due amiche ballano tra i tavoli" },
+  { src: "/images/menu/wine.jpg", alt: "La parete dei vini di RYO con le bottiglie illuminate" },
   // giro 2
   { src: "/images/home/locale-sala-felci.jpg", alt: "La sala sotto il soffitto di felci" },
   { src: "/images/home/cibo-tacos.jpg", alt: "Tacos e tartare con un cocktail" },
@@ -109,10 +109,15 @@ export function FeatureCard({ href, external, title, meta, cta = "Scopri", image
           style={{ objectPosition: position }}
           className="-z-20 object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
         />
-        <div className={cn("absolute inset-0 -z-10 from-black/70 via-black/15 via-40% to-black/0", textTop ? "bg-gradient-to-b" : "bg-gradient-to-t")} />
+        <div
+          className={cn(
+            "absolute inset-0 -z-10",
+            textTop ? "bg-gradient-to-b from-black/80 via-black/35 via-45% to-black/10" : "bg-gradient-to-t from-black/70 via-black/15 via-40% to-black/0",
+          )}
+        />
         <ForegroundFrond className={size === "full" ? "-left-24 -bottom-32 w-[46%]" : "-right-20 -top-24 w-[70%] rotate-[160deg]"} />
 
-        <h2 className="font-display text-[clamp(2.6rem,6vw,5rem)] leading-none">{title}</h2>
+        <h2 className="font-display text-[clamp(2.6rem,6vw,5rem)] leading-none [text-shadow:0_2px_24px_rgb(0_0_0/0.45)]">{title}</h2>
         {meta && <p className="mt-5 text-sm tracking-[0.18em] uppercase opacity-90">{meta}</p>}
         <span className="link-underline mt-6 text-lg">{cta}</span>
       </Link>

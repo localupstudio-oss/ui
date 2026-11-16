@@ -24,6 +24,7 @@ export default function HomePage() {
               image="/images/serate/eventi-settimana-dj.jpg"
               alt="La console del DJ con una rosa rossa e la sala in festa"
               position="10% center"
+              textTop
             />
             <FeatureCard
               size="half"

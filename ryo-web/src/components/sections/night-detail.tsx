@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { useReducedMotion } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 
@@ -18,6 +18,14 @@ const EVERY = 1600
  */
 export function NightDetail({ night: n }: { night: Night }) {
   const [more, setMore] = useState(false)
+  // la pagina si apre sempre dall'inizio: Safari (iPad) altrimenti riprende lo scorrimento della pagina precedente
+  useLayoutEffect(() => {
+    const top = () => window.scrollTo({ top: 0, behavior: "instant" })
+    top()
+    // anche dopo lo scorrimento automatico del router e il caricamento della prima foto
+    const ts = [60, 250, 600].map((ms) => setTimeout(top, ms))
+    return () => ts.forEach(clearTimeout)
+  }, [n.slug])
   return (
     <section className="pattern-croci grid min-h-[100svh] grid-cols-1 grid-rows-[auto_1fr] lg:grid-cols-2 lg:grid-rows-1">
       <div className="relative h-[30svh] min-[400px]:h-[36svh] lg:h-auto lg:min-h-[100svh]">
